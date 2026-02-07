@@ -75,7 +75,7 @@ const Header = () => {
         </div>
 
         <a 
-          href="https://app.sellerpilot.cloud/register"
+          href="https://app.sellerpilot.cloud?tab=register"
           className="bg-primary hover:bg-primary-hover text-white font-semibold py-2.5 px-6 rounded-lg transition-colors shadow-lg hover:shadow-orange-500/30"
         >
           Ücretsiz Dene
@@ -111,7 +111,7 @@ const Hero = () => {
             
             <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 mb-6">
               <a 
-                href="https://app.sellerpilot.cloud/register"
+                href="https://app.sellerpilot.cloud?tab=register"
                 className="w-full sm:w-auto bg-primary hover:bg-primary-hover text-white text-lg font-bold py-4 px-8 rounded-lg shadow-xl shadow-orange-500/20 transition-all transform hover:-translate-y-1 text-center"
               >
                 7 Gün Ücretsiz Dene
@@ -649,7 +649,7 @@ const FinalCTA = () => {
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
           <a 
-            href="https://app.sellerpilot.cloud/register"
+            href="https://app.sellerpilot.cloud?tab=register"
             className="w-full sm:w-auto bg-primary hover:bg-primary-hover text-white text-lg font-bold py-4 px-8 rounded-lg shadow-xl shadow-orange-500/20 transition-all transform hover:-translate-y-1 flex items-center justify-center gap-3"
           >
             <Mail size={24} />
@@ -699,7 +699,7 @@ const Footer = () => {
                   </a>
                 </li>
               ))}
-              <li><a href="https://app.sellerpilot.cloud/register" className="text-gray-400 hover:text-primary transition-colors">Ücretsiz Dene</a></li>
+              <li><a href="https://app.sellerpilot.cloud?tab=register" className="text-gray-400 hover:text-primary transition-colors">Ücretsiz Dene</a></li>
             </ul>
           </div>
 
