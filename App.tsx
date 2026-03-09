@@ -124,7 +124,7 @@ const Hero = () => {
             
             <div className="flex items-center justify-center lg:justify-start gap-2 text-dark-gray font-medium">
               <CheckCircle className="w-5 h-5 text-success" />
-              <span>Kredi kartı gerekmez · Anında kurulum</span>
+              <span>Kredi kartı gerekmez · API bilgilerinizi girin, anında aktif</span>
             </div>
           </motion.div>
 
@@ -575,6 +575,140 @@ const Features = () => {
   );
 };
 
+// --- Pricing Section ---
+
+const PLANS = [
+  {
+    name: "Başlangıç Paketi",
+    price: "499",
+    questions: "100",
+    features: [
+      "100 Soru / Ay",
+      "15 Dakikada Cevap Garantisi",
+      "1 Mağaza Entegrasyonu",
+      "Temel Raporlama",
+      "Temel Marka Dili Ayarları",
+      "Mesaj Üzerinden Destek",
+    ],
+    popular: false,
+    cta: "Ücretsiz Deneyin",
+  },
+  {
+    name: "Küçük Esnaf Paketi",
+    price: "1.299",
+    questions: "300",
+    features: [
+      "300 Soru / Ay",
+      "5 Dakikada Cevap Garantisi",
+      "1 Mağaza Entegrasyonu",
+      "Basit Raporlama",
+      "Temel Marka Dili Ayarları",
+      "Mesaj Üzerinden Destek",
+    ],
+    popular: false,
+    cta: "Ücretsiz Deneyin",
+  },
+  {
+    name: "Büyüyen Marka Paketi",
+    price: "6.999",
+    questions: "3.000",
+    features: [
+      "3.000 Soru / Ay",
+      "5 Dakikada Cevap Garantisi",
+      "3 Mağaza Entegrasyonu",
+      "Detaylı Raporlama",
+      "Gelişmiş Marka Dili",
+      "Canlı Telefon Desteği",
+    ],
+    popular: true,
+    cta: "Ücretsiz Deneyin",
+  },
+  {
+    name: "Kurumsal Şirket Paketi",
+    price: "14.999",
+    questions: "10.000",
+    features: [
+      "10.000 Soru / Ay",
+      "5 Dakikada Cevap Garantisi",
+      "Sınırsız Mağaza Entegrasyonu",
+      "Detaylı Raporlama",
+      "Gelişmiş Marka Dili",
+      "Canlı Telefon Desteği",
+    ],
+    popular: false,
+    cta: "Ücretsiz Deneyin",
+  },
+];
+
+const Pricing = () => {
+  return (
+    <section id="pricing" className="py-24 bg-light">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-4">
+          <span className="inline-block py-1 px-3 bg-white text-dark-gray text-xs font-bold uppercase tracking-wider rounded-full mb-4 border border-gray-200">
+            Fiyatlandırma
+          </span>
+          <h2 className="text-3xl sm:text-4xl font-display font-bold text-dark mb-3">
+            Hızlı ve Kolay Fiyatlandırma
+          </h2>
+          <p className="text-dark-gray mb-1">Mağazanıza uygun planı seçin, API bilgilerinizi girin, aynı gün aktif edin.</p>
+          <p className="text-sm text-gray-400 mb-12">
+            Tüm planlarda 5 dakikadan fazla süren ve uzmana yönlendirilen sorular ücretsizdir, mesaj hakkınızdan sayılmaz.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-start">
+          {PLANS.map((plan) => (
+            <motion.div
+              key={plan.name}
+              whileHover={{ y: -6 }}
+              className={`relative rounded-2xl p-6 flex flex-col gap-5 transition-all ${
+                plan.popular
+                  ? "border-2 border-dark bg-white shadow-2xl"
+                  : "border border-gray-200 bg-white shadow-sm hover:shadow-lg"
+              }`}
+            >
+              {plan.popular && (
+                <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-dark text-white text-xs font-bold px-4 py-1 rounded-full whitespace-nowrap">
+                  ★ Popüler
+                </span>
+              )}
+
+              <p className="text-center text-gray-500 text-sm font-semibold">{plan.name}</p>
+
+              <div className="text-center">
+                <span className="text-4xl font-black text-dark">{plan.price}₺</span>
+                <span className="text-gray-400 text-sm"> / aylık</span>
+                <p className="text-xs text-gray-400 mt-1">KDV Dahil</p>
+              </div>
+
+              <ul className="flex flex-col gap-2.5">
+                {plan.features.map((f) => (
+                  <li key={f} className="flex items-start gap-2 text-sm text-gray-600">
+                    <Check className="w-4 h-4 text-primary mt-0.5 shrink-0" />
+                    {f}
+                  </li>
+                ))}
+              </ul>
+
+              <a
+                href="https://app.sellerpilot.cloud"
+                className={`mt-auto py-3 rounded-xl text-center text-sm font-bold transition-all ${
+                  plan.popular
+                    ? "bg-dark text-white hover:bg-gray-800"
+                    : "border border-gray-300 text-dark hover:bg-gray-50"
+                }`}
+              >
+                {plan.cta}
+              </a>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
 const FAQ = () => {
   const [openId, setOpenId] = useState<number | null>(null);
 
@@ -740,6 +874,7 @@ const App = () => {
         <LiveDemo />
         <HowItWorks />
         <Features />
+        <Pricing />
         <FAQ />
         <FinalCTA />
       </main>
