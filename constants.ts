@@ -9,6 +9,7 @@ export const NAV_LINKS = [
   { label: 'Özellikler', href: '#features' },
   { label: 'Nasıl Çalışır?', href: '#how-it-works' },
   { label: 'Örnekler', href: '#examples' },
+  { label: 'Fiyatlar', href: '#pricing' },
   { label: 'SSS', href: '#faq' },
 ];
 
@@ -91,20 +92,20 @@ export const STEPS: Step[] = [
   {
     id: 1,
     icon: Key,
-    title: "Mağaza Bilgilerinizi Paylaşın",
-    description: "Trendyol mağaza bilgilerinizi bize iletin — hepsi bu kadar."
+    title: "API Bilgilerinizi Girin",
+    description: "Hesabınızı oluşturun, Trendyol API bilgilerinizi sisteme girin — kurulum başlar."
   },
   {
     id: 2,
     icon: Settings,
-    title: "Sistemi Aktif Edin",
-    description: "Arka planda entegrasyonu biz kurarız, siz hiçbir şey yapmazsınız."
+    title: "Sistem Anında Aktif Olur",
+    description: "API bilgilerinizi girdiğiniz anda SellerPilot mağazanıza bağlanır. Beklemenize gerek yok."
   },
   {
     id: 3,
     icon: Moon,
     title: "Rahat Uyuyun",
-    description: "AI asistanınız 7/24 soruları cevaplar, ürün önerir, satış yapar."
+    description: "AI asistanınız 7/24 soruları cevaplar, ürün önerir, satış yapar. Siz sadece büyüyün."
   }
 ];
 
@@ -151,36 +152,36 @@ export const FAQ_ITEMS: FaqItem[] = [
   {
     id: 1,
     question: "Kurulum ne kadar sürer?",
-    answer: "Mağaza bilgilerinizi aldıktan sonra 24 saat içinde sisteminiz aktif olur."
+    answer: "Hesabınızı oluşturup API bilgilerinizi girdiğiniz anda sistem aktif olur. Herhangi bir bekleme süresi yoktur."
   },
   {
     id: 2,
     question: "Yanlış cevap verirse ne olur?",
-    answer: "Sistem bilgi yoksa cevap vermez. Soru otomatik uzmana yönlendirilir."
+    answer: "Sistem bilgi yoksa cevap vermez. Soru otomatik olarak size e-posta ile iletilir ve uzmana yönlendirilir."
   },
   {
     id: 3,
     question: "Tüm ürünlerime uygulanır mı?",
-    answer: "Evet, mağazanızdaki tüm ürünler için çalışır."
+    answer: "Evet, mağazanızdaki tüm ürünler için çalışır. Ürün bilgilerinizi otomatik olarak tarar ve her ürüne özel cevaplar verir."
   },
   {
     id: 4,
     question: "Fiyatlandırma nasıl?",
-    answer: "Mağaza büyüklüğünüze göre özel fiyatlandırma yapıyoruz. Demo görüşmesinde detaylarını konuşuruz."
+    answer: "Aylık soru hacminize göre 4 farklı plan sunuyoruz: Başlangıç (100 soru/ay, 499₺), Küçük Esnaf (300 soru/ay, 1.299₺), Büyüyen Marka (3.000 soru/ay, 6.999₺), Kurumsal (10.000 soru/ay, 14.999₺). Tüm planlar KDV dahil olup 7 günlük ücretsiz deneme ile başlar. Soru limitinizi aşarsanız sistem sizi bilgilendirir."
   },
   {
     id: 5,
     question: "Trendyol onaylı mı?",
-    answer: "Trendyol API'sini kullanıyoruz, resmi kurallara uygun çalışıyoruz."
+    answer: "Evet. Trendyol'un resmi API'sini kullanıyoruz ve Trendyol'un belirlediği kurallara tam uyumlu çalışıyoruz. Hesabınızda herhangi bir risk veya kısıtlama oluşturmaz."
   },
   {
     id: 6,
     question: "Müşterilerim AI olduğunu anlar mı?",
-    answer: "Hayır. Cevaplar doğal Türkçe ve insan tonunda."
+    answer: "Hayır. Cevaplar doğal Türkçe ve insan tonunda oluşturulur. Marka dilinizi siz belirlersiniz — kurumsal da olabilir, samimi de."
   },
   {
     id: 7,
     question: "İstediğim zaman iptal edebilir miyim?",
-    answer: "Evet, aylık sözleşme ile çalışıyoruz. Dilediğiniz zaman iptal edebilirsiniz."
+    answer: "Evet, aylık sözleşme ile çalışıyoruz. Herhangi bir taahhüt veya ceza olmadan dilediğiniz zaman iptal edebilirsiniz."
   }
 ];
