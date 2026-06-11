@@ -1,9 +1,12 @@
-import { Zap, ShoppingBag, Shield, MessageCircle, Box, Moon, Key, Settings, UserCheck } from 'lucide-react';
+import { Zap, ShoppingBag, MessageCircle, Box, Moon, Key, Settings, UserCheck } from 'lucide-react';
 import { ChatExample, FaqItem, Feature, StatCard, Step } from './types';
 
 // ÖNEMLİ: Google Apps Script'ten aldığın Web App URL'ini buraya yapıştır.
 // Dağıtım yaparken "Who has access" kısmının "Anyone" olduğundan emin ol.
 export const GOOGLE_SHEETS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwtGXVec6cRsfgpJpb5GAODf8RDrkLoQvwMsu6E1OOBqxuummZdZs2BxUbRoYzSepc/exec"; 
+
+export const WHATSAPP_URL = "https://wa.me/905378374102";
+export const APP_URL = "https://app.sellerpilot.cloud";
 
 export const NAV_LINKS = [
   { label: 'Özellikler', href: '#features' },
@@ -16,23 +19,23 @@ export const NAV_LINKS = [
 export const STAT_CARDS: StatCard[] = [
   {
     id: 1,
-    title: "15 Saniyede Cevap",
-    description: "Müşteriler beklemez, mağaza puanınız yükselir",
-    imageUrl: "", // Handled by custom component now
+    title: "Saniyeler İçinde Cevap",
+    description: "Soru geldiği an cevaplanır. Müşteri beklemez, başka mağazaya kaçmaz, mağaza puanınız yükselir.",
+    imageUrl: "",
     iconLabel: "⚡"
   },
   {
     id: 2,
-    title: "Satış Asistanı",
-    description: "Ürün önerir, cross-sell yapar, sizin yerinize satar",
-    imageUrl: "", // Handled by custom component now
+    title: "Satış Yapan Cevaplar",
+    description: "Sadece cevaplamaz; müşteri farklı bir ürün ararsa mağazanızdan alternatif önerir. Soruları satışa çevirir.",
+    imageUrl: "",
     iconLabel: "🛍️"
   },
   {
     id: 3,
-    title: "Güvenli & Akıllı",
-    description: "Yanlış bilgi vermez, bilgi yoksa size mail atar",
-    imageUrl: "", // Handled by custom component now
+    title: "Emin Değilse Susar",
+    description: "Bilmediği konuda tahmin yürütmez. Zor soruyu size e-posta ile iletir — yanlış cevap riski sıfır.",
+    imageUrl: "",
     iconLabel: "🔐"
   }
 ];
@@ -93,19 +96,19 @@ export const STEPS: Step[] = [
     id: 1,
     icon: Key,
     title: "API Bilgilerinizi Girin",
-    description: "Hesabınızı oluşturun, Trendyol API bilgilerinizi sisteme girin — kurulum başlar."
+    description: "Hesabınızı oluşturun, Trendyol satıcı panelinizden API bilgilerinizi kopyalayıp girin. Hepsi bu — teknik bilgi gerekmez."
   },
   {
     id: 2,
     icon: Settings,
-    title: "Sistem Anında Aktif Olur",
-    description: "API bilgilerinizi girdiğiniz anda SellerPilot mağazanıza bağlanır. Beklemenize gerek yok."
+    title: "Ürünleriniz Otomatik Yüklenir",
+    description: "SellerPilot mağazanıza bağlanır, tüm ürünlerinizi ve açıklamalarınızı kendisi öğrenir. Beklemenize gerek yok, sistem anında aktif."
   },
   {
     id: 3,
     icon: Moon,
-    title: "Rahat Uyuyun",
-    description: "AI asistanınız 7/24 soruları cevaplar, ürün önerir, satış yapar. Siz sadece büyüyün."
+    title: "Siz Hayatınıza Dönün",
+    description: "Gelen her soru saniyeler içinde cevaplanır. Cevaplanamayan zor sorular e-posta ile size düşer — gerisini düşünmeyin."
   }
 ];
 
@@ -113,38 +116,38 @@ export const FEATURES: Feature[] = [
   {
     id: 1,
     icon: Zap,
-    title: "15 Saniyede Otomatik Cevap",
-    description: "Müşteri sorusu geldiği anda cevaplanır. Bekleme yok, mağaza puanınız yükselir."
+    title: "Saniyeler İçinde Otomatik Cevap",
+    description: "Müşteri sorusu geldiği an cevaplanır. Soruda bekleyen müşteri başka mağazadan almaz, mağaza puanınız yükselir."
   },
   {
     id: 2,
     icon: UserCheck,
-    title: "Ürünlerinizi Öğrenir",
-    description: "Yapay zekâ ürün bilgilerinizi ve güncel içerikleri tarar. Eğer bilgi yoksa, soruyu uzmana yönlendirir — yanlış cevap vermez."
+    title: "Ürünlerinizi Ezbere Bilir",
+    description: "Ürün açıklamalarınızı ve özelliklerinizi tarar, her ürüne özel cevap verir. Bilgi yoksa tahmin etmez — soruyu size yönlendirir."
   },
   {
     id: 3,
     icon: ShoppingBag,
-    title: "Cross-Sell & Upsell Yapar",
-    description: "Müşteri farklı bir ürün sorarsa mağazanızdan alternatif önerir. Sizin yerinize satış yapar."
+    title: "Sizin Yerinize Satış Yapar",
+    description: "Müşteri sizde olmayan bir özelliği sorarsa, mağazanızdaki uygun alternatifi önerir. Her soru bir satış fırsatına dönüşür."
   },
   {
     id: 4,
     icon: MessageCircle,
-    title: "İnsan Gibi Cevaplar",
-    description: "Merhabalar ile başlar, kısa ve samimi konuşur. Müşteriler AI olduğunu fark etmez."
+    title: "İnsan Gibi Konuşur",
+    description: "Doğal Türkçe, samimi ya da kurumsal — marka dilinizi siz seçersiniz. Müşterileriniz robotla konuştuğunu fark etmez."
   },
   {
     id: 5,
     icon: Box,
-    title: "Stok Durumunu Bildirir",
-    description: "Stokta var mı? sorusuna doğru cevap verir. Müşteri deneyimi bozulmaz."
+    title: "Stoğu ve Geçmişi Takip Eder",
+    description: "Stok durumunu doğru bildirir, daha önce verdiğiniz cevapları hatırlar ve onlarla çelişmez. Tutarlı bir mağaza dili kurar."
   },
   {
     id: 6,
     icon: Moon,
-    title: "Uyku Yok, Tatil Yok",
-    description: "Gece yarısı, hafta sonu, bayram — fark etmez. Her an aktif, her zaman hazır."
+    title: "Gece, Hafta Sonu, Bayram",
+    description: "Siz uyurken, tatildeyken, kargoyla uğraşırken de çalışır. Soru-cevap ekranınız hep temiz kalır."
   }
 ];
 
@@ -152,17 +155,17 @@ export const FAQ_ITEMS: FaqItem[] = [
   {
     id: 1,
     question: "Kurulum ne kadar sürer?",
-    answer: "Hesabınızı oluşturup API bilgilerinizi girdiğiniz anda sistem aktif olur. Herhangi bir bekleme süresi yoktur."
+    answer: "Hesabınızı oluşturup Trendyol API bilgilerinizi girdiğiniz anda sistem aktif olur. Ürünleriniz otomatik yüklenir, herhangi bir bekleme süresi yoktur."
   },
   {
     id: 2,
     question: "Yanlış cevap verirse ne olur?",
-    answer: "Sistem bilgi yoksa cevap vermez. Soru otomatik olarak size e-posta ile iletilir ve uzmana yönlendirilir."
+    answer: "Sistemin en önemli kuralı bu: emin olmadığı soruya cevap vermez. Bilgi yoksa soru otomatik olarak size e-posta ile iletilir, siz cevaplarsınız. Tahmine dayalı cevap riski yoktur."
   },
   {
     id: 3,
     question: "Tüm ürünlerime uygulanır mı?",
-    answer: "Evet, mağazanızdaki tüm ürünler için çalışır. Ürün bilgilerinizi otomatik olarak tarar ve her ürüne özel cevaplar verir."
+    answer: "Evet, mağazanızdaki tüm onaylı ürünler için çalışır. Ürün açıklamalarınızı ve özelliklerinizi otomatik tarar, her ürüne özel cevap üretir."
   },
   {
     id: 4,
@@ -171,8 +174,8 @@ export const FAQ_ITEMS: FaqItem[] = [
   },
   {
     id: 5,
-    question: "Trendyol onaylı mı?",
-    answer: "Evet. Trendyol'un resmi API'sini kullanıyoruz ve Trendyol'un belirlediği kurallara tam uyumlu çalışıyoruz. Hesabınızda herhangi bir risk veya kısıtlama oluşturmaz."
+    question: "Trendyol onaylı mı? Mağazama risk oluşturur mu?",
+    answer: "Trendyol'un resmi satıcı API'sini kullanıyoruz ve Trendyol'un belirlediği kurallara tam uyumlu çalışıyoruz. Cevaplar sizin satıcı hesabınız üzerinden, sizin adınıza gönderilir."
   },
   {
     id: 6,
