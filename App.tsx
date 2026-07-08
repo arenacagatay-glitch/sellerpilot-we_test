@@ -236,6 +236,7 @@ const Hero = () => (
 
           <p className="text-lg sm:text-xl text-gray-400 leading-relaxed mb-9 max-w-2xl mx-auto lg:mx-0">
             SellerPilot mağazanıza bağlanır, gelen her soruyu ürün bilgilerinize göre saniyeler içinde yanıtlar.
+            Müşteri başka bir ürün ararsa kataloğunuzdan önerir, kampanyanızı hatırlatır.
             Emin olamadığı soruyu cevaplamaz — e-posta ile size bildirir.
           </p>
 
@@ -469,6 +470,77 @@ const LiveDemo = () => {
     </section>
   );
 };
+
+// ────────────────────────────────────────────────
+// Upsell / Satış fırsatları (#upsell)
+// ────────────────────────────────────────────────
+const UpsellSection = () => (
+  <section id="upsell" className="py-24 bg-gradient-to-b from-white to-light">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="flex flex-col lg:flex-row items-center gap-14">
+
+        {/* Left: text */}
+        <Reveal className="flex-1">
+          <span className="inline-block py-1 px-3 bg-orange-50 text-primary text-xs font-bold uppercase tracking-wider rounded-full mb-4 border border-orange-100">Satış Fırsatları</span>
+          <h2 className="text-3xl sm:text-4xl font-display font-bold text-dark mb-5 leading-tight">
+            Cevaplamakla kalmaz, <span className="grad-text">kaçacak satışı yakalar</span>
+          </h2>
+          <p className="text-dark-gray leading-relaxed mb-8">
+            Müşteri baktığı üründe olmayan bir şeyi sorduğunda çoğu mağaza o satışı kaybeder.
+            SellerPilot kataloğunuzu tanır: sorulan ürünü gerçek bilgileriyle cevaplar,
+            uygunsa stokta olan doğru ürünü önerir ve tanımladığınız kampanyayı doğal bir dille hatırlatır.
+          </p>
+          <ul className="space-y-4">
+            <li className="flex items-start gap-3">
+              <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 shrink-0" />
+              <p className="text-dark-gray"><span className="font-semibold text-dark">Sadece gerçek ürünler.</span> Önerdiği her ürün kataloğunuzla doğrulanır — listede olmayan ürünü, stokta olmayanı öneremez.</p>
+            </li>
+            <li className="flex items-start gap-3">
+              <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 shrink-0" />
+              <p className="text-dark-gray"><span className="font-semibold text-dark">Kampanyayı siz tanımlarsınız.</span> Tanımlı kampanya yoksa indirim ya da avantaj uydurmaz.</p>
+            </li>
+            <li className="flex items-start gap-3">
+              <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 shrink-0" />
+              <p className="text-dark-gray"><span className="font-semibold text-dark">Yeri geldiğinde susar.</span> İade, şikâyet, kargo sorunu gibi konularda satış önerisi hiç devreye girmez — önce müşterinin konusu çözülür.</p>
+            </li>
+          </ul>
+        </Reveal>
+
+        {/* Right: chat mock */}
+        <Reveal delay={0.15} className="flex-1 w-full max-w-xl">
+          <div className="bg-white rounded-3xl shadow-2xl p-6 sm:p-8 border border-orange-100">
+            <div className="mb-4 text-center">
+              <span className="text-xs font-bold text-primary bg-orange-50 px-2 py-1 rounded tracking-widest uppercase">Aksesuar — Çapraz Satış</span>
+            </div>
+            <div className="flex justify-end mb-5">
+              <div className="bg-[#F5F5F5] rounded-tl-2xl rounded-tr-sm rounded-br-2xl rounded-bl-2xl p-4 text-dark max-w-[85%]">
+                <p className="text-sm leading-relaxed">Merhaba, bu cüzdanla uyumlu bir kemeriniz var mı? Takım yapmak istiyorum.</p>
+              </div>
+            </div>
+            <div className="flex justify-start">
+              <div className="text-white p-4 rounded-tl-2xl rounded-tr-2xl rounded-br-2xl rounded-bl-sm shadow-lg max-w-[92%]" style={{ background: 'linear-gradient(135deg,#FF6B35,#FFBE5C)' }}>
+                <div className="flex items-center gap-2 mb-2 border-b border-white/20 pb-2">
+                  <div className="bg-white p-1 rounded-full"><Plane size={12} className="text-primary fill-primary" /></div>
+                  <span className="text-[11px] font-bold text-white/90">Mağazanız adına cevaplandı</span>
+                </div>
+                <p className="text-sm leading-relaxed text-white/95">
+                  Merhaba! Cüzdanınızla çok şık bir takım olacak Erkek Takım Elbise Deri İnce Kemer'imiz stokta mevcut.
+                  Bu ay cüzdan + kemer birlikte alımlarda ikinci üründe %20 indirimimiz de geçerli.
+                </p>
+              </div>
+            </div>
+            <div className="mt-5 flex justify-center">
+              <div className="inline-flex items-center gap-2 bg-green-50 border border-green-200 text-green-700 text-xs font-bold px-4 py-2 rounded-full">
+                <TrendingUp size={14} /> Kaybolacak soru → yeni satış fırsatı
+              </div>
+            </div>
+            <p className="mt-4 text-center text-[11px] text-gray-400">Önerilen ürün ve kampanya, mağazanın kendi kataloğundan ve tanımladığı kampanyadan geliyor.</p>
+          </div>
+        </Reveal>
+      </div>
+    </div>
+  </section>
+);
 
 // ────────────────────────────────────────────────
 // How it works (#how-it-works)
@@ -739,6 +811,7 @@ const App = () => (
       <FounderStrip />
       <SocialProof />
       <LiveDemo />
+      <UpsellSection />
       <HowItWorks />
       <Features />
       <Pricing />

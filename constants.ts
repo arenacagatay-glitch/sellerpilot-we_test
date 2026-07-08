@@ -47,7 +47,7 @@ export const CHAT_EXAMPLES: ChatExample[] = [
     customerName: "**** ****",
     date: "26 Kasım 2025 22:18",
     question: "Merhaba içinde şeftali sedir misk amberli ama böyle ergen vanilya kokan olmasın istiyorum buğday teniliyim hangisi olmalı",
-    answer: "Merhabalar, [ÜRÜN ADI GİZLİ] parfümümüz şeftali, sedir, misk ve amber gibi sıcak ve zarif notalara sahip, ergen vanilya kokusu barındırmayan sofistike bir seçenek. Buğday teninize de çok güzel uyum sağlayacaktır. Eğer daha hafif ve ferah bir alternatif isterseniz, sedir ağacı ve yasemin kokusuyla vücut spreyimizi de inceleyebilirsiniz. Her ikisi de kalıcı ve kaliteli formüllere sahiptir. Yardımcı olabileceğimiz başka bir şey olursa lütfen çekinmeden sorun."
+    answer: "Merhabalar, [ÜRÜN ADI GİZLİ] parfümümüz şeftali, sedir, misk ve amber gibi sıcak ve zarif notalara sahip, ergen vanilya kokusu barındırmayan sofistike bir seçenek. Buğday teninize de çok güzel uyum sağlayacaktır. Eğer daha hafif ve ferah bir alternatif isterseniz, sedir ağacı ve yasemin kokusuyla vücut spreyimizi de inceleyebilirsiniz. Her ikisi de kalıcı ve kaliteli formüllere sahiptir."
   },
   {
     id: 2,
@@ -55,7 +55,7 @@ export const CHAT_EXAMPLES: ChatExample[] = [
     customerName: "**** ****",
     date: "26 Kasım 2025 22:15",
     question: "ürünü sürmeden önce pirinç suyu kullanıyorum sızce kremin etkisini azaltır mı",
-    answer: "Merhabalar, pirinç suyu kullanmanız kremimizin etkisini azaltmaz. Ürünümüz tüm cilt tiplerine uygun ve harici kullanım içindir, dolayısıyla cildinizde diğer bakım ürünleriyle birlikte kullanabilirsiniz. Ancak, kremden önce cildinizin tamamen temiz ve kuru olmasına özen göstermeniz etkisini artırabilir. Sorularınız olursa her zaman yardımcı oluruz. Afiyetle kullanın!"
+    answer: "Merhabalar, pirinç suyu kullanmanız kremimizin etkisini azaltmaz. Ürünümüz tüm cilt tiplerine uygun ve harici kullanım içindir, dolayısıyla cildinizde diğer bakım ürünleriyle birlikte kullanabilirsiniz. Ancak, kremden önce cildinizin tamamen temiz ve kuru olmasına özen göstermeniz etkisini artırabilir. Afiyetle kullanın!"
   },
   {
     id: 3,
@@ -63,7 +63,7 @@ export const CHAT_EXAMPLES: ChatExample[] = [
     customerName: "**** ****",
     date: "27 Kasım 2025 14:32",
     question: "Bu pantolonun bedeni küçük mü kalıyor? 38 beden giyiyorum hangisini almalıyım?",
-    answer: "Merhabalar, ürünümüz normal kalıp özelliğine sahiptir. 38 beden giyiyorsanız kendi bedeninizi tercih edebilirsiniz. Ancak bol kesim seviyorsanız bir beden büyük almanızı öneririz. Bel ve kalça ölçülerinizi ürün açıklamasındaki beden tablosuyla karşılaştırırsanız daha net karar verebilirsiniz. Yardımcı olabileceğimiz başka bir şey varsa lütfen sorun!"
+    answer: "Merhabalar, ürünümüz normal kalıp özelliğine sahiptir. 38 beden giyiyorsanız kendi bedeninizi tercih edebilirsiniz. Ancak bol kesim seviyorsanız bir beden büyük almanızı öneririz. Bel ve kalça ölçülerinizi ürün açıklamasındaki beden tablosuyla karşılaştırırsanız daha net karar verebilirsiniz."
   },
   {
     id: 4,
@@ -71,7 +71,7 @@ export const CHAT_EXAMPLES: ChatExample[] = [
     customerName: "**** ****",
     date: "27 Kasım 2025 18:45",
     question: "Kumaş terletir mi? Yazlık mı kışlık mı?",
-    answer: "Merhabalar, ürünümüz %100 pamuklu dokuma kumaştan üretilmiştir ve terletmez. Nefes alan yapısı sayesinde 4 mevsim rahatlıkla kullanabilirsiniz. Özellikle ilkbahar ve yaz aylarında tercih edilmektedir. Herhangi bir sorunuz olursa her zaman yardımcı olmaktan memnuniyet duyarız!"
+    answer: "Merhabalar, ürünümüz %100 pamuklu dokuma kumaştan üretilmiştir ve terletmez. Nefes alan yapısı sayesinde 4 mevsim rahatlıkla kullanabilirsiniz. Özellikle ilkbahar ve yaz aylarında tercih edilmektedir."
   },
   {
     id: 5,
@@ -87,7 +87,7 @@ export const CHAT_EXAMPLES: ChatExample[] = [
     customerName: "**** ****",
     date: "28 Kasım 2025 16:27",
     question: "iPhone 13 ile uyumlu mu?",
-    answer: "Merhabalar, evet ürünümüz iPhone 13 ile tam uyumludur. Ayrıca iPhone 12, 13, 14 ve 15 serisi tüm modellerde sorunsuz çalışmaktadır. Plug and play özelliği sayesinde herhangi bir ayar gerektirmez. Başka sorularınız varsa her zaman yardımcı olmaktan mutluluk duyarız!"
+    answer: "Merhabalar, evet ürünümüz iPhone 13 ile tam uyumludur. Ayrıca iPhone 12, 13, 14 ve 15 serisi tüm modellerde sorunsuz çalışmaktadır. Plug and play özelliği sayesinde herhangi bir ayar gerektirmez."
   }
 ];
 
@@ -129,7 +129,7 @@ export const FEATURES: Feature[] = [
     id: 3,
     icon: ShoppingBag,
     title: "Sizin Yerinize Satış Yapar",
-    description: "Müşteri sizde olmayan bir özelliği sorarsa, mağazanızdaki uygun alternatifi önerir. Her soru bir satış fırsatına dönüşür."
+    description: "Müşteri sizde olmayan bir ürünü sorarsa kataloğunuzdan gerçek, stokta olan alternatifi önerir; tanımladığınız kampanyaları cevaba doğal şekilde ekler. İade ve şikâyet konuşmalarında asla satış yapmaz."
   },
   {
     id: 4,
@@ -186,5 +186,10 @@ export const FAQ_ITEMS: FaqItem[] = [
     id: 7,
     question: "İstediğim zaman iptal edebilir miyim?",
     answer: "Evet, aylık sözleşme ile çalışıyoruz. Herhangi bir taahhüt veya ceza olmadan dilediğiniz zaman iptal edebilirsiniz."
+  },
+  {
+    id: 8,
+    question: "Ürün önerisi ve kampanya özelliği nasıl çalışır? Olmayan bir indirim söyler mi?",
+    answer: "Hayır, asla. Sistem yalnızca kataloğunuzda gerçekten var olan ve stokta bulunan ürünleri önerebilir; önerdiği her ürün gerçek katalog verisiyle doğrulanır. Kampanyaları panelden siz tanımlarsınız — tanımlı kampanya yoksa sistem indirim, fiyat veya avantaj uydurmaz. İade, şikâyet, kargo sorunu ve sağlıkla ilgili sorularda öneri hiç devreye girmez: önce müşterinin konusu çözülür. Bu özellik isteğe bağlıdır, panelden tek tuşla açıp kapatabilirsiniz."
   }
 ];
