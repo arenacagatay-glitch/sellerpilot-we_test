@@ -80,3 +80,7 @@ a.btnlink { display: inline-block; background: #262a38; color: #e8e8ee; border: 
 a.btnlink:hover { filter: brightness(1.15); }
 .ps-result .succ { color: #7fe0a0; }
 .ps-result .fail { color: #ff9c9c; font-size: 11px; cursor: help; }
+.ps-result .pending { color: #e0c060; font-size: 11px; }
+.imgs img { cursor: zoom-in; }
+label.btnlike { display: inline-flex; align-items: center; gap: 4px; background: #262a38; color: #e8e8ee; border: 1px solid #363b4d; border-radius: 8px; padding: 4px 9px; font-size: 12px; }
+label.btnlike:hover { filter: brightness(1.15); }

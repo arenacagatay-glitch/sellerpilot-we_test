@@ -259,11 +259,13 @@ function renderDrafts() {
       </div>
       <label>Açıklama<textarea data-f="description">${esc(d.description)}</textarea></label>
       <div><b style="font-size:12px">Görseller (${d.images.length}/8)</b>
-        <div class="imgs">${d.images.map((u, j) => `<span class="im"><img src="${esc(u)}" loading="lazy"/><button class="rm" data-rmimg="${j}">×</button></span>`).join('')}</div>
+        <div class="imgs">${d.images.map((u, j) => `<span class="im"><img src="${esc(u)}" data-full="${esc(u)}" loading="lazy"/><button class="rm" data-rmimg="${j}">×</button></span>`).join('')}</div>
         <div class="row">
+          <label class="small btnlike" style="cursor:pointer">📁 Bilgisayardan yükle<input type="file" data-act="upfiles" accept="image/*" multiple hidden></label>
           <button class="small" data-act="imgurl">🔗 URL ekle</button>
           <button class="small" data-act="fromgallery">🖼 Galeriden ekle</button>
         </div>
+        <div class="up-status muted" style="font-size:11px"></div>
       </div>
       <div style="margin-top:10px"><b style="font-size:12px">Özellikler (${(d.attributes || []).length})</b>
         <div class="attrs">${(d.attributes || []).map((a) => `<div class="attr-row"><span>${esc(a.attributeName || a.attributeId)}</span><span>${esc(a.attributeValue || a.customAttributeValue || a.attributeValueId)}</span></div>`).join('')}</div>
@@ -298,6 +300,26 @@ function renderDrafts() {
       });
     });
     el.querySelectorAll('[data-rmimg]').forEach((b) => b.addEventListener('click', () => { d.images.splice(Number(b.dataset.rmimg), 1); save(); renderDrafts(); }));
+    el.querySelectorAll('.imgs img[data-full]').forEach((img) => img.addEventListener('click', () => openLightbox(img.dataset.full)));
+    el.querySelector('[data-act="upfiles"]').addEventListener('change', async (e) => {
+      const files = [...e.target.files];
+      if (!files.length) return;
+      const st = el.querySelector('.up-status');
+      const slot = 8 - d.images.length;
+      if (slot <= 0) { toast('Bu taslakta zaten 8 görsel var'); return; }
+      const use = files.slice(0, slot);
+      st.textContent = `⏳ ${use.length} dosya yükleniyor...`;
+      try {
+        const resized = await Promise.all(use.map((f) => resizeImageFile(f)));
+        const fd = new FormData();
+        resized.forEach((f) => fd.append('files', f));
+        fd.append('productName', d.title || d.barcode || 'urun');
+        const data = await api('/api/images/upload', { method: 'POST', body: fd });
+        (data.images || []).forEach((im) => { if (d.images.length < 8) d.images.push(im.url); });
+        save(); renderDrafts();
+        toast(`${(data.images || []).length} görsel taslağa eklendi`);
+      } catch (err) { st.textContent = '❌ ' + err.message; }
+    });
     el.querySelector('[data-act="imgurl"]').addEventListener('click', () => {
       const u = prompt('Görsel URL (https ile başlamalı):');
       if (u && u.startsWith('https://')) { d.images.push(u.trim()); save(); renderDrafts(); }
@@ -530,6 +552,7 @@ function renderBatches() {
 
 /* ---------- Fiyat & Stok ---------- */
 let psRows = load('sp_psrows_cache', []);
+let lastBatchId = localStorage.getItem('sp_last_batch') || null;
 function savePsRows() { localStorage.setItem('sp_psrows_cache', JSON.stringify(psRows)); }
 $('#psLoad').addEventListener('click', async () => {
   $('#psStatus').textContent = 'Yükleniyor...';
@@ -570,7 +593,7 @@ function renderPs() {
       <td><input type="number" data-bc="${esc(r.barcode)}" data-k="quantity" value="${r.quantity ?? ''}" /></td>
       <td><input type="number" step="0.01" data-bc="${esc(r.barcode)}" data-k="salePrice" value="${r.salePrice ?? ''}" /></td>
       <td><input type="number" step="0.01" data-bc="${esc(r.barcode)}" data-k="listPrice" value="${r.listPrice ?? ''}" /></td>
-      <td class="ps-result" data-bc="${esc(r.barcode)}">${r.result ? (r.result.ok ? '<span class="succ">✓</span>' : `<span class="fail" title="${esc(r.result.msg || '')}">✗ ${esc((r.result.msg || 'hata').slice(0, 40))}</span>`) : ''}</td>
+      <td class="ps-result" data-bc="${esc(r.barcode)}">${r.result ? (r.result.ok ? '<span class="succ">✓ güncellendi</span>' : r.result.pending ? '<span class="pending">⏳ işleniyor</span>' : `<span class="fail" title="${esc(r.result.msg || '')}">✗ ${esc((r.result.msg || 'hata').slice(0, 40))}</span>`) : ''}</td>
     </tr>`).join('') + '</tbody></table>' + (rows.length === 0 ? '<div class="hint">Aramanızla eşleşen ürün yok.</div>' : '');
   $$('#psTable input').forEach((inp) => inp.addEventListener('change', () => {
     const r = psRows.find((x) => x.barcode === inp.dataset.bc);
@@ -618,34 +641,37 @@ $('#psSend').addEventListener('click', async () => {
     const batchId = res.batchRequestId;
     if (!batchId) { $('#psStatus').textContent = '⚠️ Trendyol batch numarası dönmedi: ' + JSON.stringify(res); return; }
 
-    // Trendyol guncellemeyi kuyruga alir; sonucu birkac kez sorgulayip gercekten islenip islenmedigini gosteririz.
-    $('#psStatus').textContent = `⏳ Gönderildi (${batchId}). Trendyol işliyor, sonuç bekleniyor...`;
-    let statusData = null;
-    for (let attempt = 0; attempt < 8; attempt++) {
-      await sleep(attempt === 0 ? 3000 : 4000);
+    // Trendyol guncellemeyi kuyruga alir; sonuc genelde 10-40sn icinde items[] icinde SUCCESS/FAILED olarak gelir.
+    // Ust seviye "status" alani fiyat/stok batch'inde HEP null doner; sonuc SADECE items[] icindedir.
+    lastBatchId = batchId; localStorage.setItem('sp_last_batch', batchId);
+    $('#psStatus').textContent = `⏳ Gönderildi (${batchId.slice(0, 8)}...). Trendyol işliyor, sonuç bekleniyor...`;
+    let bItems = [];
+    for (let attempt = 0; attempt < 16; attempt++) { // ~60sn'ye kadar bekle
+      await sleep(attempt === 0 ? 2500 : 4000);
       try {
-        statusData = await api('/api/batch/' + encodeURIComponent(batchId));
-        if (statusData && (statusData.status === 'COMPLETED' || (statusData.items && statusData.items.length))) break;
+        const sd = await api('/api/batch/' + encodeURIComponent(batchId));
+        if (sd && sd.items && sd.items.length) { bItems = sd.items; break; }
       } catch { /* tekrar dene */ }
     }
 
-    const bItems = (statusData && statusData.items) || [];
     const byBarcode = {};
     bItems.forEach((it) => {
       const bc = it.requestItem?.barcode || it.requestItem?.product?.barcode;
       if (bc) byBarcode[bc] = it;
     });
-    let ok = 0, fail = 0;
+    let ok = 0, fail = 0, pending = 0;
     changed.forEach((r) => {
       const it = byBarcode[r.barcode];
       if (it && it.status === 'SUCCESS') { r.result = { ok: true }; r.changed = false; ok++; }
       else if (it && it.status === 'FAILED') { r.result = { ok: false, msg: (it.failureReasons || []).join(', ') || 'Trendyol reddetti' }; fail++; }
-      else { r.result = { ok: false, msg: 'sonuç alınamadı (Trendyol hâlâ işliyor olabilir)' }; }
+      // Sonuc henuz gelmediyse HATA DEĞİL: gonderildi, isleniyor. Satiri "gonderildi" say (changed=false).
+      else { r.result = { pending: true }; r.changed = false; pending++; }
     });
     savePsRows();
     renderPs();
-    if (fail === 0 && ok === changed.length) $('#psStatus').textContent = `✅ ${ok} ürün gerçekten güncellendi.`;
-    else $('#psStatus').textContent = `⚠️ ${ok} başarılı, ${fail} başarısız. "Durum" sütununa bakın (kırmızı ✗ üstüne gelince sebep görünür).`;
+    if (fail === 0 && pending === 0) $('#psStatus').textContent = `✅ ${ok} ürün gerçekten güncellendi.`;
+    else if (fail > 0) $('#psStatus').textContent = `⚠️ ${ok} başarılı, ${fail} başarısız${pending ? ', ' + pending + ' işleniyor' : ''}. Kırmızı ✗ üstüne gelince sebep görünür.`;
+    else $('#psStatus').textContent = `✅ Gönderildi (${ok} onaylı, ${pending} Trendyol'da işleniyor). Birkaç dk sonra "Ürünleri Getir" ile doğrulayabilirsiniz. — Fiyat GİTTİ, panik yok.`;
   } catch (e) { $('#psStatus').textContent = '❌ ' + e.message; }
 });
 
