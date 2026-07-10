@@ -4,9 +4,9 @@ const $ = (s) => document.querySelector(s);
 const $$ = (s) => [...document.querySelectorAll(s)];
 
 const state = {
-  page: 0,
-  totalPages: 0,
-  products: [],
+  page: load('sp_prod_page', 0),
+  totalPages: load('sp_prod_totalpages', 0),
+  products: load('sp_products_cache', []),
   kombin: [], // seçilen barkodlar
   drafts: load('sp_drafts', []),
   gallery: load('sp_gallery', []),
@@ -18,6 +18,9 @@ function save() {
   localStorage.setItem('sp_drafts', JSON.stringify(state.drafts));
   localStorage.setItem('sp_gallery', JSON.stringify(state.gallery));
   localStorage.setItem('sp_batches', JSON.stringify(state.batches));
+  localStorage.setItem('sp_products_cache', JSON.stringify(state.products));
+  localStorage.setItem('sp_prod_page', JSON.stringify(state.page));
+  localStorage.setItem('sp_prod_totalpages', JSON.stringify(state.totalPages));
   $('#draftCount').textContent = state.drafts.length;
 }
 
@@ -92,6 +95,7 @@ async function loadProducts(page = 0) {
     if (barcode) q.set('barcode', barcode);
     const data = await api('/api/products?' + q);
     state.page = data.page; state.totalPages = data.totalPages; state.products = data.content;
+    save();
     $('#prodInfo').textContent = `${data.totalElements} ürün`;
     $('#prodPage').textContent = `Sayfa ${data.page + 1} / ${data.totalPages || 1}`;
     renderProducts();
@@ -101,7 +105,7 @@ async function loadProducts(page = 0) {
 function renderProducts() {
   $('#prodList').innerHTML = state.products.map((p) => `
     <div class="card">
-      <img src="${esc(p.images[0] || '')}" loading="lazy" onerror="this.style.visibility='hidden'" />
+      <img src="${esc(p.images[0] || '')}" data-full="${esc(p.images[0] || '')}" loading="lazy" onerror="this.style.visibility='hidden'" />
       <div class="body">
         <h4>${esc(p.title)}</h4>
         <div class="meta">
@@ -123,7 +127,15 @@ function renderProducts() {
     if (b.dataset.act === 'copy') { addDraftFromProduct(p); toast('Taslak oluşturuldu → “Varyasyon Kurgusu” sekmesi'); }
     else toggleKombin(p);
   }));
+  $$('#prodList img[data-full]').forEach((img) => img.addEventListener('click', () => openLightbox(img.dataset.full)));
 }
+
+function openLightbox(url) {
+  if (!url) return;
+  $('#lightboxImg').src = url;
+  $('#lightbox').classList.remove('hidden');
+}
+$('#lightbox').addEventListener('click', () => $('#lightbox').classList.add('hidden'));
 
 $('#prodLoad').addEventListener('click', () => loadProducts(0));
 $('#prodPrev').addEventListener('click', () => state.page > 0 && loadProducts(state.page - 1));
@@ -370,12 +382,13 @@ $('#upRun').addEventListener('click', async () => {
 function renderGallery() {
   $('#gallery').innerHTML = state.gallery.map((g, i) => `
     <div class="g">
-      <img src="${esc(g.url)}" loading="lazy" />
+      <img src="${esc(g.url)}" data-full="${esc(g.url)}" loading="lazy" />
       <div class="row">
         <button class="small" data-copy="${i}">Kopyala</button>
         <button class="small" data-todraft="${i}">Taslağa</button>
       </div>
     </div>`).join('') || '<div class="hint">Henüz görsel yok.</div>';
+  $$('#gallery img[data-full]').forEach((img) => img.addEventListener('click', () => openLightbox(img.dataset.full)));
   $$('#gallery [data-copy]').forEach((b) => b.addEventListener('click', () => { navigator.clipboard.writeText(state.gallery[b.dataset.copy].url); toast('URL kopyalandı'); }));
   $$('#gallery [data-todraft]').forEach((b) => b.addEventListener('click', () => {
     if (!state.drafts.length) return toast('Önce taslak oluşturun');
@@ -474,32 +487,54 @@ function renderBatches() {
 }
 
 /* ---------- Fiyat & Stok ---------- */
-let psRows = [];
+let psRows = load('sp_psrows_cache', []);
+function savePsRows() { localStorage.setItem('sp_psrows_cache', JSON.stringify(psRows)); }
 $('#psLoad').addEventListener('click', async () => {
   $('#psStatus').textContent = 'Yükleniyor...';
   try {
-    const data = await api('/api/products?page=0&size=100');
-    psRows = data.content.map((p) => ({ barcode: p.barcode, title: p.title, quantity: p.quantity, salePrice: p.salePrice, listPrice: p.listPrice, changed: false }));
-    $('#psStatus').textContent = `${psRows.length} ürün yüklendi (ilk 100)`;
+    const all = [];
+    let page = 0;
+    let totalPages = 1;
+    do {
+      const data = await api(`/api/products?page=${page}&size=100`);
+      all.push(...data.content);
+      totalPages = data.totalPages || 1;
+      $('#psStatus').textContent = `Yükleniyor... (${page + 1}/${totalPages} sayfa, ${all.length} ürün)`;
+      page++;
+    } while (page < totalPages);
+    psRows = all.map((p) => ({ barcode: p.barcode, title: p.title, quantity: p.quantity, salePrice: p.salePrice, listPrice: p.listPrice, changed: false }));
+    savePsRows();
+    $('#psStatus').textContent = `${psRows.length} ürün yüklendi (tümü)`;
     renderPs();
   } catch (e) { $('#psStatus').textContent = '❌ ' + e.message; }
 });
 
 function renderPs() {
+  const q = $('#psSearch').value.trim().toLocaleLowerCase('tr');
+  const stockFilter = $('#psStockFilter').value;
+  let rows = psRows;
+  if (q) rows = rows.filter((r) => (r.barcode || '').toLocaleLowerCase('tr').includes(q) || (r.title || '').toLocaleLowerCase('tr').includes(q));
+  if (stockFilter === 'in') rows = rows.filter((r) => Number(r.quantity) > 0);
+  else if (stockFilter === 'out') rows = rows.filter((r) => !Number(r.quantity));
   $('#psTable').innerHTML = `<table><thead><tr><th>Barkod</th><th>Ürün</th><th>Stok</th><th>Satış ₺</th><th>Liste ₺</th></tr></thead><tbody>` +
-    psRows.map((r, i) => `<tr class="${r.changed ? 'changed' : ''}">
+    rows.map((r) => `<tr class="${r.changed ? 'changed' : ''}">
       <td>${esc(r.barcode)}</td><td>${esc((r.title || '').slice(0, 60))}</td>
-      <td><input type="number" data-i="${i}" data-k="quantity" value="${r.quantity ?? ''}" /></td>
-      <td><input type="number" step="0.01" data-i="${i}" data-k="salePrice" value="${r.salePrice ?? ''}" /></td>
-      <td><input type="number" step="0.01" data-i="${i}" data-k="listPrice" value="${r.listPrice ?? ''}" /></td>
-    </tr>`).join('') + '</tbody></table>';
+      <td><input type="number" data-bc="${esc(r.barcode)}" data-k="quantity" value="${r.quantity ?? ''}" /></td>
+      <td><input type="number" step="0.01" data-bc="${esc(r.barcode)}" data-k="salePrice" value="${r.salePrice ?? ''}" /></td>
+      <td><input type="number" step="0.01" data-bc="${esc(r.barcode)}" data-k="listPrice" value="${r.listPrice ?? ''}" /></td>
+    </tr>`).join('') + '</tbody></table>' + (rows.length === 0 ? '<div class="hint">Aramanızla eşleşen ürün yok.</div>' : '');
   $$('#psTable input').forEach((inp) => inp.addEventListener('change', () => {
-    const r = psRows[Number(inp.dataset.i)];
+    const r = psRows.find((x) => x.barcode === inp.dataset.bc);
+    if (!r) return;
     r[inp.dataset.k] = Number(inp.value);
     r.changed = true;
+    savePsRows();
     inp.closest('tr').classList.add('changed');
   }));
 }
+
+$('#psSearch').addEventListener('input', debounce(() => renderPs(), 150));
+$('#psStockFilter').addEventListener('change', () => renderPs());
 
 $('#psSend').addEventListener('click', async () => {
   const changed = psRows.filter((r) => r.changed);
@@ -511,11 +546,21 @@ $('#psSend').addEventListener('click', async () => {
     const res = await api('/api/price-stock', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ items }) });
     $('#psStatus').textContent = `✅ Gönderildi. Batch: ${res.batchRequestId || JSON.stringify(res)}`;
     changed.forEach((r) => (r.changed = false));
+    savePsRows();
     renderPs();
   } catch (e) { $('#psStatus').textContent = '❌ ' + e.message; }
 });
 
 /* ---------- başlangıç ---------- */
+if (state.products.length) {
+  renderProducts();
+  $('#prodInfo').textContent = `${state.products.length} ürün (önbellek — "Yükle / Yenile" ile tazele)`;
+  $('#prodPage').textContent = `Sayfa ${state.page + 1} / ${state.totalPages || 1}`;
+}
+if (psRows.length) {
+  renderPs();
+  $('#psStatus').textContent = `${psRows.length} ürün (önbellek — "Ürünleri Getir" ile tazele)`;
+}
 renderDrafts();
 renderGallery();
 renderBatches();

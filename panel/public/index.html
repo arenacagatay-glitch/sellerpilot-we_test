@@ -71,8 +71,8 @@
             </label>
             <label>Kalite
               <select id="genQuality">
-                <option value="medium">Orta (~0,06$/görsel)</option>
-                <option value="high" selected>Yüksek (~0,25$/görsel)</option>
+                <option value="medium">Orta (düşük maliyet)</option>
+                <option value="high" selected>Yüksek (en iyi kalite)</option>
               </select>
             </label>
             <label>Boyut
@@ -114,6 +114,12 @@
       <div class="toolbar">
         <button id="psLoad" class="primary">Ürünleri Getir</button>
         <button id="psSend" class="danger">Değişiklikleri Trendyol'a Gönder</button>
+        <input id="psSearch" placeholder="Barkod veya ürün adıyla ara..." style="min-width:260px" />
+        <select id="psStockFilter">
+          <option value="">Tüm Stok Durumu</option>
+          <option value="in">Stokta Olanlar</option>
+          <option value="out">Stokta Olmayanlar</option>
+        </select>
         <span id="psStatus" class="muted"></span>
       </div>
       <div class="hint">Satırda fiyat/stok değiştirin; değişen satırlar sarı işaretlenir ve topluca gönderilir.</div>
@@ -122,6 +128,7 @@
   </main>
 
   <div id="toast" class="toast hidden"></div>
+  <div id="lightbox" class="lightbox hidden"><img id="lightboxImg" src="" /></div>
   <script src="app.js"></script>
 </body>
 </html>

@@ -24,7 +24,8 @@ async function editOnce({ apiKey, model, referenceBuffer, referenceMime, prompt,
   form.append('n', '1');
   form.append('size', size);
   form.append('quality', quality);
-  form.append('input_fidelity', 'high');
+  // gpt-image-2 input_fidelity parametresini desteklemiyor; sadece gpt-image-1/1.5'te var.
+  if (/^gpt-image-1(\.|$)/.test(model)) form.append('input_fidelity', 'high');
   form.append('image', new Blob([referenceBuffer], { type: referenceMime || 'image/png' }), 'reference.png');
 
   const res = await fetch('https://api.openai.com/v1/images/edits', {
@@ -49,7 +50,7 @@ export async function generateProductImages({
 }) {
   const apiKey = process.env.OPENAI_API_KEY;
   if (!apiKey) throw new Error('OPENAI_API_KEY tanimli degil (.env dosyasina ekleyin)');
-  const model = process.env.OPENAI_IMAGE_MODEL || 'gpt-image-1';
+  const model = process.env.OPENAI_IMAGE_MODEL || 'gpt-image-2';
 
   const n = Math.min(Math.max(Number(count) || 6, 1), ANGLE_DIRECTIVES.length);
   const directives = ANGLE_DIRECTIVES.slice(0, n);
