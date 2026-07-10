@@ -42,6 +42,24 @@ function toast(msg, ms = 4200) {
 
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
+// Sunucu istek boyutu sinirini asmamak icin (ozellikle canli/Vercel dagitiminda) buyuk telefon
+// fotograflarini yuklemeden once tarayicida kucultur.
+async function resizeImageFile(file, maxDim = 1600, quality = 0.85) {
+  if (!file.type?.startsWith('image/') || file.type === 'image/svg+xml') return file;
+  try {
+    const bitmap = await createImageBitmap(file);
+    const scale = Math.min(1, maxDim / Math.max(bitmap.width, bitmap.height));
+    const w = Math.max(1, Math.round(bitmap.width * scale));
+    const h = Math.max(1, Math.round(bitmap.height * scale));
+    const canvas = document.createElement('canvas');
+    canvas.width = w; canvas.height = h;
+    canvas.getContext('2d').drawImage(bitmap, 0, 0, w, h);
+    const blob = await new Promise((res) => canvas.toBlob(res, 'image/jpeg', quality));
+    if (!blob || blob.size >= file.size) return file;
+    return new File([blob], file.name.replace(/\.\w+$/, '') + '.jpg', { type: 'image/jpeg' });
+  } catch { return file; }
+}
+
 /* ---------- Sekmeler ---------- */
 $$('#tabs button').forEach((b) => b.addEventListener('click', () => {
   $$('#tabs button').forEach((x) => x.classList.remove('active'));
@@ -312,8 +330,9 @@ function debounce(fn, ms) { let t; return (...a) => { clearTimeout(t); t = setTi
 
 /* ---------- Görsel Stüdyosu ---------- */
 $('#genRun').addEventListener('click', async () => {
-  const file = $('#genFile').files[0];
-  if (!file) return toast('Referans fotoğraf seçin');
+  const rawFile = $('#genFile').files[0];
+  if (!rawFile) return toast('Referans fotoğraf seçin');
+  const file = await resizeImageFile(rawFile);
   const fd = new FormData();
   fd.append('reference', file);
   fd.append('productName', $('#genName').value || file.name);
@@ -335,8 +354,9 @@ $('#genRun').addEventListener('click', async () => {
 $('#upRun').addEventListener('click', async () => {
   const files = $('#upFiles').files;
   if (!files.length) return toast('Dosya seçin');
+  const resized = await Promise.all([...files].map((f) => resizeImageFile(f)));
   const fd = new FormData();
-  [...files].forEach((f) => fd.append('files', f));
+  resized.forEach((f) => fd.append('files', f));
   fd.append('productName', $('#upName').value || files[0].name);
   $('#upStatus').textContent = '⏳ Yükleniyor...';
   try {

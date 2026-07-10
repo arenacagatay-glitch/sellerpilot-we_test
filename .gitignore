@@ -4,4 +4,6 @@ dist/
 *.local
 panel/.cache/
 panel/output/
+panel/api/_env.js
+panel/.vercel/
 .DS_Store

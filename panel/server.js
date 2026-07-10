@@ -2,6 +2,7 @@ import 'dotenv/config';
 import express from 'express';
 import multer from 'multer';
 import path from 'node:path';
+import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import * as ty from './lib/trendyol.js';
 import { generateProductImages } from './lib/openaiImages.js';
@@ -10,6 +11,26 @@ import { slugify } from './lib/slug.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
+
+// PANEL_USER/PANEL_PASSWORD tanimliysa Basic Auth ile korur (ornegin canli/Vercel dagitiminda);
+// yerel gelistirmede bu degiskenler bos oldugu icin acik kalir.
+function timingSafeEq(a, b) {
+  const bufA = Buffer.from(String(a)); const bufB = Buffer.from(String(b));
+  return bufA.length === bufB.length && crypto.timingSafeEqual(bufA, bufB);
+}
+app.use((req, res, next) => {
+  const user = process.env.PANEL_USER;
+  const pass = process.env.PANEL_PASSWORD;
+  if (!user || !pass) return next();
+  const header = req.headers.authorization || '';
+  if (header.startsWith('Basic ')) {
+    const [u, p] = Buffer.from(header.slice(6), 'base64').toString('utf8').split(':');
+    if (timingSafeEq(u || '', user) && timingSafeEq(p || '', pass)) return next();
+  }
+  res.set('WWW-Authenticate', 'Basic realm="SellerPilot Panel"');
+  res.status(401).send('Yetkisiz erisim');
+});
+
 app.use(express.json({ limit: '20mb' }));
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -172,7 +193,12 @@ app.post('/api/images/upload', upload.array('files', 10), asyncRoute(async (req,
   res.json({ images: uploaded });
 }));
 
-const port = Number(process.env.PORT || 5599);
-app.listen(port, () => {
-  console.log(`SellerPilot Panel calisiyor: http://localhost:${port}`);
-});
+export default app;
+
+// Vercel'de app.listen cagirilmaz; fonksiyon istekleri dogrudan app'e yonlendirir.
+if (!process.env.VERCEL) {
+  const port = Number(process.env.PORT || 5599);
+  app.listen(port, () => {
+    console.log(`SellerPilot Panel calisiyor: http://localhost:${port}`);
+  });
+}
