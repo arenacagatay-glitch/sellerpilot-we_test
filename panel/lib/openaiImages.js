@@ -47,13 +47,20 @@ export async function generateProductImages({
   count = 6,
   size = '1024x1536',
   quality = 'high',
+  angleIndex = null, // verilirse yalnizca o aci uretilir (serverless 504 timeout'u onlemek icin)
 }) {
   const apiKey = process.env.OPENAI_API_KEY;
   if (!apiKey) throw new Error('OPENAI_API_KEY tanimli degil (.env dosyasina ekleyin)');
   const model = process.env.OPENAI_IMAGE_MODEL || 'gpt-image-2';
 
-  const n = Math.min(Math.max(Number(count) || 6, 1), ANGLE_DIRECTIVES.length);
-  const directives = ANGLE_DIRECTIVES.slice(0, n);
+  let directives;
+  if (angleIndex !== null && angleIndex !== undefined && angleIndex !== '') {
+    const idx = Math.min(Math.max(Number(angleIndex), 0), ANGLE_DIRECTIVES.length - 1);
+    directives = [ANGLE_DIRECTIVES[idx]];
+  } else {
+    const n = Math.min(Math.max(Number(count) || 6, 1), ANGLE_DIRECTIVES.length);
+    directives = ANGLE_DIRECTIVES.slice(0, n);
+  }
 
   const results = await Promise.allSettled(
     directives.map((d) =>

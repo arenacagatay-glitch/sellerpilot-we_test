@@ -72,3 +72,11 @@ tr.changed { background: #2e2a17; }
 .lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 200; display: flex; align-items: center; justify-content: center; cursor: zoom-out; padding: 24px; }
 .lightbox.hidden { display: none; }
 .lightbox img { max-width: 92vw; max-height: 92vh; object-fit: contain; border-radius: 8px; box-shadow: 0 8px 40px rgba(0,0,0,0.6); }
+.card h4 a { color: #e8e8ee; text-decoration: none; }
+.card h4 a:hover { color: #ff6b35; text-decoration: underline; }
+td a { color: #cfd3e0; text-decoration: none; }
+td a:hover { color: #ff6b35; text-decoration: underline; }
+a.btnlink { display: inline-block; background: #262a38; color: #e8e8ee; border: 1px solid #363b4d; border-radius: 8px; padding: 4px 9px; font-size: 12px; text-decoration: none; }
+a.btnlink:hover { filter: brightness(1.15); }
+.ps-result .succ { color: #7fe0a0; }
+.ps-result .fail { color: #ff9c9c; font-size: 11px; cursor: help; }

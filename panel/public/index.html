@@ -24,7 +24,7 @@
     <!-- ÜRÜNLERİM -->
     <section id="tab-urunler" class="tab active">
       <div class="toolbar">
-        <input id="prodSearch" placeholder="Barkod ile ara..." />
+        <input id="prodSearch" placeholder="Barkod veya ürün adı ile ara..." style="min-width:240px" />
         <select id="prodApproved">
           <option value="">Tümü</option>
           <option value="true">Onaylı</option>
@@ -122,7 +122,14 @@
         </select>
         <span id="psStatus" class="muted"></span>
       </div>
-      <div class="hint">Satırda fiyat/stok değiştirin; değişen satırlar sarı işaretlenir ve topluca gönderilir.</div>
+      <div class="hint">Satırda fiyat/stok değiştirin; değişen satırlar sarı işaretlenir. Gönderdikten sonra Trendyol'un gerçekten kabul edip etmediği <b>“Durum”</b> sütununda ✓/✗ olarak görünür. Ürün adına tıklayınca Trendyol sayfası açılır.</div>
+      <div class="toolbar" style="background:#1a1d26;border:1px solid #2a2e3c;border-radius:8px;padding:8px 12px">
+        <b style="font-size:12px">🧮 Toplu fiyat:</b>
+        <input id="psBulkPct" type="number" value="10" style="width:80px" /> %
+        <button id="psBulkUp" class="small">▲ Zam yap</button>
+        <button id="psBulkDown" class="small">▼ İndirim yap</button>
+        <span class="muted" style="font-size:11px">(şu an ekranda görünen ürünlere uygulanır; göndermeden önce kontrol edin)</span>
+      </div>
       <div id="psTable"></div>
     </section>
   </main>

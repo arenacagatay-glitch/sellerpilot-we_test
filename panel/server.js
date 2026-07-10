@@ -64,6 +64,9 @@ app.get('/api/products', asyncRoute(async (req, res) => {
     content: (data.content || []).map((p) => ({
       barcode: p.barcode,
       title: p.title,
+      productUrl: p.productUrl,
+      locked: p.locked,
+      hasActiveCampaign: p.hasActiveCampaign,
       brand: p.brand,
       brandId: p.brandId,
       categoryName: p.categoryName,
@@ -166,6 +169,7 @@ app.post('/api/images/generate', upload.single('reference'), asyncRoute(async (r
     count: req.body.count,
     size: req.body.size || '1024x1536',
     quality: req.body.quality || 'high',
+    angleIndex: req.body.angleIndex,
   });
 
   const stamp = Date.now().toString(36);

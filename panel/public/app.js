@@ -86,13 +86,34 @@ $$('#tabs button').forEach((b) => b.addEventListener('click', () => {
 
 /* ---------- Ürünlerim ---------- */
 async function loadProducts(page = 0) {
+  const term = $('#prodSearch').value.trim();
+  const approved = $('#prodApproved').value;
   $('#prodInfo').textContent = 'Yükleniyor...';
   try {
+    // Arama terimi varsa: tüm sayfaları çekip barkod VEYA ürün adına göre süz (Trendyol sadece barkodla süzer).
+    if (term) {
+      const all = [];
+      let p = 0, totalPages = 1;
+      do {
+        const qs = new URLSearchParams({ page: p, size: 100 });
+        if (approved) qs.set('approved', approved);
+        const data = await api('/api/products?' + qs);
+        all.push(...data.content);
+        totalPages = data.totalPages || 1;
+        $('#prodInfo').textContent = `Aranıyor... (${all.length} ürün tarandı)`;
+        p++;
+      } while (p < totalPages && p < 30);
+      const t = term.toLocaleLowerCase('tr');
+      const found = all.filter((x) => (x.barcode || '').toLocaleLowerCase('tr').includes(t) || (x.title || '').toLocaleLowerCase('tr').includes(t));
+      state.products = found; state.page = 0; state.totalPages = 1;
+      save();
+      $('#prodInfo').textContent = `${found.length} sonuç (“${term}”)`;
+      $('#prodPage').textContent = '';
+      renderProducts();
+      return;
+    }
     const q = new URLSearchParams({ page, size: 20 });
-    const approved = $('#prodApproved').value;
-    const barcode = $('#prodSearch').value.trim();
     if (approved) q.set('approved', approved);
-    if (barcode) q.set('barcode', barcode);
     const data = await api('/api/products?' + q);
     state.page = data.page; state.totalPages = data.totalPages; state.products = data.content;
     save();
@@ -107,16 +128,19 @@ function renderProducts() {
     <div class="card">
       <img src="${esc(p.images[0] || '')}" data-full="${esc(p.images[0] || '')}" loading="lazy" onerror="this.style.visibility='hidden'" />
       <div class="body">
-        <h4>${esc(p.title)}</h4>
+        <h4>${p.productUrl ? `<a href="${esc(p.productUrl)}" target="_blank" rel="noopener" title="Trendyol'da aç">${esc(p.title)}</a>` : esc(p.title)}</h4>
         <div class="meta">
           <span class="tag ${p.approved ? 'ok' : 'no'}">${p.approved ? 'Onaylı' : 'Onaysız'}</span>
           ${p.onSale ? '<span class="tag ok">Satışta</span>' : ''}
+          ${p.hasActiveCampaign ? '<span class="tag ok">Kampanyalı</span>' : ''}
+          ${p.locked ? '<span class="tag no">Kilitli</span>' : ''}
           <br/>Barkod: <b>${esc(p.barcode)}</b> · Stok: <b>${p.quantity ?? '-'}</b> · Fiyat: <b>${p.salePrice ?? '-'} TL</b>
           <br/>${esc(p.categoryName || '')} · ${esc(p.brand || '')}
         </div>
         <div class="row">
           <button class="small primary" data-act="copy" data-bc="${esc(p.barcode)}">➕ Taslağa Kopyala</button>
           <button class="small" data-act="kombin" data-bc="${esc(p.barcode)}">🧩 Kombine Ekle</button>
+          ${p.productUrl ? `<a class="small btnlink" href="${esc(p.productUrl)}" target="_blank" rel="noopener">🔗 Trendyol'da Aç</a>` : ''}
         </div>
       </div>
     </div>`).join('') || '<div class="hint">Ürün bulunamadı. “Yükle / Yenile”ye basın.</div>';
@@ -138,6 +162,7 @@ function openLightbox(url) {
 $('#lightbox').addEventListener('click', () => $('#lightbox').classList.add('hidden'));
 
 $('#prodLoad').addEventListener('click', () => loadProducts(0));
+$('#prodSearch').addEventListener('keydown', (e) => { if (e.key === 'Enter') loadProducts(0); });
 $('#prodPrev').addEventListener('click', () => state.page > 0 && loadProducts(state.page - 1));
 $('#prodNext').addEventListener('click', () => state.page < state.totalPages - 1 && loadProducts(state.page + 1));
 
@@ -345,21 +370,38 @@ $('#genRun').addEventListener('click', async () => {
   const rawFile = $('#genFile').files[0];
   if (!rawFile) return toast('Referans fotoğraf seçin');
   const file = await resizeImageFile(rawFile);
-  const fd = new FormData();
-  fd.append('reference', file);
-  fd.append('productName', $('#genName').value || file.name);
-  fd.append('prompt', $('#genPrompt').value);
-  fd.append('count', $('#genCount').value);
-  fd.append('quality', $('#genQuality').value);
-  fd.append('size', $('#genSize').value);
-  $('#genStatus').textContent = `⏳ ${$('#genCount').value} görsel üretiliyor (1-2 dk sürebilir)...`;
+  const count = Number($('#genCount').value) || 6;
+  const productName = $('#genName').value || file.name;
+  const prompt = $('#genPrompt').value;
+  const quality = $('#genQuality').value;
+  const size = $('#genSize').value;
+
   $('#genRun').disabled = true;
-  try {
-    const data = await api('/api/images/generate', { method: 'POST', body: fd });
-    data.images.forEach((im) => state.gallery.unshift({ url: im.url, angle: im.angle, at: Date.now() }));
-    save(); renderGallery();
-    $('#genStatus').textContent = `✅ ${data.images.length} görsel üretildi ve yayınlandı.` + (data.warnings?.length ? ` (${data.warnings.length} açı başarısız)` : '');
-  } catch (e) { $('#genStatus').textContent = '❌ ' + e.message; }
+  let ok = 0;
+  const fails = [];
+  // Her açı AYRI istek: serverless 60sn limitine takılmamak için (tek istekte 6 görsel = 504 timeout).
+  for (let i = 0; i < count; i++) {
+    $('#genStatus').textContent = `⏳ Görsel üretiliyor... (${i + 1}/${count}) — üretilenler aşağıda birikir`;
+    const fd = new FormData();
+    fd.append('reference', file);
+    fd.append('productName', productName);
+    fd.append('prompt', prompt);
+    fd.append('quality', quality);
+    fd.append('size', size);
+    fd.append('angleIndex', String(i));
+    try {
+      const data = await api('/api/images/generate', { method: 'POST', body: fd });
+      (data.images || []).forEach((im) => state.gallery.unshift({ url: im.url, angle: im.angle, at: Date.now() }));
+      if (data.images && data.images.length) { ok++; save(); renderGallery(); }
+      else fails.push(`#${i + 1}`);
+    } catch (e) {
+      fails.push(`#${i + 1}: ${e.message}`);
+      $('#genStatus').textContent = `⚠️ ${ok} üretildi, ${i + 1}. görselde hata: ${e.message} — devam ediliyor...`;
+    }
+  }
+  $('#genStatus').textContent = fails.length
+    ? `⚠️ ${ok}/${count} görsel üretildi. Başarısız: ${fails.length}. (Tekrar basınca eksikler tamamlanmaya çalışılır.)`
+    : `✅ ${ok} görsel üretildi ve yayınlandı.`;
   $('#genRun').disabled = false;
 });
 
@@ -502,26 +544,33 @@ $('#psLoad').addEventListener('click', async () => {
       $('#psStatus').textContent = `Yükleniyor... (${page + 1}/${totalPages} sayfa, ${all.length} ürün)`;
       page++;
     } while (page < totalPages);
-    psRows = all.map((p) => ({ barcode: p.barcode, title: p.title, quantity: p.quantity, salePrice: p.salePrice, listPrice: p.listPrice, changed: false }));
+    psRows = all.map((p) => ({ barcode: p.barcode, title: p.title, quantity: p.quantity, salePrice: p.salePrice, listPrice: p.listPrice, productUrl: p.productUrl, locked: p.locked, hasActiveCampaign: p.hasActiveCampaign, changed: false }));
     savePsRows();
     $('#psStatus').textContent = `${psRows.length} ürün yüklendi (tümü)`;
     renderPs();
   } catch (e) { $('#psStatus').textContent = '❌ ' + e.message; }
 });
 
-function renderPs() {
+function psFiltered() {
   const q = $('#psSearch').value.trim().toLocaleLowerCase('tr');
   const stockFilter = $('#psStockFilter').value;
   let rows = psRows;
   if (q) rows = rows.filter((r) => (r.barcode || '').toLocaleLowerCase('tr').includes(q) || (r.title || '').toLocaleLowerCase('tr').includes(q));
   if (stockFilter === 'in') rows = rows.filter((r) => Number(r.quantity) > 0);
   else if (stockFilter === 'out') rows = rows.filter((r) => !Number(r.quantity));
-  $('#psTable').innerHTML = `<table><thead><tr><th>Barkod</th><th>Ürün</th><th>Stok</th><th>Satış ₺</th><th>Liste ₺</th></tr></thead><tbody>` +
+  return rows;
+}
+
+function renderPs() {
+  const rows = psFiltered();
+  $('#psTable').innerHTML = `<table><thead><tr><th>Barkod</th><th>Ürün</th><th>Stok</th><th>Satış ₺</th><th>Liste ₺</th><th>Durum</th></tr></thead><tbody>` +
     rows.map((r) => `<tr class="${r.changed ? 'changed' : ''}">
-      <td>${esc(r.barcode)}</td><td>${esc((r.title || '').slice(0, 60))}</td>
+      <td>${esc(r.barcode)}</td>
+      <td>${r.productUrl ? `<a href="${esc(r.productUrl)}" target="_blank" rel="noopener">${esc((r.title || '').slice(0, 55))}</a>` : esc((r.title || '').slice(0, 55))}${r.locked ? ' <span class="tag no">Kilitli</span>' : ''}${r.hasActiveCampaign ? ' <span class="tag ok">Kampanyalı</span>' : ''}</td>
       <td><input type="number" data-bc="${esc(r.barcode)}" data-k="quantity" value="${r.quantity ?? ''}" /></td>
       <td><input type="number" step="0.01" data-bc="${esc(r.barcode)}" data-k="salePrice" value="${r.salePrice ?? ''}" /></td>
       <td><input type="number" step="0.01" data-bc="${esc(r.barcode)}" data-k="listPrice" value="${r.listPrice ?? ''}" /></td>
+      <td class="ps-result" data-bc="${esc(r.barcode)}">${r.result ? (r.result.ok ? '<span class="succ">✓</span>' : `<span class="fail" title="${esc(r.result.msg || '')}">✗ ${esc((r.result.msg || 'hata').slice(0, 40))}</span>`) : ''}</td>
     </tr>`).join('') + '</tbody></table>' + (rows.length === 0 ? '<div class="hint">Aramanızla eşleşen ürün yok.</div>' : '');
   $$('#psTable input').forEach((inp) => inp.addEventListener('change', () => {
     const r = psRows.find((x) => x.barcode === inp.dataset.bc);
@@ -536,6 +585,28 @@ function renderPs() {
 $('#psSearch').addEventListener('input', debounce(() => renderPs(), 150));
 $('#psStockFilter').addEventListener('change', () => renderPs());
 
+function psBulkApply(dir) {
+  const pct = Number($('#psBulkPct').value || 0);
+  if (!pct) return toast('Yüzde girin');
+  const rows = psFiltered();
+  if (!rows.length) return toast('Uygulanacak ürün yok');
+  const factor = 1 + (dir * pct) / 100;
+  const round2 = (n) => Math.round(Number(n) * factor * 100) / 100;
+  rows.forEach((r) => {
+    if (r.salePrice != null) r.salePrice = round2(r.salePrice);
+    if (r.listPrice != null) r.listPrice = round2(r.listPrice);
+    r.changed = true;
+    r.result = null;
+  });
+  savePsRows();
+  renderPs();
+  toast(`${rows.length} ürüne %${pct} ${dir > 0 ? 'zam' : 'indirim'} uygulandı — göndermeden kontrol edin.`);
+}
+$('#psBulkUp').addEventListener('click', () => psBulkApply(1));
+$('#psBulkDown').addEventListener('click', () => psBulkApply(-1));
+
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
 $('#psSend').addEventListener('click', async () => {
   const changed = psRows.filter((r) => r.changed);
   if (!changed.length) return toast('Değişiklik yok');
@@ -544,10 +615,37 @@ $('#psSend').addEventListener('click', async () => {
   try {
     const items = changed.map((r) => ({ barcode: r.barcode, quantity: Number(r.quantity), salePrice: Number(r.salePrice), listPrice: Number(r.listPrice) }));
     const res = await api('/api/price-stock', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ items }) });
-    $('#psStatus').textContent = `✅ Gönderildi. Batch: ${res.batchRequestId || JSON.stringify(res)}`;
-    changed.forEach((r) => (r.changed = false));
+    const batchId = res.batchRequestId;
+    if (!batchId) { $('#psStatus').textContent = '⚠️ Trendyol batch numarası dönmedi: ' + JSON.stringify(res); return; }
+
+    // Trendyol guncellemeyi kuyruga alir; sonucu birkac kez sorgulayip gercekten islenip islenmedigini gosteririz.
+    $('#psStatus').textContent = `⏳ Gönderildi (${batchId}). Trendyol işliyor, sonuç bekleniyor...`;
+    let statusData = null;
+    for (let attempt = 0; attempt < 8; attempt++) {
+      await sleep(attempt === 0 ? 3000 : 4000);
+      try {
+        statusData = await api('/api/batch/' + encodeURIComponent(batchId));
+        if (statusData && (statusData.status === 'COMPLETED' || (statusData.items && statusData.items.length))) break;
+      } catch { /* tekrar dene */ }
+    }
+
+    const bItems = (statusData && statusData.items) || [];
+    const byBarcode = {};
+    bItems.forEach((it) => {
+      const bc = it.requestItem?.barcode || it.requestItem?.product?.barcode;
+      if (bc) byBarcode[bc] = it;
+    });
+    let ok = 0, fail = 0;
+    changed.forEach((r) => {
+      const it = byBarcode[r.barcode];
+      if (it && it.status === 'SUCCESS') { r.result = { ok: true }; r.changed = false; ok++; }
+      else if (it && it.status === 'FAILED') { r.result = { ok: false, msg: (it.failureReasons || []).join(', ') || 'Trendyol reddetti' }; fail++; }
+      else { r.result = { ok: false, msg: 'sonuç alınamadı (Trendyol hâlâ işliyor olabilir)' }; }
+    });
     savePsRows();
     renderPs();
+    if (fail === 0 && ok === changed.length) $('#psStatus').textContent = `✅ ${ok} ürün gerçekten güncellendi.`;
+    else $('#psStatus').textContent = `⚠️ ${ok} başarılı, ${fail} başarısız. "Durum" sütununa bakın (kırmızı ✗ üstüne gelince sebep görünür).`;
   } catch (e) { $('#psStatus').textContent = '❌ ' + e.message; }
 });
 
