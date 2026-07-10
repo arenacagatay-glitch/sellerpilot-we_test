@@ -1,0 +1,18 @@
+{
+  "name": "sellerpilot-panel",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "SellerPilot Operasyon Paneli - Trendyol urun/varyasyon yukleme + AI gorsel studyosu",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "multer": "^1.4.5-lts.1"
+  }
+}

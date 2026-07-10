@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SellerPilot Panel — Trendyol Ürün Operasyonu</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <div class="brand">🚀 SellerPilot <span>Panel</span></div>
+    <nav id="tabs">
+      <button data-tab="urunler" class="active">Ürünlerim</button>
+      <button data-tab="taslaklar">Varyasyon Kurgusu <span id="draftCount" class="pill">0</span></button>
+      <button data-tab="studyo">Görsel Stüdyosu</button>
+      <button data-tab="gonder">Trendyol'a Gönder</button>
+      <button data-tab="fiyatstok">Fiyat &amp; Stok</button>
+    </nav>
+    <div id="configBadges" class="badges"></div>
+  </header>
+
+  <main>
+    <!-- ÜRÜNLERİM -->
+    <section id="tab-urunler" class="tab active">
+      <div class="toolbar">
+        <input id="prodSearch" placeholder="Barkod ile ara..." />
+        <select id="prodApproved">
+          <option value="">Tümü</option>
+          <option value="true">Onaylı</option>
+          <option value="false">Onaysız</option>
+        </select>
+        <button id="prodLoad" class="primary">Yükle / Yenile</button>
+        <span id="prodInfo" class="muted"></span>
+      </div>
+      <div class="hint">Bir ürünü <b>“Taslağa Kopyala”</b> ile çoğaltıp varyasyon yapabilir, <b>“Kombine Ekle”</b> ile 2-3 ürünü tek sette birleştirebilirsiniz.</div>
+      <div id="kombinBar" class="kombin-bar hidden">
+        <span id="kombinList"></span>
+        <input id="kombinIndirim" type="number" value="10" min="0" max="90" style="width:70px" title="Set indirimi %" /> % set indirimi
+        <button id="kombinYap" class="primary">Kombin Oluştur</button>
+        <button id="kombinTemizle">Temizle</button>
+      </div>
+      <div id="prodList" class="cards"></div>
+      <div class="toolbar">
+        <button id="prodPrev">◀ Önceki</button>
+        <span id="prodPage" class="muted"></span>
+        <button id="prodNext">Sonraki ▶</button>
+      </div>
+    </section>
+
+    <!-- VARYASYON KURGUSU -->
+    <section id="tab-taslaklar" class="tab">
+      <div class="toolbar">
+        <button id="draftClear" class="danger">Tüm Taslakları Sil</button>
+        <span class="muted">Taslaklar tarayıcınızda saklanır; “Trendyol'a Gönder” sekmesinden yüklenir.</span>
+      </div>
+      <div id="draftList" class="drafts"></div>
+    </section>
+
+    <!-- GÖRSEL STÜDYOSU -->
+    <section id="tab-studyo" class="tab">
+      <div class="panel-grid">
+        <div class="box">
+          <h3>🎨 Yapay Zekâ ile Üret (referans fotoğraftan)</h3>
+          <label>Referans ürün fotoğrafı <input type="file" id="genFile" accept="image/*" /></label>
+          <label>Ürün adı (dosya adları için) <input id="genName" placeholder="cosmolive intim jel 300ml" /></label>
+          <label>Ek yönlendirme (opsiyonel) <input id="genPrompt" placeholder="ör: lavanta temalı, pastel arka plan" /></label>
+          <div class="row">
+            <label>Adet
+              <select id="genCount"><option>4</option><option selected>6</option><option>8</option></select>
+            </label>
+            <label>Kalite
+              <select id="genQuality">
+                <option value="medium">Orta (~0,06$/görsel)</option>
+                <option value="high" selected>Yüksek (~0,25$/görsel)</option>
+              </select>
+            </label>
+            <label>Boyut
+              <select id="genSize">
+                <option value="1024x1536" selected>Dikey 1024x1536 (Trendyol)</option>
+                <option value="1024x1024">Kare 1024x1024</option>
+              </select>
+            </label>
+          </div>
+          <button id="genRun" class="primary">Görselleri Üret ve Yayınla</button>
+          <div id="genStatus" class="muted"></div>
+        </div>
+        <div class="box">
+          <h3>📤 Kendi Görsellerini Yükle</h3>
+          <label>Dosyalar (en fazla 10) <input type="file" id="upFiles" accept="image/*" multiple /></label>
+          <label>Ürün adı (dosya adları için) <input id="upName" placeholder="urun adi" /></label>
+          <button id="upRun" class="primary">Yükle ve URL Al</button>
+          <div id="upStatus" class="muted"></div>
+        </div>
+      </div>
+      <h3>🖼 Galeri (yayınlanan görseller)</h3>
+      <div class="toolbar"><button id="galleryClear">Galeri listesini temizle</button><span class="muted">Görseller Supabase'de kalır; sadece liste temizlenir.</span></div>
+      <div id="gallery" class="gallery"></div>
+    </section>
+
+    <!-- GÖNDER -->
+    <section id="tab-gonder" class="tab">
+      <div class="toolbar">
+        <button id="sendAll" class="primary">🚀 Tüm Taslakları Trendyol'a Gönder</button>
+        <span id="sendStatus" class="muted"></span>
+      </div>
+      <div id="sendValidation"></div>
+      <h3>📦 Gönderim Geçmişi (Batch Takibi)</h3>
+      <div id="batchList"></div>
+    </section>
+
+    <!-- FİYAT & STOK -->
+    <section id="tab-fiyatstok" class="tab">
+      <div class="toolbar">
+        <button id="psLoad" class="primary">Ürünleri Getir</button>
+        <button id="psSend" class="danger">Değişiklikleri Trendyol'a Gönder</button>
+        <span id="psStatus" class="muted"></span>
+      </div>
+      <div class="hint">Satırda fiyat/stok değiştirin; değişen satırlar sarı işaretlenir ve topluca gönderilir.</div>
+      <div id="psTable"></div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast hidden"></div>
+  <script src="app.js"></script>
+</body>
+</html>
