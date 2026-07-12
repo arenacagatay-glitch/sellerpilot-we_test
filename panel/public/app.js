@@ -252,7 +252,7 @@ function renderDrafts() {
   const wrap = $('#draftList');
   wrap.innerHTML = state.drafts.map((d, i) => `
     <div class="draft" data-id="${d.id}">
-      <h4>#${i + 1} · ${esc(d.title)} <span class="muted">(${esc(d.barcode)})</span></h4>
+      <h4>#${i + 1} · ${esc(d.title)} <span class="muted">(${esc(d.barcode)})</span>${d.setSize ? ` <span class="tag ok">${d.setSize}'li set</span>` : ''}${d.copySource ? ` <span class="tag ${d.copySource === 'openai' ? 'ok' : 'no'}">${d.copySource === 'openai' ? '🤖 AI metni' : '⚙️ Otomatik metin'}</span>` : ''}</h4>
       <div class="grid2">
         ${F.map(([k, label]) => `<label>${label}<input data-f="${k}" value="${esc(d[k])}" /></label>`).join('')}
         <label>Kategori Ara<input data-f="_catSearch" placeholder="${esc(d.categoryName || 'kategori adı yazın')}" list="catlist-${d.id}" /><datalist id="catlist-${d.id}"></datalist></label>
@@ -389,20 +389,27 @@ $('#comboSuggest').addEventListener('click', async () => {
   const q = $('#comboKeyword').value.trim();
   if (!q) return toast('Arama kelimesi girin (ör: kadın parfüm)');
   const exclude = $('#comboExclude').value.trim();
-  const count = Number($('#comboCount').value) || 4;
+  const count2 = Number($('#comboCount2').value) || 0;
+  const count3 = Number($('#comboCount3').value) || 0;
+  const count4 = Number($('#comboCount4').value) || 0;
   const discount = Number($('#comboDiscount').value) || 12;
-  $('#comboStatus').textContent = '⏳ Ürünler taranıyor, kombinler oluşturuluyor...';
+  if (!count2 && !count3 && !count4) return toast('En az bir set boyutu için adet girin (2li/3lü/4lü)');
+  $('#comboStatus').textContent = '⏳ Ürünler taranıyor, başlık/açıklama yazılıyor...';
   try {
-    const qs = new URLSearchParams({ q, count, discount });
+    const qs = new URLSearchParams({ q, count2, count3, count4, discount });
     if (exclude) qs.set('exclude', exclude);
     const data = await api('/api/combo-suggestions?' + qs);
     if (!data.combos.length) {
-      $('#comboStatus').textContent = `⚠️ "${q}" için uygun ürün bulunamadı (${data.candidates} aday tarandı, stoklu+onaylı olmalı).`;
+      $('#comboStatus').textContent = `⚠️ "${q}" için uygun ürün bulunamadı (${data.candidates} aday tarandı, stoklu+onaylı olmalı, en az 2 gerekli).`;
       return;
     }
     data.combos.forEach((c) => state.drafts.push(c));
     save(); renderDrafts();
-    $('#comboStatus').textContent = `✅ ${data.combos.length} kombin taslağı oluşturuldu (${data.candidates} aday arasından). Görselsiz — fotoğrafları siz ekleyeceksiniz.`;
+    const bySize = {};
+    data.combos.forEach((c) => { bySize[c.setSize] = (bySize[c.setSize] || 0) + 1; });
+    const sizeLine = Object.keys(bySize).sort().map((k) => `${bySize[k]} adet ${k}'li`).join(', ');
+    const aiUsed = data.combos.some((c) => c.copySource === 'openai');
+    $('#comboStatus').textContent = `✅ ${data.combos.length} kombin taslağı oluşturuldu (${sizeLine} — ${data.candidates} aday arasından). Başlık/açıklama ${aiUsed ? 'AI ile' : 'otomatik algoritmayla'} yazıldı. Görselsiz — fotoğrafları siz ekleyeceksiniz.`;
     toast(`${data.combos.length} yeni kombin taslağı eklendi (aşağıda). Fotoğrafları ekleyip "Trendyol'a Gönder"e basabilirsiniz.`);
   } catch (e) { $('#comboStatus').textContent = '❌ ' + e.message; }
 });

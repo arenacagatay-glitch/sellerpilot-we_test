@@ -8,6 +8,7 @@ import * as ty from './lib/trendyol.js';
 import { generateProductImages } from './lib/openaiImages.js';
 import { uploadImage, isConfigured as storageConfigured } from './lib/storage.js';
 import { slugify } from './lib/slug.js';
+import { composeCopy } from './lib/copywriter.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -158,25 +159,35 @@ app.post('/api/price-stock', asyncRoute(async (req, res) => {
 }));
 
 // ---- Otomatik kombin onerisi ----
-// Bir arama kelimesine gore (ornegin "kadin parfum") stoklu/onayli urunleri ikili
-// eslestirip baslik+aciklama hazir, GORSELSIZ taslak dondurur. Gorseller kullanici
-// tarafindan sonradan eklenir; hicbir Trendyol yazma islemi yapilmaz (sadece okuma).
-function buildCombo(parts, discount) {
+// Bir arama kelimesine gore (ornegin "kadin parfum") stoklu/onayli urunleri 2'li/3'lu/4'lu
+// gruplayip baslik+aciklama (AI varsa AI, yoksa akilli algoritma) ile GORSELSIZ taslak
+// dondurur. Gorseller kullanici tarafindan sonradan eklenir; hicbir Trendyol yazma
+// islemi yapilmaz (sadece okuma).
+async function buildCombo(parts, discount) {
+  const mothersDay = parts.length >= 3;
+  const { title, description, source } = await composeCopy(parts, { mothersDay });
+
+  // Barkod <=40 karakter olmali (Trendyol siniri): stamp (8 kar.) + tire icin pay birakip
+  // urun sayisina gore her parcadan alinacak karakter sayisini kucult.
   const stamp = Date.now().toString(36).slice(-5) + Math.random().toString(36).slice(2, 5);
+  const perLen = Math.max(3, Math.floor((31 - 4 - (parts.length - 1)) / parts.length));
+  const base = ('SET-' + parts.map((p) => p.barcode.slice(0, perLen)).join('-')).slice(0, 31);
+  const barcode = base + '-' + stamp;
+
   const list = parts.reduce((t, p) => t + Number(p.listPrice || p.salePrice || 0), 0);
   const sale = Math.round(parts.reduce((t, p) => t + Number(p.salePrice || 0), 0) * (1 - discount / 100) * 100) / 100;
-  const barcode = ('SET-' + parts.map((p) => p.barcode.slice(0, 10)).join('-')).slice(0, 34) + '-' + stamp;
+
   return {
     id: crypto.randomUUID(),
     barcode,
-    title: (parts.map((p) => p.title.split(' ').slice(0, 4).join(' ')).join(' + ') + ` ${parts.length}'li Set`).slice(0, 100),
+    title,
     productMainId: barcode,
     brandId: parts[0].brandId, brandName: parts[0].brand,
     categoryId: parts[0].pimCategoryId || '', categoryName: parts[0].categoryName || '',
     quantity: Math.min(...parts.map((p) => Number(p.quantity || 0))),
     stockCode: barcode,
     dimensionalWeight: parts.reduce((t, p) => t + Number(p.dimensionalWeight || 1), 0),
-    description: parts.map((p) => `<h3>${p.title}</h3>` + (p.description || '')).join('<hr/>').slice(0, 29000),
+    description,
     currencyType: 'TRY',
     listPrice: Math.max(list, sale), salePrice: sale,
     vatRate: parts[0].vatRate ?? 20,
@@ -185,6 +196,8 @@ function buildCombo(parts, discount) {
       ? { attributeId: a.attributeId, attributeValueId: a.attributeValueId, attributeName: a.attributeName, attributeValue: a.attributeValue }
       : { attributeId: a.attributeId, customAttributeValue: a.attributeValue, attributeName: a.attributeName, attributeValue: a.attributeValue })),
     sourceProducts: parts.map((p) => ({ barcode: p.barcode, title: p.title })),
+    setSize: parts.length,
+    copySource: source,
   };
 }
 
@@ -192,8 +205,10 @@ app.get('/api/combo-suggestions', asyncRoute(async (req, res) => {
   const keyword = String(req.query.q || '').trim().toLocaleLowerCase('tr');
   if (!keyword) return res.status(400).json({ error: 'q (arama kelimesi) gerekli' });
   const exclude = String(req.query.exclude || '').toLocaleLowerCase('tr').split(',').map((s) => s.trim()).filter(Boolean);
-  const count = Math.min(Math.max(Number(req.query.count) || 4, 1), 20);
   const discount = Math.min(Math.max(Number(req.query.discount) || 12, 0), 50);
+  const count2 = Math.min(Math.max(Number(req.query.count2) || 0, 0), 20);
+  const count3 = Math.min(Math.max(Number(req.query.count3) || 0, 0), 20);
+  const count4 = Math.min(Math.max(Number(req.query.count4) || 0, 0), 20);
 
   const all = [];
   let page = 0, totalPages = 1;
@@ -217,17 +232,26 @@ app.get('/api/combo-suggestions', asyncRoute(async (req, res) => {
     return true;
   });
 
-  const shuffled = [...candidates].sort(() => Math.random() - 0.5);
-  const used = new Set();
-  const combos = [];
-  for (let i = 0; i < shuffled.length && combos.length < count; i++) {
-    const a = shuffled[i];
-    if (used.has(a.barcode)) continue;
-    const partner = shuffled.slice(i + 1).find((b) => !used.has(b.barcode) && b.barcode !== a.barcode);
-    if (!partner) continue;
-    used.add(a.barcode); used.add(partner.barcode);
-    combos.push(buildCombo([a, partner], discount));
+  if (candidates.length < 2) return res.json({ candidates: candidates.length, combos: [] });
+
+  // Ayni urun farkli kombinlerde tekrar kullanilabilir (ör. Hurrem hem bir 2'li hem bir 3'lu
+  // sette olabilir); sadece TAMAMEN AYNI urun grubunun iki kez cikmasini engelliyoruz.
+  const seen = new Set();
+  function pickGroup(size) {
+    if (candidates.length < size) return null;
+    for (let attempt = 0; attempt < 20; attempt++) {
+      const shuffled = [...candidates].sort(() => Math.random() - 0.5).slice(0, size);
+      const sig = shuffled.map((p) => p.barcode).sort().join('|');
+      if (!seen.has(sig)) { seen.add(sig); return shuffled; }
+    }
+    return null;
   }
+
+  const plan = [...Array(count2).fill(2), ...Array(count3).fill(3), ...Array(count4).fill(4)];
+  const groups = plan.map((size) => pickGroup(size)).filter(Boolean);
+
+  // Baslik/aciklama yazimi (AI kullanilirsa istekler) paralel calisir, boylece toplam sure uzamaz.
+  const combos = await Promise.all(groups.map((g) => buildCombo(g, discount)));
 
   res.json({ candidates: candidates.length, combos });
 }));

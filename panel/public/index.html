@@ -58,11 +58,13 @@
         <b style="font-size:12px">🧩 Otomatik Kombin Öner:</b>
         <input id="comboKeyword" value="kadın parfüm" style="min-width:160px" placeholder="ör: kadın parfüm" />
         <input id="comboExclude" value="erkek, unisex" style="min-width:150px" placeholder="hariç tut (virgülle)" />
-        <label style="display:flex;align-items:center;gap:4px;font-size:12px">Adet <input id="comboCount" type="number" value="4" min="1" max="20" style="width:60px" /></label>
+        <label style="display:flex;align-items:center;gap:4px;font-size:12px">2'li <input id="comboCount2" type="number" value="5" min="0" max="20" style="width:50px" /></label>
+        <label style="display:flex;align-items:center;gap:4px;font-size:12px">3'lü <input id="comboCount3" type="number" value="4" min="0" max="20" style="width:50px" /></label>
+        <label style="display:flex;align-items:center;gap:4px;font-size:12px">4'lü <input id="comboCount4" type="number" value="4" min="0" max="20" style="width:50px" /></label>
         <label style="display:flex;align-items:center;gap:4px;font-size:12px">Set indirimi % <input id="comboDiscount" type="number" value="12" min="0" max="50" style="width:60px" /></label>
         <button id="comboSuggest" class="primary small">🧩 Kombin Taslakları Oluştur</button>
       </div>
-      <div class="hint">Girdiğiniz kelimeye göre (kategori/başlık içinde arar) stoklu ve onaylı ürünleri ikişerli eşleştirip başlık+açıklama hazır, <b>görselsiz</b> taslak oluşturur. Siz fotoğrafları ekleyip “Trendyol'a Gönder” ile onaya yollarsınız.</div>
+      <div class="hint">Girdiğiniz kelimeye göre (kategori/başlık içinde arar) stoklu ve onaylı ürünleri 2'li/3'lü/4'lü gruplayıp <b>görselsiz</b> taslak oluşturur. Başlık (100 karakter sınırı) ve açıklama; OpenAI anahtarı tanımlıysa AI ile, tanımlı değilse akıllı bir algoritmayla gerçek ürün verinizden yazılır. 3'lü ve 4'lü setlerde başlıkta otomatik "Anneler Günü Hediyesi" teması kullanılır. Siz fotoğrafları ekleyip “Trendyol'a Gönder” ile onaya yollarsınız.</div>
       <div id="comboStatus" class="muted"></div>
       <div id="draftList" class="drafts"></div>
     </section>
