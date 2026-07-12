@@ -5,6 +5,7 @@ import {
   MessageSquare, Sparkles, ArrowRight, Star, TrendingUp, Zap as ZapIcon
 } from 'lucide-react';
 import { CHAT_EXAMPLES, FAQ_ITEMS, FEATURES, NAV_LINKS, STAT_CARDS, STEPS, WHATSAPP_URL, APP_URL } from './constants';
+import AdminPanel from './AdminPanel';
 
 // ────────────────────────────────────────────────
 // CSS animations injected once
@@ -770,6 +771,8 @@ const Footer = () => (
             <a href="#" className="hover:text-white transition-colors">Gizlilik Politikası</a>
             <span className="text-gray-700">|</span>
             <a href="#" className="hover:text-white transition-colors">Kullanım Koşulları</a>
+            <span className="text-gray-700">|</span>
+            <a href="#admin" className="hover:text-white transition-colors">Yönetim Paneli</a>
           </div>
         </div>
       </div>
@@ -801,7 +804,20 @@ const FloatingWhatsApp = () => {
 // ────────────────────────────────────────────────
 // App
 // ────────────────────────────────────────────────
-const App = () => (
+// Basit hash tabanlı yönlendirme: #admin -> Admin paneli, aksi halde site.
+function useHashRoute() {
+  const [hash, setHash] = useState<string>(
+    typeof window !== 'undefined' ? window.location.hash : ''
+  );
+  useEffect(() => {
+    const fn = () => setHash(window.location.hash);
+    window.addEventListener('hashchange', fn);
+    return () => window.removeEventListener('hashchange', fn);
+  }, []);
+  return hash;
+}
+
+const LandingPage = () => (
   <div className="min-h-screen bg-white font-sans text-dark antialiased">
     <GlobalStyles />
     <Header />
@@ -822,5 +838,18 @@ const App = () => (
     <FloatingWhatsApp />
   </div>
 );
+
+const App = () => {
+  const hash = useHashRoute();
+  // #admin veya #admin/... -> yönetim paneli
+  if (hash.replace(/^#\/?/, '').toLowerCase().startsWith('admin')) {
+    return (
+      <div className="font-sans text-dark antialiased">
+        <AdminPanel />
+      </div>
+    );
+  }
+  return <LandingPage />;
+};
 
 export default App;

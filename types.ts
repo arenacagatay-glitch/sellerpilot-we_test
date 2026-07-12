@@ -36,3 +36,13 @@ export interface StatCard {
   imageUrl: string;
   iconLabel: string;
 }
+
+// Admin panelinde gösterilen tek bir talep / konuşma satırı.
+// Google Sheet'teki bir satıra karşılık gelir.
+export interface Lead {
+  name: string;
+  email: string;
+  phone: string;
+  date: string;
+  status: string;
+}

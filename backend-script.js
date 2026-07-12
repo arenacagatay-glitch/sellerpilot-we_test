@@ -81,6 +81,64 @@ function doPost(e) {
   }
 }
 
+// ─────────────────────────────────────────────────────────────
+// ADMIN PANELİ İÇİN: Talepleri okuyup JSON olarak döndürür.
+// Telefonda #admin ekranı bu fonksiyondan veri çeker.
+// Tarayıcı CORS engeline takılmamak için JSONP (callback) destekler:
+//   ...exec?callback=fn   -> fn([...]) döner
+//   ...exec               -> düz JSON döner
+// ─────────────────────────────────────────────────────────────
+function doGet(e) {
+  try {
+    var doc = SpreadsheetApp.openById("14Utuv-uzIrtdEaU31b_7zusCzLas-9oXjhVDS7HMM-Y");
+    var sheet = doc.getSheetByName("Sheet1");
+
+    var rows = sheet.getDataRange().getValues(); // [name, email, phone, date, status]
+    var leads = [];
+    for (var i = 0; i < rows.length; i++) {
+      var r = rows[i];
+      // Başlık satırını atla (ilk sütunda "İsim"/"name" gibi bir başlık varsa)
+      if (i === 0 && String(r[0]).toLowerCase().indexOf("isim") === -1 &&
+          String(r[0]).toLowerCase().indexOf("name") === -1 && r[1] === "email") {
+        // no-op
+      }
+      if (!r[0] && !r[1] && !r[2]) continue; // boş satırları atla
+      leads.push({
+        name:   r[0] ? String(r[0]) : "İsimsiz",
+        email:  r[1] ? String(r[1]) : "",
+        phone:  r[2] ? String(r[2]) : "",
+        date:   r[3] ? String(r[3]) : "",
+        status: r[4] ? String(r[4]) : ""
+      });
+    }
+
+    // En yeni talep en üstte olsun
+    leads.reverse();
+
+    var payload = JSON.stringify(leads);
+    var callback = e && e.parameter ? e.parameter.callback : null;
+
+    if (callback) {
+      return ContentService
+        .createTextOutput(callback + "(" + payload + ")")
+        .setMimeType(ContentService.MimeType.JAVASCRIPT);
+    }
+    return ContentService
+      .createTextOutput(payload)
+      .setMimeType(ContentService.MimeType.JSON);
+
+  } catch (err) {
+    var errPayload = JSON.stringify({ result: "error", error: err.toString() });
+    var cb = e && e.parameter ? e.parameter.callback : null;
+    if (cb) {
+      return ContentService.createTextOutput(cb + "(" + errPayload + ")")
+        .setMimeType(ContentService.MimeType.JAVASCRIPT);
+    }
+    return ContentService.createTextOutput(errPayload)
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}
+
 // İZİN VERMEK İÇİN ÖNCE BUNU ÇALIŞTIR
 function testSetup() {
   MailApp.sendEmail({
