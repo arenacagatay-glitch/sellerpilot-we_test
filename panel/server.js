@@ -1,4 +1,5 @@
 import 'dotenv/config';
+import './api/_env.js';
 import express from 'express';
 import multer from 'multer';
 import path from 'node:path';
@@ -8,7 +9,7 @@ import * as ty from './lib/trendyol.js';
 import { generateProductImages } from './lib/openaiImages.js';
 import { uploadImage, isConfigured as storageConfigured } from './lib/storage.js';
 import { slugify } from './lib/slug.js';
-import { composeCopy } from './lib/copywriter.js';
+import { composeCopy, distinctiveBigrams } from './lib/copywriter.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -163,7 +164,7 @@ app.post('/api/price-stock', asyncRoute(async (req, res) => {
 // gruplayip baslik+aciklama (AI varsa AI, yoksa akilli algoritma) ile GORSELSIZ taslak
 // dondurur. Gorseller kullanici tarafindan sonradan eklenir; hicbir Trendyol yazma
 // islemi yapilmaz (sadece okuma).
-async function buildCombo(parts, discount) {
+async function buildCombo(parts, discount, matchType) {
   const mothersDay = parts.length >= 3;
   const { title, description, source } = await composeCopy(parts, { mothersDay });
 
@@ -198,17 +199,81 @@ async function buildCombo(parts, discount) {
     sourceProducts: parts.map((p) => ({ barcode: p.barcode, title: p.title })),
     setSize: parts.length,
     copySource: source,
+    matchType: matchType || 'kategori-ici',
   };
 }
 
+// Baslikta gecen 2 kelimelik ozel isim benzeri ifadeleri (or. "Cotton Island") paylasan,
+// FARKLI kategorilerdeki urunleri "aile" olarak grupluyor (ornegin parfum + ayni isimli
+// vucut spreyi). Tekli kelimeye gore cok daha az tesaduf eslesme uretir.
+function buildFamilyGroups(candidates) {
+  const byBigram = new Map();
+  candidates.forEach((p) => {
+    distinctiveBigrams(p.title).forEach((bg) => {
+      if (!byBigram.has(bg)) byBigram.set(bg, []);
+      const arr = byBigram.get(bg);
+      if (!arr.find((x) => x.barcode === p.barcode)) arr.push(p);
+    });
+  });
+  const groups = [];
+  for (const [, arr] of byBigram) {
+    if (arr.length < 2) continue;
+    for (let i = 0; i < arr.length; i += 4) {
+      const chunk = arr.slice(i, i + 4);
+      if (chunk.length >= 2) groups.push(chunk);
+    }
+  }
+  return groups;
+}
+
+// Gercek bakim rutini / hediye seti mantigi: kelime tesadufune degil, "bu urun tipleri
+// birlikte satilir" bilgisine dayanir (ör. temizleyici+serum+krem = cilt bakim rutini).
+// Kategoriler-arasi kombinlerin cogu buradan gelir.
+const ROUTINE_TEMPLATES = [
+  { name: 'cilt-bakim-rutini', cats: ['Yüz Temizleyici', 'Cilt Serumu', 'Yüz Kremi'] },
+  { name: 'sac-bakim-rutini', cats: ['Şampuan', 'Saç Kremi', 'Saç Maskesi'] },
+  { name: 'vucut-bakim-rutini', cats: ['Duş Jeli', 'Vücut Kremi', 'Vücut Spreyi'] },
+  { name: 'parfum-hediye-seti', cats: ['Parfüm', 'Vücut Spreyi', 'Katı Sabun'] },
+  { name: 'makyaj-temizleme-rutini', cats: ['Makyaj Temizleyici', 'Tonik', 'Yüz Kremi'] },
+  { name: 'bebek-hediye-seti', cats: ['Bebek Şampuanı', 'Bebek Kremi ve Yağı', 'Bebek Sabunu'] },
+];
+
+function buildTemplateGroups(candidates, maxPerTemplate = 20) {
+  const byCat = new Map();
+  candidates.forEach((p) => {
+    const c = p.categoryName || '';
+    if (!byCat.has(c)) byCat.set(c, []);
+    byCat.get(c).push(p);
+  });
+  const groups = [];
+  const seenHere = new Set();
+  for (const tpl of ROUTINE_TEMPLATES) {
+    const pools = tpl.cats.map((c) => byCat.get(c) || []);
+    if (pools.some((p) => p.length === 0)) continue;
+    const minLen = Math.min(...pools.map((p) => p.length));
+    const attempts = Math.min(maxPerTemplate, Math.max(minLen, 3) * 2);
+    for (let i = 0; i < attempts; i++) {
+      const group = pools.map((pool) => pool[Math.floor(Math.random() * pool.length)]);
+      const barcodes = group.map((p) => p.barcode);
+      if (new Set(barcodes).size !== group.length) continue; // ayni urun grup icinde tekrar etmesin
+      const sig = [...barcodes].sort().join('|');
+      if (seenHere.has(sig)) continue;
+      seenHere.add(sig);
+      groups.push(group);
+    }
+  }
+  return groups;
+}
+
 app.get('/api/combo-suggestions', asyncRoute(async (req, res) => {
+  // q bos birakilirsa TUM kategoriler taranir (kategori/kelime filtresi yok).
   const keyword = String(req.query.q || '').trim().toLocaleLowerCase('tr');
-  if (!keyword) return res.status(400).json({ error: 'q (arama kelimesi) gerekli' });
   const exclude = String(req.query.exclude || '').toLocaleLowerCase('tr').split(',').map((s) => s.trim()).filter(Boolean);
   const discount = Math.min(Math.max(Number(req.query.discount) || 12, 0), 50);
-  const count2 = Math.min(Math.max(Number(req.query.count2) || 0, 0), 20);
-  const count3 = Math.min(Math.max(Number(req.query.count3) || 0, 0), 20);
-  const count4 = Math.min(Math.max(Number(req.query.count4) || 0, 0), 20);
+  const count2 = Math.min(Math.max(Number(req.query.count2) || 0, 0), 150);
+  const count3 = Math.min(Math.max(Number(req.query.count3) || 0, 0), 150);
+  const count4 = Math.min(Math.max(Number(req.query.count4) || 0, 0), 150);
+  const smart = req.query.smart !== '0'; // varsayilan acik
 
   const all = [];
   let page = 0, totalPages = 1;
@@ -221,14 +286,15 @@ app.get('/api/combo-suggestions', asyncRoute(async (req, res) => {
 
   const candidates = all.filter((p) => {
     const hay = `${p.title || ''} ${p.categoryName || ''}`.toLocaleLowerCase('tr');
-    if (!hay.includes(keyword)) return false;
+    if (keyword && !hay.includes(keyword)) return false;
     if (exclude.some((x) => hay.includes(x))) return false;
     if (!p.approved) return false;
     if (!Number(p.quantity)) return false;
     if (!Number(p.salePrice)) return false;
+    if (String(p.title || '').trim().length < 4) return false;
     // Zaten hazir bir "set/kombin" urununu tekrar sete sokma (ör. "Yilbasi Seti", "Parfum Seti").
     const catL = (p.categoryName || '').toLocaleLowerCase('tr');
-    if (!keyword.includes('set') && (catL.includes('set') || p.barcode.startsWith('SET-'))) return false;
+    if (!(keyword && keyword.includes('set')) && (catL.includes('set') || p.barcode.startsWith('SET-'))) return false;
     return true;
   });
 
@@ -237,21 +303,32 @@ app.get('/api/combo-suggestions', asyncRoute(async (req, res) => {
   // Ayni urun farkli kombinlerde tekrar kullanilabilir (ör. Hurrem hem bir 2'li hem bir 3'lu
   // sette olabilir); sadece TAMAMEN AYNI urun grubunun iki kez cikmasini engelliyoruz.
   const seen = new Set();
+  const sigOf = (group) => group.map((p) => p.barcode).sort().join('|');
   function pickGroup(size) {
     if (candidates.length < size) return null;
     for (let attempt = 0; attempt < 20; attempt++) {
       const shuffled = [...candidates].sort(() => Math.random() - 0.5).slice(0, size);
-      const sig = shuffled.map((p) => p.barcode).sort().join('|');
+      const sig = sigOf(shuffled);
       if (!seen.has(sig)) { seen.add(sig); return shuffled; }
     }
     return null;
   }
 
+  const familyGroups = smart ? buildFamilyGroups(candidates) : [];
+  const routineGroups = smart ? buildTemplateGroups(candidates) : [];
+  [...familyGroups, ...routineGroups].forEach((g) => seen.add(sigOf(g)));
+
   const plan = [...Array(count2).fill(2), ...Array(count3).fill(3), ...Array(count4).fill(4)];
-  const groups = plan.map((size) => pickGroup(size)).filter(Boolean);
+  const fillerGroups = plan.map((size) => pickGroup(size)).filter(Boolean);
+
+  const tagged = [
+    ...familyGroups.map((g) => ({ group: g, matchType: 'akilli' })),
+    ...routineGroups.map((g) => ({ group: g, matchType: 'rutin-hediye' })),
+    ...fillerGroups.map((g) => ({ group: g, matchType: 'kategori-ici' })),
+  ];
 
   // Baslik/aciklama yazimi (AI kullanilirsa istekler) paralel calisir, boylece toplam sure uzamaz.
-  const combos = await Promise.all(groups.map((g) => buildCombo(g, discount)));
+  const combos = await Promise.all(tagged.map(({ group, matchType }) => buildCombo(group, discount, matchType)));
 
   res.json({ candidates: candidates.length, combos });
 }));

@@ -6,8 +6,28 @@
 const STOPWORDS = new Set([
   'kadin', 'erkek', 'unisex', 'parfum', 'parfumu', 'kalici', 'kalicilik', 'yuksek', 'esans',
   'esansli', 'esanslar', 'yayilim', 'ozel', 'tasarim', 'edp', 'vucut', 'spreyi', 'vucudu',
-  'gucunde', 'yeni', 'seri', 've', 'ile', 'icin', 'icinde',
+  'gucunde', 'yeni', 'seri', 've', 'ile', 'icin', 'icinde', 'koku', 'etkili', 'kokusu',
+  'ciceksi', 'tatli', 'krem', 'kremi', 'yuz', 'yag', 'yagi', 'temizleyici', 'seti', 'set',
+  // Genel bakim/kozmetik dolgu kelimeleri (marka/karakter ismi DEGIL, tesaduf eslesmeye
+  // yol acan cok yaygin sifat/madde adlari): akilli aile eslestirmede gurultu yaratiyorlar.
+  'hyaluronik', 'hyalüronik', 'asit', 'aloe', 'vera', 'hassas', 'ciltler', 'cilt', 'bakim',
+  'bakimi', 'losyonu', 'kokulu', 'nemlendirici', 'nemlendir', 'kolay', 'tarama', 'teli',
+  'guclendirici', 'conditioner', 'hair', 'dogal', 'yagli', 'bazli', 'kuru', 'karma', 'gunes',
+  'gozenek', 'sikilastirici', 'niasinamid', 'niasina', 'serisi', 'sutu', 'cevresi', 'genital',
+  'bolge', 'yikama', 'jeli', 'giderici', 'organik', 'kokusuz', 'roll', 'koltuk', 'deodorant',
+  'kabarma', 'belirginlestirici', 'bukle', 'profesyonel', 'yenileme', 'seffaf', 'seyahat',
+  'cantasi', 'duzenleme', 'kozmetik', 'karsiti', 'yaslanma', 'kirisiklik', 'koyu', 'leke',
+  'aydinlik', 'puruzsuz', 'alti', 'gece', 'gunduz', 'mineralli', 'gliserin', 'provitamin',
+  'aktif', 'karbon', 'sabun', 'sabunu', 'zeytinyagi', 'argan', 'sut', 'hindistan', 'cevizi',
+  'kutu', 'kraft', 'sise', 'spreyli', 'boy', 'isiltili', 'bloom', 'organik',
+  // Baslik-genelinde tekrar eden urun-tipi kelimeleri (marka/koku ismi DEGIL):
+  // filtrelenmezse "Body Mist & Body Mist & Body Mist" gibi anlamsiz tekrarli
+  // basliklar uretiliyordu.
+  'body', 'mist', 'seyahat', 'serum', 'serumu', 'vitamini', 'vitamin', 'losyon',
+  'sprey', 'stick', 'roll-on', 'gucunde', 'pro',
 ]);
+
+const UNIT_RE = /^(\d+([.,]\d+)?%?|ml|lt|l|gr|g|kg|cm|cc|adet|pcs|x)$/i;
 
 function trFold(s) {
   return String(s || '')
@@ -16,20 +36,81 @@ function trFold(s) {
     .toLowerCase();
 }
 
-function identityOf(title, maxWords) {
+function identityOf(title, maxWords, fallback) {
+  const tokens = String(title || '').split(/[\s|/,-]+/).filter(Boolean);
+  const notNoise = (t) => {
+    const bare = trFold(t).replace(/[^a-z0-9%]/g, '');
+    if (!bare) return false;
+    if (UNIT_RE.test(bare)) return false;
+    return !STOPWORDS.has(bare);
+  };
+  const kept = tokens.filter(notNoise);
+  // Ozel isim/koku ismi gibi gorunen (buyuk harfle baslayan, >=4 karakter) kelimeleri
+  // once tercih et - jenerik urun-tipi kelimelerinin (stopword listesine girmemis olsa
+  // bile) basliga hakim olmasini engeller.
+  const distinctive = kept.filter((t) => /^[A-ZÇĞİÖŞÜ]/.test(t) && t.replace(/[^\p{L}]/gu, '').length >= 4);
+  // Basligin TAMAMI jenerik/dolgu kelimelerden olusuyorsa (ör. "Unisex Erkek Kadın Parfüm")
+  // ham kelimelere donmek anlamsiz tekrar uretir - bu durumda marka/kategori kullan.
+  const pool = distinctive.length ? distinctive : kept;
+  if (!pool.length) return fallback || '';
+  // Ayni kelimenin ayni kimlik icinde tekrarini onle (ör. "Bare Vanilla ... Vanilla Wood").
+  const dedupPool = [];
+  const seenWord = new Set();
+  for (const t of pool) {
+    const key = trFold(t);
+    if (seenWord.has(key)) continue;
+    seenWord.add(key);
+    dedupPool.push(t);
+  }
+  const use = dedupPool.slice(0, maxWords);
+  const result = use.join(' ').trim();
+  return result || fallback || '';
+}
+
+// Baslikta gecen "ozel isim gibi" kelimeleri (buyuk harfle baslayan, dolgu olmayan, >=4
+// karakter) cikarir. Ayni kelime farkli kategorilerdeki urunlerde geciyorsa (or. "Hurrem"
+// hem Parfum hem Vucut Spreyi kategorisinde varsa) bu, ayni "aile"den urunler oldugunun
+// isaretidir; kategoriler-arasi akilli eslesme icin kullanilir.
+export function distinctiveTokens(title) {
   const tokens = String(title || '').split(/[\s|]+/).filter(Boolean);
-  const kept = tokens.filter((t) => !STOPWORDS.has(trFold(t).replace(/[^a-z0-9]/g, '')));
-  const use = (kept.length ? kept : tokens).slice(0, maxWords);
-  return use.join(' ').trim();
+  return tokens
+    .filter((t) => /^[A-ZÇĞİÖŞÜ]/.test(t))
+    .map((t) => t.replace(/[^\p{L}\p{N}]/gu, ''))
+    .filter((t) => t.length >= 4)
+    .map((t) => trFold(t))
+    .filter((t) => !STOPWORDS.has(t));
+}
+
+// Ardisik 2 ayirt edici kelimeyi birlikte alir ("cotton island" gibi) - tekli kelimeye gore
+// cok daha spesifik, tesaduf eslesme riski dusuk (marka/koku ailesi tespiti icin kullanilir).
+export function distinctiveBigrams(title) {
+  const toks = distinctiveTokens(title);
+  const out = [];
+  for (let i = 0; i < toks.length - 1; i++) out.push(toks[i] + ' ' + toks[i + 1]);
+  return out;
 }
 
 export function algorithmicCopy(parts, { mothersDay = false } = {}) {
   let title = '';
   for (let n = 3; n >= 1; n--) {
-    const idents = parts.map((p) => identityOf(p.title, parts.length >= 4 ? Math.min(n, 2) : n));
+    const maxWords = parts.length >= 4 ? Math.min(n, 2) : n;
+    const rawIdents = parts.map((p) => identityOf(p.title, maxWords, p.brand || p.categoryName || 'Ürün'));
+    // Ayni koku/urun ailesinden birden fazla parca (or. ayni parfumun farkli boyu) ayni
+    // ayirt edici ismi uretebilir - tekrar yerine kategoriyle ayristir, yine de ayniysa
+    // tek seferde goster (yoksa "X & X & X" gibi anlamsiz tekrar olusuyor).
+    const seenCount = new Map();
+    const idents = rawIdents.map((ident, i) => {
+      const key = ident.toLowerCase();
+      const n2 = (seenCount.get(key) || 0) + 1;
+      seenCount.set(key, n2);
+      if (n2 === 1) return ident;
+      const catWord = distinctiveTokens(parts[i].categoryName || '')[0];
+      return catWord ? `${ident} ${catWord.charAt(0).toUpperCase()}${catWord.slice(1)}` : ident;
+    });
+    const uniqueIdents = [...new Set(idents)];
     title = mothersDay
-      ? `${idents.join(' & ')} Anneler Günü Hediye Seti`
-      : `${idents.join(' & ')} ${parts.length}'li Set`;
+      ? `${uniqueIdents.join(' & ')} Anneler Günü Hediye Seti`
+      : `${uniqueIdents.join(' & ')} ${parts.length}'li Set`;
     if (title.length <= 100) break;
   }
   if (title.length > 100) title = title.slice(0, 100);
