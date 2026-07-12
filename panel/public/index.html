@@ -54,6 +54,16 @@
         <button id="draftClear" class="danger">Tüm Taslakları Sil</button>
         <span class="muted">Taslaklar tarayıcınızda saklanır; “Trendyol'a Gönder” sekmesinden yüklenir.</span>
       </div>
+      <div class="toolbar" style="background:#1a1d26;border:1px solid #2a2e3c;border-radius:8px;padding:10px 12px;flex-wrap:wrap">
+        <b style="font-size:12px">🧩 Otomatik Kombin Öner:</b>
+        <input id="comboKeyword" value="kadın parfüm" style="min-width:160px" placeholder="ör: kadın parfüm" />
+        <input id="comboExclude" value="erkek, unisex" style="min-width:150px" placeholder="hariç tut (virgülle)" />
+        <label style="display:flex;align-items:center;gap:4px;font-size:12px">Adet <input id="comboCount" type="number" value="4" min="1" max="20" style="width:60px" /></label>
+        <label style="display:flex;align-items:center;gap:4px;font-size:12px">Set indirimi % <input id="comboDiscount" type="number" value="12" min="0" max="50" style="width:60px" /></label>
+        <button id="comboSuggest" class="primary small">🧩 Kombin Taslakları Oluştur</button>
+      </div>
+      <div class="hint">Girdiğiniz kelimeye göre (kategori/başlık içinde arar) stoklu ve onaylı ürünleri ikişerli eşleştirip başlık+açıklama hazır, <b>görselsiz</b> taslak oluşturur. Siz fotoğrafları ekleyip “Trendyol'a Gönder” ile onaya yollarsınız.</div>
+      <div id="comboStatus" class="muted"></div>
       <div id="draftList" class="drafts"></div>
     </section>
 

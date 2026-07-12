@@ -157,6 +157,81 @@ app.post('/api/price-stock', asyncRoute(async (req, res) => {
   res.json(await ty.updatePriceStock(items));
 }));
 
+// ---- Otomatik kombin onerisi ----
+// Bir arama kelimesine gore (ornegin "kadin parfum") stoklu/onayli urunleri ikili
+// eslestirip baslik+aciklama hazir, GORSELSIZ taslak dondurur. Gorseller kullanici
+// tarafindan sonradan eklenir; hicbir Trendyol yazma islemi yapilmaz (sadece okuma).
+function buildCombo(parts, discount) {
+  const stamp = Date.now().toString(36).slice(-5) + Math.random().toString(36).slice(2, 5);
+  const list = parts.reduce((t, p) => t + Number(p.listPrice || p.salePrice || 0), 0);
+  const sale = Math.round(parts.reduce((t, p) => t + Number(p.salePrice || 0), 0) * (1 - discount / 100) * 100) / 100;
+  const barcode = ('SET-' + parts.map((p) => p.barcode.slice(0, 10)).join('-')).slice(0, 34) + '-' + stamp;
+  return {
+    id: crypto.randomUUID(),
+    barcode,
+    title: (parts.map((p) => p.title.split(' ').slice(0, 4).join(' ')).join(' + ') + ` ${parts.length}'li Set`).slice(0, 100),
+    productMainId: barcode,
+    brandId: parts[0].brandId, brandName: parts[0].brand,
+    categoryId: parts[0].pimCategoryId || '', categoryName: parts[0].categoryName || '',
+    quantity: Math.min(...parts.map((p) => Number(p.quantity || 0))),
+    stockCode: barcode,
+    dimensionalWeight: parts.reduce((t, p) => t + Number(p.dimensionalWeight || 1), 0),
+    description: parts.map((p) => `<h3>${p.title}</h3>` + (p.description || '')).join('<hr/>').slice(0, 29000),
+    currencyType: 'TRY',
+    listPrice: Math.max(list, sale), salePrice: sale,
+    vatRate: parts[0].vatRate ?? 20,
+    images: [],
+    attributes: (parts[0].attributes || []).map((a) => (a.attributeValueId
+      ? { attributeId: a.attributeId, attributeValueId: a.attributeValueId, attributeName: a.attributeName, attributeValue: a.attributeValue }
+      : { attributeId: a.attributeId, customAttributeValue: a.attributeValue, attributeName: a.attributeName, attributeValue: a.attributeValue })),
+    sourceProducts: parts.map((p) => ({ barcode: p.barcode, title: p.title })),
+  };
+}
+
+app.get('/api/combo-suggestions', asyncRoute(async (req, res) => {
+  const keyword = String(req.query.q || '').trim().toLocaleLowerCase('tr');
+  if (!keyword) return res.status(400).json({ error: 'q (arama kelimesi) gerekli' });
+  const exclude = String(req.query.exclude || '').toLocaleLowerCase('tr').split(',').map((s) => s.trim()).filter(Boolean);
+  const count = Math.min(Math.max(Number(req.query.count) || 4, 1), 20);
+  const discount = Math.min(Math.max(Number(req.query.discount) || 12, 0), 50);
+
+  const all = [];
+  let page = 0, totalPages = 1;
+  do {
+    const data = await ty.getProducts({ page, size: 100 });
+    all.push(...(data.content || []));
+    totalPages = data.totalPages || 1;
+    page++;
+  } while (page < totalPages && page < 30);
+
+  const candidates = all.filter((p) => {
+    const hay = `${p.title || ''} ${p.categoryName || ''}`.toLocaleLowerCase('tr');
+    if (!hay.includes(keyword)) return false;
+    if (exclude.some((x) => hay.includes(x))) return false;
+    if (!p.approved) return false;
+    if (!Number(p.quantity)) return false;
+    if (!Number(p.salePrice)) return false;
+    // Zaten hazir bir "set/kombin" urununu tekrar sete sokma (ör. "Yilbasi Seti", "Parfum Seti").
+    const catL = (p.categoryName || '').toLocaleLowerCase('tr');
+    if (!keyword.includes('set') && (catL.includes('set') || p.barcode.startsWith('SET-'))) return false;
+    return true;
+  });
+
+  const shuffled = [...candidates].sort(() => Math.random() - 0.5);
+  const used = new Set();
+  const combos = [];
+  for (let i = 0; i < shuffled.length && combos.length < count; i++) {
+    const a = shuffled[i];
+    if (used.has(a.barcode)) continue;
+    const partner = shuffled.slice(i + 1).find((b) => !used.has(b.barcode) && b.barcode !== a.barcode);
+    if (!partner) continue;
+    used.add(a.barcode); used.add(partner.barcode);
+    combos.push(buildCombo([a, partner], discount));
+  }
+
+  res.json({ candidates: candidates.length, combos });
+}));
+
 // ---- Gorsel studyosu ----
 app.post('/api/images/generate', upload.single('reference'), asyncRoute(async (req, res) => {
   if (!req.file) return res.status(400).json({ error: 'Referans gorsel yukleyin (reference alani)' });

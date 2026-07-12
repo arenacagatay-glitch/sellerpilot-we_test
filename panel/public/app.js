@@ -385,6 +385,28 @@ async function openAttrEditor(d, mount) {
 
 $('#draftClear').addEventListener('click', () => { if (confirm('Tüm taslaklar silinsin mi?')) { state.drafts = []; save(); renderDrafts(); } });
 
+$('#comboSuggest').addEventListener('click', async () => {
+  const q = $('#comboKeyword').value.trim();
+  if (!q) return toast('Arama kelimesi girin (ör: kadın parfüm)');
+  const exclude = $('#comboExclude').value.trim();
+  const count = Number($('#comboCount').value) || 4;
+  const discount = Number($('#comboDiscount').value) || 12;
+  $('#comboStatus').textContent = '⏳ Ürünler taranıyor, kombinler oluşturuluyor...';
+  try {
+    const qs = new URLSearchParams({ q, count, discount });
+    if (exclude) qs.set('exclude', exclude);
+    const data = await api('/api/combo-suggestions?' + qs);
+    if (!data.combos.length) {
+      $('#comboStatus').textContent = `⚠️ "${q}" için uygun ürün bulunamadı (${data.candidates} aday tarandı, stoklu+onaylı olmalı).`;
+      return;
+    }
+    data.combos.forEach((c) => state.drafts.push(c));
+    save(); renderDrafts();
+    $('#comboStatus').textContent = `✅ ${data.combos.length} kombin taslağı oluşturuldu (${data.candidates} aday arasından). Görselsiz — fotoğrafları siz ekleyeceksiniz.`;
+    toast(`${data.combos.length} yeni kombin taslağı eklendi (aşağıda). Fotoğrafları ekleyip "Trendyol'a Gönder"e basabilirsiniz.`);
+  } catch (e) { $('#comboStatus').textContent = '❌ ' + e.message; }
+});
+
 function debounce(fn, ms) { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; }
 
 /* ---------- Görsel Stüdyosu ---------- */
