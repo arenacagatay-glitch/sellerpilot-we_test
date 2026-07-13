@@ -161,9 +161,26 @@ app.post('/api/price-stock', asyncRoute(async (req, res) => {
 
 // ---- Otomatik kombin onerisi ----
 // Bir arama kelimesine gore (ornegin "kadin parfum") stoklu/onayli urunleri 2'li/3'lu/4'lu
-// gruplayip baslik+aciklama (AI varsa AI, yoksa akilli algoritma) ile GORSELSIZ taslak
-// dondurur. Gorseller kullanici tarafindan sonradan eklenir; hicbir Trendyol yazma
-// islemi yapilmaz (sadece okuma).
+// gruplayip baslik+aciklama (AI varsa AI, yoksa akilli algoritma) ve kaynak urunlerin
+// gercek fotograflariyla taslak dondurur. Kullanici dilerse fotograflari degistirir;
+// hicbir Trendyol yazma islemi yapilmaz (sadece okuma).
+// Manuel "Kombin Olustur" ile ayni mantik: her parcanin kendi gercek Trendyol
+// gorsellerinden sirayla (round-robin) alinip karisik sekilde diziliyor -
+// 2'li sette 2 urunun, 3'lude 3 urunun, 4'lude 4 urunun fotograflari donuyor.
+// Uydurma/AI gorsel degil, gercek kaynak urun fotograflari.
+function buildComboImages(parts, max = 8) {
+  const images = [];
+  for (let i = 0; i < max; i++) {
+    const p = parts[i % parts.length];
+    const imgs = p.images || [];
+    const idx = Math.floor(i / parts.length);
+    const raw = imgs[idx];
+    const url = raw?.url || raw;
+    if (url) images.push(url);
+  }
+  return images;
+}
+
 async function buildCombo(parts, discount, matchType) {
   const mothersDay = parts.length >= 3;
   const { title, description, source } = await composeCopy(parts, { mothersDay });
@@ -192,7 +209,7 @@ async function buildCombo(parts, discount, matchType) {
     currencyType: 'TRY',
     listPrice: Math.max(list, sale), salePrice: sale,
     vatRate: parts[0].vatRate ?? 20,
-    images: [],
+    images: buildComboImages(parts),
     attributes: (parts[0].attributes || []).map((a) => (a.attributeValueId
       ? { attributeId: a.attributeId, attributeValueId: a.attributeValueId, attributeName: a.attributeName, attributeValue: a.attributeValue }
       : { attributeId: a.attributeId, customAttributeValue: a.attributeValue, attributeName: a.attributeName, attributeValue: a.attributeValue })),

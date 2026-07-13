@@ -414,8 +414,9 @@ $('#comboSuggest').addEventListener('click', async () => {
     const typeLabel = { akilli: '🧠 Akıllı', 'rutin-hediye': '🎁 Rutin/Hediye Seti', 'kategori-ici': 'Kategori içi' };
     const typeLine = Object.keys(byType).map((k) => `${byType[k]} ${typeLabel[k] || k}`).join(', ');
     const aiUsed = data.combos.some((c) => c.copySource === 'openai');
-    $('#comboStatus').textContent = `✅ ${data.combos.length} kombin taslağı oluşturuldu (${sizeLine}). Kaynak: ${typeLine}. ${data.candidates} aday arasından, başlık/açıklama ${aiUsed ? 'AI ile' : 'otomatik algoritmayla'} yazıldı. Görselsiz — fotoğrafları siz ekleyeceksiniz.`;
-    toast(`${data.combos.length} yeni kombin taslağı eklendi (aşağıda). Fotoğrafları ekleyip "Trendyol'a Gönder"e basabilirsiniz.`);
+    const withPhotos = data.combos.filter((c) => (c.images || []).length > 0).length;
+    $('#comboStatus').textContent = `✅ ${data.combos.length} kombin taslağı oluşturuldu (${sizeLine}). Kaynak: ${typeLine}. ${data.candidates} aday arasından, başlık/açıklama ${aiUsed ? 'AI ile' : 'otomatik algoritmayla'} yazıldı. ${withPhotos}/${data.combos.length} tanesinde kaynak ürünlerin gerçek fotoğrafları otomatik eklendi.`;
+    toast(`${data.combos.length} yeni kombin taslağı eklendi (aşağıda), fotoğraflarla birlikte. Dilerseniz değiştirip "Trendyol'a Gönder"e basabilirsiniz.`);
   } catch (e) { $('#comboStatus').textContent = '❌ ' + e.message; }
 });
 
