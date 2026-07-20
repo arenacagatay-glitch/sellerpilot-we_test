@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import {
   ChevronDown, ChevronUp, ChevronLeft, ChevronRight, CheckCircle, Mail,
   Smartphone, Check, Plane, X, Menu as MenuIcon, ShieldCheck, Store, Clock,
-  MessageSquare, Sparkles, ArrowRight, Star, TrendingUp, Zap as ZapIcon
+  MessageSquare, Sparkles, ArrowRight, Star, TrendingUp, Zap as ZapIcon,
+  Camera, Image as ImageIcon, Wand2, Gauge
 } from 'lucide-react';
 import { CHAT_EXAMPLES, FAQ_ITEMS, FEATURES, NAV_LINKS, STAT_CARDS, STEPS, WHATSAPP_URL, APP_URL } from './constants';
 
@@ -472,6 +473,215 @@ const LiveDemo = () => {
 };
 
 // ────────────────────────────────────────────────
+// AI Görsel Stüdyo (#ai-studyo)
+// ────────────────────────────────────────────────
+const STUDYO_SHOTS = [
+  { src: '/studyo/nevresim-1.jpg', tag: 'Vitrin' },
+  { src: '/studyo/nevresim-2.jpg', tag: 'Yaşam Alanı' },
+  { src: '/studyo/nevresim-3.jpg', tag: 'Öne Çıkan Fayda' },
+  { src: '/studyo/nevresim-4.jpg', tag: 'Yakın Detay' },
+  { src: '/studyo/nevresim-5.jpg', tag: 'Kullanıcı Karesi' },
+  { src: '/studyo/nevresim-6.jpg', tag: 'Set İçeriği' },
+];
+
+const STUDYO_GALLERY = [
+  { label: 'Güneş Gözlüğü', ref: '/studyo/gozluk-ref.jpg', hero: '/studyo/gozluk-hero.jpg' },
+  { label: 'Takı & Aksesuar', ref: '/studyo/kolye-ref.jpg', hero: '/studyo/kolye-hero.jpg' },
+  { label: 'Çanta', ref: '/studyo/canta-ref.jpg', hero: '/studyo/canta-hero.jpg' },
+  { label: 'Elektronik', ref: '/studyo/kulaklik-ref.jpg', hero: '/studyo/kulaklik-hero.jpg' },
+];
+
+const STUDYO_PACKAGES = [
+  {
+    name: 'Jet', price: '99', img: '/studyo/paket-jet.jpg', popular: false,
+    tagline: 'Hızlı taslak, en uygun. Saniyeler içinde 6 görsel.',
+    speed: 'En hızlı', quality: 'İyi kalite',
+    features: ['1 vitrin + 5 varyant (6 görsel)', 'Saniyeler içinde teslim', 'Beyaz zemin, temiz kadraj', 'En uygun fiyat'],
+  },
+  {
+    name: 'Vitrin', price: '199', img: '/studyo/paket-vitrin.jpg', popular: true,
+    tagline: 'Dengeli, hızlı, en popüler. Günlük kullanım için ideal.',
+    speed: 'Hızlı', quality: 'Yüksek kalite',
+    features: ['1 vitrin + 5 varyant (6 görsel)', 'Yaşam alanı & kullanıcı kareleri', 'Öne çıkan fayda görselleri', 'Günlük listeleme için ideal'],
+  },
+  {
+    name: 'Stüdyo', price: '249', img: '/studyo/paket-studyo.jpg', popular: false,
+    tagline: 'Premium kalite. Etiket ve yazı sadakati en üst düzey.',
+    speed: 'Standart', quality: 'Premium',
+    features: ['1 vitrin + 5 varyant (6 görsel)', 'Etiket & yazı sadakati en üst düzey', 'En yüksek çözünürlük', 'Marka görseli hassasiyeti'],
+  },
+];
+
+const AIGorselStudyo = () => (
+  <section id="ai-studyo" className="py-24 bg-gradient-to-b from-light to-white overflow-hidden">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <Reveal className="text-center mb-14">
+        <span className="inline-flex items-center gap-1.5 py-1 px-3 bg-orange-50 text-primary text-xs font-bold uppercase tracking-wider rounded-full mb-4 border border-orange-100">
+          <Sparkles size={13} /> Yeni · AI Görsel Stüdyo
+        </span>
+        <h2 className="text-3xl sm:text-4xl font-display font-bold text-dark mb-4 max-w-3xl mx-auto leading-tight">
+          Telefonla çektiğiniz fotoğraf, saniyeler içinde{' '}
+          <span className="grad-text">satış getiren Trendyol görsellerine</span> dönüşsün
+        </h2>
+        <p className="text-dark-gray max-w-2xl mx-auto leading-relaxed">
+          Tek bir ürün fotoğrafı yükleyin; yapay zekâ sizin için 1 vitrin görseli ve 5 profesyonel varyant üretsin.
+          Fotoğraf stüdyosu, ışık, dekor derdi yok — sıradan bir kareden e-ticarete hazır 6 görsel.
+        </p>
+      </Reveal>
+
+      {/* Before → After kanıt showcase */}
+      <Reveal>
+        <div className="bg-white rounded-3xl border border-orange-100 shadow-xl shadow-orange-500/5 p-5 sm:p-8">
+          <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 items-stretch">
+            {/* Referans */}
+            <div className="lg:w-[30%] flex flex-col">
+              <span className="inline-flex items-center gap-1.5 self-start text-xs font-bold text-gray-500 bg-gray-100 px-3 py-1 rounded-full mb-3">
+                <Camera size={13} /> Sizin fotoğrafınız
+              </span>
+              <div className="relative rounded-2xl overflow-hidden border border-gray-200 bg-gray-50 flex-1">
+                <img src="/studyo/nevresim-ref.jpg" alt="Referans ürün fotoğrafı" loading="lazy" className="w-full h-full object-cover aspect-[3/4]" />
+              </div>
+              <p className="text-xs text-gray-400 mt-3 leading-snug">Tek kare — telefonla, ışık ve dekor derdi olmadan çekilmiş sıradan ürün fotoğrafı.</p>
+            </div>
+
+            {/* Ok / dönüşüm */}
+            <div className="flex lg:flex-col items-center justify-center gap-3 shrink-0">
+              <div className="w-14 h-14 rounded-full flex items-center justify-center text-white shadow-lg shrink-0" style={{ background: 'linear-gradient(135deg,#FF6B35,#FFBE5C)', boxShadow: '0 8px 24px #FF6B3540' }}>
+                <Wand2 size={24} />
+              </div>
+              <ArrowRight className="text-primary rotate-90 lg:rotate-0" size={26} />
+            </div>
+
+            {/* Üretilen 6 görsel */}
+            <div className="flex-1 flex flex-col">
+              <span className="inline-flex items-center gap-1.5 self-start text-xs font-bold text-primary bg-orange-50 px-3 py-1 rounded-full mb-3 border border-orange-100">
+                <ImageIcon size={13} /> SellerPilot üretti — 6 profesyonel görsel
+              </span>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 flex-1">
+                {STUDYO_SHOTS.map((s, i) => (
+                  <div key={i} className="relative rounded-2xl overflow-hidden border border-gray-200 group">
+                    <img src={s.src} alt={`Üretilen görsel — ${s.tag}`} loading="lazy" className="w-full h-full object-cover aspect-[3/4] transition-transform duration-300 group-hover:scale-105" />
+                    <span className="absolute top-2 left-2 text-[10px] font-bold text-white bg-black/45 backdrop-blur-sm px-2 py-0.5 rounded-full">{s.tag}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </Reveal>
+
+      {/* Çeşitlilik galerisi */}
+      <Reveal className="mt-16">
+        <div className="text-center mb-8">
+          <h3 className="text-2xl font-bold font-display text-dark mb-2">Her kategoride çalışır</h3>
+          <p className="text-dark-gray max-w-xl mx-auto">Gözlükten takıya, çantadan elektroniğe — üründen bağımsız, temiz ve tutarlı vitrin görselleri.</p>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          {STUDYO_GALLERY.map((g, i) => (
+            <Reveal key={g.label} delay={(i % 2) * 0.1}>
+              <div className="card-hover h-full bg-white rounded-3xl border border-gray-200 overflow-hidden hover:border-orange-200 hover:shadow-2xl hover:shadow-orange-500/10">
+                <div className="grid grid-cols-2">
+                  <div className="relative">
+                    <img src={g.ref} alt={`${g.label} — referans`} loading="lazy" className="w-full h-full object-cover aspect-[4/5]" />
+                    <span className="absolute top-2.5 left-2.5 text-[10px] font-bold text-white bg-black/45 backdrop-blur-sm px-2 py-0.5 rounded-full">Önce</span>
+                  </div>
+                  <div className="relative border-l-2 border-white">
+                    <img src={g.hero} alt={`${g.label} — üretilen görsel`} loading="lazy" className="w-full h-full object-cover aspect-[4/5]" />
+                    <span className="absolute top-2.5 right-2.5 text-[10px] font-bold text-white px-2 py-0.5 rounded-full" style={{ background: 'linear-gradient(135deg,#FF6B35,#FFBE5C)' }}>Sonra</span>
+                  </div>
+                </div>
+                <div className="flex items-center justify-between px-5 py-4">
+                  <span className="font-bold font-display text-dark">{g.label}</span>
+                  <span className="text-xs text-gray-400 flex items-center gap-1"><ImageIcon size={13} className="text-primary" /> 6 görsel</span>
+                </div>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </Reveal>
+
+      {/* Paketler */}
+      <Reveal className="mt-20">
+        <div className="text-center mb-10">
+          <span className="inline-block py-1 px-3 bg-orange-50 text-primary text-xs font-bold uppercase tracking-wider rounded-full mb-4 border border-orange-100">Paketler</span>
+          <h3 className="text-3xl sm:text-4xl font-display font-bold text-dark mb-3">İhtiyacınıza göre seçin</h3>
+          <p className="text-dark-gray max-w-xl mx-auto">Her pakette 1 vitrin + 5 varyant, toplam 6 profesyonel görsel. Fiyatlar sipariş başınadır.</p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch max-w-5xl mx-auto">
+          {STUDYO_PACKAGES.map((p, i) => (
+            <Reveal key={p.name} delay={i * 0.08} className="h-full">
+              {p.popular ? (
+                <div className="relative h-full rounded-3xl p-[2px]" style={{ background: 'linear-gradient(135deg,#FF6B35,#FFBE5C)' }}>
+                  <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 text-white text-xs font-bold px-4 py-1 rounded-full whitespace-nowrap z-10" style={{ background: 'linear-gradient(135deg,#FF6B35,#FFBE5C)' }}>★ En Popüler</span>
+                  <div className="bg-white h-full rounded-3xl p-6 flex flex-col gap-4">
+                    <div className="rounded-2xl overflow-hidden border border-orange-100">
+                      <img src={p.img} alt={`${p.name} paketi örnek görsel`} loading="lazy" className="w-full object-cover aspect-[4/3]" />
+                    </div>
+                    <div className="text-center">
+                      <p className="text-lg font-bold font-display text-dark">{p.name}</p>
+                      <div className="mt-1"><span className="text-4xl font-black grad-text">{p.price}₺</span><span className="text-gray-400 text-sm"> / sipariş</span></div>
+                    </div>
+                    <p className="text-sm text-center text-dark-gray leading-snug">{p.tagline}</p>
+                    <div className="flex justify-center gap-2">
+                      <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-primary bg-orange-50 px-2.5 py-1 rounded-full"><Gauge size={12} /> {p.speed}</span>
+                      <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-primary bg-orange-50 px-2.5 py-1 rounded-full"><Sparkles size={12} /> {p.quality}</span>
+                    </div>
+                    <ul className="flex flex-col gap-2 mt-1">
+                      {p.features.map(f => <li key={f} className="flex items-start gap-2 text-sm text-gray-600"><Check className="w-4 h-4 text-primary mt-0.5 shrink-0" />{f}</li>)}
+                    </ul>
+                    <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="mt-auto py-3 rounded-xl text-center text-sm font-bold text-white flex items-center justify-center gap-2" style={{ background: 'linear-gradient(135deg,#FF6B35,#FFBE5C)' }}>
+                      Hemen Dene <ArrowRight size={16} />
+                    </a>
+                  </div>
+                </div>
+              ) : (
+                <div className="card-hover h-full rounded-3xl p-6 flex flex-col gap-4 border border-gray-200 bg-white shadow-sm hover:shadow-xl hover:border-orange-200">
+                  <div className="rounded-2xl overflow-hidden border border-gray-100">
+                    <img src={p.img} alt={`${p.name} paketi örnek görsel`} loading="lazy" className="w-full object-cover aspect-[4/3]" />
+                  </div>
+                  <div className="text-center">
+                    <p className="text-lg font-bold font-display text-dark">{p.name}</p>
+                    <div className="mt-1"><span className="text-4xl font-black text-dark">{p.price}₺</span><span className="text-gray-400 text-sm"> / sipariş</span></div>
+                  </div>
+                  <p className="text-sm text-center text-dark-gray leading-snug">{p.tagline}</p>
+                  <div className="flex justify-center gap-2">
+                    <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-gray-500 bg-gray-100 px-2.5 py-1 rounded-full"><Gauge size={12} /> {p.speed}</span>
+                    <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-gray-500 bg-gray-100 px-2.5 py-1 rounded-full"><Sparkles size={12} /> {p.quality}</span>
+                  </div>
+                  <ul className="flex flex-col gap-2 mt-1">
+                    {p.features.map(f => <li key={f} className="flex items-start gap-2 text-sm text-gray-600"><Check className="w-4 h-4 text-primary mt-0.5 shrink-0" />{f}</li>)}
+                  </ul>
+                  <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="mt-auto py-3 rounded-xl text-center text-sm font-bold border border-gray-300 text-dark hover:bg-orange-50 hover:border-orange-200 transition-colors flex items-center justify-center gap-2">
+                    Hemen Dene <ArrowRight size={16} />
+                  </a>
+                </div>
+              )}
+            </Reveal>
+          ))}
+        </div>
+
+        {/* CTA */}
+        <div className="mt-12 text-center">
+          <div className="inline-flex flex-col sm:flex-row items-center gap-4">
+            <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer"
+              className="w-full sm:w-auto bg-[#25D366] hover:bg-[#1fb355] text-white text-base font-bold py-3.5 px-7 rounded-2xl flex items-center justify-center gap-2.5 transition-colors"
+              style={{ boxShadow: '0 8px 24px #25D36640' }}>
+              <Smartphone size={20} /> Hemen Dene
+            </a>
+            <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer"
+              className="w-full sm:w-auto text-white text-base font-bold py-3.5 px-7 rounded-2xl flex items-center justify-center gap-2.5 transition-all"
+              style={{ background: 'linear-gradient(135deg,#FF6B35,#FFBE5C)', boxShadow: '0 8px 24px #FF6B3540' }}>
+              <Camera size={20} /> Sipariş Ver <ArrowRight size={18} />
+            </a>
+          </div>
+          <p className="text-xs text-gray-400 mt-4">Fotoğrafınızı WhatsApp'tan gönderin, görselleriniz hazırlanıp size iletilsin.</p>
+        </div>
+      </Reveal>
+    </div>
+  </section>
+);
+
+// ────────────────────────────────────────────────
 // Upsell / Satış fırsatları (#upsell)
 // ────────────────────────────────────────────────
 const UpsellSection = () => (
@@ -752,6 +962,7 @@ const Footer = () => (
           </div>
           <p className="text-gray-400 mb-6">Trendyol satıcıları için yapay zekâ destekli soru-cevap asistanı. Bir satıcı tarafından, satıcılar için geliştirildi.</p>
           <p className="text-sm text-gray-500">© 2026 SellerPilot. Tüm hakları saklıdır.</p>
+          <p className="text-xs text-gray-600 mt-4 leading-relaxed">PURELYPRO BADGER KOZMETİK VE DANIŞMANLIK HİZMETLERİ TİCARET LİMİTED ŞİRKETİ<br/>Bahçelievler Mah. Talatpaşa Cad. Saray Apt. No: 43 İç Kapı No: 34, Bahçelievler / İstanbul<br/>Vergi Kimlik No: 7331258700 · MERSİS: 0733125870000001</p>
         </div>
         <div className="md:pl-12">
           <h4 className="text-lg font-bold font-display mb-6">Bağlantılar</h4>
@@ -764,12 +975,15 @@ const Footer = () => (
           <h4 className="text-lg font-bold font-display mb-6">İletişim</h4>
           <ul className="space-y-4 text-gray-400">
             <li className="flex items-center gap-3"><Mail size={18} className="text-primary" /><span>info@sellerpilot.cloud</span></li>
-            <li><a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:text-white transition-colors"><Smartphone size={18} className="text-primary" /><span>+90 (537) 837 41 02</span></a></li>
+            <li><a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:text-white transition-colors"><Smartphone size={18} className="text-primary" /><span>+90 530 621 61 39</span></a></li>
           </ul>
-          <div className="mt-8 flex gap-4 text-sm text-gray-500">
-            <a href="#" className="hover:text-white transition-colors">Gizlilik Politikası</a>
-            <span className="text-gray-700">|</span>
-            <a href="#" className="hover:text-white transition-colors">Kullanım Koşulları</a>
+          <div className="mt-8 flex flex-wrap gap-x-4 gap-y-2 text-sm text-gray-500">
+            <a href="/mesafeli-satis-sozlesmesi.html" className="hover:text-white transition-colors">Mesafeli Satış Sözleşmesi</a>
+            <a href="/on-bilgilendirme-formu.html" className="hover:text-white transition-colors">Ön Bilgilendirme Formu</a>
+            <a href="/gizlilik-politikasi.html" className="hover:text-white transition-colors">Gizlilik ve Güvenlik</a>
+            <a href="/iptal-iade-kosullari.html" className="hover:text-white transition-colors">İptal ve İade</a>
+            <a href="/teslimat-ve-ifa.html" className="hover:text-white transition-colors">Teslimat ve İfa</a>
+            <a href="/cerez-politikasi.html" className="hover:text-white transition-colors">Çerez Politikası</a>
           </div>
         </div>
       </div>
@@ -811,6 +1025,7 @@ const App = () => (
       <FounderStrip />
       <SocialProof />
       <LiveDemo />
+      <AIGorselStudyo />
       <UpsellSection />
       <HowItWorks />
       <Features />

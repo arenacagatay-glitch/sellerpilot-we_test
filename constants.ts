@@ -5,13 +5,14 @@ import { ChatExample, FaqItem, Feature, StatCard, Step } from './types';
 // Dağıtım yaparken "Who has access" kısmının "Anyone" olduğundan emin ol.
 export const GOOGLE_SHEETS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwtGXVec6cRsfgpJpb5GAODf8RDrkLoQvwMsu6E1OOBqxuummZdZs2BxUbRoYzSepc/exec"; 
 
-export const WHATSAPP_URL = "https://wa.me/905378374102";
+export const WHATSAPP_URL = "https://wa.me/905306216139";
 export const APP_URL = "https://app.sellerpilot.cloud";
 
 export const NAV_LINKS = [
   { label: 'Özellikler', href: '#features' },
   { label: 'Nasıl Çalışır?', href: '#how-it-works' },
   { label: 'Örnekler', href: '#examples' },
+  { label: 'Görsel Stüdyo', href: '#ai-studyo' },
   { label: 'Fiyatlar', href: '#pricing' },
   { label: 'SSS', href: '#faq' },
 ];
