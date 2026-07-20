@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import {
   ChevronDown, ChevronUp, ChevronLeft, ChevronRight, CheckCircle, Mail,
   Smartphone, Check, Plane, X, Menu as MenuIcon, ShieldCheck, Store, Clock,
@@ -491,12 +492,96 @@ const STUDYO_SHOTS = [
   { src: '/studyo/nevresim-6.jpg', tag: 'Set İçeriği' },
 ];
 
-const STUDYO_GALLERY = [
-  { label: 'Güneş Gözlüğü', ref: '/studyo/gozluk-ref.jpg', hero: '/studyo/gozluk-hero.jpg' },
-  { label: 'Takı & Aksesuar', ref: '/studyo/kolye-ref.jpg', hero: '/studyo/kolye-hero.jpg' },
-  { label: 'Çanta', ref: '/studyo/canta-ref.jpg', hero: '/studyo/canta-hero.jpg' },
-  { label: 'Elektronik', ref: '/studyo/kulaklik-ref.jpg', hero: '/studyo/kulaklik-hero.jpg' },
+// Her kategori: 1 gerçek referans fotoğrafı + tıklayınca açılan 6 üretilmiş görsel
+// (worker doğrulamasından tüm slotları geçen setler; dosyalar public/studyo/sets/<dir>/)
+const STUDYO_SETS = [
+  { label: 'Takı & Aksesuar', dir: '/studyo/sets/kolye' },
+  { label: 'Güneş Gözlüğü', dir: '/studyo/sets/gozluk' },
+  { label: 'Çanta', dir: '/studyo/sets/canta' },
+  { label: 'Elektronik', dir: '/studyo/sets/kulaklik' },
 ];
+
+const CategoryShowcase = () => {
+  const [openSet, setOpenSet] = useState<(typeof STUDYO_SETS)[number] | null>(null);
+
+  useEffect(() => {
+    if (!openSet) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setOpenSet(null); };
+    window.addEventListener('keydown', onKey);
+    document.body.style.overflow = 'hidden';
+    return () => { window.removeEventListener('keydown', onKey); document.body.style.overflow = ''; };
+  }, [openSet]);
+
+  return (
+    <>
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+        {STUDYO_SETS.map((g) => (
+          <button
+            key={g.label}
+            onClick={() => setOpenSet(g)}
+            className="card-hover group text-left bg-white rounded-3xl border border-gray-200 overflow-hidden hover:border-orange-200 hover:shadow-2xl hover:shadow-orange-500/10"
+          >
+            <div className="relative">
+              <img src={`${g.dir}/ref.jpg`} alt={`${g.label} — referans fotoğraf`} loading="lazy" className="w-full object-cover aspect-[3/4] transition-transform duration-300 group-hover:scale-[1.03]" />
+              <span className="absolute top-2.5 left-2.5 text-[10px] font-bold text-white bg-black/45 backdrop-blur-sm px-2 py-0.5 rounded-full flex items-center gap-1">
+                <Camera size={11} /> Referans görsel
+              </span>
+              <div className="absolute inset-x-0 bottom-0 p-3 pt-10 bg-gradient-to-t from-black/60 to-transparent flex items-end justify-between">
+                <span className="text-white text-sm font-bold font-display drop-shadow">{g.label}</span>
+                <span className="text-[11px] font-bold text-white px-2.5 py-1 rounded-full flex items-center gap-1 shadow-lg" style={{ background: 'linear-gradient(135deg,#FF6B35,#FFBE5C)' }}>
+                  <Sparkles size={11} /> 6 fotoğrafı gör
+                </span>
+              </div>
+            </div>
+          </button>
+        ))}
+      </div>
+
+      {/* Portal şart: Reveal'ın transform'u fixed konumlandırmayı kırıyor (transformed ancestor) */}
+      {openSet && createPortal(
+        <div className="fixed inset-0 z-[80] flex items-center justify-center p-4" onClick={() => setOpenSet(null)}>
+          <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
+          <div
+            className="relative bg-white rounded-3xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="sticky top-0 z-10 bg-white/95 backdrop-blur border-b border-gray-100 px-5 sm:px-7 py-4 flex items-center justify-between rounded-t-3xl">
+              <div>
+                <p className="font-bold font-display text-dark">{openSet.label}</p>
+                <p className="text-xs text-gray-400">1 referans fotoğraftan üretilen, e-ticarete hazır 6 görsel</p>
+              </div>
+              <button onClick={() => setOpenSet(null)} className="p-2 rounded-xl hover:bg-gray-100 transition-colors" aria-label="Kapat">
+                <X size={20} />
+              </button>
+            </div>
+            <div className="p-5 sm:p-7">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="relative w-20 shrink-0 rounded-xl overflow-hidden border border-gray-200">
+                  <img src={`${openSet.dir}/ref.jpg`} alt="Referans" className="w-full aspect-[3/4] object-cover" />
+                </div>
+                <div className="text-sm text-dark-gray">
+                  <span className="inline-flex items-center gap-1.5 text-xs font-bold text-gray-500 bg-gray-100 px-2.5 py-1 rounded-full mb-1"><Camera size={12} /> Satıcının tek fotoğrafı</span>
+                  <p>Bu tek kareden aşağıdaki 6 görsel üretildi — stüdyo, model, dekor derdi olmadan.</p>
+                </div>
+              </div>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                {[1, 2, 3, 4, 5, 6].map((n) => (
+                  <div key={n} className="relative rounded-2xl overflow-hidden border border-orange-100 group">
+                    <img src={`${openSet.dir}/${n}.jpg`} alt={`${openSet.label} — üretilen görsel ${n}`} loading="lazy" className="w-full aspect-[3/4] object-cover transition-transform duration-300 group-hover:scale-105" />
+                    <span className="absolute top-2 left-2 text-[10px] font-bold text-white px-2 py-0.5 rounded-full flex items-center gap-1" style={{ background: 'linear-gradient(135deg,#FF6B35,#FFBE5C)' }}>
+                      <Sparkles size={10} /> AI üretimi
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>,
+        document.body
+      )}
+    </>
+  );
+};
 
 const STUDYO_PACKAGES = [
   {
@@ -600,30 +685,9 @@ const AIGorselStudyo = () => (
       <Reveal className="mt-16">
         <div className="text-center mb-8">
           <h3 className="text-2xl font-bold font-display text-dark mb-2">Her kategoride çalışır</h3>
-          <p className="text-dark-gray max-w-xl mx-auto">Gözlükten takıya, çantadan elektroniğe — üründen bağımsız, temiz ve tutarlı vitrin görselleri.</p>
+          <p className="text-dark-gray max-w-xl mx-auto">Tek referans fotoğrafa tıklayın — o kareden üretilen, e-ticarete hazır 6 görseli görün.</p>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          {STUDYO_GALLERY.map((g, i) => (
-            <Reveal key={g.label} delay={(i % 2) * 0.1}>
-              <div className="card-hover h-full bg-white rounded-3xl border border-gray-200 overflow-hidden hover:border-orange-200 hover:shadow-2xl hover:shadow-orange-500/10">
-                <div className="grid grid-cols-2">
-                  <div className="relative">
-                    <img src={g.ref} alt={`${g.label} — referans`} loading="lazy" className="w-full h-full object-cover aspect-[4/5]" />
-                    <span className="absolute top-2.5 left-2.5 text-[10px] font-bold text-white bg-black/45 backdrop-blur-sm px-2 py-0.5 rounded-full">Önce</span>
-                  </div>
-                  <div className="relative border-l-2 border-white">
-                    <img src={g.hero} alt={`${g.label} — üretilen görsel`} loading="lazy" className="w-full h-full object-cover aspect-[4/5]" />
-                    <span className="absolute top-2.5 right-2.5 text-[10px] font-bold text-white px-2 py-0.5 rounded-full" style={{ background: 'linear-gradient(135deg,#FF6B35,#FFBE5C)' }}>Sonra</span>
-                  </div>
-                </div>
-                <div className="flex items-center justify-between px-5 py-4">
-                  <span className="font-bold font-display text-dark">{g.label}</span>
-                  <span className="text-xs text-gray-400 flex items-center gap-1"><ImageIcon size={13} className="text-primary" /> 6 görsel</span>
-                </div>
-              </div>
-            </Reveal>
-          ))}
-        </div>
+        <CategoryShowcase />
       </Reveal>
 
       {/* Paketler */}
