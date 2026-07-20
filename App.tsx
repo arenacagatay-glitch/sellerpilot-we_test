@@ -55,6 +55,13 @@ const GlobalStyles = () => (
     .slide-exit   { animation: slideOut .4s ease-out both; }
 
     .grad-text    { background: linear-gradient(90deg,#FF6B35,#FF9A3C,#FFBE5C); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+
+    @keyframes showcaseScroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+    .showcase-track { display:flex; gap:1.25rem; width:max-content; animation: showcaseScroll 45s linear infinite; }
+    .showcase-track:hover { animation-play-state: paused; }
+    .showcase-stage { perspective: 1200px; }
+    .showcase-card { transform: rotateY(-8deg) rotateX(2deg); transition: transform .35s ease, box-shadow .35s ease; }
+    .showcase-card:hover { transform: rotateY(0deg) rotateX(0deg) scale(1.05); box-shadow: 0 20px 50px rgba(255,107,53,.25); }
     .glow-blob    { pointer-events:none; position:absolute; border-radius:9999px; filter:blur(130px); }
   `}</style>
 );
@@ -493,24 +500,38 @@ const STUDYO_GALLERY = [
 
 const STUDYO_PACKAGES = [
   {
-    name: 'Jet', price: '99', img: '/studyo/paket-jet.jpg', popular: false,
-    tagline: 'Hızlı taslak, en uygun. Saniyeler içinde 6 görsel.',
-    speed: 'En hızlı', quality: 'İyi kalite',
-    features: ['1 vitrin + 5 varyant (6 görsel)', 'Saniyeler içinde teslim', 'Beyaz zemin, temiz kadraj', 'En uygun fiyat'],
-  },
-  {
-    name: 'Vitrin', price: '199', img: '/studyo/paket-vitrin.jpg', popular: true,
+    name: 'Vitrin', price: '249', img: '/studyo/paket-vitrin.jpg', popular: true,
     tagline: 'Dengeli, hızlı, en popüler. Günlük kullanım için ideal.',
     speed: 'Hızlı', quality: 'Yüksek kalite',
     features: ['1 vitrin + 5 varyant (6 görsel)', 'Yaşam alanı & kullanıcı kareleri', 'Öne çıkan fayda görselleri', 'Günlük listeleme için ideal'],
   },
   {
-    name: 'Stüdyo', price: '249', img: '/studyo/paket-studyo.jpg', popular: false,
+    name: 'Stüdyo', price: '349', img: '/studyo/paket-studyo.jpg', popular: false,
     tagline: 'Premium kalite. Etiket ve yazı sadakati en üst düzey.',
     speed: 'Standart', quality: 'Premium',
     features: ['1 vitrin + 5 varyant (6 görsel)', 'Etiket & yazı sadakati en üst düzey', 'En yüksek çözünürlük', 'Marka görseli hassasiyeti'],
   },
 ];
+
+// En iyi gerçek üretim çıktıları (worker doğrulamasından tüm slotları geçen setlerin hero kareleri)
+const SHOWCASE_IMAGES = Array.from({ length: 10 }, (_, i) => `/showcase/showcase-${i + 1}.jpg`);
+
+const ShowcaseMarquee = () => (
+  <div className="showcase-stage relative mt-2 mb-14 -mx-4 sm:-mx-6 lg:-mx-8 overflow-hidden">
+    <div className="pointer-events-none absolute inset-y-0 left-0 w-16 sm:w-28 z-10 bg-gradient-to-r from-white to-transparent" />
+    <div className="pointer-events-none absolute inset-y-0 right-0 w-16 sm:w-28 z-10 bg-gradient-to-l from-white to-transparent" />
+    <div className="showcase-track py-4">
+      {[...SHOWCASE_IMAGES, ...SHOWCASE_IMAGES].map((src, i) => (
+        <div key={i} className="showcase-card relative shrink-0 w-44 sm:w-56 rounded-2xl overflow-hidden border border-orange-100 shadow-lg bg-white">
+          <img src={src} alt="SellerPilot AI Görsel Stüdyo üretimi" loading="lazy" className="w-full aspect-[3/4] object-cover" />
+          <span className="absolute bottom-2 left-2 text-[10px] font-bold text-white bg-black/45 backdrop-blur-sm px-2 py-0.5 rounded-full flex items-center gap-1">
+            <Sparkles size={10} /> AI üretimi
+          </span>
+        </div>
+      ))}
+    </div>
+  </div>
+);
 
 const AIGorselStudyo = () => (
   <section id="ai-studyo" className="py-24 bg-gradient-to-b from-light to-white overflow-hidden">
@@ -527,6 +548,11 @@ const AIGorselStudyo = () => (
           Tek bir ürün fotoğrafı yükleyin; yapay zekâ sizin için 1 vitrin görseli ve 5 profesyonel varyant üretsin.
           Fotoğraf stüdyosu, ışık, dekor derdi yok — sıradan bir kareden e-ticarete hazır 6 görsel.
         </p>
+      </Reveal>
+
+      {/* Gerçek üretim vitrini — kayan 3D şerit */}
+      <Reveal>
+        <ShowcaseMarquee />
       </Reveal>
 
       {/* Before → After kanıt showcase */}
@@ -607,7 +633,7 @@ const AIGorselStudyo = () => (
           <h3 className="text-3xl sm:text-4xl font-display font-bold text-dark mb-3">İhtiyacınıza göre seçin</h3>
           <p className="text-dark-gray max-w-xl mx-auto">Her pakette 1 vitrin + 5 varyant, toplam 6 profesyonel görsel. Fiyatlar sipariş başınadır.</p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch max-w-3xl mx-auto">
           {STUDYO_PACKAGES.map((p, i) => (
             <Reveal key={p.name} delay={i * 0.08} className="h-full">
               {p.popular ? (
