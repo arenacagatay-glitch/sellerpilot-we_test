@@ -496,10 +496,6 @@ const STUDYO_SHOTS = [
 // Her kategori: 1 gerçek referans fotoğrafı + tıklayınca açılan 6 üretilmiş görsel
 // (worker doğrulamasından tüm slotları geçen setler; dosyalar public/studyo/sets/<dir>/)
 const STUDYO_SETS = [
-  { label: 'Takı & Aksesuar', dir: '/studyo/sets/kolye' },
-  { label: 'Güneş Gözlüğü', dir: '/studyo/sets/gozluk' },
-  { label: 'Çanta', dir: '/studyo/sets/canta' },
-  { label: 'Elektronik', dir: '/studyo/sets/kulaklik' },
   { label: 'Giyim', dir: '/studyo/sets/takim' },
   { label: 'Oyuncak', dir: '/studyo/sets/oyuncak' },
   { label: 'Züccaciye', dir: '/studyo/sets/bardak' },
