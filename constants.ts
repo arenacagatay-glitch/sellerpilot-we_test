@@ -13,6 +13,7 @@ export const NAV_LINKS = [
   { label: 'Nasıl Çalışır?', href: '#how-it-works' },
   { label: 'Örnekler', href: '#examples' },
   { label: 'Görsel Stüdyo', href: '#ai-studyo' },
+  { label: 'Danışmanlık', href: '/danismanlik' },
   { label: 'Fiyatlar', href: '#pricing' },
   { label: 'SSS', href: '#faq' },
 ];

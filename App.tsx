@@ -112,11 +112,11 @@ const Header = () => {
   const onHome = pathname === '/';
   // Sayfa-farkında nav: Görsel Stüdyo ayrı sayfa (route); diğer çapa linkleri ana
   // sayfadaysak #anchor, değilsek /#anchor (ana sayfaya gidip kaydır).
-  const navLinks = NAV_LINKS.map(l =>
-    l.href === '#ai-studyo'
-      ? { ...l, href: '/gorsel-studyo', route: true }
-      : { ...l, href: onHome ? l.href : `/${l.href}`, route: false }
-  );
+  const navLinks = NAV_LINKS.map(l => {
+    if (l.href === '#ai-studyo') return { ...l, href: '/gorsel-studyo', route: true };
+    if (l.href.startsWith('/')) return { ...l, route: true };
+    return { ...l, href: onHome ? l.href : `/${l.href}`, route: false };
+  });
 
   return (
     <nav style={{ transition: 'all .3s' }} className={`fixed top-0 left-0 right-0 z-50 ${dark ? 'bg-transparent py-5' : 'bg-white/90 backdrop-blur-xl shadow-md py-3'}`}>
@@ -1304,6 +1304,185 @@ const HomePage = () => (
   </>
 );
 
+// ────────────────────────────────────────────────
+// Danışmanlık & Hesap Yönetimi (/danismanlik)
+// ────────────────────────────────────────────────
+const DANISMANLIK_YONETIM = [
+  {
+    icon: ImageIcon,
+    title: 'Ürün Listesi Optimizasyonu',
+    desc: "Fotoğraf, başlık ve açıklamalarınız Trendyol arama motoruna göre yeniden kurgulanır. Müşteri aradığında sizin ürününüz çıkar — tıklanır, satar.",
+  },
+  {
+    icon: TrendingUp,
+    title: 'Reklam Yönetimi — İçeride ve Dışarıda',
+    desc: 'Trendyol içi reklamlar ve Meta CPAS (Trendyol dışı) uçtan uca kurgulanır: kreatifler bizden, hedefleme bizden, düzenli takip ve optimizasyon bizden. Bütçeniz boşa yanmaz.',
+  },
+  {
+    icon: Store,
+    title: 'Ürün Analizi ve Doğru Ürün Seçimi',
+    desc: 'Yeni ürün girişlerinde pazar ve rekabet analiziyle yönlendiriyoruz. Ölecek ürüne stok bağlamazsınız; potansiyeli olana odaklanırsınız.',
+  },
+  {
+    icon: Gauge,
+    title: 'Kampanya Kurguları ve Fiyat Stratejisi',
+    desc: 'Flash indirimler (3 saatlik / 24 saatlik) kârlılık hesabı yapılarak kurgulanır. Komisyon tarifeleri ürün ürün incelenir; stratejinize göre korumacı ya da büyüme odaklı fiyat belirlenir, kârlı olan her kampanyaya girilir — kârsız olandan uzak durulur.',
+  },
+];
+
+const DanismanlikPage = () => {
+  useEffect(() => {
+    document.title = 'Trendyol Danışmanlık & Hesap Yönetimi — Satış Artmazsa Para İade | SellerPilot';
+    return () => { document.title = 'SellerPilot - Trendyol Satıcıları İçin Yapay Zeka Asistanı'; };
+  }, []);
+  return (
+    <>
+      <Header />
+      <main>
+        {/* Hero — iddia net */}
+        <section className="relative pt-32 pb-16 overflow-hidden" style={{ background: 'radial-gradient(1200px 500px at 80% -10%, rgba(255,107,53,0.18), transparent 60%), #0A0C11' }}>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <span className="inline-flex items-center gap-1.5 py-1 px-3 bg-white/5 text-primary text-xs font-bold uppercase tracking-wider rounded-full mb-5 border border-white/10">
+              <ShieldCheck size={13} /> Trendyol Danışmanlık & Hesap Yönetimi
+            </span>
+            <h1 className="text-4xl sm:text-6xl font-display font-black text-white mb-5 leading-tight max-w-4xl mx-auto">
+              Satışlarınızı artıramazsak <span className="grad-text">paranızı iade ediyoruz.</span>
+            </h1>
+            <p className="text-gray-300 max-w-2xl mx-auto leading-relaxed text-lg mb-4">
+              Kimsenin yapmadığını yapıyoruz, çünkü kendimize güveniyoruz. 6 yıldır Trendyol'da aktif satan bir ekip + SellerPilot yapay zekâ araçları — mağazanızı biz yönetiyoruz, riski biz alıyoruz.
+            </p>
+            <p className="text-gray-400 text-sm mb-8">Herkesi kabul etmiyoruz: en az 1 yıldır Trendyol'da satıcı olmalısınız. Önce mağazanızı inceliyoruz.</p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+              <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto bg-[#25D366] hover:bg-[#1fb355] text-white text-base font-bold py-3.5 px-7 rounded-2xl flex items-center justify-center gap-2.5 transition-colors" style={{ boxShadow: '0 8px 24px #25D36640' }}>
+                <Smartphone size={20} /> Mağaza Uygunluğunu Sorgula
+              </a>
+              <a href="#danismanlik-hizmetler" className="w-full sm:w-auto text-white text-base font-bold py-3.5 px-7 rounded-2xl flex items-center justify-center gap-2.5 border border-white/15 hover:bg-white/5 transition-colors">
+                Neler Yapıyoruz? <ArrowRight size={18} />
+              </a>
+            </div>
+          </div>
+        </section>
+
+        {/* Süreç — 3 adım */}
+        <section className="py-20 bg-gradient-to-b from-light to-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <Reveal className="text-center mb-12">
+              <h2 className="text-3xl sm:text-4xl font-display font-bold text-dark mb-3">Nasıl başlıyoruz?</h2>
+              <p className="text-dark-gray max-w-xl mx-auto">Para almadan önce mağazanıza katkı sağlayabileceğimizden emin oluyoruz.</p>
+            </Reveal>
+            <div className="grid md:grid-cols-3 gap-6">
+              {[
+                { n: '1', t: 'WhatsApp\'tan başvurun', d: 'Mağaza linkinizi gönderin. Ön şart: en az 1 yıldır Trendyol\'da aktif satıcı olmak.' },
+                { n: '2', t: 'Ücretsiz uygunluk kontrolü', d: 'Mağazanızı, kategorinizi ve rekabeti inceliyoruz. Katkı sağlayamayacağımızı görürsek zaten kabul etmiyoruz — boşa para ödemezsiniz.' },
+                { n: '3', t: 'Yol haritası + başlangıç', d: 'Uygunsanız net bir aksiyon planı sunuyoruz; onayınızla mağazanızın yönetimine başlıyoruz.' },
+              ].map((s, i) => (
+                <Reveal key={s.n} delay={i * 0.08}>
+                  <div className="bg-white rounded-3xl border border-gray-200 p-7 h-full card-hover hover:border-orange-200 hover:shadow-xl">
+                    <div className="w-12 h-12 rounded-2xl flex items-center justify-center text-white font-black text-xl mb-4" style={{ background: 'linear-gradient(135deg,#FF6B35,#FFBE5C)' }}>{s.n}</div>
+                    <p className="font-bold font-display text-dark text-lg mb-2">{s.t}</p>
+                    <p className="text-dark-gray text-sm leading-relaxed">{s.d}</p>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Hizmetler + fiyat */}
+        <section id="danismanlik-hizmetler" className="py-20 bg-white scroll-mt-24">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <Reveal className="text-center mb-12">
+              <span className="inline-block py-1 px-3 bg-orange-50 text-primary text-xs font-bold uppercase tracking-wider rounded-full mb-4 border border-orange-100">Hizmetler</span>
+              <h2 className="text-3xl sm:text-4xl font-display font-bold text-dark mb-3">İki yol var — ikisinde de risk bizde</h2>
+            </Reveal>
+            <div className="grid md:grid-cols-2 gap-6 items-stretch max-w-4xl mx-auto">
+              <Reveal className="h-full">
+                <div className="h-full rounded-3xl p-7 flex flex-col gap-4 border border-gray-200 bg-white shadow-sm card-hover hover:shadow-xl hover:border-orange-200">
+                  <p className="text-lg font-bold font-display text-dark">Aylık Danışmanlık</p>
+                  <div><span className="text-4xl font-black text-dark">15.000₺</span><span className="text-gray-400 text-sm"> / ay · KDV dahil</span></div>
+                  <p className="text-sm text-dark-gray leading-relaxed">Mağazanız sizde kalır, yol haritası bizden: haftalık analiz, fiyat/kampanya/reklam kararlarında birebir yönlendirme.</p>
+                  <div className="bg-orange-50 border border-orange-100 rounded-xl p-3.5 text-sm text-dark flex items-start gap-2">
+                    <ShieldCheck className="w-4 h-4 text-primary mt-0.5 shrink-0" />
+                    <span><b>Garanti:</b> Katkısı olmadığını düşünürseniz ücretiniz iade edilir.</span>
+                  </div>
+                  <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="mt-auto py-3 rounded-xl text-center text-sm font-bold border border-gray-300 text-dark hover:bg-orange-50 hover:border-orange-200 transition-colors">WhatsApp'tan Başvur</a>
+                </div>
+              </Reveal>
+              <Reveal delay={0.08} className="h-full">
+                <div className="relative h-full rounded-3xl p-[2px]" style={{ background: 'linear-gradient(135deg,#FF6B35,#FFBE5C)' }}>
+                  <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 text-white text-xs font-bold px-4 py-1 rounded-full whitespace-nowrap z-10" style={{ background: 'linear-gradient(135deg,#FF6B35,#FFBE5C)' }}>★ Tam Teslim</span>
+                  <div className="bg-white h-full rounded-3xl p-7 flex flex-col gap-4">
+                    <p className="text-lg font-bold font-display text-dark">Hesap Yönetimi — A'dan Z'ye</p>
+                    <div><span className="text-3xl font-black grad-text">SKU bazlı fiyat</span></div>
+                    <p className="text-sm text-dark-gray leading-relaxed">Mağazanızı komple biz yönetiyoruz: listeleme, reklam, kampanya, fiyat — hepsi bizde. Fiyat, ürün (SKU) sayınıza göre belirlenir.</p>
+                    <p className="text-xs text-gray-400">WhatsApp'tan iletişime geçip mağaza uygunluğunuzu sorgulayın.</p>
+                    <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="mt-auto py-3 rounded-xl text-center text-sm font-bold text-white" style={{ background: 'linear-gradient(135deg,#FF6B35,#FFBE5C)' }}>Uygunluğunu Sorgula</a>
+                  </div>
+                </div>
+              </Reveal>
+            </div>
+
+            {/* Hesap yönetiminde neler var */}
+            <Reveal className="text-center mt-20 mb-10">
+              <h3 className="text-2xl sm:text-3xl font-display font-bold text-dark">Hesap yönetiminde neler yapıyoruz?</h3>
+            </Reveal>
+            <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+              {DANISMANLIK_YONETIM.map((f, i) => (
+                <Reveal key={f.title} delay={i * 0.06}>
+                  <div className="bg-white rounded-3xl border border-gray-200 p-7 h-full card-hover hover:border-orange-200 hover:shadow-xl">
+                    <div className="w-12 h-12 rounded-2xl bg-orange-50 border border-orange-100 flex items-center justify-center mb-4">
+                      <f.icon className="w-6 h-6 text-primary" />
+                    </div>
+                    <p className="font-bold font-display text-dark text-lg mb-2">{f.title}</p>
+                    <p className="text-dark-gray text-sm leading-relaxed">{f.desc}</p>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+
+            {/* Bonuslar */}
+            <Reveal className="mt-16">
+              <div className="relative max-w-4xl mx-auto rounded-3xl px-6 sm:px-10 py-8 overflow-hidden" style={{ background: 'radial-gradient(900px 400px at 80% -20%, rgba(255,107,53,0.18), transparent 60%), #0A0C11' }}>
+                <p className="text-center text-xs font-bold uppercase tracking-widest text-primary mb-5">Hesap yönetimi müşterilerine özel bonuslar</p>
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <div className="bg-white/5 border border-white/10 rounded-2xl p-5 flex items-start gap-3">
+                    <MessageSquare className="w-6 h-6 text-primary shrink-0 mt-0.5" />
+                    <div>
+                      <p className="text-white font-bold mb-1">SellerPilot Soru-Cevap — Sınırsız & Ücretsiz</p>
+                      <p className="text-gray-400 text-sm leading-relaxed">Trendyol soru-cevap entegrasyonu: müşteri sorularınızı yapay zekâ 7/24 cevaplar, limitsiz.</p>
+                    </div>
+                  </div>
+                  <div className="bg-white/5 border border-white/10 rounded-2xl p-5 flex items-start gap-3">
+                    <Camera className="w-6 h-6 text-primary shrink-0 mt-0.5" />
+                    <div>
+                      <p className="text-white font-bold mb-1">10 Adet Stüdyo Kalite Görsel — Ücretsiz</p>
+                      <p className="text-gray-400 text-sm leading-relaxed">AI Görsel Stüdyo'nun en üst paketinden 10 kullanım hakkı (3.500₺ değerinde) hediye.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </Reveal>
+
+            {/* Kapanış CTA */}
+            <Reveal className="mt-16 text-center">
+              <h3 className="text-3xl sm:text-4xl font-display font-black text-dark mb-3">
+                Satışlarınızı artıramazsak <span className="grad-text">paranızı iade ediyoruz.</span>
+              </h3>
+              <p className="text-dark-gray max-w-xl mx-auto mb-7">Bu cümleyi kurabilen başka bir ekip bulursanız, onlarla çalışın.</p>
+              <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2.5 bg-[#25D366] hover:bg-[#1fb355] text-white text-base font-bold py-3.5 px-8 rounded-2xl transition-colors" style={{ boxShadow: '0 8px 24px #25D36640' }}>
+                <Smartphone size={20} /> Mağaza Uygunluğunu Sorgula
+              </a>
+              <p className="text-xs text-gray-400 mt-4">Ön şart: en az 1 yıldır Trendyol'da aktif satıcı olmak.</p>
+            </Reveal>
+          </div>
+        </section>
+      </main>
+      <Footer />
+      <FloatingWhatsApp />
+    </>
+  );
+};
+
 // Görsel Stüdyo — kendi dedicated sayfası (reklam trafiği buraya)
 const GorselStudyoPage = () => {
   useEffect(() => {
@@ -1331,6 +1510,7 @@ const App = () => (
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/gorsel-studyo" element={<GorselStudyoPage />} />
+        <Route path="/danismanlik" element={<DanismanlikPage />} />
       </Routes>
     </div>
   </BrowserRouter>
