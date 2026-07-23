@@ -7,6 +7,7 @@ import {
   Camera, Image as ImageIcon, Wand2, Gauge
 } from 'lucide-react';
 import { CHAT_EXAMPLES, FAQ_ITEMS, FEATURES, NAV_LINKS, STAT_CARDS, STEPS, WHATSAPP_URL, APP_URL } from './constants';
+import { BrowserRouter, Routes, Route, Link, useLocation } from 'react-router-dom';
 
 // ────────────────────────────────────────────────
 // CSS animations injected once
@@ -107,22 +108,33 @@ const Header = () => {
 
   const dark = !isScrolled && !menuOpen;
 
+  const { pathname } = useLocation();
+  const onHome = pathname === '/';
+  // Sayfa-farkında nav: Görsel Stüdyo ayrı sayfa (route); diğer çapa linkleri ana
+  // sayfadaysak #anchor, değilsek /#anchor (ana sayfaya gidip kaydır).
+  const navLinks = NAV_LINKS.map(l =>
+    l.href === '#ai-studyo'
+      ? { ...l, href: '/gorsel-studyo', route: true }
+      : { ...l, href: onHome ? l.href : `/${l.href}`, route: false }
+  );
+
   return (
     <nav style={{ transition: 'all .3s' }} className={`fixed top-0 left-0 right-0 z-50 ${dark ? 'bg-transparent py-5' : 'bg-white/90 backdrop-blur-xl shadow-md py-3'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-        <a href="#" className="flex items-center gap-2">
+        <Link to="/" className="flex items-center gap-2">
           <div className="p-2 rounded-xl shadow-lg" style={{ background: 'linear-gradient(135deg,#FF6B35,#FFBE5C)', boxShadow: '0 4px 16px #FF6B3540' }}>
             <Plane className="w-5 h-5 text-white fill-white" />
           </div>
           <span className={`text-xl sm:text-2xl font-bold font-display ${dark ? 'text-white' : 'text-dark'}`}>SellerPilot</span>
-        </a>
+        </Link>
 
         <div className="hidden lg:flex items-center gap-8">
-          {NAV_LINKS.map(l => (
-            <a key={l.label} href={l.href} className={`font-medium transition-colors ${dark ? 'text-gray-300 hover:text-white' : 'text-dark-gray hover:text-primary'}`}>
-              {l.label}
-            </a>
-          ))}
+          {navLinks.map(l => {
+            const cls = `font-medium transition-colors ${dark ? 'text-gray-300 hover:text-white' : 'text-dark-gray hover:text-primary'}`;
+            return l.route
+              ? <Link key={l.label} to={l.href} className={cls}>{l.label}</Link>
+              : <a key={l.label} href={l.href} className={cls}>{l.label}</a>;
+          })}
         </div>
 
         <div className="flex items-center gap-3">
@@ -138,8 +150,10 @@ const Header = () => {
       {menuOpen && (
         <div className="lg:hidden bg-white border-t border-gray-100 overflow-hidden" style={{ animation: 'menuDown .25s ease-out' }}>
           <div className="px-6 py-4 flex flex-col gap-1">
-            {NAV_LINKS.map(l => (
-              <a key={l.label} href={l.href} onClick={() => setMenuOpen(false)} className="py-3 text-dark font-medium border-b border-gray-50 last:border-0 hover:text-primary transition-colors">{l.label}</a>
+            {navLinks.map(l => (
+              l.route
+                ? <Link key={l.label} to={l.href} onClick={() => setMenuOpen(false)} className="py-3 text-dark font-medium border-b border-gray-50 last:border-0 hover:text-primary transition-colors">{l.label}</Link>
+                : <a key={l.label} href={l.href} onClick={() => setMenuOpen(false)} className="py-3 text-dark font-medium border-b border-gray-50 last:border-0 hover:text-primary transition-colors">{l.label}</a>
             ))}
             <a href={APP_URL} className="mt-3 text-white text-center font-bold py-3.5 rounded-xl" style={{ background: 'linear-gradient(135deg,#FF6B35,#FFBE5C)' }}>7 Gün Ücretsiz Dene</a>
             <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="mt-2 bg-[#25D366] text-white text-center font-bold py-3.5 rounded-xl flex items-center justify-center gap-2">
@@ -702,6 +716,66 @@ const FounderNote = () => (
   </div>
 );
 
+// Görsel Stüdyo sayfası hero'su (koyu, reklam mesaj-eşleşmeli)
+const GorselStudyoHero = () => (
+  <section className="relative pt-32 pb-16 overflow-hidden" style={{ background: 'radial-gradient(1200px 500px at 80% -10%, rgba(255,107,53,0.18), transparent 60%), #0A0C11' }}>
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <span className="inline-flex items-center gap-1.5 py-1 px-3 bg-white/5 text-primary text-xs font-bold uppercase tracking-wider rounded-full mb-5 border border-white/10">
+        <Sparkles size={13} /> AI Görsel Stüdyo
+      </span>
+      <h1 className="text-4xl sm:text-6xl font-display font-black text-white mb-5 leading-tight max-w-4xl mx-auto">
+        Tek fotoğraf. <span className="grad-text">6 profesyonel görsel.</span>
+      </h1>
+      <p className="text-gray-300 max-w-2xl mx-auto leading-relaxed text-lg mb-8">
+        Telefonla çektiğiniz sıradan bir ürün karesini, saniyeler içinde Trendyol'a hazır 6 profesyonel görsele dönüştürün. Fotoğraf stüdyosu, model, dekor derdi yok.
+      </p>
+      <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+        <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto bg-[#25D366] hover:bg-[#1fb355] text-white text-base font-bold py-3.5 px-7 rounded-2xl flex items-center justify-center gap-2.5 transition-colors" style={{ boxShadow: '0 8px 24px #25D36640' }}>
+          <Smartphone size={20} /> WhatsApp'tan Gönder
+        </a>
+        <a href="#studyo-fiyat" className="w-full sm:w-auto text-white text-base font-bold py-3.5 px-7 rounded-2xl flex items-center justify-center gap-2.5 border border-white/15 hover:bg-white/5 transition-colors">
+          Fiyatları Gör <ArrowRight size={18} />
+        </a>
+      </div>
+    </div>
+  </section>
+);
+
+// Ana sayfada Görsel Stüdyo teaser'ı (dev bölüm yerine ince kart → dedicated sayfa)
+const GorselStudyoTeaser = () => (
+  <section className="py-20 bg-gradient-to-b from-white to-light overflow-hidden">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <Reveal>
+        <div className="relative rounded-3xl overflow-hidden border border-white/10 p-8 sm:p-12" style={{ background: 'radial-gradient(900px 400px at 85% -20%, rgba(255,107,53,0.18), transparent 60%), #0A0C11' }}>
+          <div className="flex flex-col lg:flex-row items-center gap-8">
+            <div className="lg:flex-1 text-center lg:text-left">
+              <span className="inline-flex items-center gap-1.5 py-1 px-3 bg-white/5 text-primary text-xs font-bold uppercase tracking-wider rounded-full mb-4 border border-white/10">
+                <Sparkles size={13} /> Yeni · AI Görsel Stüdyo
+              </span>
+              <h2 className="text-3xl sm:text-4xl font-display font-bold text-white mb-3 leading-tight">
+                Tek fotoğraf → <span className="grad-text">6 profesyonel görsel</span>
+              </h2>
+              <p className="text-gray-300 mb-6 max-w-xl leading-relaxed">
+                Ürün fotoğraflarınızı da SellerPilot üretsin. Telefonla çektiğiniz sıradan bir kareden, Trendyol'a hazır 6 profesyonel görsel — stüdyo, model, dekor derdi olmadan.
+              </p>
+              <Link to="/gorsel-studyo" className="inline-flex items-center gap-2 text-white font-bold py-3 px-6 rounded-2xl transition-all" style={{ background: 'linear-gradient(135deg,#FF6B35,#FFBE5C)', boxShadow: '0 8px 24px #FF6B3540' }}>
+                Görsel Stüdyo'yu İncele <ArrowRight size={18} />
+              </Link>
+            </div>
+            <div className="lg:w-[42%] grid grid-cols-3 gap-2">
+              {['/studyo/sets/vucutsprey/1.jpg', '/studyo/sets/takim/1.jpg', '/showcase/showcase-11.jpg', '/studyo/sets/vucutsprey/5.jpg', '/studyo/sets/bardak/1.jpg', '/studyo/sets/vucutsprey/4.jpg'].map((s, i) => (
+                <div key={i} className="rounded-xl overflow-hidden border border-white/10">
+                  <img src={s} alt="AI üretimi örnek görsel" loading="lazy" className="w-full aspect-[3/4] object-cover" />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </Reveal>
+    </div>
+  </section>
+);
+
 const AIGorselStudyo = () => (
   <section id="ai-studyo" className="py-24 bg-gradient-to-b from-light to-white overflow-hidden">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -784,10 +858,11 @@ const AIGorselStudyo = () => (
         <FounderNote />
       </Reveal>
 
-      {/* Paketler */}
+      {/* Paketler / Fiyatlandırma */}
+      <div id="studyo-fiyat" className="scroll-mt-24" />
       <Reveal className="mt-20">
         <div className="text-center mb-10">
-          <span className="inline-block py-1 px-3 bg-orange-50 text-primary text-xs font-bold uppercase tracking-wider rounded-full mb-4 border border-orange-100">Paketler</span>
+          <span className="inline-block py-1 px-3 bg-orange-50 text-primary text-xs font-bold uppercase tracking-wider rounded-full mb-4 border border-orange-100">Fiyatlandırma</span>
           <h3 className="text-3xl sm:text-4xl font-display font-bold text-dark mb-3">İhtiyacınıza göre seçin</h3>
           <p className="text-dark-gray max-w-xl mx-auto">Her pakette 1 vitrin + 5 varyant, toplam 6 profesyonel görsel. Fiyatlar sipariş başınadır.</p>
         </div>
@@ -1199,9 +1274,16 @@ const FloatingWhatsApp = () => {
 // ────────────────────────────────────────────────
 // App
 // ────────────────────────────────────────────────
-const App = () => (
-  <div className="min-h-screen bg-white font-sans text-dark antialiased">
-    <GlobalStyles />
+// Rota değişiminde en üste kaydır
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+  useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
+  return null;
+};
+
+// Ana sayfa — SORU-CEVAP odaklı (Görsel Stüdyo yerine teaser)
+const HomePage = () => (
+  <>
     <Header />
     <main>
       <Hero />
@@ -1209,7 +1291,7 @@ const App = () => (
       <FounderStrip />
       <SocialProof />
       <LiveDemo />
-      <AIGorselStudyo />
+      <GorselStudyoTeaser />
       <UpsellSection />
       <HowItWorks />
       <Features />
@@ -1219,7 +1301,33 @@ const App = () => (
     </main>
     <Footer />
     <FloatingWhatsApp />
-  </div>
+  </>
+);
+
+// Görsel Stüdyo — kendi dedicated sayfası (reklam trafiği buraya)
+const GorselStudyoPage = () => (
+  <>
+    <Header />
+    <main>
+      <GorselStudyoHero />
+      <AIGorselStudyo />
+    </main>
+    <Footer />
+    <FloatingWhatsApp />
+  </>
+);
+
+const App = () => (
+  <BrowserRouter>
+    <ScrollToTop />
+    <div className="min-h-screen bg-white font-sans text-dark antialiased">
+      <GlobalStyles />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/gorsel-studyo" element={<GorselStudyoPage />} />
+      </Routes>
+    </div>
+  </BrowserRouter>
 );
 
 export default App;
