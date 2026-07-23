@@ -485,19 +485,19 @@ const LiveDemo = () => {
 // AI Görsel Stüdyo (#ai-studyo)
 // ────────────────────────────────────────────────
 const STUDYO_SHOTS = [
-  { src: '/studyo/nevresim-1.jpg', tag: 'Vitrin' },
-  { src: '/studyo/nevresim-2.jpg', tag: 'Yaşam Alanı' },
-  { src: '/studyo/nevresim-3.jpg', tag: 'Öne Çıkan Fayda' },
-  { src: '/studyo/nevresim-4.jpg', tag: 'Yakın Detay' },
-  { src: '/studyo/nevresim-5.jpg', tag: 'Kullanıcı Karesi' },
-  { src: '/studyo/nevresim-6.jpg', tag: 'Set İçeriği' },
+  { src: '/studyo/sets/vucutsprey/1.jpg', tag: 'Vitrin' },
+  { src: '/studyo/sets/vucutsprey/5.jpg', tag: 'Yaşam Alanı' },
+  { src: '/studyo/sets/vucutsprey/4.jpg', tag: 'Koku Notları' },
+  { src: '/studyo/sets/vucutsprey/6.jpg', tag: 'Yakın Detay' },
+  { src: '/studyo/sets/vucutsprey/2.jpg', tag: 'Kullanıcı Karesi' },
+  { src: '/studyo/sets/vucutsprey/3.jpg', tag: 'Kullanım Şekli' },
 ];
 
 // Her kategori: 1 gerçek referans fotoğrafı + tıklayınca açılan 6 üretilmiş görsel
 // (worker doğrulamasından tüm slotları geçen setler; dosyalar public/studyo/sets/<dir>/)
 const STUDYO_SETS = [
+  { label: 'Vücut Spreyi', dir: '/studyo/sets/vucutsprey' },
   { label: 'Giyim', dir: '/studyo/sets/takim' },
-  { label: 'Oyuncak', dir: '/studyo/sets/oyuncak' },
   { label: 'Züccaciye', dir: '/studyo/sets/bardak' },
   { label: 'Gıda', dir: '/studyo/sets/recel' },
 ];
@@ -523,9 +523,9 @@ const CategoryShowcase = () => {
             className="card-hover group text-left bg-white rounded-3xl border border-gray-200 overflow-hidden hover:border-orange-200 hover:shadow-2xl hover:shadow-orange-500/10"
           >
             <div className="relative">
-              <img src={`${g.dir}/ref.jpg`} alt={`${g.label} — referans fotoğraf`} loading="lazy" className="w-full object-cover aspect-[3/4] transition-transform duration-300 group-hover:scale-[1.03]" />
-              <span className="absolute top-2.5 left-2.5 text-[10px] font-bold text-white bg-black/45 backdrop-blur-sm px-2 py-0.5 rounded-full flex items-center gap-1">
-                <Camera size={11} /> Referans görsel
+              <img src={`${g.dir}/1.jpg`} alt={`${g.label} — SellerPilot ile üretilen görsel`} loading="lazy" className="w-full object-cover aspect-[3/4] transition-transform duration-300 group-hover:scale-[1.03]" />
+              <span className="absolute top-2.5 left-2.5 text-[10px] font-bold text-white px-2 py-0.5 rounded-full flex items-center gap-1" style={{ background: 'linear-gradient(135deg,#FF6B35,#FFBE5C)' }}>
+                <Sparkles size={11} /> SellerPilot üretti
               </span>
               <div className="absolute inset-x-0 bottom-0 p-3 pt-10 bg-gradient-to-t from-black/60 to-transparent flex items-end justify-between">
                 <span className="text-white text-sm font-bold font-display drop-shadow">{g.label}</span>
@@ -620,14 +620,21 @@ const STUDYO_PACKAGES = [
 ];
 
 // En iyi gerçek üretim çıktıları (worker doğrulamasından tüm slotları geçen setlerin hero kareleri)
-// Her üründen TEK hero — komple set değil (kullanıcı talebi 2026-07-23).
+// Her üründen TEK kaliteli hero — ham/amatör kareler (boya, rulon, etiketli
+// ayakkabı, ayran) marquee'den çıkarıldı (kullanıcı talebi 2026-07-23).
 const SHOWCASE_IMAGES = [
-  ...Array.from({ length: 10 }, (_, i) => `/showcase/showcase-${i + 1}.jpg`),
-  '/showcase/showcase-11.jpg', // parfüm (Warrior) — tek hero
-  '/studyo/sets/takim/1.jpg',
-  '/studyo/sets/oyuncak/1.jpg',
-  '/studyo/sets/bardak/1.jpg',
-  '/studyo/sets/recel/1.jpg',
+  '/studyo/sets/vucutsprey/1.jpg', // vücut spreyi — mor premium hero
+  '/showcase/showcase-11.jpg',     // parfüm Warrior
+  '/studyo/sets/takim/1.jpg',      // giyim
+  '/showcase/showcase-2.jpg',      // nevresim
+  '/showcase/showcase-6.jpg',      // çanta
+  '/showcase/showcase-8.jpg',      // yastık
+  '/showcase/showcase-10.jpg',     // kulaklık
+  '/showcase/showcase-9.jpg',      // lamba
+  '/showcase/showcase-3.jpg',      // saat
+  '/showcase/showcase-7.jpg',      // hoparlör
+  '/studyo/sets/bardak/1.jpg',     // züccaciye
+  '/studyo/sets/oyuncak/1.jpg',    // oyuncak
 ];
 
 const ShowcaseMarquee = () => (
@@ -732,9 +739,9 @@ const AIGorselStudyo = () => (
                 <Camera size={13} /> Sizin fotoğrafınız
               </span>
               <div className="relative rounded-2xl overflow-hidden border border-gray-200 bg-gray-50 flex-1">
-                <img src="/studyo/nevresim-ref.jpg" alt="Referans ürün fotoğrafı" loading="lazy" className="w-full h-full object-cover aspect-[3/4]" />
+                <img src="/studyo/sets/vucutsprey/ref.jpg" alt="Referans ürün fotoğrafı" loading="lazy" className="w-full h-full object-cover aspect-[3/4]" />
               </div>
-              <p className="text-xs text-gray-400 mt-3 leading-snug">Tek kare — telefonla, ışık ve dekor derdi olmadan çekilmiş sıradan ürün fotoğrafı.</p>
+              <p className="text-xs text-gray-400 mt-3 leading-snug">Ürününüzün sade tek karesi — model, ışık, dekor derdi olmadan.</p>
             </div>
 
             {/* Ok / dönüşüm */}
