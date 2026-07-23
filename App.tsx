@@ -620,7 +620,15 @@ const STUDYO_PACKAGES = [
 ];
 
 // En iyi gerçek üretim çıktıları (worker doğrulamasından tüm slotları geçen setlerin hero kareleri)
-const SHOWCASE_IMAGES = Array.from({ length: 16 }, (_, i) => `/showcase/showcase-${i + 1}.jpg`);
+// Her üründen TEK hero — komple set değil (kullanıcı talebi 2026-07-23).
+const SHOWCASE_IMAGES = [
+  ...Array.from({ length: 10 }, (_, i) => `/showcase/showcase-${i + 1}.jpg`),
+  '/showcase/showcase-11.jpg', // parfüm (Warrior) — tek hero
+  '/studyo/sets/takim/1.jpg',
+  '/studyo/sets/oyuncak/1.jpg',
+  '/studyo/sets/bardak/1.jpg',
+  '/studyo/sets/recel/1.jpg',
+];
 
 const ShowcaseMarquee = () => (
   <div className="showcase-stage relative mt-2 mb-14 -mx-4 sm:-mx-6 lg:-mx-8 overflow-hidden">
