@@ -27,6 +27,7 @@ const GlobalStyles = () => (
     @keyframes slideOut     { from{opacity:1;transform:translateX(0)} to{opacity:0;transform:translateX(-40px)} }
     @keyframes menuDown     { from{height:0;opacity:0} to{opacity:1} }
     @keyframes whatsappBounce { 0%,100%{transform:scale(1)} 50%{transform:scale(1.06)} }
+    @keyframes setSlideIn   { from{opacity:0;transform:translateX(56px) scale(.94)} to{opacity:1;transform:translateX(0) scale(1)} }
 
     .float-phone  { animation: floatPhone 5s ease-in-out infinite; }
     .float-a      { animation: floatA 4.5s ease-in-out infinite; }
@@ -499,6 +500,10 @@ const STUDYO_SETS = [
   { label: 'Güneş Gözlüğü', dir: '/studyo/sets/gozluk' },
   { label: 'Çanta', dir: '/studyo/sets/canta' },
   { label: 'Elektronik', dir: '/studyo/sets/kulaklik' },
+  { label: 'Giyim', dir: '/studyo/sets/takim' },
+  { label: 'Oyuncak', dir: '/studyo/sets/oyuncak' },
+  { label: 'Züccaciye', dir: '/studyo/sets/bardak' },
+  { label: 'Gıda', dir: '/studyo/sets/recel' },
 ];
 
 const CategoryShowcase = () => {
@@ -538,41 +543,61 @@ const CategoryShowcase = () => {
       </div>
 
       {/* Portal şart: Reveal'ın transform'u fixed konumlandırmayı kırıyor (transformed ancestor) */}
+      {/* Premium koyu vitrin: referans solda sabit, üretilen 6 görsel yana doğru akan film şeridi */}
       {openSet && createPortal(
         <div className="fixed inset-0 z-[80] flex items-center justify-center p-4" onClick={() => setOpenSet(null)}>
-          <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
+          <div className="absolute inset-0 bg-black/80 backdrop-blur-md" />
           <div
-            className="relative bg-white rounded-3xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-y-auto"
+            className="relative w-full max-w-6xl max-h-[92vh] overflow-y-auto rounded-3xl shadow-2xl border border-white/10"
+            style={{ background: 'radial-gradient(1200px 500px at 85% -10%, rgba(255,107,53,0.16), transparent 60%), #0A0C11' }}
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="sticky top-0 z-10 bg-white/95 backdrop-blur border-b border-gray-100 px-5 sm:px-7 py-4 flex items-center justify-between rounded-t-3xl">
-              <div>
-                <p className="font-bold font-display text-dark">{openSet.label}</p>
-                <p className="text-xs text-gray-400">1 referans fotoğraftan üretilen, e-ticarete hazır 6 görsel</p>
+            <div className="sticky top-0 z-10 px-5 sm:px-8 py-4 flex items-center justify-between border-b border-white/10 backdrop-blur rounded-t-3xl" style={{ background: 'rgba(10,12,17,0.85)' }}>
+              <div className="flex items-center gap-3">
+                <div className="p-1.5 rounded-lg" style={{ background: 'linear-gradient(135deg,#FF6B35,#FFBE5C)' }}>
+                  <Sparkles className="w-4 h-4 text-white" />
+                </div>
+                <div>
+                  <p className="font-bold font-display text-white">{openSet.label}</p>
+                  <p className="text-xs text-gray-400">1 referans fotoğraftan, e-ticarete hazır 6 görsel</p>
+                </div>
               </div>
-              <button onClick={() => setOpenSet(null)} className="p-2 rounded-xl hover:bg-gray-100 transition-colors" aria-label="Kapat">
+              <button onClick={() => setOpenSet(null)} className="p-2 rounded-xl text-gray-300 hover:bg-white/10 transition-colors" aria-label="Kapat">
                 <X size={20} />
               </button>
             </div>
-            <div className="p-5 sm:p-7">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="relative w-20 shrink-0 rounded-xl overflow-hidden border border-gray-200">
-                  <img src={`${openSet.dir}/ref.jpg`} alt="Referans" className="w-full aspect-[3/4] object-cover" />
-                </div>
-                <div className="text-sm text-dark-gray">
-                  <span className="inline-flex items-center gap-1.5 text-xs font-bold text-gray-500 bg-gray-100 px-2.5 py-1 rounded-full mb-1"><Camera size={12} /> Satıcının tek fotoğrafı</span>
-                  <p>Bu tek kareden aşağıdaki 6 görsel üretildi — stüdyo, model, dekor derdi olmadan.</p>
-                </div>
-              </div>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                {[1, 2, 3, 4, 5, 6].map((n) => (
-                  <div key={n} className="relative rounded-2xl overflow-hidden border border-orange-100 group">
-                    <img src={`${openSet.dir}/${n}.jpg`} alt={`${openSet.label} — üretilen görsel ${n}`} loading="lazy" className="w-full aspect-[3/4] object-cover transition-transform duration-300 group-hover:scale-105" />
-                    <span className="absolute top-2 left-2 text-[10px] font-bold text-white px-2 py-0.5 rounded-full flex items-center gap-1" style={{ background: 'linear-gradient(135deg,#FF6B35,#FFBE5C)' }}>
-                      <Sparkles size={10} /> AI üretimi
+            <div className="p-5 sm:p-8">
+              <div className="flex flex-col lg:flex-row gap-6 items-stretch">
+                {/* Referans — satıcının yüklediği tek kare */}
+                <div className="lg:w-[220px] shrink-0 flex lg:flex-col gap-3 items-start">
+                  <div className="relative w-36 lg:w-full rounded-2xl overflow-hidden border-2 border-dashed border-white/25">
+                    <img src={`${openSet.dir}/ref.jpg`} alt={`${openSet.label} — referans`} className="w-full aspect-[3/4] object-cover" />
+                    <span className="absolute top-2 left-2 text-[10px] font-bold text-white bg-black/55 backdrop-blur-sm px-2 py-0.5 rounded-full flex items-center gap-1">
+                      <Camera size={11} /> Referans görsel
                     </span>
                   </div>
-                ))}
+                  <div className="text-sm text-gray-300 leading-relaxed lg:mt-1">
+                    <p className="font-bold text-white mb-1">Sizin yüklediğiniz</p>
+                    <p className="text-xs text-gray-400">Tek kare yetti. Sağdaki 6 görselin tamamı bu fotoğraftan üretildi.</p>
+                    <span className="hidden lg:inline-flex items-center gap-1.5 mt-3 text-[11px] font-bold text-primary"><ArrowRight size={13} /> Kaydırarak inceleyin</span>
+                  </div>
+                </div>
+
+                {/* Üretilen 6 görsel — yana doğru akan şerit */}
+                <div className="flex-1 min-w-0">
+                  <div className="flex gap-4 overflow-x-auto pb-3 snap-x snap-mandatory [-webkit-overflow-scrolling:touch]" style={{ scrollbarWidth: 'thin' }}>
+                    {[1, 2, 3, 4, 5, 6].map((n, i) => (
+                      <div key={n} className="relative shrink-0 w-56 sm:w-64 snap-start rounded-2xl overflow-hidden border border-white/10 shadow-xl group"
+                        style={{ animation: `setSlideIn 0.5s ${0.06 * i}s cubic-bezier(0.22,1,0.36,1) both` }}>
+                        <img src={`${openSet.dir}/${n}.jpg`} alt={`${openSet.label} — üretilen görsel ${n}`} loading="lazy" className="w-full aspect-[3/4] object-cover transition-transform duration-300 group-hover:scale-105" />
+                        <span className="absolute top-2 left-2 text-[10px] font-bold text-white px-2 py-0.5 rounded-full flex items-center gap-1" style={{ background: 'linear-gradient(135deg,#FF6B35,#FFBE5C)' }}>
+                          <Sparkles size={10} /> AI üretimi
+                        </span>
+                        <span className="absolute bottom-2 right-2 text-[10px] font-bold text-white/80 bg-black/40 backdrop-blur-sm px-2 py-0.5 rounded-full">{n}/6</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -599,7 +624,7 @@ const STUDYO_PACKAGES = [
 ];
 
 // En iyi gerçek üretim çıktıları (worker doğrulamasından tüm slotları geçen setlerin hero kareleri)
-const SHOWCASE_IMAGES = Array.from({ length: 10 }, (_, i) => `/showcase/showcase-${i + 1}.jpg`);
+const SHOWCASE_IMAGES = Array.from({ length: 16 }, (_, i) => `/showcase/showcase-${i + 1}.jpg`);
 
 const ShowcaseMarquee = () => (
   <div className="showcase-stage relative mt-2 mb-14 -mx-4 sm:-mx-6 lg:-mx-8 overflow-hidden">
@@ -618,6 +643,54 @@ const ShowcaseMarquee = () => (
   </div>
 );
 
+// Kurulum videosu — sayfa hızını etkilememesi için video DOM'a ancak play'e
+// basılınca eklenir (o ana kadar sadece ~58KB poster yüklenir).
+const TUTORIAL_VIDEO_URL = 'https://xomqtedspgqnnavdssgl.supabase.co/storage/v1/object/public/ad-creatives/kurulum/kurulum-web-720p.mp4';
+const TUTORIAL_POSTER_URL = 'https://xomqtedspgqnnavdssgl.supabase.co/storage/v1/object/public/ad-creatives/kurulum/kurulum-poster.jpg';
+
+const TutorialVideo = () => {
+  const [playing, setPlaying] = useState(false);
+  return (
+    <div className="relative max-w-4xl mx-auto rounded-3xl overflow-hidden border border-white/10 shadow-2xl" style={{ background: '#0A0C11', boxShadow: '0 30px 80px rgba(255,107,53,0.12), 0 20px 60px rgba(0,0,0,0.35)' }}>
+      {playing ? (
+        <video src={TUTORIAL_VIDEO_URL} poster={TUTORIAL_POSTER_URL} controls autoPlay playsInline className="w-full aspect-video" />
+      ) : (
+        <button onClick={() => setPlaying(true)} className="relative w-full aspect-video group text-left" aria-label="Kurulum videosunu oynat">
+          <img src={TUTORIAL_POSTER_URL} alt="SellerPilot Görsel Stüdyo kurulum videosu" loading="lazy" className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-black/25 group-hover:bg-black/10 transition-colors" />
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="w-20 h-20 rounded-full flex items-center justify-center transition-transform group-hover:scale-110" style={{ background: 'linear-gradient(135deg,#FF6B35,#FFBE5C)', boxShadow: '0 12px 40px rgba(255,107,53,0.5)' }}>
+              <svg width="30" height="30" viewBox="0 0 24 24" fill="white" aria-hidden><path d="M8 5.14v13.72c0 .8.87 1.3 1.56.88l10.54-6.86a1.04 1.04 0 0 0 0-1.76L9.56 4.26A1.04 1.04 0 0 0 8 5.14Z"/></svg>
+            </div>
+          </div>
+          <div className="absolute bottom-4 left-5 right-5 flex items-center justify-between">
+            <span className="text-white text-sm font-bold drop-shadow flex items-center gap-2"><Wand2 size={15} /> Kurulumdan ilk görsele — adım adım</span>
+            <span className="text-[11px] font-bold text-white bg-black/50 backdrop-blur-sm px-2.5 py-1 rounded-full">90 saniye</span>
+          </div>
+        </button>
+      )}
+    </div>
+  );
+};
+
+// Kurucu mesajı — birebir, satıcıdan satıcıya
+const FounderNote = () => (
+  <div className="relative max-w-3xl mx-auto rounded-3xl px-6 sm:px-10 py-8 sm:py-10 text-center overflow-hidden" style={{ background: 'radial-gradient(900px 400px at 80% -20%, rgba(255,107,53,0.18), transparent 60%), #0A0C11' }}>
+    <div className="inline-flex items-center gap-2 mb-4">
+      <div className="p-1.5 rounded-lg" style={{ background: 'linear-gradient(135deg,#FF6B35,#FFBE5C)' }}>
+        <Plane className="w-4 h-4 text-white fill-white" />
+      </div>
+      <span className="text-xs font-bold uppercase tracking-widest text-primary">Neden yaptık?</span>
+    </div>
+    <p className="text-white text-lg sm:text-xl leading-relaxed font-medium">
+      "6 yıllık Trendyol satıcısı olarak fotoğrafların ve verdiği mesajın satışları ne derece arttırdığını kendi
+      mağazamdan gördüm. Artık fotoğraf ve video ajanslarının kaprisini çekme derdi yok.{' '}
+      <span className="grad-text font-bold">En iyi kaliteyi, en hızlı şekilde alıp en hızlı şekilde satışa başlamak var.</span>"
+    </p>
+    <p className="text-gray-400 text-sm mt-4">— SellerPilot kurucusu · 6 yıldır aktif Trendyol satıcısı</p>
+  </div>
+);
+
 const AIGorselStudyo = () => (
   <section id="ai-studyo" className="py-24 bg-gradient-to-b from-light to-white overflow-hidden">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -633,6 +706,11 @@ const AIGorselStudyo = () => (
           Tek bir ürün fotoğrafı yükleyin; yapay zekâ sizin için 1 vitrin görseli ve 5 profesyonel varyant üretsin.
           Fotoğraf stüdyosu, ışık, dekor derdi yok — sıradan bir kareden e-ticarete hazır 6 görsel.
         </p>
+      </Reveal>
+
+      {/* Kurulum videosu — tıkla-oynat (sayfa hızını etkilemez) */}
+      <Reveal className="mb-14">
+        <TutorialVideo />
       </Reveal>
 
       {/* Gerçek üretim vitrini — kayan 3D şerit */}
@@ -688,6 +766,11 @@ const AIGorselStudyo = () => (
           <p className="text-dark-gray max-w-xl mx-auto">Tek referans fotoğrafa tıklayın — o kareden üretilen, e-ticarete hazır 6 görseli görün.</p>
         </div>
         <CategoryShowcase />
+      </Reveal>
+
+      {/* Kurucu mesajı */}
+      <Reveal className="mt-16">
+        <FounderNote />
       </Reveal>
 
       {/* Paketler */}
