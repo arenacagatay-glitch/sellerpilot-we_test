@@ -1305,17 +1305,23 @@ const HomePage = () => (
 );
 
 // Görsel Stüdyo — kendi dedicated sayfası (reklam trafiği buraya)
-const GorselStudyoPage = () => (
-  <>
-    <Header />
-    <main>
-      <GorselStudyoHero />
-      <AIGorselStudyo />
-    </main>
-    <Footer />
-    <FloatingWhatsApp />
-  </>
-);
+const GorselStudyoPage = () => {
+  useEffect(() => {
+    document.title = 'AI Görsel Stüdyo — Tek Fotoğraf, 6 Profesyonel Görsel | SellerPilot';
+    return () => { document.title = 'SellerPilot - Trendyol Satıcıları İçin Yapay Zeka Asistanı'; };
+  }, []);
+  return (
+    <>
+      <Header />
+      <main>
+        <GorselStudyoHero />
+        <AIGorselStudyo />
+      </main>
+      <Footer />
+      <FloatingWhatsApp />
+    </>
+  );
+};
 
 const App = () => (
   <BrowserRouter>
