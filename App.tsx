@@ -1130,14 +1130,14 @@ const WhyDifferent = () => (
           title="Sizin ağzınızdan konuşur"
           mock={
             <div className="space-y-3">
-              <p className="text-[11px] font-bold text-gray-400 uppercase tracking-wider">Sizin daha önce yazdığınız cevap</p>
-              <div className="bg-white rounded-xl border border-gray-200 px-4 py-3 text-sm text-dark-gray">Merhabalar, ürünümüz tamamen pamuklu ve terletmez. Afiyetle kullanın!</div>
-              <p className="text-[11px] font-bold text-primary uppercase tracking-wider">Sistemin yeni bir soruya cevabı</p>
-              <div className="bg-white rounded-xl border border-orange-200 px-4 py-3 text-sm text-dark">Merhabalar, ürünümüz %100 pamuklu dokumadır, cildinizi rahatsız etmez. Afiyetle kullanın!</div>
+              <p className="text-[11px] font-bold text-gray-400 uppercase tracking-wider">Mağaza A — resmi ve imzalı (gerçek cevap)</p>
+              <div className="bg-white rounded-xl border border-gray-200 px-4 py-3 text-sm text-dark-gray">Merhaba efendim, ürünümüz tam kalıptır ancak ayağınız buçuklu veya taraklı ise 1 numara büyük sipariş oluşturmanızı tavsiye ederiz. Mutlu ve sağlıklı günler dilerim :) <span className="italic text-gray-400">mağaza adı</span> Müşteri Memnuniyeti Ekibi</div>
+              <p className="text-[11px] font-bold text-primary uppercase tracking-wider">Mağaza B — samimi ve kısa (gerçek cevap)</p>
+              <div className="bg-white rounded-xl border border-orange-200 px-4 py-3 text-sm text-dark">Merhaba! Boy ve kilo ölçülerinize göre hazırladığımız beden tablomuza baktığımızda 60 beden tercih edebilirsiniz 😊</div>
             </div>
           }
         >
-          Daha önce müşterilerinize yazdığınız cevapları okur; selamlamanızı, cümle uzunluğunuzu, kapanış alışkanlığınızı öğrenir. Müşteriniz farkı anlamaz.
+          Kendi yazdığınız cevapları okur; selamlamanızı, imzanızı, resmiyet düzeyinizi öğrenir. Yukarıdaki iki cevap aynı sistemden, iki gerçek mağazadan — her biri kendi sesiyle.
         </DiffCard>
 
         <DiffCard
@@ -1148,9 +1148,9 @@ const WhyDifferent = () => (
             <div className="space-y-3">
               <div className="bg-white rounded-xl border border-gray-200 px-4 py-3 text-sm text-dark-gray">Kargom nerede? 3 gün oldu.</div>
               <div className="rounded-xl px-4 py-3 text-sm text-white" style={{ background: 'linear-gradient(135deg,#FF6B35,#FFBE5C)' }}>
-                Siparişiniz kargoya verildi, yolda. Tahmini teslimat 13–16 Temmuz.
+                Merhaba! 114•••0188 numaralı siparişinizi kontrol ettik: siparişiniz kargoya verildi, yolda (Kolay Gelsin Marketplace). Tahmini teslimat: 13 Temmuz - 16 Temmuz. 📦
               </div>
-              <div className="flex items-center gap-2 text-[11px] text-gray-400"><BadgeCheck size={13} className="text-green-500" /> Siparişin o anki gerçek durumu — tahmin değil</div>
+              <div className="flex items-center gap-2 text-[11px] text-gray-400"><BadgeCheck size={13} className="text-green-500" /> Gerçek sorgu — durum, kargo firması ve tarih Trendyol'dan geldi</div>
             </div>
           }
         >
@@ -1183,11 +1183,11 @@ const WhyDifferent = () => (
           title="Yanlış bedeni asla söylemez"
           mock={
             <div className="space-y-3">
-              <div className="bg-white rounded-xl border border-gray-200 px-4 py-3 text-sm text-dark-gray">1.70 boyunda 65 kiloyum, hangi beden olur?</div>
+              <div className="bg-white rounded-xl border border-gray-200 px-4 py-3 text-sm text-dark-gray">170 boy 107 kg kaç beden olur</div>
               <div className="rounded-xl px-4 py-3 text-sm text-white" style={{ background: 'linear-gradient(135deg,#FF6B35,#FFBE5C)' }}>
-                Beden tablomuza göre M beden tam olacaktır.
+                Merhaba! Boy ve kilo ölçülerinize göre hazırladığımız beden tablomuza baktığımızda 60 beden tercih edebilirsiniz 😊
               </div>
-              <div className="flex items-center gap-2 text-[11px] text-gray-400"><BadgeCheck size={13} className="text-green-500" /> Tablo yoksa tahmin etmez — soruyu size iletir</div>
+              <div className="flex items-center gap-2 text-[11px] text-gray-400"><BadgeCheck size={13} className="text-green-500" /> Gerçek cevap · Tablo yoksa tahmin etmez, soruyu size iletir</div>
             </div>
           }
         >
@@ -1223,12 +1223,12 @@ const WhyDifferent = () => (
           title="Emin değilse size sorar"
           mock={
             <div className="space-y-3">
-              <div className="bg-white rounded-xl border border-gray-200 px-4 py-3 text-sm text-dark-gray">Bu ürünü hamileyken kullanabilir miyim?</div>
+              <div className="bg-white rounded-xl border border-gray-200 px-4 py-3 text-sm text-dark-gray">Cırt cırt pant geri söküldüğü zaman pencerenin beyaz bölümünde leke yapışkanlık iz bırakır mı</div>
               <div className="flex items-center gap-2 bg-white rounded-xl border border-orange-200 px-4 py-3">
                 <Mail size={15} className="text-primary shrink-0" />
                 <span className="text-sm text-dark">Soru size e-posta ile iletildi</span>
               </div>
-              <p className="text-[11px] text-gray-400">Sağlık, ilaç ve alerji soruları her zaman size gelir.</p>
+              <p className="text-[11px] text-gray-400">Gerçek vaka: kalıntı riski yüzeye göre değiştiği için tahmin edilmedi. Sağlık ve ilaç soruları da her zaman size gelir.</p>
             </div>
           }
         >
