@@ -9,6 +9,7 @@ import {
 } from 'lucide-react';
 import { CHAT_EXAMPLES, FAQ_ITEMS, FEATURES, NAV_LINKS, STAT_CARDS, STEPS, WHATSAPP_URL, APP_URL } from './constants';
 import { BrowserRouter, Routes, Route, Link, useLocation } from 'react-router-dom';
+import V2Page from './LandingV2';
 
 // ────────────────────────────────────────────────
 // CSS animations injected once
@@ -1794,6 +1795,8 @@ const App = () => (
         <Route path="/" element={<HomePage />} />
         <Route path="/gorsel-studyo" element={<GorselStudyoPage />} />
         <Route path="/danismanlik" element={<DanismanlikPage />} />
+        {/* v2 tasarım önizlemesi — onaylanınca "/" ile yer değiştirecek */}
+        <Route path="/v2" element={<V2Page />} />
       </Routes>
     </div>
   </BrowserRouter>
