@@ -1,23 +1,66 @@
 // ═══════════════════════════════════════════════════════════════════
-// SellerPilot Landing v2 — "Ink & Ember"
+// SellerPilot Landing v2 — "Ink & Ember", Apple-grade revizyon
 // ═══════════════════════════════════════════════════════════════════
-// Tasarım ilkeleri (App.tsx'teki v1'den farkı):
-//  1. Renk disiplini — turuncu yüzeyin ~%5'inde: sadece CTA, tek vurgu
-//     kelimesi ve aktif durum. v1'de başlık/rozet/çip/çerçeve hepsi turuncuydu,
-//     bu yüzden vurgu vurgu olmaktan çıkmıştı.
-//  2. Derinlik kalın gölgeyle değil 1px saç-teli çizgi + katmanla kurulur.
-//  3. Ürün kanıtı CSS ile çizilir (görsel dosyası YOK) — her ekranda net,
-//     sıfır ağırlık, müşteri verisi sızma riski yok.
-//  4. Yeni JS bağımlılığı YOK. Hareket = CSS + IntersectionObserver.
-//     prefers-reduced-motion tam desteklenir.
+// Kurallar:
+//  1. ÖRNEK CEVAPLARDA KURGU YASAK — buradaki her müşteri sorusu ve her
+//     sistem cevabı Supabase'ten (questions tablosu) birebir alınmıştır.
+//     Tek düzenleme: mağaza adları ‹mağaza› olarak, sipariş numaraları
+//     kısmen maskelendi. Yazım hataları müşterilere aittir, düzeltilmez.
+//  2. Renk disiplini: turuncu yüzeyin ~%5'inde (CTA + tek vurgu + aktif durum).
+//  3. Derinlik 1px çizgi + katmanla; gölge yok denecek kadar az.
+//  4. Yeni JS bağımlılığı YOK; hareket CSS + IntersectionObserver,
+//     prefers-reduced-motion tam destekli.
 // ═══════════════════════════════════════════════════════════════════
 import React, { useState, useEffect, useRef } from 'react';
 import {
   ArrowRight, Check, Minus, Plane, Mail, Smartphone, ShieldCheck, Ruler,
   SlidersHorizontal, PackageCheck, MessageSquare, Clock, BadgeCheck, X,
-  Sparkles, Camera, ChevronDown, Menu as MenuIcon
+  Sparkles, Camera, ChevronDown, Menu as MenuIcon, Search, PenLine, Send
 } from 'lucide-react';
 import { FAQ_ITEMS, WHATSAPP_URL, APP_URL } from './constants';
+
+// ────────────────────────────────────────────────
+// GERÇEK VERİ — Supabase `questions`, answer_source='ai', 20-25 Tem 2026.
+// Birebir; sadece mağaza adı ‹mağaza›, sipariş no kısmen maskeli.
+// ────────────────────────────────────────────────
+const REAL_EXAMPLES = [
+  {
+    cat: 'AYAKKABI', date: '25 Temmuz 2026',
+    q: 'denizde giyinilrmi ıslak kumda',
+    a: 'Merhaba efendim, bu terliğimiz her ne kadar plaj ve sahil kullanımına uygun olsa da ıslak kumda veya denizde hasır ve tekstil yapısı nedeniyle zorlanabilir 🌊 Deniz kenarında kullanım için tam koruma sağlayan Kadın Erkek Şeffaf Kaymaz Taban Deniz Plaj Ayakkabısı modelimizi de inceleyebilirsiniz. Mutlu ve sağlıklı günler dilerim :)',
+    note: 'Ürünün sınırını dürüstçe söyledi, satışı kaybetmek yerine doğru ürüne yönlendirdi.',
+  },
+  {
+    cat: 'TEKSTİL', date: '25 Temmuz 2026',
+    q: '170 boy 107 kg kaç beden olur',
+    a: 'Merhaba! Boy ve kilo ölçülerinize göre hazırladığımız beden tablomuza baktığımızda 60 beden tercih edebilirsiniz 😊',
+    note: 'Mağazanın kendi beden tablosundan hesapladı — tahmin değil.',
+  },
+  {
+    cat: 'PARFÜM', date: '23 Temmuz 2026',
+    q: 'La Vie Est Belle Vanille Nude Lancôme muadili var mı aynı kokunun kodu kaç acaba',
+    a: 'Merhaba! İncelediğiniz ürün Good Girl esintilidir, aradığınız La Vie Est Belle tarzı için La Vi Belle Esintili Kadın Parfüm modelimizi tercih edebilirsiniz ✨',
+    note: 'Müşterinin yanlış üründe olduğunu fark etti, katalogdan doğrusunu buldu.',
+  },
+  {
+    cat: 'YAPI MARKET', date: '22 Temmuz 2026',
+    q: 'mutfak tezganihi boyamak istiyorum kac litre almam lazim',
+    a: 'Merhaba! Mutfak tezgahınızın boyutu hakkında net bir şey söyleyebilmem için yaklaşık ölçülerini paylaşabilir misiniz? Genellikle mutfak tezgahı ve yoğun temas eden yüzeyler için koruyucu vernikle desteklenen setlerimiz çok daha uzun ömürlü bir kullanım sağlar 🍳✨',
+    note: 'Litre uydurmak yerine ölçü istedi; doğru seti de önerdi.',
+  },
+  {
+    cat: 'KOZMETİK', date: '25 Temmuz 2026',
+    q: '🛍MRB, mağaza büyütmek için kullandığımız bir sistem var. Merak ederseniz takipci favori 2 şeklinde aratabilirsiniz...',
+    a: 'Merhaba, nazik teklifiniz için teşekkür ederiz ancak biz ‹mağaza› olarak kendi iç süreçlerimizle ilerliyoruz. 😊 Yağlı ciltler için özel olarak geliştirdiğimiz güneş kremimizle ilgili sormak istediğiniz başka bir detay var mı?',
+    note: 'Reklam mesajını kibarca savdı, konuyu kendi ürününe döndürdü.',
+  },
+  {
+    cat: 'AYAKKABI', date: '25 Temmuz 2026',
+    q: '43 numara giyiyorum ürün rahat mı bir beden büyük mü almalıyım yoksa 43 numara uygun olur mu hangi kargo kolay gelsin',
+    a: 'Merhaba efendim, ürünümüz tam kalıptır; ancak ayak yapınız buçuklu, taraklı veya etli/genişse rahat etmeniz için 1 numara büyük tercih edebilirsiniz. Siparişleriniz PTT Kargo ile gönderilmektedir 🌊 Mutlu ve sağlıklı günler dilerim :) ‹mağaza› Müşteri Memnuniyeti Ekibi',
+    note: 'Tek mesajdaki iki ayrı soruyu tek cevapta topladı: kalıp + kargo firması.',
+  },
+];
 
 // ────────────────────────────────────────────────
 // Tasarım tokenları + hareket
@@ -25,26 +68,21 @@ import { FAQ_ITEMS, WHATSAPP_URL, APP_URL } from './constants';
 const V2Styles = () => (
   <style>{`
   .v2 {
-    /* Kağıt katmanı */
     --paper:      #FAFAF9;
-    --paper-2:    #F5F5F4;
+    --paper-2:    #F4F4F3;
     --line:       #E7E5E4;
     --line-2:     #D6D3D1;
     --text:       #0C0A09;
     --text-mid:   #57534E;
-    --text-low:   #78716C;
-    /* Mürekkep katmanı (koyu bantlar) */
+    --text-low:   #79716B;
     --ink:        #0A0C11;
     --ink-2:      #12151D;
     --ink-line:   rgba(255,255,255,.09);
     --ink-text:   #F5F5F4;
-    --ink-mid:    #A8A29E;
-    /* Kor (marka aksanı — az kullanılır) */
+    --ink-mid:    #A6A09B;
     --ember:      #FF6B35;
     --ember-2:    #FFBE5C;
     --ember-deep: #C2410C;
-
-    --r-sm: 10px; --r: 14px; --r-lg: 20px;
     background: var(--paper);
     color: var(--text);
     font-family: Inter, system-ui, sans-serif;
@@ -52,53 +90,44 @@ const V2Styles = () => (
   }
   .v2 ::selection { background: var(--ember); color: #fff; }
 
-  /* ── Tipografi: akışkan ölçek, sıkı harf aralığı ── */
   .v2 .display {
     font-family: 'Inter Tight', Inter, system-ui, sans-serif;
-    font-weight: 600;
-    letter-spacing: -0.035em;
-    line-height: 1.03;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 1.02;
   }
-  .v2 .h1 { font-size: clamp(2.5rem, 1.4rem + 4.4vw, 4.5rem); }
-  .v2 .h2 { font-size: clamp(2rem, 1.3rem + 2.6vw, 3.25rem); }
-  .v2 .h3 { font-size: clamp(1.25rem, 1.05rem + 0.8vw, 1.6rem); letter-spacing: -0.025em; line-height: 1.15; }
-  .v2 .lede { font-size: clamp(1.02rem, 0.97rem + 0.28vw, 1.2rem); line-height: 1.65; color: var(--text-mid); max-width: 62ch; }
+  .v2 .h1 { font-size: clamp(2.75rem, 1.5rem + 5.2vw, 5.6rem); }
+  .v2 .h2 { font-size: clamp(2.1rem, 1.35rem + 3vw, 3.6rem); }
+  .v2 .h3 { font-size: clamp(1.25rem, 1.05rem + .8vw, 1.6rem); font-weight: 600; letter-spacing: -0.025em; line-height: 1.15; }
+  .v2 .lede { font-size: clamp(1.05rem, .98rem + .3vw, 1.25rem); line-height: 1.65; color: var(--text-mid); max-width: 60ch; }
   .v2 .eyebrow {
-    font-size: .6875rem; font-weight: 700; letter-spacing: .14em;
+    font-size: .6875rem; font-weight: 700; letter-spacing: .16em;
     text-transform: uppercase; color: var(--text-low);
-    display: inline-flex; align-items: center; gap: .5rem;
+    display: inline-flex; align-items: center; gap: .55rem;
   }
   .v2 .eyebrow .num { color: var(--ember-deep); font-variant-numeric: tabular-nums; }
   .v2 .ember { color: var(--ember-deep); }
 
-  /* ── Koyu bant ── */
   .v2 .band-ink { background: var(--ink); color: var(--ink-text); position: relative; isolation: isolate; }
   .v2 .band-ink .lede { color: var(--ink-mid); }
   .v2 .band-ink .eyebrow { color: var(--ink-mid); }
   .v2 .band-ink .eyebrow .num { color: var(--ember-2); }
-  /* Grain: düz koyu zemini kırar, "ekran" hissi verir. %2.5 opaklık. */
   .v2 .band-ink::before {
     content:''; position:absolute; inset:0; z-index:-1; pointer-events:none; opacity:.025;
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
   .v2 .glow {
     position:absolute; border-radius:50%; pointer-events:none; z-index:-1;
-    background: radial-gradient(circle, rgba(255,107,53,.20) 0%, rgba(255,107,53,0) 68%);
-    filter: blur(20px);
+    background: radial-gradient(circle, rgba(255,107,53,.18) 0%, rgba(255,107,53,0) 68%);
+    filter: blur(22px);
   }
 
-  /* ── Yüzeyler: gölge değil çizgi ── */
   .v2 .card {
-    background:#fff; border:1px solid var(--line); border-radius: var(--r-lg);
+    background:#fff; border:1px solid var(--line); border-radius: 20px;
     transition: border-color .25s ease, transform .25s ease;
   }
   .v2 .card:hover { border-color: var(--line-2); }
-  .v2 .card-ink {
-    background: var(--ink-2); border:1px solid var(--ink-line); border-radius: var(--r-lg);
-  }
-  .v2 .hair { border-top:1px solid var(--line); }
 
-  /* ── Butonlar ── */
   .v2 .btn {
     display:inline-flex; align-items:center; justify-content:center; gap:.5rem;
     font-weight:600; font-size:.95rem; border-radius:12px; padding:.85rem 1.4rem;
@@ -114,12 +143,10 @@ const V2Styles = () => (
     outline: 2px solid var(--ember); outline-offset: 3px; border-radius: 8px;
   }
 
-  /* ── Beliriş ── */
-  .v2 .rv { opacity:0; transform: translateY(14px); transition: opacity .6s cubic-bezier(.22,1,.36,1), transform .6s cubic-bezier(.22,1,.36,1); }
+  .v2 .rv { opacity:0; transform: translateY(16px); transition: opacity .65s cubic-bezier(.22,1,.36,1), transform .65s cubic-bezier(.22,1,.36,1); }
   .v2 .rv.in { opacity:1; transform:none; }
 
-  /* ── Panel mockup ── */
-  .v2 .chrome { background:#fff; border:1px solid var(--line); border-radius:14px; overflow:hidden; }
+  .v2 .chrome { background:#fff; border:1px solid var(--line); border-radius:16px; overflow:hidden; }
   .v2 .band-ink .chrome { background: var(--ink-2); border-color: var(--ink-line); }
   .v2 .chrome-bar {
     display:flex; align-items:center; gap:.5rem; padding:.6rem .85rem;
@@ -142,15 +169,25 @@ const V2Styles = () => (
   .v2 .chip-ok { color:#15803D; border-color:#BBF7D0; background:#F0FDF4; }
   .v2 .chip-wait { color: var(--ember-deep); border-color:#FED7AA; background:#FFF7ED; }
 
+  /* Gerçek cevap vitrini — yatay kaydırma, snap */
+  .v2 .rail {
+    display:flex; gap:1.1rem; overflow-x:auto; padding: .25rem .25rem 1.25rem;
+    scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .v2 .rail::-webkit-scrollbar { display:none; }
+  .v2 .rail > * { scroll-snap-align: center; flex: 0 0 min(88vw, 30rem); }
+  .v2 .masked { font-style: italic; color: var(--text-low); }
+
   @media (prefers-reduced-motion: reduce) {
     .v2 .rv { opacity:1 !important; transform:none !important; transition:none !important; }
-    .v2 * { animation: none !important; }
+    .v2 * { animation: none !important; scroll-behavior: auto !important; }
   }
   `}</style>
 );
 
 // ────────────────────────────────────────────────
-// Beliriş yardımcıları
+// Yardımcılar
 // ────────────────────────────────────────────────
 const useReveal = () => {
   const ref = useRef<HTMLDivElement>(null);
@@ -159,7 +196,7 @@ const useReveal = () => {
     if (!el) return;
     const io = new IntersectionObserver(
       ([e]) => { if (e.isIntersecting) { el.classList.add('in'); io.unobserve(el); } },
-      { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
     );
     io.observe(el);
     return () => io.disconnect();
@@ -172,12 +209,28 @@ const Rv = ({ children, delay = 0, className = '' }: any) => {
   return <div ref={ref} className={`rv ${className}`} style={{ transitionDelay: `${delay}s` }}>{children}</div>;
 };
 
-const Eyebrow = ({ num, children }: any) => (
-  <p className="eyebrow mb-5"><span className="num">{num}</span><span className="w-6 h-px bg-current opacity-30" />{children}</p>
+const Eyebrow = ({ num, children, center = false }: any) => (
+  <p className={`eyebrow mb-5 ${center ? 'justify-center' : ''}`}><span className="num">{num}</span><span className="w-6 h-px bg-current opacity-30" />{children}</p>
 );
 
+// ‹mağaza› maskesini şık göster
+const Masked = ({ text }: { text: string }) => {
+  const parts = text.split(/‹mağaza›/g);
+  return (
+    <>
+      {parts.map((p, i) => (
+        <React.Fragment key={i}>
+          {p}
+          {i < parts.length - 1 && <span className="masked">mağaza adı</span>}
+        </React.Fragment>
+      ))}
+    </>
+  );
+};
+
 // ────────────────────────────────────────────────
-// CSS ile çizilmiş panel — ürün kanıtı (görsel dosyası yok)
+// CSS ile çizilmiş panel — hero kanıtı (görsel dosyası yok)
+// Soru satırları gerçek (Supabase, Tem 2026).
 // ────────────────────────────────────────────────
 const HOURS = [8, 14, 22, 31, 45, 62, 78, 96, 88, 71, 54, 38];
 
@@ -204,9 +257,9 @@ const PanelMock = () => (
       <p className="text-[10px] mb-5" style={{ color: 'var(--ink-mid)' }}>Saatlik soru yoğunluğu — son 24 saat</p>
       <div className="space-y-1.5">
         {[
-          ['Bu ürün hassas ciltte kullanılır mı?', 'Otomatik cevaplandı', true],
-          ['1.70 boyunda 65 kiloyum, hangi beden?', 'Otomatik cevaplandı', true],
-          ['Hamileyken kullanabilir miyim?', 'Size iletildi', false],
+          ['denizde giyinilrmi ıslak kumda', 'Otomatik cevaplandı', true],
+          ['170 boy 107 kg kaç beden olur', 'Otomatik cevaplandı', true],
+          ['Cırt cırt bant pencerede iz bırakır mı', 'Size iletildi', false],
         ].map(([q, s, ok]: any) => (
           <div key={q} className="flex items-center justify-between gap-3 rounded-lg px-3 py-2" style={{ background: 'rgba(255,255,255,.03)' }}>
             <span className="text-[11px] sm:text-xs truncate" style={{ color: 'var(--ink-text)' }}>{q}</span>
@@ -227,9 +280,10 @@ const PanelMock = () => (
 // Nav
 // ────────────────────────────────────────────────
 const LINKS = [
+  { l: 'Gerçek cevaplar', h: '#v2-cevaplar' },
   { l: 'Farkımız', h: '#v2-fark' },
-  { l: 'Ürün', h: '#v2-urun' },
-  { l: 'Nasıl çalışır', h: '#v2-nasil' },
+  { l: 'İlanlar', h: '#v2-ilan' },
+  { l: 'Panel', h: '#v2-urun' },
   { l: 'Fiyatlar', h: '#v2-fiyat' },
   { l: 'SSS', h: '#v2-sss' },
 ];
@@ -281,24 +335,24 @@ const V2Nav = () => {
 };
 
 // ────────────────────────────────────────────────
-// Hero — koyu sinematik bant
+// Hero
 // ────────────────────────────────────────────────
 const V2Hero = () => (
-  <section id="top" className="band-ink pt-32 pb-20 sm:pt-40 sm:pb-28 overflow-hidden">
-    <span className="glow" style={{ width: 760, height: 760, top: -260, left: '50%', transform: 'translateX(-50%)' }} />
+  <section id="top" className="band-ink pt-32 pb-16 sm:pt-44 sm:pb-24 overflow-hidden">
+    <span className="glow" style={{ width: 820, height: 820, top: -300, left: '50%', transform: 'translateX(-50%)' }} />
     <div className="max-w-6xl mx-auto px-5 sm:px-8">
       <Rv className="text-center">
-        <span className="inline-flex items-center gap-2 text-xs font-medium rounded-full px-3.5 py-1.5 mb-8"
+        <span className="inline-flex items-center gap-2 text-xs font-medium rounded-full px-3.5 py-1.5 mb-9"
           style={{ border: '1px solid var(--ink-line)', color: 'var(--ink-mid)', background: 'rgba(255,255,255,.03)' }}>
           <span className="w-1.5 h-1.5 rounded-full" style={{ background: 'var(--ember)' }} />
           Bir Trendyol satıcısı tarafından geliştirildi
         </span>
-        <h1 className="display h1 mb-6" style={{ color: 'var(--ink-text)' }}>
-          Müşteri sorularını siz değil,<br className="hidden sm:block" /> <span style={{ color: 'var(--ember-2)' }}>yapay zekânız</span> cevaplasın.
+        <h1 className="display h1 mb-7" style={{ color: 'var(--ink-text)' }}>
+          Sorulara siz değil,<br /><span style={{ color: 'var(--ember-2)' }}>mağazanız</span> cevap versin.
         </h1>
-        <p className="lede mx-auto mb-9">
-          SellerPilot mağazanıza bağlanır, gelen her soruyu ürün bilgilerinize göre saniyeler içinde yanıtlar.
-          Emin olamadığı soruyu cevaplamaz — size iletir.
+        <p className="lede mx-auto mb-10">
+          SellerPilot ürünlerinizi tanır, gelen her soruyu sizin sesinizle saniyeler içinde yanıtlar.
+          Emin olamadığını asla uydurmaz — size iletir.
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-4">
           <a href={APP_URL} className="btn btn-ember w-full sm:w-auto">30 gün ücretsiz dene <ArrowRight size={17} /></a>
@@ -309,40 +363,76 @@ const V2Hero = () => (
         <p className="text-xs" style={{ color: 'var(--ink-mid)' }}>Kredi kartı gerekmez · Kurulum birkaç dakika</p>
       </Rv>
 
-      <Rv delay={0.12} className="mt-14 sm:mt-20 max-w-3xl mx-auto">
+      <Rv delay={0.12} className="mt-16 sm:mt-24 max-w-3xl mx-auto">
         <PanelMock />
+      </Rv>
+
+      <Rv delay={0.18} className="mt-14">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-px rounded-2xl overflow-hidden" style={{ background: 'var(--ink-line)' }}>
+          {[
+            ['Saniyeler', 'içinde otomatik cevap'],
+            ['7/24', 'gece, hafta sonu, bayram'],
+            ['Sıfır', 'tahmine dayalı cevap'],
+            ['Tek panel', 'tüm mağazalarınız'],
+          ].map(([big, small]) => (
+            <div key={big} className="px-5 py-7 text-center" style={{ background: 'var(--ink)' }}>
+              <p className="display text-2xl sm:text-[1.75rem] mb-1.5" style={{ color: 'var(--ink-text)', fontWeight: 600 }}>{big}</p>
+              <p className="text-xs" style={{ color: 'var(--ink-mid)' }}>{small}</p>
+            </div>
+          ))}
+        </div>
       </Rv>
     </div>
   </section>
 );
 
 // ────────────────────────────────────────────────
-// Metrik şeridi
+// Gerçek cevaplar — yıldız bölüm
 // ────────────────────────────────────────────────
-const V2Metrics = () => (
-  <section className="band-ink pb-20 sm:pb-24">
+const V2RealAnswers = () => (
+  <section id="v2-cevaplar" className="py-24 sm:py-36 overflow-hidden">
     <div className="max-w-6xl mx-auto px-5 sm:px-8">
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-px rounded-2xl overflow-hidden" style={{ background: 'var(--ink-line)' }}>
-        {[
-          ['Saniyeler', 'içinde otomatik cevap'],
-          ['7/24', 'gece, hafta sonu, bayram'],
-          ['Sıfır', 'tahmine dayalı cevap'],
-          ['Tek panel', 'tüm mağazalarınız'],
-        ].map(([big, small], i) => (
-          <Rv key={big} delay={i * 0.06}>
-            <div className="h-full px-5 py-7 text-center" style={{ background: 'var(--ink)' }}>
-              <p className="display text-2xl sm:text-[1.75rem] mb-1.5" style={{ color: 'var(--ink-text)' }}>{big}</p>
-              <p className="text-xs" style={{ color: 'var(--ink-mid)' }}>{small}</p>
+      <Rv className="text-center max-w-3xl mx-auto mb-14">
+        <Eyebrow num="01" center>Gerçek cevaplar</Eyebrow>
+        <h2 className="display h2 mb-6">Kurgu değil.<br /><span className="ember">Bu hafta verilmiş cevaplar.</span></h2>
+        <p className="lede mx-auto">
+          Aşağıdaki her cevap sistem tarafından yazıldı ve Trendyol'da gerçekten yayınlandı.
+          Yazım hataları müşterilere ait — gerçek hayat böyle.
+        </p>
+      </Rv>
+    </div>
+    <Rv delay={0.08}>
+      <div className="rail px-5 sm:px-[max(1.25rem,calc((100vw-72rem)/2+2rem))]">
+        {REAL_EXAMPLES.map(ex => (
+          <article key={ex.q} className="card p-6 sm:p-7 flex flex-col">
+            <div className="flex items-center justify-between mb-5">
+              <span className="eyebrow" style={{ marginBottom: 0 }}>{ex.cat}</span>
+              <span className="text-[.68rem]" style={{ color: 'var(--text-low)' }}>{ex.date}</span>
             </div>
-          </Rv>
+            <div className="rounded-2xl rounded-bl-md px-4 py-3 mb-3 self-start max-w-[92%]"
+              style={{ background: 'var(--paper-2)', border: '1px solid var(--line)' }}>
+              <p className="text-[.85rem] leading-relaxed" style={{ color: 'var(--text-mid)' }}>{ex.q}</p>
+            </div>
+            <div className="rounded-2xl rounded-br-md px-4 py-3.5 mb-5 self-end max-w-[95%] text-white"
+              style={{ background: 'linear-gradient(135deg,var(--ember),var(--ember-2))' }}>
+              <p className="text-[.85rem] leading-relaxed"><Masked text={ex.a} /></p>
+            </div>
+            <div className="mt-auto flex items-start gap-2 pt-4" style={{ borderTop: '1px solid var(--line)' }}>
+              <BadgeCheck size={15} className="text-green-600 shrink-0 mt-0.5" />
+              <p className="text-[.78rem] leading-relaxed" style={{ color: 'var(--text-mid)' }}>{ex.note}</p>
+            </div>
+          </article>
         ))}
       </div>
-    </div>
+    </Rv>
+    <p className="text-center text-[.72rem] mt-4 px-5" style={{ color: 'var(--text-low)' }}>
+      Kaydırarak devamını görün · Mağaza adları gizlendi, cevapların geri kalanı birebir.
+    </p>
   </section>
 );
 
 // ────────────────────────────────────────────────
-// Farkımız — bento
+// Farkımız — bento (gerçek kanıtlarla)
 // ────────────────────────────────────────────────
 const Diff = ({ icon: Icon, title, body, mock, span = 'lg:col-span-3', delay = 0 }: any) => (
   <Rv delay={delay} className={span}>
@@ -374,17 +464,32 @@ const Note = ({ children }: any) => (
 );
 
 const V2Diff = () => (
-  <section id="v2-fark" className="py-24 sm:py-32">
+  <section id="v2-fark" className="py-24 sm:py-36" style={{ background: 'var(--paper-2)' }}>
     <div className="max-w-6xl mx-auto px-5 sm:px-8">
       <Rv className="max-w-2xl mb-14">
-        <Eyebrow num="01">Farkımız</Eyebrow>
-        <h2 className="display h2 mb-5">Otomatik cevap kolay.<br /><span className="ember">Doğru cevap zor.</span></h2>
+        <Eyebrow num="02">Farkımız</Eyebrow>
+        <h2 className="display h2 mb-6">Otomatik cevap kolay.<br /><span className="ember">Doğru cevap zor.</span></h2>
         <p className="lede">Bir mağazayı yakan şey cevapsız soru değil, yanlış cevaptır. SellerPilot'ı satıcı olarak biz kurduk — bu yüzden neyi söylemeyeceğini de biliyor.</p>
       </Rv>
 
       <div className="grid grid-cols-1 lg:grid-cols-6 gap-4 sm:gap-5">
         <Diff
+          icon={MessageSquare}
+          title="Sizin ağzınızdan konuşur"
+          body="Kendi yazdığınız cevapları okur; selamlamanızı, imzanızı, resmiyet düzeyinizi öğrenir. Aşağıdaki iki cevap aynı sistemden, iki gerçek mağazadan — biri 'efendim'li ve imzalı, öteki samimi ve kısa."
+          mock={
+            <div className="space-y-2.5">
+              <p className="text-[.62rem] font-bold uppercase tracking-wider" style={{ color: 'var(--text-low)' }}>Mağaza A — resmi ve imzalı</p>
+              <Bubble me><Masked text="Merhaba efendim, ürünümüz tam kalıptır ancak ayağınız buçuklu veya taraklı ise 1 numara büyük sipariş oluşturmanızı tavsiye ederiz. Mutlu ve sağlıklı günler dilerim :) ‹mağaza› Müşteri Memnuniyeti Ekibi" /></Bubble>
+              <p className="text-[.62rem] font-bold uppercase tracking-wider" style={{ color: 'var(--text-low)' }}>Mağaza B — samimi ve kısa</p>
+              <Bubble me>Merhaba! Boy ve kilo ölçülerinize göre hazırladığımız beden tablomuza baktığımızda 60 beden tercih edebilirsiniz 😊</Bubble>
+              <Note>İki cevap da gerçek — 25 Temmuz 2026</Note>
+            </div>
+          }
+        />
+        <Diff
           icon={SlidersHorizontal}
+          delay={0.06}
           title="Kontrol tamamen sizde"
           body="İster tamamen size bıraksın, ister her cevabı hazırlayıp onayınıza sunsun, ister hiç karışmasın. Bir konuşmayı devraldığınızda sistem araya girmez."
           mock={
@@ -404,61 +509,54 @@ const V2Diff = () => (
           }
         />
         <Diff
-          icon={MessageSquare}
-          delay={0.06}
-          title="Sizin ağzınızdan konuşur"
-          body="Daha önce müşterilerinize yazdığınız cevapları okur; selamlamanızı, cümle uzunluğunuzu, kapanış alışkanlığınızı öğrenir. Müşteriniz farkı anlamaz."
-          mock={
-            <div className="space-y-2.5">
-              <p className="text-[.62rem] font-bold uppercase tracking-wider" style={{ color: 'var(--text-low)' }}>Sizin yazdığınız</p>
-              <Bubble>Merhabalar, ürünümüz tamamen pamuklu ve terletmez. Afiyetle kullanın!</Bubble>
-              <p className="text-[.62rem] font-bold uppercase tracking-wider ember">Sistemin yeni cevabı</p>
-              <Bubble>Merhabalar, ürünümüz %100 pamuklu dokumadır, cildinizi rahatsız etmez. Afiyetle kullanın!</Bubble>
-            </div>
-          }
-        />
-        <Diff
           icon={PackageCheck}
           title="Kargonun yerini gidip bakar"
           span="lg:col-span-2"
+          body="Müşteri sipariş numarasını yazdığında sistem siparişi anında kontrol eder, gerçek durumunu söyler."
           mock={
             <div className="space-y-2.5">
               <Bubble>Kargom nerede? 3 gün oldu.</Bubble>
-              <Bubble me>Siparişiniz kargoya verildi, yolda. Tahmini teslimat 13–16 Temmuz.</Bubble>
-              <Note>Gerçek durum — tahmin değil</Note>
+              <Bubble me>Merhaba! 114•••0188 numaralı siparişinizi kontrol ettik: siparişiniz kargoya verildi, yolda (Kolay Gelsin Marketplace). Tahmini teslimat: 13 Temmuz - 16 Temmuz. 📦</Bubble>
+              <Note>Gerçek sipariş sorgusu — durum, kargo firması ve tarih Trendyol'dan geldi</Note>
             </div>
           }
-          body="Müşteri sipariş numarasını yazdığında sistem siparişi anında kontrol eder, gerçek durumunu söyler."
         />
         <Diff
           icon={Clock}
           delay={0.06}
           title="Aynı müşteriyi hatırlar"
           span="lg:col-span-2"
+          body="İkinci kez yazan müşteri sıfırdan başlamaz. Sipariş numarasını tekrar sormaz; konu çözülmediyse konuşma geçmişiyle birlikte size devredilir."
           mock={
             <div className="space-y-2.5">
-              <p className="text-[.62rem] font-bold uppercase tracking-wider" style={{ color: 'var(--text-low)' }}>Dün</p>
-              <Bubble>Sipariş numaram 11405740188, ne zaman gelir?</Bubble>
-              <p className="text-[.62rem] font-bold uppercase tracking-wider ember">Bugün</p>
-              <Bubble>Hâlâ gelmedi, ne olacak?</Bubble>
-              <Note>Numarası tekrar sorulmadı, konu size iletildi</Note>
+              <div className="flex items-center gap-2 rounded-lg px-3 py-2.5 bg-white" style={{ border: '1px solid var(--line)' }}>
+                <Clock size={13} style={{ color: 'var(--text-low)' }} className="shrink-0" />
+                <span className="text-[.78rem]" style={{ color: 'var(--text-mid)' }}>Dün — müşteri sipariş numarasını yazdı</span>
+              </div>
+              <div className="flex items-center gap-2 rounded-lg px-3 py-2.5 bg-white" style={{ border: '1px solid var(--line)' }}>
+                <Clock size={13} style={{ color: 'var(--ember-deep)' }} className="shrink-0" />
+                <span className="text-[.78rem]" style={{ color: 'var(--text-mid)' }}>Bugün — aynı müşteri tekrar yazdı</span>
+              </div>
+              <div className="flex items-center gap-2 rounded-lg px-3 py-2.5 bg-white" style={{ border: '1px solid #BBF7D0' }}>
+                <BadgeCheck size={14} className="text-green-600 shrink-0" />
+                <span className="text-[.78rem]">Numara tekrar sorulmadı — geçmişiyle birlikte değerlendirildi</span>
+              </div>
             </div>
           }
-          body="İkinci kez yazan müşteri sıfırdan başlamaz. Sipariş numarasını tekrar sormaz; konu çözülmediyse sizi devreye sokar."
         />
         <Diff
           icon={Ruler}
           delay={0.12}
           title="Yanlış bedeni söylemez"
           span="lg:col-span-2"
+          body="Ayakkabıda numara, giyimde beden — her ürün kendi tablosuyla cevaplanır. Tablo yoksa kesin beden söylemez, size sorar."
           mock={
             <div className="space-y-2.5">
-              <Bubble>1.70 boyunda 65 kiloyum, hangi beden olur?</Bubble>
-              <Bubble me>Beden tablomuza göre M beden tam olacaktır.</Bubble>
-              <Note>Tablo yoksa tahmin etmez, size sorar</Note>
+              <Bubble>Bir beden büyük alırsam genişler mi acaba uzunlaması iyi ama toka kısmından dar geliyor</Bubble>
+              <Bubble me><Masked text="Merhaba efendim, ürünümüz tam kalıptır ancak ayak yapınız taraklı veya buçuklu ise konforunuz için 1 numara büyük tercih etmenizi öneririm; bu sayede enlemesine ve toka kısmından da rahat edersiniz 🌸" /></Bubble>
+              <Note>Gerçek cevap — 24 Temmuz 2026</Note>
             </div>
           }
-          body="Ayakkabıda numara, giyimde beden — her ürün kendi tablosuyla cevaplanır. Tablo yoksa kesin beden söylemez."
         />
         <Diff
           icon={ShieldCheck}
@@ -485,12 +583,12 @@ const V2Diff = () => (
           body="Bilmediği konuda tahmin yürütmez, müşteriye “bilgim yok” da demez. Soru sessizce size düşer — müşteri yanlış bilgiyle karşılaşmaz."
           mock={
             <div className="space-y-2.5">
-              <Bubble>Bu ürünü hamileyken kullanabilir miyim?</Bubble>
+              <Bubble>Cırt cırt pant geri söküldüğü zaman pencerenin beyaz bölümünde leke yapışkanlık iz bırakır mı</Bubble>
               <div className="flex items-center gap-2 rounded-lg px-3 py-2.5 bg-white" style={{ border: '1px solid var(--line)' }}>
                 <Mail size={14} style={{ color: 'var(--ember-deep)' }} className="shrink-0" />
                 <span className="text-[.8rem]">Soru size e-posta ile iletildi</span>
               </div>
-              <Note>Sağlık ve ilaç soruları her zaman size gelir</Note>
+              <Note>Gerçek vaka: kalıntı riski yüzeye göre değiştiği için tahmin edilmedi</Note>
             </div>
           }
         />
@@ -500,7 +598,102 @@ const V2Diff = () => (
 );
 
 // ────────────────────────────────────────────────
-// Ürün — sekmeli panel kanıtı
+// İlanlarınız kendini yazar (P6/P7)
+// ────────────────────────────────────────────────
+const V2Listings = () => (
+  <section id="v2-ilan" className="py-24 sm:py-36">
+    <div className="max-w-6xl mx-auto px-5 sm:px-8">
+      <Rv className="text-center max-w-3xl mx-auto mb-16">
+        <Eyebrow num="03" center>İlan iyileştirme</Eyebrow>
+        <h2 className="display h2 mb-6">İlanlarınız <span className="ember">kendini yazar</span></h2>
+        <p className="lede mx-auto">
+          Müşteriler aynı şeyi tekrar tekrar soruyorsa, o bilgi açıklamanızda eksik demektir.
+          SellerPilot bunu sizin yerinize fark eder — ve düzeltir.
+        </p>
+      </Rv>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
+        {[
+          {
+            icon: Search, t: 'Tespit eder',
+            d: 'Çok soru alan ürünleriniz otomatik işaretlenir: müşteriler soruyor ama açıklamada cevabı yok.',
+            mock: (
+              <div className="space-y-2">
+                <div className="rounded-lg px-3 py-2.5 bg-white" style={{ border: '1px solid var(--line)' }}>
+                  <p className="text-[.8rem] font-semibold mb-1">Kadın Günlük Terlik</p>
+                  <span className="chip chip-wait">Sık soru alıyor — açıklamanız eksik olabilir</span>
+                </div>
+                <div className="rounded-lg px-3 py-2.5 bg-white flex items-center justify-between" style={{ border: '1px solid var(--line)' }}>
+                  <p className="text-[.8rem]" style={{ color: 'var(--text-mid)' }}>Bu ay gelen soru</p>
+                  <p className="text-[.85rem] font-semibold">27</p>
+                </div>
+              </div>
+            ),
+          },
+          {
+            icon: PenLine, t: 'Sizin yerinize yazar',
+            d: 'Gelen soruları ve ürün fotoğrafını inceler; başlık ve açıklama için hazır metin önerir. Neyin eksik olduğunu da söyler.',
+            mock: (
+              <div className="space-y-2">
+                <p className="text-[.62rem] font-bold uppercase tracking-wider" style={{ color: 'var(--text-low)' }}>Müşteriler soruyor, açıklamada yok:</p>
+                <div className="flex flex-wrap gap-1.5">
+                  {['Kalıp bilgisi', 'Numara tablosu', 'Taban özelliği'].map(x => (
+                    <span key={x} className="chip bg-white">{x}</span>
+                  ))}
+                </div>
+                <div className="rounded-lg px-3 py-2.5 bg-white" style={{ border: '1px solid var(--ember)' }}>
+                  <p className="text-[.72rem]" style={{ color: 'var(--text-mid)' }}>✎ Yeni açıklama taslağı hazır — dilerseniz düzenleyin</p>
+                </div>
+              </div>
+            ),
+          },
+          {
+            icon: Send, t: 'Tek tuşla Trendyol\'a',
+            d: 'Beğendiyseniz tek tuşla gönderirsiniz. Sadece başlık ve açıklama güncellenir — fiyata, stoğa ve kategoriye asla dokunulmaz.',
+            mock: (
+              <div className="space-y-2">
+                <button className="btn btn-ember w-full" style={{ padding: '.65rem 1rem', fontSize: '.82rem', pointerEvents: 'none' }}>
+                  Trendyol'a Gönder <ArrowRight size={14} />
+                </button>
+                <div className="flex items-center gap-2 rounded-lg px-3 py-2.5 bg-white" style={{ border: '1px solid #BBF7D0' }}>
+                  <BadgeCheck size={14} className="text-green-600 shrink-0" />
+                  <span className="text-[.72rem]">Fiyat, stok ve kategori korunur</span>
+                </div>
+              </div>
+            ),
+          },
+        ].map((s, i) => (
+          <Rv key={s.t} delay={i * 0.08}>
+            <div className="card h-full p-6 sm:p-8 flex flex-col">
+              <p className="display text-4xl mb-6" style={{ color: 'var(--line-2)', fontWeight: 600 }}>0{i + 1}</p>
+              <h3 className="display h3 mb-3">{s.t}</h3>
+              <p className="text-[.9rem] leading-relaxed mb-7" style={{ color: 'var(--text-mid)' }}>{s.d}</p>
+              <div className="mt-auto rounded-xl p-4" style={{ background: 'var(--paper-2)', border: '1px solid var(--line)' }}>{s.mock}</div>
+            </div>
+          </Rv>
+        ))}
+      </div>
+
+      <Rv delay={0.2}>
+        <a href="/gorsel-studyo" className="mt-6 card flex flex-col sm:flex-row items-center justify-between gap-4 p-6 sm:p-7 group">
+          <div className="flex items-center gap-4">
+            <span className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0" style={{ background: 'var(--paper-2)', border: '1px solid var(--line)' }}>
+              <Camera size={17} style={{ color: 'var(--ember-deep)' }} />
+            </span>
+            <div>
+              <p className="font-semibold text-[.95rem]">Ürün fotoğraflarınızı da üretir</p>
+              <p className="text-[.85rem]" style={{ color: 'var(--text-mid)' }}>Tek fotoğraftan Trendyol'a hazır 6 profesyonel görsel — Görsel Stüdyo</p>
+            </div>
+          </div>
+          <span className="btn btn-line" style={{ padding: '.6rem 1.1rem', fontSize: '.85rem' }}>İncele <ArrowRight size={15} /></span>
+        </a>
+      </Rv>
+    </div>
+  </section>
+);
+
+// ────────────────────────────────────────────────
+// Panel — sekmeli ürün kanıtı
 // ────────────────────────────────────────────────
 const TABS = [
   {
@@ -509,11 +702,11 @@ const TABS = [
     render: () => (
       <div className="p-4 sm:p-5 space-y-2">
         {[
-          ['Bu serum hassas ciltte kullanılır mı?', 'Otomatik', 'ok'],
-          ['Kumaş terletir mi? Yazlık mı?', 'Otomatik', 'ok'],
-          ['Bu cüzdanla uyumlu kemer var mı?', 'Ürün önerildi', 'ok'],
-          ['1.70 boyunda 65 kiloyum, hangi beden?', 'Onayınızda', 'wait'],
-          ['Hamileyken kullanılır mı?', 'Size iletildi', 'wait'],
+          ['denizde giyinilrmi ıslak kumda', 'Ürün önerildi', 'ok'],
+          ['170 boy 107 kg kaç beden olur', 'Otomatik', 'ok'],
+          ['La Vie Est Belle muadili var mı', 'Otomatik', 'ok'],
+          ['mutfak tezganihi boyamak istiyorum kac litre', 'Ölçü istendi', 'ok'],
+          ['Cırt cırt bant pencerede iz bırakır mı', 'Size iletildi', 'wait'],
         ].map(([q, s, t]: any) => (
           <div key={q} className="flex items-center justify-between gap-3 rounded-lg px-3.5 py-3 bg-white" style={{ border: '1px solid var(--line)' }}>
             <span className="text-xs sm:text-[.82rem] truncate">{q}</span>
@@ -570,11 +763,11 @@ const TABS = [
 const V2Product = () => {
   const [t, setT] = useState(0);
   return (
-    <section id="v2-urun" className="py-24 sm:py-32" style={{ background: 'var(--paper-2)' }}>
+    <section id="v2-urun" className="py-24 sm:py-36" style={{ background: 'var(--paper-2)' }}>
       <div className="max-w-5xl mx-auto px-5 sm:px-8">
         <Rv className="max-w-2xl mb-12">
-          <Eyebrow num="02">Panel</Eyebrow>
-          <h2 className="display h2 mb-5">Her şey <span className="ember">tek ekranda</span></h2>
+          <Eyebrow num="04">Panel</Eyebrow>
+          <h2 className="display h2 mb-6">Her şey <span className="ember">tek ekranda</span></h2>
           <p className="lede">Mağazanıza ne olduğunu görmek için Trendyol paneline girmenize gerek yok.</p>
         </Rv>
         <Rv delay={0.08}>
@@ -603,13 +796,13 @@ const V2Product = () => {
 };
 
 // ────────────────────────────────────────────────
-// Nasıl çalışır
+// Kurulum
 // ────────────────────────────────────────────────
 const V2Steps = () => (
-  <section id="v2-nasil" className="py-24 sm:py-32">
+  <section id="v2-nasil" className="py-24 sm:py-36">
     <div className="max-w-5xl mx-auto px-5 sm:px-8">
       <Rv className="max-w-2xl mb-14">
-        <Eyebrow num="03">Kurulum</Eyebrow>
+        <Eyebrow num="05">Kurulum</Eyebrow>
         <h2 className="display h2 mb-5">Üç adım, birkaç dakika</h2>
       </Rv>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-px" style={{ background: 'var(--line)' }}>
@@ -620,7 +813,7 @@ const V2Steps = () => (
         ].map(([t, d], i) => (
           <Rv key={t} delay={i * 0.08}>
             <div className="h-full px-6 sm:px-8 py-10" style={{ background: 'var(--paper)' }}>
-              <p className="display text-4xl mb-5" style={{ color: 'var(--line-2)' }}>0{i + 1}</p>
+              <p className="display text-4xl mb-5" style={{ color: 'var(--line-2)', fontWeight: 600 }}>0{i + 1}</p>
               <h3 className="display h3 mb-3">{t}</h3>
               <p className="text-[.9rem] leading-relaxed" style={{ color: 'var(--text-mid)' }}>{d}</p>
             </div>
@@ -651,11 +844,11 @@ const ROWS: [string, boolean, boolean][] = [
 ];
 
 const V2Compare = () => (
-  <section className="py-24 sm:py-32" style={{ background: 'var(--paper-2)' }}>
+  <section className="py-24 sm:py-36" style={{ background: 'var(--paper-2)' }}>
     <div className="max-w-3xl mx-auto px-5 sm:px-8">
       <Rv className="mb-12">
-        <Eyebrow num="04">Karşılaştırma</Eyebrow>
-        <h2 className="display h2 mb-5">Aradaki fark nerede?</h2>
+        <Eyebrow num="06">Karşılaştırma</Eyebrow>
+        <h2 className="display h2 mb-6">Aradaki fark nerede?</h2>
         <p className="lede">Piyasadaki çoğu araç soruyu kapatır. Biz soruyu satışa çevirip mağazanızı korumaya çalışıyoruz.</p>
       </Rv>
       <Rv delay={0.08}>
@@ -694,11 +887,11 @@ const V2_PLANS = [
 ];
 
 const V2Pricing = () => (
-  <section id="v2-fiyat" className="py-24 sm:py-32">
+  <section id="v2-fiyat" className="py-24 sm:py-36">
     <div className="max-w-6xl mx-auto px-5 sm:px-8">
       <Rv className="max-w-2xl mb-14">
-        <Eyebrow num="05">Fiyatlandırma</Eyebrow>
-        <h2 className="display h2 mb-5">Soru hacminize göre seçin</h2>
+        <Eyebrow num="07">Fiyatlandırma</Eyebrow>
+        <h2 className="display h2 mb-6">Soru hacminize göre seçin</h2>
         <p className="lede">Tüm planlar 30 gün ücretsiz deneme ile başlar. Kredi kartı gerekmez.</p>
       </Rv>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -711,7 +904,7 @@ const V2Pricing = () => (
                   style={{ background: 'var(--ember)' }}>En çok tercih edilen</span>
               )}
               <p className="text-[.8rem] font-semibold mb-4" style={{ color: 'var(--text-mid)' }}>{p.name}</p>
-              <p className="display text-3xl mb-1">{p.price}₺</p>
+              <p className="display text-3xl mb-1" style={{ fontWeight: 600 }}>{p.price}₺</p>
               <p className="text-[.7rem] mb-1" style={{ color: 'var(--text-low)' }}>+ KDV · aylık</p>
               <p className="text-[.7rem] mb-5 ember">{p.per}</p>
               <p className="text-[.85rem] font-semibold mb-4 pb-4" style={{ borderBottom: '1px solid var(--line)' }}>{p.q}</p>
@@ -742,10 +935,10 @@ const V2Pricing = () => (
 const V2Faq = () => {
   const [open, setOpen] = useState<number | null>(null);
   return (
-    <section id="v2-sss" className="py-24 sm:py-32" style={{ background: 'var(--paper-2)' }}>
+    <section id="v2-sss" className="py-24 sm:py-36" style={{ background: 'var(--paper-2)' }}>
       <div className="max-w-3xl mx-auto px-5 sm:px-8">
         <Rv className="mb-12">
-          <Eyebrow num="06">Sıkça sorulanlar</Eyebrow>
+          <Eyebrow num="08">Sıkça sorulanlar</Eyebrow>
           <h2 className="display h2">Merak edilenler</h2>
         </Rv>
         <Rv delay={0.08}>
@@ -777,14 +970,14 @@ const V2Faq = () => {
 // Kapanış + footer
 // ────────────────────────────────────────────────
 const V2Cta = () => (
-  <section className="band-ink py-24 sm:py-32 overflow-hidden">
+  <section className="band-ink py-24 sm:py-36 overflow-hidden">
     <span className="glow" style={{ width: 620, height: 620, bottom: -320, left: '50%', transform: 'translateX(-50%)' }} />
     <div className="max-w-3xl mx-auto px-5 sm:px-8 text-center">
       <Rv>
-        <h2 className="display h2 mb-6" style={{ color: 'var(--ink-text)' }}>
+        <h2 className="display h2 mb-7" style={{ color: 'var(--ink-text)' }}>
           Bu gece son kez<br />sorulara <span style={{ color: 'var(--ember-2)' }}>siz bakın.</span>
         </h2>
-        <p className="lede mx-auto mb-9">Yarın sabah soru-cevap ekranınız temiz olsun. 30 gün ücretsiz, kredi kartı gerekmez.</p>
+        <p className="lede mx-auto mb-10">Yarın sabah soru-cevap ekranınız temiz olsun. 30 gün ücretsiz, kredi kartı gerekmez.</p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
           <a href={APP_URL} className="btn btn-ember w-full sm:w-auto">Hemen başlayın <ArrowRight size={17} /></a>
           <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="btn btn-line w-full sm:w-auto">
@@ -823,8 +1016,7 @@ const V2Footer = () => (
 const V2Page = () => {
   useEffect(() => {
     document.title = 'SellerPilot — Trendyol satıcıları için yapay zekâ asistanı';
-    // Önizleme rotası: ana sayfayla aynı içeriği taşıdığı için arama motorlarına
-    // kopya içerik olarak görünmesin. v2 "/" ile yer değiştirdiğinde bu blok silinir.
+    // Önizleme rotası: kopya içerik indekslenmesin. v2 "/" olunca bu blok silinir.
     const m = document.createElement('meta');
     m.name = 'robots';
     m.content = 'noindex, nofollow';
@@ -837,8 +1029,9 @@ const V2Page = () => {
       <V2Nav />
       <main>
         <V2Hero />
-        <V2Metrics />
+        <V2RealAnswers />
         <V2Diff />
+        <V2Listings />
         <V2Product />
         <V2Steps />
         <V2Compare />
