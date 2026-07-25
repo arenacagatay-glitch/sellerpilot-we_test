@@ -25,6 +25,12 @@ import { FAQ_ITEMS, WHATSAPP_URL, APP_URL } from './constants';
 // ────────────────────────────────────────────────
 const REAL_EXAMPLES = [
   {
+    cat: 'SİPARİŞ TAKİBİ', date: '21 Temmuz 2026',
+    q: '114•••0188 ben PTT demiştim ama ip ğ kolay gelsin kargoya vermişsiniz. ne zaman getirecekler,',
+    a: 'Merhaba! 114•••0188 numaralı siparişinizi kontrol ettik: siparişiniz kargoya verildi, yolda (Kolay Gelsin Marketplace). Tahmini teslimat: 13 Temmuz - 16 Temmuz. Hesabım > Siparişlerim > "Kargom Nerede?" adımından da anlık takip edebilirsiniz. 📦',
+    note: 'Numarayı görüp siparişi Trendyol\'dan gerçekten sorguladı — durum, kargo firması ve teslim tarihi gerçek.',
+  },
+  {
     cat: 'AYAKKABI', date: '25 Temmuz 2026',
     q: 'denizde giyinilrmi ıslak kumda',
     a: 'Merhaba efendim, bu terliğimiz her ne kadar plaj ve sahil kullanımına uygun olsa da ıslak kumda veya denizde hasır ve tekstil yapısı nedeniyle zorlanabilir 🌊 Deniz kenarında kullanım için tam koruma sağlayan Kadın Erkek Şeffaf Kaymaz Taban Deniz Plaj Ayakkabısı modelimizi de inceleyebilirsiniz. Mutlu ve sağlıklı günler dilerim :)',
@@ -43,16 +49,22 @@ const REAL_EXAMPLES = [
     note: 'Müşterinin yanlış üründe olduğunu fark etti, katalogdan doğrusunu buldu.',
   },
   {
+    cat: 'BEBEK', date: '25 Temmuz 2026',
+    q: 'Kapsamı nedir ben oyun parkı için istiyorum 120x120 uyumlumudur',
+    a: 'Merhaba, evet bu sinekliğimiz tüm park yatak ve bebek yataklarıyla uyumlu olacak şekilde tasarlanmıştır, oyun parkınız için rahatlıkla kullanabilirsiniz 🍼✨',
+    note: 'Ölçü uyumluluğunu ürün verisinden doğrulayıp net cevap verdi.',
+  },
+  {
     cat: 'YAPI MARKET', date: '22 Temmuz 2026',
     q: 'mutfak tezganihi boyamak istiyorum kac litre almam lazim',
     a: 'Merhaba! Mutfak tezgahınızın boyutu hakkında net bir şey söyleyebilmem için yaklaşık ölçülerini paylaşabilir misiniz? Genellikle mutfak tezgahı ve yoğun temas eden yüzeyler için koruyucu vernikle desteklenen setlerimiz çok daha uzun ömürlü bir kullanım sağlar 🍳✨',
     note: 'Litre uydurmak yerine ölçü istedi; doğru seti de önerdi.',
   },
   {
-    cat: 'KOZMETİK', date: '25 Temmuz 2026',
-    q: '🛍MRB, mağaza büyütmek için kullandığımız bir sistem var. Merak ederseniz takipci favori 2 şeklinde aratabilirsiniz...',
-    a: 'Merhaba, nazik teklifiniz için teşekkür ederiz ancak biz ‹mağaza› olarak kendi iç süreçlerimizle ilerliyoruz. 😊 Yağlı ciltler için özel olarak geliştirdiğimiz güneş kremimizle ilgili sormak istediğiniz başka bir detay var mı?',
-    note: 'Reklam mesajını kibarca savdı, konuyu kendi ürününe döndürdü.',
+    cat: 'OTO KOKUSU', date: '20 Temmuz 2026',
+    q: 'Bunu nasıl kullanıyoruz?',
+    a: "Merhaba! Ürünümüzü 20-30 cm uzaklıktan uygulamanız, etkileyicilik ve kalıcılık açısından en iyi sonucu verecektir. Yoğun esanslı formülüyle aracınızda ferah bir ortam yaratabilirsiniz. Farklı bir koku denemek isterseniz, koleksiyonumuzdaki 'Elmalı Turta' kokumuza da göz atabilirsiniz! 🚗✨",
+    note: 'Kullanım tarifi verdi, üstüne katalogdan ikinci bir kokuyu doğal dille önerdi.',
   },
   {
     cat: 'AYAKKABI', date: '25 Temmuz 2026',
@@ -179,6 +191,40 @@ const V2Styles = () => (
   .v2 .rail > * { scroll-snap-align: center; flex: 0 0 min(88vw, 30rem); }
   .v2 .masked { font-style: italic; color: var(--text-low); }
 
+  /* ── Telefon vitrini (hero) ── */
+  .v2 .phone-stage {
+    position: relative;
+    background-image:
+      radial-gradient(circle at 50% 42%, rgba(255,107,53,.16) 0%, rgba(255,107,53,0) 62%),
+      linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+    background-size: 100% 100%, 44px 44px, 44px 44px;
+  }
+  .v2 .phone {
+    background: #0D0F16; border: 1px solid rgba(255,255,255,.12);
+    border-radius: 2.6rem; box-shadow: 0 0 0 6px rgba(255,255,255,.03), 0 40px 80px -30px rgba(0,0,0,.8);
+  }
+  .v2 .float-chip {
+    position: absolute; display: flex; align-items: center; gap: .6rem;
+    background: rgba(18,21,29,.72); border: 1px solid rgba(255,255,255,.12);
+    backdrop-filter: blur(10px); border-radius: 1rem; padding: .6rem .9rem;
+    box-shadow: 0 18px 40px -18px rgba(0,0,0,.7);
+  }
+  .v2 .bob1 { animation: v2bob 6s ease-in-out infinite; }
+  .v2 .bob2 { animation: v2bob 7.5s ease-in-out 1.2s infinite; }
+  .v2 .bob3 { animation: v2bob 8.5s ease-in-out 2.1s infinite; }
+  @keyframes v2bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
+
+  .v2 .msg-in { animation: v2msg .55s cubic-bezier(.22,1,.36,1) both; }
+  @keyframes v2msg { from { opacity: 0; transform: translateY(12px) scale(.98); } to { opacity: 1; transform: none; } }
+  .v2 .typing span {
+    width: 5px; height: 5px; border-radius: 50%; background: var(--ink-mid);
+    display: inline-block; animation: v2typ 1.1s ease-in-out infinite;
+  }
+  .v2 .typing span:nth-child(2) { animation-delay: .18s; }
+  .v2 .typing span:nth-child(3) { animation-delay: .36s; }
+  @keyframes v2typ { 0%,60%,100% { opacity: .25; transform: translateY(0); } 30% { opacity: 1; transform: translateY(-3px); } }
+
   @media (prefers-reduced-motion: reduce) {
     .v2 .rv { opacity:1 !important; transform:none !important; transition:none !important; }
     .v2 * { animation: none !important; scroll-behavior: auto !important; }
@@ -229,52 +275,128 @@ const Masked = ({ text }: { text: string }) => {
 };
 
 // ────────────────────────────────────────────────
-// CSS ile çizilmiş panel — hero kanıtı (görsel dosyası yok)
-// Soru satırları gerçek (Supabase, Tem 2026).
+// Canlı telefon vitrini — hero kanıtı (görsel dosyası yok, CSS + küçük döngü)
+// Konuşmaların ÜÇÜ DE GERÇEK (Supabase, Tem 2026); sırayla oynar.
 // ────────────────────────────────────────────────
-const HOURS = [8, 14, 22, 31, 45, 62, 78, 96, 88, 71, 54, 38];
+const PHONE_CONVOS = [
+  {
+    tag: 'Beden tablosundan hesaplandı',
+    q: '170 boy 107 kg kaç beden olur',
+    a: 'Merhaba! Boy ve kilo ölçülerinize göre hazırladığımız beden tablomuza baktığımızda 60 beden tercih edebilirsiniz 😊',
+  },
+  {
+    tag: "Sipariş Trendyol'dan canlı sorgulandı",
+    q: '114•••0188 ben PTT demiştim ama ip ğ kolay gelsin kargoya vermişsiniz. ne zaman getirecekler,',
+    a: 'Merhaba! 114•••0188 numaralı siparişinizi kontrol ettik: siparişiniz kargoya verildi, yolda (Kolay Gelsin Marketplace). Tahmini teslimat: 13 Temmuz - 16 Temmuz. 📦',
+  },
+  {
+    tag: 'Ürün verisinden doğrulandı',
+    q: 'Kapsamı nedir ben oyun parkı için istiyorum 120x120 uyumlumudur',
+    a: 'Merhaba, evet bu sinekliğimiz tüm park yatak ve bebek yataklarıyla uyumlu olacak şekilde tasarlanmıştır, oyun parkınız için rahatlıkla kullanabilirsiniz 🍼✨',
+  },
+];
 
-const PanelMock = () => (
-  <div className="chrome">
-    <div className="chrome-bar">
-      <span className="dot" /><span className="dot" /><span className="dot" />
-      <span className="urlpill">app.sellerpilot.cloud</span>
-    </div>
-    <div className="p-4 sm:p-5">
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 mb-5">
-        {[['Gelen soru', '47'], ['Otomatik cevap', '43'], ['Size düşen', '4'], ['Kazanılan', '2s 9dk']].map(([l, v]) => (
-          <div key={l} className="rounded-xl px-3 py-2.5" style={{ background: 'rgba(255,255,255,.04)', border: '1px solid var(--ink-line)' }}>
-            <p className="text-[10px] uppercase tracking-wider" style={{ color: 'var(--ink-mid)' }}>{l}</p>
-            <p className="text-lg font-semibold mt-0.5" style={{ color: 'var(--ink-text)' }}>{v}</p>
+const PhoneMock = () => {
+  const [idx, setIdx] = useState(0);
+  const [phase, setPhase] = useState<'q' | 'typing' | 'a'>('a');
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    let alive = true;
+    const timers: number[] = [];
+    const cycle = (i: number) => {
+      if (!alive) return;
+      setIdx(i); setPhase('q');
+      timers.push(window.setTimeout(() => alive && setPhase('typing'), 700));
+      timers.push(window.setTimeout(() => alive && setPhase('a'), 2000));
+      timers.push(window.setTimeout(() => cycle((i + 1) % PHONE_CONVOS.length), 9000));
+    };
+    cycle(0);
+    return () => { alive = false; timers.forEach(clearTimeout); };
+  }, []);
+  const c = PHONE_CONVOS[idx];
+  return (
+    <div className="phone-stage px-6 py-10 sm:px-10 sm:py-12 rounded-[2rem]">
+      {/* Yüzen rozetler */}
+      <div className="float-chip bob1 hidden sm:flex" style={{ top: '14%', left: '-1.5rem', zIndex: 2 }}>
+        <span className="w-8 h-8 rounded-full flex items-center justify-center shrink-0" style={{ background: 'rgba(74,222,128,.12)', border: '1px solid rgba(74,222,128,.3)' }}>
+          <BadgeCheck size={15} className="text-green-400" />
+        </span>
+        <span>
+          <span className="block text-[.62rem]" style={{ color: 'var(--ink-mid)' }}>Soru cevaplandı</span>
+          <span className="block text-[.78rem] font-bold" style={{ color: 'var(--ink-text)' }}>saniyeler içinde ⚡</span>
+        </span>
+      </div>
+      <div className="float-chip bob2 hidden sm:flex" style={{ top: '38%', right: '-1.75rem', zIndex: 2 }}>
+        <span className="w-8 h-8 rounded-full flex items-center justify-center shrink-0" style={{ background: 'rgba(255,190,92,.12)', border: '1px solid rgba(255,190,92,.3)' }}>
+          <Sparkles size={14} style={{ color: 'var(--ember-2)' }} />
+        </span>
+        <span>
+          <span className="block text-[.62rem]" style={{ color: 'var(--ink-mid)' }}>Mağaza puanı</span>
+          <span className="block text-[.78rem] font-bold" style={{ color: 'var(--ink-text)' }}>9.4 ↗</span>
+        </span>
+      </div>
+      <div className="float-chip bob3 hidden sm:flex" style={{ bottom: '12%', left: '-1rem', zIndex: 2 }}>
+        <span className="w-8 h-8 rounded-full flex items-center justify-center shrink-0" style={{ background: 'rgba(255,107,53,.14)', border: '1px solid rgba(255,107,53,.32)' }}>
+          <PackageCheck size={14} style={{ color: 'var(--ember)' }} />
+        </span>
+        <span>
+          <span className="block text-[.62rem]" style={{ color: 'var(--ink-mid)' }}>Soru → satışa döndü</span>
+          <span className="block text-[.78rem] font-bold" style={{ color: 'var(--ink-text)' }}>+1 öneri 🛍️</span>
+        </span>
+      </div>
+
+      {/* Telefon */}
+      <div className="phone relative mx-auto max-w-[22rem] px-4 pt-4 pb-6 sm:px-5">
+        <div className="flex items-center justify-between px-2 py-2 mb-2">
+          <span className="text-[.75rem] font-semibold" style={{ color: 'var(--ink-text)' }}>02:47</span>
+          <span className="mx-auto w-20 h-5 rounded-full" style={{ background: '#000' }} />
+          <span className="text-[.68rem]" style={{ color: 'var(--ink-mid)' }}>☾ Sessiz mod</span>
+        </div>
+        <p className="text-center text-[.68rem] mb-4" style={{ color: 'var(--ink-mid)' }}>Siz şu an uyuyorsunuz 😴</p>
+
+        <div className="min-h-[19rem] flex flex-col justify-start gap-2.5" key={idx}>
+          <div className="msg-in self-start max-w-[88%] rounded-2xl rounded-bl-md px-3.5 py-2.5"
+            style={{ background: 'rgba(255,255,255,.06)', border: '1px solid var(--ink-line)' }}>
+            <p className="text-[.62rem] font-bold mb-1" style={{ color: 'var(--ember-2)' }}>Yeni müşteri sorusu · 02:47</p>
+            <p className="text-[.8rem] leading-relaxed" style={{ color: 'var(--ink-text)' }}>{c.q}</p>
           </div>
-        ))}
+
+          {phase === 'typing' && (
+            <div className="msg-in self-end rounded-2xl rounded-br-md px-4 py-3" style={{ background: 'rgba(255,255,255,.06)', border: '1px solid var(--ink-line)' }}>
+              <span className="typing flex gap-1"><span /><span /><span /></span>
+            </div>
+          )}
+
+          {phase === 'a' && (
+            <>
+              <div className="msg-in self-end max-w-[92%] rounded-2xl rounded-br-md px-3.5 py-3 text-white"
+                style={{ background: 'linear-gradient(135deg,var(--ember),var(--ember-2))' }}>
+                <p className="text-[.62rem] font-bold mb-1 flex items-center gap-1.5 text-white/85">
+                  <Plane size={11} className="fill-white" /> Mağazanız adına cevaplandı
+                </p>
+                <p className="text-[.8rem] leading-relaxed">{c.a}</p>
+              </div>
+              <div className="msg-in self-center mt-1 inline-flex items-center gap-1.5 text-[.65rem] font-semibold px-3 py-1.5 rounded-full"
+                style={{ color: '#4ADE80', background: 'rgba(74,222,128,.08)', border: '1px solid rgba(74,222,128,.25)', animationDelay: '.25s' }}>
+                <BadgeCheck size={12} /> {c.tag}
+              </div>
+            </>
+          )}
+        </div>
+
+        <div className="flex justify-center gap-1.5 mt-4">
+          {PHONE_CONVOS.map((_, i) => (
+            <span key={i} className="w-1.5 h-1.5 rounded-full transition-colors duration-300"
+              style={{ background: i === idx ? 'var(--ember)' : 'rgba(255,255,255,.15)' }} />
+          ))}
+        </div>
       </div>
-      <div className="flex items-end justify-between gap-1 h-20 mb-2">
-        {HOURS.map((h, i) => (
-          <div key={i} className="bar flex-1" style={{ height: `${h}%`, opacity: 0.35 + (h / 96) * 0.65 }} />
-        ))}
-      </div>
-      <p className="text-[10px] mb-5" style={{ color: 'var(--ink-mid)' }}>Saatlik soru yoğunluğu — son 24 saat</p>
-      <div className="space-y-1.5">
-        {[
-          ['denizde giyinilrmi ıslak kumda', 'Otomatik cevaplandı', true],
-          ['170 boy 107 kg kaç beden olur', 'Otomatik cevaplandı', true],
-          ['Cırt cırt bant pencerede iz bırakır mı', 'Size iletildi', false],
-        ].map(([q, s, ok]: any) => (
-          <div key={q} className="flex items-center justify-between gap-3 rounded-lg px-3 py-2" style={{ background: 'rgba(255,255,255,.03)' }}>
-            <span className="text-[11px] sm:text-xs truncate" style={{ color: 'var(--ink-text)' }}>{q}</span>
-            <span className="text-[9px] font-semibold px-2 py-0.5 rounded-full shrink-0"
-              style={ok
-                ? { color: '#4ADE80', background: 'rgba(74,222,128,.10)', border: '1px solid rgba(74,222,128,.25)' }
-                : { color: 'var(--ember-2)', background: 'rgba(255,190,92,.10)', border: '1px solid rgba(255,190,92,.28)' }}>
-              {s}
-            </span>
-          </div>
-        ))}
-      </div>
+      <p className="text-center text-[.65rem] mt-5" style={{ color: 'var(--ink-mid)' }}>
+        Üç konuşma da gerçek — Temmuz 2026'da Trendyol'da yayınlandı.
+      </p>
     </div>
-  </div>
-);
+  );
+};
 
 // ────────────────────────────────────────────────
 // Nav
@@ -338,36 +460,38 @@ const V2Nav = () => {
 // Hero
 // ────────────────────────────────────────────────
 const V2Hero = () => (
-  <section id="top" className="band-ink pt-32 pb-16 sm:pt-44 sm:pb-24 overflow-hidden">
+  <section id="top" className="band-ink pt-28 pb-16 sm:pt-40 sm:pb-24 overflow-hidden">
     <span className="glow" style={{ width: 820, height: 820, top: -300, left: '50%', transform: 'translateX(-50%)' }} />
     <div className="max-w-6xl mx-auto px-5 sm:px-8">
-      <Rv className="text-center">
-        <span className="inline-flex items-center gap-2 text-xs font-medium rounded-full px-3.5 py-1.5 mb-9"
-          style={{ border: '1px solid var(--ink-line)', color: 'var(--ink-mid)', background: 'rgba(255,255,255,.03)' }}>
-          <span className="w-1.5 h-1.5 rounded-full" style={{ background: 'var(--ember)' }} />
-          Bir Trendyol satıcısı tarafından geliştirildi
-        </span>
-        <h1 className="display h1 mb-7" style={{ color: 'var(--ink-text)' }}>
-          Sorulara siz değil,<br /><span style={{ color: 'var(--ember-2)' }}>mağazanız</span> cevap versin.
-        </h1>
-        <p className="lede mx-auto mb-10">
-          SellerPilot ürünlerinizi tanır, gelen her soruyu sizin sesinizle saniyeler içinde yanıtlar.
-          Emin olamadığını asla uydurmaz — size iletir.
-        </p>
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-4">
-          <a href={APP_URL} className="btn btn-ember w-full sm:w-auto">30 gün ücretsiz dene <ArrowRight size={17} /></a>
-          <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="btn btn-line w-full sm:w-auto">
-            <Smartphone size={17} /> WhatsApp'tan yazın
-          </a>
-        </div>
-        <p className="text-xs" style={{ color: 'var(--ink-mid)' }}>Kredi kartı gerekmez · Kurulum birkaç dakika</p>
-      </Rv>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center">
+        <Rv className="text-center lg:text-left">
+          <span className="inline-flex items-center gap-2 text-xs font-medium rounded-full px-3.5 py-1.5 mb-9"
+            style={{ border: '1px solid var(--ink-line)', color: 'var(--ink-mid)', background: 'rgba(255,255,255,.03)' }}>
+            <span className="w-1.5 h-1.5 rounded-full" style={{ background: 'var(--ember)' }} />
+            Bir Trendyol satıcısı tarafından geliştirildi
+          </span>
+          <h1 className="display h1 mb-7" style={{ color: 'var(--ink-text)' }}>
+            Sorulara siz değil,<br /><span style={{ color: 'var(--ember-2)' }}>mağazanız</span> cevap versin.
+          </h1>
+          <p className="lede mx-auto lg:mx-0 mb-10">
+            SellerPilot ürünlerinizi tanır, gelen her soruyu sizin sesinizle saniyeler içinde yanıtlar.
+            Emin olamadığını asla uydurmaz — size iletir.
+          </p>
+          <div className="flex flex-col sm:flex-row items-center lg:justify-start justify-center gap-3 mb-4">
+            <a href={APP_URL} className="btn btn-ember w-full sm:w-auto">30 gün ücretsiz dene <ArrowRight size={17} /></a>
+            <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="btn btn-line w-full sm:w-auto">
+              <Smartphone size={17} /> WhatsApp'tan yazın
+            </a>
+          </div>
+          <p className="text-xs" style={{ color: 'var(--ink-mid)' }}>Kredi kartı gerekmez · Kurulum birkaç dakika</p>
+        </Rv>
 
-      <Rv delay={0.12} className="mt-16 sm:mt-24 max-w-3xl mx-auto">
-        <PanelMock />
-      </Rv>
+        <Rv delay={0.12}>
+          <PhoneMock />
+        </Rv>
+      </div>
 
-      <Rv delay={0.18} className="mt-14">
+      <Rv delay={0.18} className="mt-16">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-px rounded-2xl overflow-hidden" style={{ background: 'var(--ink-line)' }}>
           {[
             ['Saniyeler', 'içinde otomatik cevap'],
@@ -469,7 +593,7 @@ const V2Diff = () => (
       <Rv className="max-w-2xl mb-14">
         <Eyebrow num="02">Farkımız</Eyebrow>
         <h2 className="display h2 mb-6">Otomatik cevap kolay.<br /><span className="ember">Doğru cevap zor.</span></h2>
-        <p className="lede">Bir mağazayı yakan şey cevapsız soru değil, yanlış cevaptır. SellerPilot'ı satıcı olarak biz kurduk — bu yüzden neyi söylemeyeceğini de biliyor.</p>
+        <p className="lede">Bir mağazayı yakan şey cevapsız soru değil, yanlış cevaptır. SellerPilot neyi söyleyeceği kadar, neyi söylemeyeceğini de bilir.</p>
       </Rv>
 
       <div className="grid grid-cols-1 lg:grid-cols-6 gap-4 sm:gap-5">
@@ -702,6 +826,7 @@ const TABS = [
     render: () => (
       <div className="p-4 sm:p-5 space-y-2">
         {[
+          ['114•••0188 ... ne zaman getirecekler', 'Sipariş sorgulandı', 'ok'],
           ['denizde giyinilrmi ıslak kumda', 'Ürün önerildi', 'ok'],
           ['170 boy 107 kg kaç beden olur', 'Otomatik', 'ok'],
           ['La Vie Est Belle muadili var mı', 'Otomatik', 'ok'],

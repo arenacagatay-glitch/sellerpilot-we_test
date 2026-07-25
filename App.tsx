@@ -1094,7 +1094,7 @@ const WhyDifferent = () => (
       <Reveal className="text-center mb-14">
         <span className="inline-block py-1 px-3 bg-white text-primary text-xs font-bold uppercase tracking-wider rounded-full mb-4 border border-orange-100 shadow-sm">Farkımız</span>
         <h2 className="text-3xl sm:text-4xl font-display font-bold text-dark mb-3">Otomatik cevap kolay. <span className="grad-text">Doğru cevap zor.</span></h2>
-        <p className="text-dark-gray max-w-2xl mx-auto">Bir mağazayı yakan şey cevapsız soru değil, yanlış cevaptır. SellerPilot'ı satıcı olarak biz kurduk — bu yüzden neyi söylemeyeceğini de biliyor.</p>
+        <p className="text-dark-gray max-w-2xl mx-auto">Bir mağazayı yakan şey cevapsız soru değil, yanlış cevaptır. SellerPilot neyi söyleyeceği kadar, neyi söylemeyeceğini de bilir.</p>
       </Reveal>
 
       <div className="grid grid-cols-1 lg:grid-cols-6 gap-6">
