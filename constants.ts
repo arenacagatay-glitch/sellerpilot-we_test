@@ -1,4 +1,4 @@
-import { Zap, ShoppingBag, MessageCircle, Box, Moon, Key, Settings, UserCheck } from 'lucide-react';
+import { Zap, ShoppingBag, MessageCircle, Box, Moon, Key, Settings, UserCheck, PackageCheck, ShieldCheck, Sparkles, Camera } from 'lucide-react';
 import { ChatExample, FaqItem, Feature, StatCard, Step } from './types';
 
 // ÖNEMLİ: Google Apps Script'ten aldığın Web App URL'ini buraya yapıştır.
@@ -10,6 +10,7 @@ export const APP_URL = "https://app.sellerpilot.cloud";
 
 export const NAV_LINKS = [
   { label: 'Özellikler', href: '#features' },
+  { label: 'Farkımız', href: '#fark' },
   { label: 'Nasıl Çalışır?', href: '#how-it-works' },
   { label: 'Örnekler', href: '#examples' },
   { label: 'Görsel Stüdyo', href: '#ai-studyo' },
@@ -123,33 +124,33 @@ export const FEATURES: Feature[] = [
   },
   {
     id: 2,
-    icon: UserCheck,
-    title: "Ürünlerinizi Ezbere Bilir",
-    description: "Ürün açıklamalarınızı ve özelliklerinizi tarar, her ürüne özel cevap verir. Bilgi yoksa tahmin etmez — soruyu size yönlendirir."
+    icon: PackageCheck,
+    title: "\"Kargom Nerede?\" Sorusunu Bilerek Cevaplar",
+    description: "Sipariş numarasını veren müşteriye siparişin o anki gerçek durumunu söyler. Tahmin yok, boş oyalama yok."
   },
   {
     id: 3,
     icon: ShoppingBag,
-    title: "Sizin Yerinize Satış Yapar",
-    description: "Müşteri sizde olmayan bir ürünü sorarsa kataloğunuzdan gerçek, stokta olan alternatifi önerir; tanımladığınız kampanyaları cevaba doğal şekilde ekler. İade ve şikâyet konuşmalarında asla satış yapmaz."
+    title: "Cevap Verirken Satış da Yapar",
+    description: "Müşteri aradığı şeyi bulamadığında mağazanızdaki doğru ürünü önerir, kampanyanızı hatırlatır. İade ve şikâyet konuşmalarında satış yapmaya kalkmaz."
   },
   {
     id: 4,
-    icon: MessageCircle,
-    title: "İnsan Gibi Konuşur",
-    description: "Doğal Türkçe, samimi ya da kurumsal — marka dilinizi siz seçersiniz. Müşterileriniz robotla konuştuğunu fark etmez."
+    icon: ShieldCheck,
+    title: "Tutamayacağı Sözü Vermez",
+    description: "Geciken siparişe \"yarın gelir\", \"2 güne ulaşır\" gibi sözler vermez. Müşteriyi daha çok kızdıracak cümleleri kurmaz."
   },
   {
     id: 5,
-    icon: Box,
-    title: "Stoğu ve Geçmişi Takip Eder",
-    description: "Stok durumunu doğru bildirir, daha önce verdiğiniz cevapları hatırlar ve onlarla çelişmez. Tutarlı bir mağaza dili kurar."
+    icon: Sparkles,
+    title: "İlanlarınızı da Güçlendirir",
+    description: "Müşterilerin en çok sorduğu şeylere bakıp ürün başlığınız ve açıklamanız için hazır metin önerir. Beğenirseniz tek tuşla Trendyol'a gönderir."
   },
   {
     id: 6,
-    icon: Moon,
-    title: "Gece, Hafta Sonu, Bayram",
-    description: "Siz uyurken, tatildeyken, kargoyla uğraşırken de çalışır. Soru-cevap ekranınız hep temiz kalır."
+    icon: Camera,
+    title: "Ürün Fotoğrafınızı Bile Üretir",
+    description: "Tek bir fotoğraftan satışa hazır ürün görselleri hazırlar. Stüdyo, model, çekim derdi olmadan ilanınız profesyonel görünür."
   }
 ];
 
@@ -172,7 +173,7 @@ export const FAQ_ITEMS: FaqItem[] = [
   {
     id: 4,
     question: "Fiyatlandırma nasıl?",
-    answer: "Aylık soru hacminize göre 4 farklı plan sunuyoruz: Başlangıç (100 soru/ay, 499₺), Küçük Esnaf (300 soru/ay, 1.299₺), Büyüyen Marka (3.000 soru/ay, 6.999₺), Kurumsal (10.000 soru/ay, 14.999₺). Tüm planlar KDV dahil olup 7 günlük ücretsiz deneme ile başlar. Soru limitinizi aşarsanız sistem sizi bilgilendirir."
+    answer: "Aylık soru hacminize göre 4 farklı plan sunuyoruz: Başlangıç (100 soru/ay, 1.299₺), Küçük Esnaf (300 soru/ay, 2.999₺), Büyüyen Marka (1.000 soru/ay, 8.999₺), Kurumsal (3.000 soru/ay, 19.999₺). Fiyatlara KDV dahil değildir. Tüm planlar 30 günlük ücretsiz deneme ile başlar. Önemli detay: kotanızdan sadece yapay zekânın cevapladığı sorular düşer — size yönlendirilen ve sizin yazdığınız cevaplar ücretsizdir. Soru limitinizi aşarsanız sistem sizi bilgilendirir."
   },
   {
     id: 5,
@@ -193,5 +194,25 @@ export const FAQ_ITEMS: FaqItem[] = [
     id: 8,
     question: "Ürün önerisi ve kampanya özelliği nasıl çalışır? Olmayan bir indirim söyler mi?",
     answer: "Hayır, asla. Sistem yalnızca kataloğunuzda gerçekten var olan ve stokta bulunan ürünleri önerebilir; önerdiği her ürün gerçek katalog verisiyle doğrulanır. Kampanyaları panelden siz tanımlarsınız — tanımlı kampanya yoksa sistem indirim, fiyat veya avantaj uydurmaz. İade, şikâyet, kargo sorunu ve sağlıkla ilgili sorularda öneri hiç devreye girmez: önce müşterinin konusu çözülür. Bu özellik isteğe bağlıdır, panelden tek tuşla açıp kapatabilirsiniz."
+  },
+  {
+    id: 9,
+    question: "Her cevabı otomatik göndermek zorunda mıyım?",
+    answer: "Hayır. Üç şekilde çalışabilirsiniz: sistem kendi cevaplasın, cevabı hazırlayıp onayınıza sunsun ya da hiç karışmasın. Onay modunda hazırlanan cevabı panelde görür, dilerseniz düzenler, sonra gönderirsiniz. Bir konuşmayı siz devraldığınızda sistem araya girmez."
+  },
+  {
+    id: 10,
+    question: "Cevaplarda link veya telefon paylaşılır mı? Mağazam risk altına girer mi?",
+    answer: "Hayır. Trendyol; soru-cevap alanında link, telefon numarası, e-posta ve dış kanal yönlendirmesi paylaşılmasını onaylamıyor. Sistem her cevabı gönderilmeden önce denetler; böyle bir içerik varsa temizler, cevap anlamını yitiriyorsa göndermeyip size iletir."
+  },
+  {
+    id: 11,
+    question: "Beden ve numara sorularında yanlış yönlendirme yapar mı?",
+    answer: "Beden ve numara konusunda tahmin yürütmemesi için özel olarak kısıtlandı. Panele beden tablonuzu girdiyseniz sadece ona dayanarak cevap verir; ayakkabıda numara, giyimde beden gibi her kategoriyi kendi tablosuyla değerlendirir. Tablo yoksa ve müşteri boy/kilo bilgisi vermişse kesin bir beden söylemez, soruyu size iletir."
+  },
+  {
+    id: 12,
+    question: "Hangi pazaryerlerinde çalışıyor?",
+    answer: "Şu anda Trendyol ile çalışıyoruz ve entegrasyonumuz Trendyol'un resmi satıcı API'si üzerinden yürüyor. Birden fazla Trendyol mağazanız varsa hepsini tek panelden yönetebilir, ayarlarınızı mağazalar arasında kopyalayabilirsiniz. Diğer pazaryerleri yol haritamızda yer alıyor."
   }
 ];

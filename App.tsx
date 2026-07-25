@@ -4,7 +4,8 @@ import {
   ChevronDown, ChevronUp, ChevronLeft, ChevronRight, CheckCircle, Mail,
   Smartphone, Check, Plane, X, Menu as MenuIcon, ShieldCheck, Store, Clock,
   MessageSquare, Sparkles, ArrowRight, Star, TrendingUp, Zap as ZapIcon,
-  Camera, Image as ImageIcon, Wand2, Gauge
+  Camera, Image as ImageIcon, Wand2, Gauge,
+  SlidersHorizontal, Ruler, BadgeCheck, HeartPulse, Minus, PackageCheck
 } from 'lucide-react';
 import { CHAT_EXAMPLES, FAQ_ITEMS, FEATURES, NAV_LINKS, STAT_CARDS, STEPS, WHATSAPP_URL, APP_URL } from './constants';
 import { BrowserRouter, Routes, Route, Link, useLocation } from 'react-router-dom';
@@ -155,7 +156,7 @@ const Header = () => {
                 ? <Link key={l.label} to={l.href} onClick={() => setMenuOpen(false)} className="py-3 text-dark font-medium border-b border-gray-50 last:border-0 hover:text-primary transition-colors">{l.label}</Link>
                 : <a key={l.label} href={l.href} onClick={() => setMenuOpen(false)} className="py-3 text-dark font-medium border-b border-gray-50 last:border-0 hover:text-primary transition-colors">{l.label}</a>
             ))}
-            <a href={APP_URL} className="mt-3 text-white text-center font-bold py-3.5 rounded-xl" style={{ background: 'linear-gradient(135deg,#FF6B35,#FFBE5C)' }}>7 Gün Ücretsiz Dene</a>
+            <a href={APP_URL} className="mt-3 text-white text-center font-bold py-3.5 rounded-xl" style={{ background: 'linear-gradient(135deg,#FF6B35,#FFBE5C)' }}>30 Gün Ücretsiz Dene</a>
             <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="mt-2 bg-[#25D366] text-white text-center font-bold py-3.5 rounded-xl flex items-center justify-center gap-2">
               <Smartphone size={18} /> WhatsApp'tan Yazın
             </a>
@@ -272,7 +273,7 @@ const Hero = () => (
             </a>
             <a href={APP_URL}
               className="w-full sm:w-auto border border-white/20 hover:border-amber-300/60 bg-white/5 hover:bg-white/10 text-white text-lg font-bold py-4 px-8 rounded-2xl flex items-center justify-center gap-2 transition-all">
-              7 Gün Ücretsiz Dene <ArrowRight size={20} />
+              30 Gün Ücretsiz Dene <ArrowRight size={20} />
             </a>
           </div>
 
@@ -1071,6 +1072,174 @@ const UpsellSection = () => (
 );
 
 // ────────────────────────────────────────────────
+// Why different (#fark) — premium bento kartlar
+// ────────────────────────────────────────────────
+const DiffCard = ({ icon: Icon, title, children, mock, wide = false, full = false }: any) => (
+  <Reveal className={full ? 'lg:col-span-6' : wide ? 'lg:col-span-3' : 'lg:col-span-2'}>
+    <div className="card-hover h-full bg-white rounded-3xl border border-gray-200 shadow-sm hover:shadow-xl hover:border-orange-200 p-7 sm:p-9 flex flex-col">
+      <div className="w-11 h-11 rounded-2xl bg-orange-50 border border-orange-100 flex items-center justify-center mb-6">
+        <Icon className="w-5 h-5 text-primary" />
+      </div>
+      <h3 className="text-xl sm:text-2xl font-display font-bold text-dark mb-3 leading-snug">{title}</h3>
+      <p className="text-dark-gray leading-relaxed mb-7">{children}</p>
+      <div className="mt-auto bg-light rounded-2xl p-5">{mock}</div>
+    </div>
+  </Reveal>
+);
+
+const WhyDifferent = () => (
+  <section id="fark" className="py-24 bg-gradient-to-b from-light to-white">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <Reveal className="text-center mb-14">
+        <span className="inline-block py-1 px-3 bg-white text-primary text-xs font-bold uppercase tracking-wider rounded-full mb-4 border border-orange-100 shadow-sm">Farkımız</span>
+        <h2 className="text-3xl sm:text-4xl font-display font-bold text-dark mb-3">Otomatik cevap kolay. <span className="grad-text">Doğru cevap zor.</span></h2>
+        <p className="text-dark-gray max-w-2xl mx-auto">Bir mağazayı yakan şey cevapsız soru değil, yanlış cevaptır. SellerPilot'ı satıcı olarak biz kurduk — bu yüzden neyi söylemeyeceğini de biliyor.</p>
+      </Reveal>
+
+      <div className="grid grid-cols-1 lg:grid-cols-6 gap-6">
+
+        <DiffCard
+          icon={SlidersHorizontal}
+          wide
+          title="Kontrol tamamen sizde"
+          mock={
+            <div className="space-y-2.5">
+              {[
+                ['Otomatik', 'Sistem kendi cevaplar', false],
+                ['Onaylı', 'Cevabı hazırlar, siz onaylarsınız', true],
+                ['Kapalı', 'Sadece siz cevaplarsınız', false],
+              ].map(([t, d, on]: any) => (
+                <div key={t} className={`flex items-center gap-3 rounded-xl px-4 py-3 bg-white border ${on ? 'border-primary shadow-sm' : 'border-gray-200'}`}>
+                  <span className={`w-4 h-4 rounded-full border-2 shrink-0 flex items-center justify-center ${on ? 'border-primary' : 'border-gray-300'}`}>
+                    {on && <span className="w-2 h-2 rounded-full bg-primary" />}
+                  </span>
+                  <span className="text-sm font-semibold text-dark">{t}</span>
+                  <span className="text-xs text-gray-400">{d}</span>
+                </div>
+              ))}
+            </div>
+          }
+        >
+          İster tamamen size bıraksın, ister her cevabı hazırlayıp onayınıza sunsun, ister hiç karışmasın. Bir konuşmayı devraldığınızda sistem araya girmez.
+        </DiffCard>
+
+        <DiffCard
+          icon={MessageSquare}
+          wide
+          title="Sizin ağzınızdan konuşur"
+          mock={
+            <div className="space-y-3">
+              <p className="text-[11px] font-bold text-gray-400 uppercase tracking-wider">Sizin daha önce yazdığınız cevap</p>
+              <div className="bg-white rounded-xl border border-gray-200 px-4 py-3 text-sm text-dark-gray">Merhabalar, ürünümüz tamamen pamuklu ve terletmez. Afiyetle kullanın!</div>
+              <p className="text-[11px] font-bold text-primary uppercase tracking-wider">Sistemin yeni bir soruya cevabı</p>
+              <div className="bg-white rounded-xl border border-orange-200 px-4 py-3 text-sm text-dark">Merhabalar, ürünümüz %100 pamuklu dokumadır, cildinizi rahatsız etmez. Afiyetle kullanın!</div>
+            </div>
+          }
+        >
+          Daha önce müşterilerinize yazdığınız cevapları okur; selamlamanızı, cümle uzunluğunuzu, kapanış alışkanlığınızı öğrenir. Müşteriniz farkı anlamaz.
+        </DiffCard>
+
+        <DiffCard
+          icon={PackageCheck}
+          wide
+          title="Kargonun yerini gidip bakar, söyler"
+          mock={
+            <div className="space-y-3">
+              <div className="bg-white rounded-xl border border-gray-200 px-4 py-3 text-sm text-dark-gray">Kargom nerede? 3 gün oldu.</div>
+              <div className="rounded-xl px-4 py-3 text-sm text-white" style={{ background: 'linear-gradient(135deg,#FF6B35,#FFBE5C)' }}>
+                Siparişiniz kargoya verildi, yolda. Tahmini teslimat 13–16 Temmuz.
+              </div>
+              <div className="flex items-center gap-2 text-[11px] text-gray-400"><BadgeCheck size={13} className="text-green-500" /> Siparişin o anki gerçek durumu — tahmin değil</div>
+            </div>
+          }
+        >
+          Müşteri sipariş numarasını yazdığında sistem siparişi anında kontrol eder ve gerçek durumunu söyler. Numarayı vermediyse nazikçe ister.
+        </DiffCard>
+
+        <DiffCard
+          icon={MessageSquare}
+          wide
+          title="Aynı müşteriyi hatırlar"
+          mock={
+            <div className="space-y-3">
+              <div className="flex items-center gap-2 text-[11px] font-bold text-gray-400 uppercase tracking-wider"><Clock size={12} /> Dün</div>
+              <div className="bg-white rounded-xl border border-gray-200 px-4 py-3 text-sm text-dark-gray">Sipariş numaram 11405740188, ne zaman gelir?</div>
+              <div className="flex items-center gap-2 text-[11px] font-bold text-primary uppercase tracking-wider"><Clock size={12} /> Bugün</div>
+              <div className="bg-white rounded-xl border border-gray-200 px-4 py-3 text-sm text-dark-gray">Hâlâ gelmedi, ne olacak?</div>
+              <div className="flex items-center gap-2 bg-white rounded-xl border border-orange-200 px-4 py-3">
+                <Mail size={15} className="text-primary shrink-0" />
+                <span className="text-sm text-dark">Numarası tekrar sorulmadı — konu size iletildi</span>
+              </div>
+            </div>
+          }
+        >
+          Aynı müşteri ikinci kez yazdığında sıfırdan başlamaz. Önceki mesajlarını hatırlar, sipariş numarasını tekrar sormaz; konu çözülmediyse sizi devreye sokar.
+        </DiffCard>
+
+        <DiffCard
+          icon={Ruler}
+          wide
+          title="Yanlış bedeni asla söylemez"
+          mock={
+            <div className="space-y-3">
+              <div className="bg-white rounded-xl border border-gray-200 px-4 py-3 text-sm text-dark-gray">1.70 boyunda 65 kiloyum, hangi beden olur?</div>
+              <div className="rounded-xl px-4 py-3 text-sm text-white" style={{ background: 'linear-gradient(135deg,#FF6B35,#FFBE5C)' }}>
+                Beden tablomuza göre M beden tam olacaktır.
+              </div>
+              <div className="flex items-center gap-2 text-[11px] text-gray-400"><BadgeCheck size={13} className="text-green-500" /> Tablo yoksa tahmin etmez — soruyu size iletir</div>
+            </div>
+          }
+        >
+          Ayakkabıda numara, pantolonda beden, çocuk giyimde yaş — her ürün kendi tablosuyla cevaplanır. Tablo yoksa kesin beden söylemez.
+        </DiffCard>
+
+        <DiffCard
+          icon={ShieldCheck}
+          wide
+          title="Mağaza puanınızı korur"
+          mock={
+            <div className="space-y-3">
+              <div className="flex flex-wrap gap-2">
+                {['Link', 'Telefon', 'E-posta', 'Dış kanal'].map(t => (
+                  <span key={t} className="inline-flex items-center gap-1.5 bg-white border border-gray-200 rounded-full px-3 py-1.5 text-xs font-semibold text-gray-500">
+                    <X size={12} className="text-red-400" /> {t}
+                  </span>
+                ))}
+              </div>
+              <div className="flex items-center gap-2 bg-white rounded-xl border border-green-200 px-4 py-3">
+                <BadgeCheck size={16} className="text-green-500 shrink-0" />
+                <span className="text-sm text-dark">Cevap gönderilmeden önce kontrol edilir</span>
+              </div>
+            </div>
+          }
+        >
+          Trendyol; cevaplarda link, telefon ve e-posta paylaşılmasını onaylamıyor. Sistem her cevabı gönderilmeden önce denetler, riskli olanı temizler.
+        </DiffCard>
+
+        <DiffCard
+          icon={Mail}
+          full
+          title="Emin değilse size sorar"
+          mock={
+            <div className="space-y-3">
+              <div className="bg-white rounded-xl border border-gray-200 px-4 py-3 text-sm text-dark-gray">Bu ürünü hamileyken kullanabilir miyim?</div>
+              <div className="flex items-center gap-2 bg-white rounded-xl border border-orange-200 px-4 py-3">
+                <Mail size={15} className="text-primary shrink-0" />
+                <span className="text-sm text-dark">Soru size e-posta ile iletildi</span>
+              </div>
+              <p className="text-[11px] text-gray-400">Sağlık, ilaç ve alerji soruları her zaman size gelir.</p>
+            </div>
+          }
+        >
+          Bilmediği konuda tahmin yürütmez, "bilgim yok" da demez. Soru sessizce size düşer — müşteri yanlış bilgiyle karşılaşmaz.
+        </DiffCard>
+
+      </div>
+    </div>
+  </section>
+);
+
+// ────────────────────────────────────────────────
 // How it works (#how-it-works)
 // ────────────────────────────────────────────────
 const HowItWorks = () => (
@@ -1136,13 +1305,65 @@ const Features = () => (
 );
 
 // ────────────────────────────────────────────────
+// Comparison (#karsilastirma)
+// ────────────────────────────────────────────────
+const COMPARE_ROWS: [string, boolean, boolean][] = [
+  ['Gelen soruyu otomatik cevaplar', true, true],
+  ['Ürün bilgilerinizi tanır', true, true],
+  ['Emin olmadığı soruyu size iletir', true, true],
+  ['Cevabı siz onaylayabilirsiniz', true, false],
+  ['Sipariş durumunu anlık kontrol eder', true, false],
+  ['Aynı müşteriyi ve geçmişini hatırlar', true, false],
+  ['Uygun olduğunda satış önerisi yapar', true, false],
+  ['Sizin yazım tarzınızı öğrenir', true, false],
+  ['Beden ve numarada tahmin yürütmez', true, false],
+  ['Geciken siparişe söz vermez', true, false],
+  ['Link ve telefonu cevaptan temizler', true, false],
+  ['Ürün açıklamalarınızı iyileştirir', true, false],
+  ['Ürün fotoğrafı da üretir', true, false],
+];
+
+const Comparison = () => (
+  <section id="karsilastirma" className="py-24 bg-light">
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <Reveal className="text-center mb-12">
+        <span className="inline-block py-1 px-3 bg-white text-primary text-xs font-bold uppercase tracking-wider rounded-full mb-4 border border-orange-100 shadow-sm">Karşılaştırma</span>
+        <h2 className="text-3xl sm:text-4xl font-display font-bold text-dark mb-3">Aradaki fark nerede?</h2>
+        <p className="text-dark-gray">Piyasadaki çoğu araç soruyu kapatır. Biz soruyu satışa çevirip mağazanızı korumaya çalışıyoruz.</p>
+      </Reveal>
+      <Reveal>
+        <div className="bg-white rounded-3xl border border-gray-200 shadow-sm overflow-hidden">
+          <div className="grid grid-cols-[1fr_auto_auto] gap-x-4 sm:gap-x-8 px-5 sm:px-8 py-4 border-b border-gray-100 bg-gray-50/70">
+            <span className="text-xs font-bold uppercase tracking-wider text-gray-400">Özellik</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-primary text-center w-20 sm:w-28">SellerPilot</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-gray-400 text-center w-20 sm:w-28">Sıradan bot</span>
+          </div>
+          {COMPARE_ROWS.map(([label, us, them], i) => (
+            <div key={label} className={`grid grid-cols-[1fr_auto_auto] gap-x-4 sm:gap-x-8 items-center px-5 sm:px-8 py-3.5 ${i % 2 ? 'bg-gray-50/40' : ''}`}>
+              <span className="text-sm text-dark">{label}</span>
+              <span className="w-20 sm:w-28 flex justify-center">
+                {us ? <Check className="w-5 h-5 text-green-500" /> : <Minus className="w-4 h-4 text-gray-300" />}
+              </span>
+              <span className="w-20 sm:w-28 flex justify-center">
+                {them ? <Check className="w-5 h-5 text-gray-400" /> : <Minus className="w-4 h-4 text-gray-300" />}
+              </span>
+            </div>
+          ))}
+        </div>
+        <p className="text-center text-xs text-gray-400 mt-4">Karşılaştırma, ürünümüzde bugün canlı olarak çalışan özellikler üzerinden hazırlanmıştır.</p>
+      </Reveal>
+    </div>
+  </section>
+);
+
+// ────────────────────────────────────────────────
 // Pricing (#pricing)
 // ────────────────────────────────────────────────
 const PLANS = [
-  { name: "Başlangıç Paketi", price: "499", features: ["100 Soru / Ay","15 Dakikada Cevap Garantisi","1 Mağaza Entegrasyonu","Temel Raporlama","Temel Marka Dili Ayarları","Mesaj Üzerinden Destek"], popular: false },
-  { name: "Küçük Esnaf Paketi", price: "1.299", features: ["300 Soru / Ay","5 Dakikada Cevap Garantisi","1 Mağaza Entegrasyonu","Basit Raporlama","Temel Marka Dili Ayarları","Mesaj Üzerinden Destek"], popular: false },
-  { name: "Büyüyen Marka Paketi", price: "6.999", features: ["3.000 Soru / Ay","5 Dakikada Cevap Garantisi","3 Mağaza Entegrasyonu","Detaylı Raporlama","Gelişmiş Marka Dili","Canlı Telefon Desteği"], popular: true },
-  { name: "Kurumsal Şirket Paketi", price: "14.999", features: ["10.000 Soru / Ay","5 Dakikada Cevap Garantisi","Sınırsız Mağaza Entegrasyonu","Detaylı Raporlama","Gelişmiş Marka Dili","Canlı Telefon Desteği"], popular: false },
+  { name: "Başlangıç Paketi", price: "1.299", perQ: "soru başı 12,99₺", features: ["100 Soru / Ay","1 Mağaza","Tüm özellikler dahil","Satış önerisi ve kampanya","Onay modu (cevabı siz onaylayın)","E-posta desteği"], popular: false },
+  { name: "Küçük Esnaf Paketi", price: "2.999", perQ: "soru başı 10₺", features: ["300 Soru / Ay","1 Mağaza","Tüm özellikler dahil","Satış önerisi ve kampanya","Detaylı satış ve performans raporu","Öncelikli e-posta desteği"], popular: false },
+  { name: "Büyüyen Marka Paketi", price: "8.999", perQ: "soru başı 9₺", features: ["1.000 Soru / Ay","3 Mağaza","Tüm özellikler dahil","Satış önerisi ve kampanya","Detaylı satış ve performans raporu","WhatsApp'tan öncelikli destek"], popular: true },
+  { name: "Kurumsal Şirket Paketi", price: "19.999", perQ: "soru başı 6,67₺", features: ["3.000 Soru / Ay","Sınırsız Mağaza","Tüm özellikler dahil","Satış önerisi ve kampanya","Birebir kurulum ve ayar desteği","Telefonla öncelikli destek"], popular: false },
 ];
 
 const Pricing = () => (
@@ -1151,8 +1372,8 @@ const Pricing = () => (
       <Reveal className="text-center mb-12">
         <span className="inline-block py-1 px-3 bg-orange-50 text-primary text-xs font-bold uppercase tracking-wider rounded-full mb-4 border border-orange-100">Fiyatlandırma</span>
         <h2 className="text-3xl sm:text-4xl font-display font-bold text-dark mb-3">Soru hacminize göre seçin</h2>
-        <p className="text-dark-gray mb-1">Tüm planlar 7 günlük ücretsiz deneme ile başlar. Kredi kartı gerekmez.</p>
-        <p className="text-sm text-gray-400">Uzmana yönlendirilen sorular ücretsizdir, mesaj hakkınızdan sayılmaz.</p>
+        <p className="text-dark-gray mb-1">Tüm planlar <strong className="text-dark">30 gün ücretsiz deneme</strong> ile başlar. Kredi kartı gerekmez.</p>
+        <p className="text-sm text-gray-400">Sadece yapay zekânın cevapladığı sorular sayılır — size düşen ve sizin yazdığınız cevaplar kotanızdan düşmez.</p>
       </Reveal>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
         {PLANS.map((plan, i) => (
@@ -1165,7 +1386,7 @@ const Pricing = () => (
                   <div className="text-center">
                     <span className="text-4xl font-black grad-text">{plan.price}₺</span>
                     <span className="text-gray-400 text-sm"> / aylık</span>
-                    <p className="text-xs text-gray-400 mt-1">KDV Dahil</p>
+                    <p className="text-xs text-gray-400 mt-1">+ KDV · {plan.perQ}</p>
                   </div>
                   <ul className="flex flex-col gap-2.5">
                     {plan.features.map(f => <li key={f} className="flex items-start gap-2 text-sm text-gray-600"><Check className="w-4 h-4 text-primary mt-0.5 shrink-0" />{f}</li>)}
@@ -1179,7 +1400,7 @@ const Pricing = () => (
                 <div className="text-center">
                   <span className="text-4xl font-black text-dark">{plan.price}₺</span>
                   <span className="text-gray-400 text-sm"> / aylık</span>
-                  <p className="text-xs text-gray-400 mt-1">KDV Dahil</p>
+                  <p className="text-xs text-gray-400 mt-1">+ KDV · {plan.perQ}</p>
                 </div>
                 <ul className="flex flex-col gap-2.5">
                   {plan.features.map(f => <li key={f} className="flex items-start gap-2 text-sm text-gray-600"><Check className="w-4 h-4 text-primary mt-0.5 shrink-0" />{f}</li>)}
@@ -1245,7 +1466,7 @@ const FinalCTA = () => (
           Bu gece son kez <span className="grad-text">sorulara siz bakın</span>
         </h2>
         <p className="text-lg sm:text-xl text-gray-400 mb-12 max-w-2xl mx-auto">
-          Aklınıza takılan ne varsa WhatsApp'tan sorun — bir satıcı olarak ben cevaplıyorum. Ya da hemen kayıt olun, 7 gün ücretsiz deneyin.
+          Aklınıza takılan ne varsa WhatsApp'tan sorun — bir satıcı olarak ben cevaplıyorum. Ya da hemen kayıt olun, 30 gün ücretsiz deneyin.
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
           <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer"
@@ -1352,8 +1573,10 @@ const HomePage = () => (
       <LiveDemo />
       <GorselStudyoTeaser />
       <UpsellSection />
+      <WhyDifferent />
       <HowItWorks />
       <Features />
+      <Comparison />
       <Pricing />
       <FAQ />
       <FinalCTA />
