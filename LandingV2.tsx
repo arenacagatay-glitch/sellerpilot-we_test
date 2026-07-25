@@ -403,10 +403,10 @@ const PhoneMock = () => {
 // ────────────────────────────────────────────────
 const LINKS = [
   { l: 'Gerçek cevaplar', h: '#v2-cevaplar' },
+  { l: 'Satış', h: '#v2-satis' },
   { l: 'Farkımız', h: '#v2-fark' },
   { l: 'İlanlar', h: '#v2-ilan' },
-  { l: 'Panel', h: '#v2-urun' },
-  { l: 'Fiyatlar', h: '#v2-fiyat' },
+    { l: 'Fiyatlar', h: '#v2-fiyat' },
   { l: 'SSS', h: '#v2-sss' },
 ];
 
@@ -556,6 +556,114 @@ const V2RealAnswers = () => (
 );
 
 // ────────────────────────────────────────────────
+// Satışçınız — EN ÖNEMLİ ÖZELLİK (upsell + kampanya), koyu bant
+// Üç cevap da GERÇEK (Supabase, 24-25 Tem 2026); işaretlemeler metni
+// DEĞİŞTİRMEZ, sadece ilgili kısmı renklendirir.
+// ────────────────────────────────────────────────
+const SALES_EXAMPLES = [
+  {
+    q: 'Merhaba önündeki süslü taşı var değil mi',
+    parts: [
+      { t: 'Merhaba efendim, bu modelimizde tokalı detay bulunmaktadır ancak süslü taş arıyorsanız ' },
+      { t: '"Beyaz Tüylü Taşlı Kadın Terlik" modelimizi inceleyebilirsiniz', hl: 'product' },
+      { t: ' ✨ ' },
+      { t: 'Tüm ürünlerde geçerli 5 al 4 öde kampanyamız da devam ediyor.', hl: 'campaign' },
+      { t: ' Mutlu ve sağlıklı günler dilerim :) ‹mağaza› Müşteri Memnuniyeti Ekibi' },
+    ],
+    note: 'Aranan özellik bu üründe yoktu — satışı kaybetmek yerine doğru ürüne taşıdı, kampanyayı da hatırlattı.',
+  },
+  {
+    q: 'Siyah rengi var mı',
+    parts: [
+      { t: 'Merhaba efendim, incelediğiniz bu modelimizin şu an sadece mavi rengi stoklarımızda mevcuttur 💙 Dilerseniz benzer şık tarzda olan ' },
+      { t: 'Kadın Siyah Süet Babet İçeri Dışarı Ofis Günlük Ayakkabı modelimize de göz atabilirsiniz', hl: 'product' },
+      { t: '. Mutlu ve sağlıklı günler dilerim :) ‹mağaza› Müşteri Memnuniyeti Ekibi' },
+    ],
+    note: 'İstenen renk yoktu — müşteriyi eli boş göndermek yerine kataloğdan siyah alternatifi buldu.',
+  },
+  {
+    q: 'Merhaba bedenler ne zaman güncellenir acaba',
+    parts: [
+      { t: 'Merhaba efendim, stoklarımız ne yazık ki net bir tarih olmamakla birlikte en kısa zamanda güncellenecektir 🌸 Bu arada ' },
+      { t: 'tüm ürünlerimizde geçerli 5 al 4 öde kampanyamızı da kaçırmayın derim.', hl: 'campaign' },
+      { t: ' Mutlu ve sağlıklı günler dilerim :) ‹mağaza› Müşteri Memnuniyeti Ekibi' },
+    ],
+    note: 'Net cevabı olmayan bir soruda bile fırsatı gördü: kampanyayı doğal bir cümleyle araya koydu.',
+  },
+];
+
+const HL_STYLE: any = {
+  product: { background: 'rgba(255,107,53,.14)', borderBottom: '2px solid var(--ember)', borderRadius: '3px', padding: '0 2px' },
+  campaign: { background: 'rgba(74,222,128,.16)', borderBottom: '2px solid #4ADE80', borderRadius: '3px', padding: '0 2px' },
+};
+
+const V2Sales = () => (
+  <section id="v2-satis" className="band-ink py-24 sm:py-36 overflow-hidden">
+    <span className="glow" style={{ width: 700, height: 700, top: '-10%', right: '-15%' }} />
+    <div className="max-w-6xl mx-auto px-5 sm:px-8">
+      <Rv className="text-center max-w-3xl mx-auto mb-6">
+        <Eyebrow num="02" center>Sizin yerinize satış yapar</Eyebrow>
+        <h2 className="display h2 mb-6" style={{ color: 'var(--ink-text)' }}>
+          Artık 7/24 çalışan bir<br /><span style={{ color: 'var(--ember-2)' }}>satışçınız var.</span>
+        </h2>
+        <p className="lede mx-auto">
+          Çoğu araç soruyu kapatır ve susar. SellerPilot sorunun içindeki satışı görür:
+          müşteri aradığını bulamadığında kataloğunuzdan doğru ürünü önerir,
+          tanımladığınız kampanyayı tam yerinde söyler. Sorular gider, siparişler gelir.
+        </p>
+      </Rv>
+
+      <Rv delay={0.06} className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 mb-14">
+        <span className="inline-flex items-center gap-1.5 text-[.72rem]" style={{ color: 'var(--ink-mid)' }}>
+          <span className="w-2.5 h-2.5 rounded-sm" style={{ background: 'var(--ember)' }} /> Kataloğunuzdan önerilen gerçek ürün
+        </span>
+        <span className="inline-flex items-center gap-1.5 text-[.72rem]" style={{ color: 'var(--ink-mid)' }}>
+          <span className="w-2.5 h-2.5 rounded-sm" style={{ background: '#4ADE80' }} /> Sizin tanımladığınız kampanya
+        </span>
+      </Rv>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-5">
+        {SALES_EXAMPLES.map((ex, i) => (
+          <Rv key={ex.q} delay={i * 0.08}>
+            <div className="h-full rounded-[20px] p-6 flex flex-col" style={{ background: 'var(--ink-2)', border: '1px solid var(--ink-line)' }}>
+              <div className="rounded-2xl rounded-bl-md px-4 py-3 mb-3 self-start max-w-[92%]"
+                style={{ background: 'rgba(255,255,255,.06)', border: '1px solid var(--ink-line)' }}>
+                <p className="text-[.85rem] leading-relaxed" style={{ color: 'var(--ink-text)' }}>{ex.q}</p>
+              </div>
+              <div className="rounded-2xl rounded-br-md px-4 py-3.5 mb-5 self-end bg-white">
+                <p className="text-[.85rem] leading-[1.75]" style={{ color: 'var(--text)' }}>
+                  {ex.parts.map((p, j) => p.hl
+                    ? <span key={j} style={HL_STYLE[p.hl]}><Masked text={p.t} /></span>
+                    : <Masked key={j} text={p.t} />)}
+                </p>
+              </div>
+              <div className="mt-auto flex items-start gap-2 pt-4" style={{ borderTop: '1px solid var(--ink-line)' }}>
+                <BadgeCheck size={15} className="text-green-400 shrink-0 mt-0.5" />
+                <p className="text-[.78rem] leading-relaxed" style={{ color: 'var(--ink-mid)' }}>{ex.note}</p>
+              </div>
+            </div>
+          </Rv>
+        ))}
+      </div>
+
+      <Rv delay={0.2} className="mt-12">
+        <div className="max-w-3xl mx-auto rounded-2xl px-6 py-5 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 text-center"
+          style={{ background: 'rgba(255,255,255,.03)', border: '1px solid var(--ink-line)' }}>
+          <p className="display text-3xl" style={{ color: 'var(--ember-2)', fontWeight: 600 }}>62 / 467</p>
+          <p className="text-[.85rem] leading-relaxed sm:text-left" style={{ color: 'var(--ink-mid)' }}>
+            Gerçek veri: sistemin verdiği son 467 otomatik cevabın 62'sinde müşteriye
+            katalogdan ürün önerildi. Her öneri, kaybolacak bir sorunun satış fırsatına dönmesi.
+          </p>
+        </div>
+        <p className="text-center text-[.72rem] mt-6" style={{ color: 'var(--ink-mid)' }}>
+          Güvenlik: yalnızca gerçekten stokta olan ürünler önerilir · kampanya tanımlamadıysanız indirim uydurulmaz · iade ve şikâyet konuşmalarında satış tamamen kapalıdır.
+        </p>
+      </Rv>
+    </div>
+  </section>
+);
+
+// ────────────────────────────────────────────────
 // Farkımız — bento (gerçek kanıtlarla)
 // ────────────────────────────────────────────────
 const Diff = ({ icon: Icon, title, body, mock, span = 'lg:col-span-3', delay = 0 }: any) => (
@@ -591,7 +699,7 @@ const V2Diff = () => (
   <section id="v2-fark" className="py-24 sm:py-36" style={{ background: 'var(--paper-2)' }}>
     <div className="max-w-6xl mx-auto px-5 sm:px-8">
       <Rv className="max-w-2xl mb-14">
-        <Eyebrow num="02">Farkımız</Eyebrow>
+        <Eyebrow num="03">Farkımız</Eyebrow>
         <h2 className="display h2 mb-6">Otomatik cevap kolay.<br /><span className="ember">Doğru cevap zor.</span></h2>
         <p className="lede">Bir mağazayı yakan şey cevapsız soru değil, yanlış cevaptır. SellerPilot neyi söyleyeceği kadar, neyi söylemeyeceğini de bilir.</p>
       </Rv>
@@ -728,7 +836,7 @@ const V2Listings = () => (
   <section id="v2-ilan" className="py-24 sm:py-36">
     <div className="max-w-6xl mx-auto px-5 sm:px-8">
       <Rv className="text-center max-w-3xl mx-auto mb-16">
-        <Eyebrow num="03" center>İlan iyileştirme</Eyebrow>
+        <Eyebrow num="04" center>İlan iyileştirme</Eyebrow>
         <h2 className="display h2 mb-6">İlanlarınız <span className="ember">kendini yazar</span></h2>
         <p className="lede mx-auto">
           Müşteriler aynı şeyi tekrar tekrar soruyorsa, o bilgi açıklamanızda eksik demektir.
@@ -891,7 +999,7 @@ const V2Product = () => {
     <section id="v2-urun" className="py-24 sm:py-36" style={{ background: 'var(--paper-2)' }}>
       <div className="max-w-5xl mx-auto px-5 sm:px-8">
         <Rv className="max-w-2xl mb-12">
-          <Eyebrow num="04">Panel</Eyebrow>
+          <Eyebrow num="05">Panel</Eyebrow>
           <h2 className="display h2 mb-6">Her şey <span className="ember">tek ekranda</span></h2>
           <p className="lede">Mağazanıza ne olduğunu görmek için Trendyol paneline girmenize gerek yok.</p>
         </Rv>
@@ -927,7 +1035,7 @@ const V2Steps = () => (
   <section id="v2-nasil" className="py-24 sm:py-36">
     <div className="max-w-5xl mx-auto px-5 sm:px-8">
       <Rv className="max-w-2xl mb-14">
-        <Eyebrow num="05">Kurulum</Eyebrow>
+        <Eyebrow num="06">Kurulum</Eyebrow>
         <h2 className="display h2 mb-5">Üç adım, birkaç dakika</h2>
       </Rv>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-px" style={{ background: 'var(--line)' }}>
@@ -972,7 +1080,7 @@ const V2Compare = () => (
   <section className="py-24 sm:py-36" style={{ background: 'var(--paper-2)' }}>
     <div className="max-w-3xl mx-auto px-5 sm:px-8">
       <Rv className="mb-12">
-        <Eyebrow num="06">Karşılaştırma</Eyebrow>
+        <Eyebrow num="07">Karşılaştırma</Eyebrow>
         <h2 className="display h2 mb-6">Aradaki fark nerede?</h2>
         <p className="lede">Piyasadaki çoğu araç soruyu kapatır. Biz soruyu satışa çevirip mağazanızı korumaya çalışıyoruz.</p>
       </Rv>
@@ -1015,7 +1123,7 @@ const V2Pricing = () => (
   <section id="v2-fiyat" className="py-24 sm:py-36">
     <div className="max-w-6xl mx-auto px-5 sm:px-8">
       <Rv className="max-w-2xl mb-14">
-        <Eyebrow num="07">Fiyatlandırma</Eyebrow>
+        <Eyebrow num="08">Fiyatlandırma</Eyebrow>
         <h2 className="display h2 mb-6">Soru hacminize göre seçin</h2>
         <p className="lede">Tüm planlar 30 gün ücretsiz deneme ile başlar. Kredi kartı gerekmez.</p>
       </Rv>
@@ -1063,7 +1171,7 @@ const V2Faq = () => {
     <section id="v2-sss" className="py-24 sm:py-36" style={{ background: 'var(--paper-2)' }}>
       <div className="max-w-3xl mx-auto px-5 sm:px-8">
         <Rv className="mb-12">
-          <Eyebrow num="08">Sıkça sorulanlar</Eyebrow>
+          <Eyebrow num="09">Sıkça sorulanlar</Eyebrow>
           <h2 className="display h2">Merak edilenler</h2>
         </Rv>
         <Rv delay={0.08}>
@@ -1155,6 +1263,7 @@ const V2Page = () => {
       <main>
         <V2Hero />
         <V2RealAnswers />
+        <V2Sales />
         <V2Diff />
         <V2Listings />
         <V2Product />
