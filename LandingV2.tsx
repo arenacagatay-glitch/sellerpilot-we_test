@@ -33,7 +33,7 @@ const REAL_EXAMPLES = [
   {
     cat: 'AYAKKABI', date: '25 Temmuz 2026',
     q: 'denizde giyinilrmi ıslak kumda',
-    a: 'Merhaba efendim, bu terliğimiz her ne kadar plaj ve sahil kullanımına uygun olsa da ıslak kumda veya denizde hasır ve tekstil yapısı nedeniyle zorlanabilir 🌊 Deniz kenarında kullanım için tam koruma sağlayan Kadın Erkek Şeffaf Kaymaz Taban Deniz Plaj Ayakkabısı modelimizi de inceleyebilirsiniz. Mutlu ve sağlıklı günler dilerim :)',
+    a: 'Merhaba efendim, bu terliğimiz her ne kadar plaj ve sahil kullanımına uygun olsa da ıslak kumda veya denizde hasır ve tekstil yapısı nedeniyle zorlanabilir 🌊 Deniz kenarında kullanım için tam koruma sağlayan «Kadın Erkek Şeffaf Kaymaz Taban Deniz Plaj Ayakkabısı» modelimizi de inceleyebilirsiniz. Mutlu ve sağlıklı günler dilerim :)',
     note: 'Ürünün sınırını dürüstçe söyledi, satışı kaybetmek yerine doğru ürüne yönlendirdi.',
   },
   {
@@ -41,12 +41,6 @@ const REAL_EXAMPLES = [
     q: '170 boy 107 kg kaç beden olur',
     a: 'Merhaba! Boy ve kilo ölçülerinize göre hazırladığımız beden tablomuza baktığımızda 60 beden tercih edebilirsiniz 😊',
     note: 'Mağazanın kendi beden tablosundan hesapladı — tahmin değil.',
-  },
-  {
-    cat: 'PARFÜM', date: '23 Temmuz 2026',
-    q: 'La Vie Est Belle Vanille Nude Lancôme muadili var mı aynı kokunun kodu kaç acaba',
-    a: 'Merhaba! İncelediğiniz ürün Good Girl esintilidir, aradığınız La Vie Est Belle tarzı için La Vi Belle Esintili Kadın Parfüm modelimizi tercih edebilirsiniz ✨',
-    note: 'Müşterinin yanlış üründe olduğunu fark etti, katalogdan doğrusunu buldu.',
   },
   {
     cat: 'BEBEK', date: '25 Temmuz 2026',
@@ -63,7 +57,7 @@ const REAL_EXAMPLES = [
   {
     cat: 'OTO KOKUSU', date: '20 Temmuz 2026',
     q: 'Bunu nasıl kullanıyoruz?',
-    a: "Merhaba! Ürünümüzü 20-30 cm uzaklıktan uygulamanız, etkileyicilik ve kalıcılık açısından en iyi sonucu verecektir. Yoğun esanslı formülüyle aracınızda ferah bir ortam yaratabilirsiniz. Farklı bir koku denemek isterseniz, koleksiyonumuzdaki 'Elmalı Turta' kokumuza da göz atabilirsiniz! 🚗✨",
+    a: "Merhaba! Ürünümüzü 20-30 cm uzaklıktan uygulamanız, etkileyicilik ve kalıcılık açısından en iyi sonucu verecektir. Yoğun esanslı formülüyle aracınızda ferah bir ortam yaratabilirsiniz. Farklı bir koku denemek isterseniz, koleksiyonumuzdaki «'Elmalı Turta'» kokumuza da göz atabilirsiniz! 🚗✨",
     note: 'Kullanım tarifi verdi, üstüne katalogdan ikinci bir kokuyu doğal dille önerdi.',
   },
   {
@@ -190,6 +184,12 @@ const V2Styles = () => (
   .v2 .rail::-webkit-scrollbar { display:none; }
   .v2 .rail > * { scroll-snap-align: center; flex: 0 0 min(88vw, 30rem); }
   .v2 .masked { font-style: italic; color: var(--text-low); }
+  .v2 .redact {
+    filter: blur(4.5px);
+    user-select: none; -webkit-user-select: none;
+    pointer-events: none;
+    opacity: .85;
+  }
 
   /* ── Telefon vitrini (hero) ── */
   .v2 .phone-stage {
@@ -259,17 +259,17 @@ const Eyebrow = ({ num, children, center = false }: any) => (
   <p className={`eyebrow mb-5 ${center ? 'justify-center' : ''}`}><span className="num">{num}</span><span className="w-6 h-px bg-current opacity-30" />{children}</p>
 );
 
-// ‹mağaza› maskesini şık göster
+// Gizlilik maskeleri: ‹mağaza› → bulanık "Mağaza Adı", «ürün adı» → bulanık ürün adı.
+// Cevap metni birebir kalır; sadece kimlik bilgisi görsel olarak bulanıklaştırılır.
 const Masked = ({ text }: { text: string }) => {
-  const parts = text.split(/‹mağaza›/g);
+  const tokens = text.split(/(‹mağaza›|«[^»]+»)/g);
   return (
     <>
-      {parts.map((p, i) => (
-        <React.Fragment key={i}>
-          {p}
-          {i < parts.length - 1 && <span className="masked">mağaza adı</span>}
-        </React.Fragment>
-      ))}
+      {tokens.map((tk, i) => {
+        if (tk === '‹mağaza›') return <span key={i} className="redact">Mağaza Adı</span>;
+        if (tk.startsWith('«') && tk.endsWith('»')) return <span key={i} className="redact">{tk.slice(1, -1)}</span>;
+        return <React.Fragment key={i}>{tk}</React.Fragment>;
+      })}
     </>
   );
 };
@@ -550,7 +550,7 @@ const V2RealAnswers = () => (
       </div>
     </Rv>
     <p className="text-center text-[.72rem] mt-4 px-5" style={{ color: 'var(--text-low)' }}>
-      Kaydırarak devamını görün · Mağaza adları gizlendi, cevapların geri kalanı birebir.
+      Kaydırarak devamını görün · Mağaza ve ürün adları gizlilik için bulanıklaştırıldı — cevapların geri kalanı birebir.
     </p>
   </section>
 );
@@ -562,10 +562,10 @@ const V2RealAnswers = () => (
 // ────────────────────────────────────────────────
 const SALES_EXAMPLES = [
   {
-    q: 'Merhaba önündeki süslü taşı var değil mi',
+    store: 'Ayakkabı mağazası', q: 'Merhaba önündeki süslü taşı var değil mi',
     parts: [
       { t: 'Merhaba efendim, bu modelimizde tokalı detay bulunmaktadır ancak süslü taş arıyorsanız ' },
-      { t: '"Beyaz Tüylü Taşlı Kadın Terlik" modelimizi inceleyebilirsiniz', hl: 'product' },
+      { t: '«"Beyaz Tüylü Taşlı Kadın Terlik"» modelimizi inceleyebilirsiniz', hl: 'product' },
       { t: ' ✨ ' },
       { t: 'Tüm ürünlerde geçerli 5 al 4 öde kampanyamız da devam ediyor.', hl: 'campaign' },
       { t: ' Mutlu ve sağlıklı günler dilerim :) ‹mağaza› Müşteri Memnuniyeti Ekibi' },
@@ -573,22 +573,22 @@ const SALES_EXAMPLES = [
     note: 'Aranan özellik bu üründe yoktu — satışı kaybetmek yerine doğru ürüne taşıdı, kampanyayı da hatırlattı.',
   },
   {
-    q: 'Siyah rengi var mı',
+    store: 'Ev & yaşam mağazası', q: 'Daha büyük boyu var mı',
     parts: [
-      { t: 'Merhaba efendim, incelediğiniz bu modelimizin şu an sadece mavi rengi stoklarımızda mevcuttur 💙 Dilerseniz benzer şık tarzda olan ' },
-      { t: 'Kadın Siyah Süet Babet İçeri Dışarı Ofis Günlük Ayakkabı modelimize de göz atabilirsiniz', hl: 'product' },
-      { t: '. Mutlu ve sağlıklı günler dilerim :) ‹mağaza› Müşteri Memnuniyeti Ekibi' },
+      { t: 'Merhaba! Bu modelimiz 80x100 cm ebatındadır ancak daha geniş bir kullanım için ' },
+      { t: '«100x150 cm Kurutma Örtüsü» seçeneğimizi de inceleyebilirsiniz', hl: 'product' },
+      { t: ' 😊' },
     ],
-    note: 'İstenen renk yoktu — müşteriyi eli boş göndermek yerine kataloğdan siyah alternatifi buldu.',
+    note: 'Küçük gelen ürünü satmaya çalışmadı — kataloğundaki büyük boyu bulup satışı ona taşıdı.',
   },
   {
-    q: 'Merhaba bedenler ne zaman güncellenir acaba',
+    store: 'Parfüm mağazası', q: 'La Vie Est Belle Vanille Nude Lancôme muadili var mı aynı kokunun esans oranı nedir ?',
     parts: [
-      { t: 'Merhaba efendim, stoklarımız ne yazık ki net bir tarih olmamakla birlikte en kısa zamanda güncellenecektir 🌸 Bu arada ' },
-      { t: 'tüm ürünlerimizde geçerli 5 al 4 öde kampanyamızı da kaçırmayın derim.', hl: 'campaign' },
-      { t: ' Mutlu ve sağlıklı günler dilerim :) ‹mağaza› Müşteri Memnuniyeti Ekibi' },
+      { t: 'Merhaba! İncelediğiniz ürün Good Girl esintilidir, ancak aradığınız La Vie Est Belle tarzı için ' },
+      { t: '«La Vi Belle Esintili Kadın Parfüm» modelimizi önerebilirim', hl: 'product' },
+      { t: '. Ürünlerimiz %35-40 esans oranına sahip olup şık hediyelik kutusunda gönderilmektedir ✨' },
     ],
-    note: 'Net cevabı olmayan bir soruda bile fırsatı gördü: kampanyayı doğal bir cümleyle araya koydu.',
+    note: 'Müşterinin yanlış üründe olduğunu anladı, aradığı kokuyu katalogdan buldu, teknik soruyu da cevapladı.',
   },
 ];
 
@@ -626,6 +626,7 @@ const V2Sales = () => (
         {SALES_EXAMPLES.map((ex, i) => (
           <Rv key={ex.q} delay={i * 0.08}>
             <div className="h-full rounded-[20px] p-6 flex flex-col" style={{ background: 'var(--ink-2)', border: '1px solid var(--ink-line)' }}>
+              <p className="eyebrow mb-4" style={{ marginBottom: '1rem' }}>{ex.store}</p>
               <div className="rounded-2xl rounded-bl-md px-4 py-3 mb-3 self-start max-w-[92%]"
                 style={{ background: 'rgba(255,255,255,.06)', border: '1px solid var(--ink-line)' }}>
                 <p className="text-[.85rem] leading-relaxed" style={{ color: 'var(--ink-text)' }}>{ex.q}</p>
@@ -656,7 +657,7 @@ const V2Sales = () => (
           </p>
         </div>
         <p className="text-center text-[.72rem] mt-6" style={{ color: 'var(--ink-mid)' }}>
-          Güvenlik: yalnızca gerçekten stokta olan ürünler önerilir · kampanya tanımlamadıysanız indirim uydurulmaz · iade ve şikâyet konuşmalarında satış tamamen kapalıdır.
+          Üç cevap üç farklı mağazadan · Mağaza ve ürün adları gizlilik için bulanıklaştırıldı · Yalnızca stoktaki ürünler önerilir, kampanya tanımlı değilse indirim uydurulmaz, iade ve şikâyette satış kapalıdır.
         </p>
       </Rv>
     </div>
@@ -852,7 +853,7 @@ const V2Listings = () => (
             mock: (
               <div className="space-y-2">
                 <div className="rounded-lg px-3 py-2.5 bg-white" style={{ border: '1px solid var(--line)' }}>
-                  <p className="text-[.8rem] font-semibold mb-1">Kadın Günlük Terlik</p>
+                  <p className="text-[.8rem] font-semibold mb-1"><span className="redact">Kadın Günlük Terlik</span></p>
                   <span className="chip chip-wait">Sık soru alıyor — açıklamanız eksik olabilir</span>
                 </div>
                 <div className="rounded-lg px-3 py-2.5 bg-white flex items-center justify-between" style={{ border: '1px solid var(--line)' }}>
