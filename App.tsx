@@ -1563,6 +1563,36 @@ const ScrollToTop = () => {
   return null;
 };
 
+// Meta Pixel olayları — reklamın dönüşümü WhatsApp'a tıklamada gerçekleşiyor,
+// index.html sadece PageView atıyordu; tıklamayı Contact olarak sayıyoruz.
+const MetaPixelEvents = () => {
+  const { pathname } = useLocation();
+  const ilkRender = useRef(true);
+
+  // SPA içi geçişler (ilk yüklemeyi index.html zaten sayıyor)
+  useEffect(() => {
+    if (ilkRender.current) { ilkRender.current = false; return; }
+    (window as any).fbq?.('track', 'PageView');
+  }, [pathname]);
+
+  useEffect(() => {
+    const onClick = (e: MouseEvent) => {
+      const hedef = e.target as Element | null;
+      if (!hedef?.closest?.('a[href*="wa.me"]')) return;
+      const q = new URLSearchParams(window.location.search);
+      (window as any).fbq?.('track', 'Contact', {
+        content_name: window.location.pathname,
+        content_category: q.get('utm_campaign') || 'organik',
+        content_ids: [q.get('utm_content') || 'yok'],
+      });
+    };
+    document.addEventListener('click', onClick);
+    return () => document.removeEventListener('click', onClick);
+  }, []);
+
+  return null;
+};
+
 // Ana sayfa — SORU-CEVAP odaklı (Görsel Stüdyo yerine teaser)
 const HomePage = () => (
   <>
@@ -1792,6 +1822,7 @@ const GorselStudyoPage = () => {
 const App = () => (
   <BrowserRouter>
     <ScrollToTop />
+    <MetaPixelEvents />
     <div className="min-h-screen bg-white font-sans text-dark antialiased">
       <GlobalStyles />
       <Routes>
