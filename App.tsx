@@ -8,8 +8,8 @@ import {
   SlidersHorizontal, Ruler, BadgeCheck, HeartPulse, Minus, PackageCheck
 } from 'lucide-react';
 import { CHAT_EXAMPLES, FAQ_ITEMS, FEATURES, NAV_LINKS, STAT_CARDS, STEPS, WHATSAPP_URL, APP_URL } from './constants';
-import { BrowserRouter, Routes, Route, Link, useLocation } from 'react-router-dom';
-import V2Page from './LandingV2';
+import { BrowserRouter, Routes, Route, Link, Navigate, useLocation } from 'react-router-dom';
+import V2Page, { V2Styles, V2Nav, V2Footer } from './LandingV2';
 
 // ────────────────────────────────────────────────
 // CSS animations injected once
@@ -1619,8 +1619,9 @@ const DanismanlikPage = () => {
     return () => { document.title = 'SellerPilot - Trendyol Satıcıları İçin Yapay Zeka Asistanı'; };
   }, []);
   return (
-    <>
-      <Header />
+    <div className="v2">
+      <V2Styles />
+      <V2Nav />
       <main>
         {/* Hero — iddia net */}
         <section className="relative pt-32 pb-16 overflow-hidden" style={{ background: 'radial-gradient(1200px 500px at 80% -10%, rgba(255,107,53,0.18), transparent 60%), #0A0C11' }}>
@@ -1760,9 +1761,9 @@ const DanismanlikPage = () => {
           </div>
         </section>
       </main>
-      <Footer />
+      <V2Footer />
       <FloatingWhatsApp />
-    </>
+    </div>
   );
 };
 
@@ -1773,16 +1774,17 @@ const GorselStudyoPage = () => {
     return () => { document.title = 'SellerPilot - Trendyol Satıcıları İçin Yapay Zeka Asistanı'; };
   }, []);
   return (
-    <>
-      <Header />
+    <div className="v2">
+      <V2Styles />
+      <V2Nav />
       <main>
         <GorselStudyoHero />
         <GorselStudyoIkiYol />
         <AIGorselStudyo />
       </main>
-      <Footer />
+      <V2Footer />
       <FloatingWhatsApp />
-    </>
+    </div>
   );
 };
 
@@ -1792,11 +1794,11 @@ const App = () => (
     <div className="min-h-screen bg-white font-sans text-dark antialiased">
       <GlobalStyles />
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={<V2Page />} />
         <Route path="/gorsel-studyo" element={<GorselStudyoPage />} />
         <Route path="/danismanlik" element={<DanismanlikPage />} />
-        {/* v2 tasarım önizlemesi — onaylanınca "/" ile yer değiştirecek */}
-        <Route path="/v2" element={<V2Page />} />
+        {/* eski önizleme adresi ana sayfaya yönlenir */}
+        <Route path="/v2" element={<Navigate to="/" replace />} />
       </Routes>
     </div>
   </BrowserRouter>

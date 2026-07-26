@@ -95,6 +95,7 @@ const V2Styles = () => (
     -webkit-font-smoothing: antialiased;
   }
   .v2 ::selection { background: var(--ember); color: #fff; }
+  .v2 .font-display { font-family: 'Inter Tight', Inter, system-ui, sans-serif !important; letter-spacing: -0.03em; }
 
   .v2 .display {
     font-family: 'Inter Tight', Inter, system-ui, sans-serif;
@@ -402,12 +403,12 @@ const PhoneMock = () => {
 // Nav
 // ────────────────────────────────────────────────
 const LINKS = [
-  { l: 'Gerçek cevaplar', h: '#v2-cevaplar' },
-  { l: 'Satış', h: '#v2-satis' },
-  { l: 'Farkımız', h: '#v2-fark' },
-  { l: 'İlanlar', h: '#v2-ilan' },
-    { l: 'Fiyatlar', h: '#v2-fiyat' },
-  { l: 'SSS', h: '#v2-sss' },
+  { l: 'Satış', h: '/#v2-satis' },
+  { l: 'Farkımız', h: '/#v2-fark' },
+  { l: 'Görsel Stüdyo', h: '/gorsel-studyo' },
+  { l: 'Danışmanlık', h: '/danismanlik' },
+  { l: 'Fiyatlar', h: '/#v2-fiyat' },
+  { l: 'SSS', h: '/#v2-sss' },
 ];
 
 const V2Nav = () => {
@@ -622,7 +623,7 @@ const V2Sales = () => (
         </span>
       </Rv>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-5">
+      <div className="rail">
         {SALES_EXAMPLES.map((ex, i) => (
           <Rv key={ex.q} delay={i * 0.08}>
             <div className="h-full rounded-[20px] p-6 flex flex-col" style={{ background: 'var(--ink-2)', border: '1px solid var(--ink-line)' }}>
@@ -646,8 +647,9 @@ const V2Sales = () => (
           </Rv>
         ))}
       </div>
+      <p className="text-center text-[.72rem] mt-2" style={{ color: 'var(--ink-mid)' }}>Kaydırarak üç mağazayı da görün →</p>
 
-      <Rv delay={0.2} className="mt-12">
+      <Rv delay={0.2} className="mt-10">
         <div className="max-w-3xl mx-auto rounded-2xl px-6 py-5 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 text-center"
           style={{ background: 'rgba(255,255,255,.03)', border: '1px solid var(--ink-line)' }}>
           <p className="display text-3xl" style={{ color: 'var(--ember-2)', fontWeight: 600 }}>62 / 467</p>
@@ -1250,12 +1252,6 @@ const V2Footer = () => (
 const V2Page = () => {
   useEffect(() => {
     document.title = 'SellerPilot — Trendyol satıcıları için yapay zekâ asistanı';
-    // Önizleme rotası: kopya içerik indekslenmesin. v2 "/" olunca bu blok silinir.
-    const m = document.createElement('meta');
-    m.name = 'robots';
-    m.content = 'noindex, nofollow';
-    document.head.appendChild(m);
-    return () => { m.remove(); };
   }, []);
   return (
     <div className="v2">
@@ -1279,4 +1275,5 @@ const V2Page = () => {
   );
 };
 
+export { V2Styles, V2Nav, V2Footer };
 export default V2Page;
