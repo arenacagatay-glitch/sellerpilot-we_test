@@ -10,6 +10,7 @@ import {
 import { CHAT_EXAMPLES, FAQ_ITEMS, FEATURES, NAV_LINKS, STAT_CARDS, STEPS, WHATSAPP_URL, APP_URL } from './constants';
 import { BrowserRouter, Routes, Route, Link, Navigate, useLocation } from 'react-router-dom';
 import V2Page, { V2Styles, V2Nav, V2Footer } from './LandingV2';
+import { BlogListPage, BlogPostPage } from './BlogPages';
 
 // ────────────────────────────────────────────────
 // CSS animations injected once
@@ -1797,6 +1798,8 @@ const App = () => (
         <Route path="/" element={<V2Page />} />
         <Route path="/gorsel-studyo" element={<GorselStudyoPage />} />
         <Route path="/danismanlik" element={<DanismanlikPage />} />
+        <Route path="/blog" element={<BlogListPage />} />
+        <Route path="/blog/:slug" element={<BlogPostPage />} />
         {/* eski önizleme adresi ana sayfaya yönlenir */}
         <Route path="/v2" element={<Navigate to="/" replace />} />
       </Routes>

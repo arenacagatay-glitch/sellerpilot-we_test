@@ -407,6 +407,7 @@ const LINKS = [
   { l: 'Farkımız', h: '/#v2-fark' },
   { l: 'Görsel Stüdyo', h: '/gorsel-studyo' },
   { l: 'Danışmanlık', h: '/danismanlik' },
+  { l: 'Blog', h: '/blog' },
   { l: 'Fiyatlar', h: '/#v2-fiyat' },
   { l: 'SSS', h: '/#v2-sss' },
 ];
@@ -1238,6 +1239,7 @@ const V2Footer = () => (
           </span>
         </div>
         <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[.78rem]" style={{ color: 'var(--ink-mid)' }}>
+          <a href="/blog">Blog</a>
           <a href="/mesafeli-satis-sozlesmesi.html">Mesafeli Satış</a>
           <a href="/gizlilik-guvenlik.html">Gizlilik</a>
           <a href="/iptal-iade.html">İptal & İade</a>
