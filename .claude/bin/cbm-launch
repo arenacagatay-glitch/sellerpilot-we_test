@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+# Launches codebase-memory-mcp as an MCP stdio server, installing it first if
+# this machine does not have it yet.
+#
+# Claude Code on the web starts every session in a fresh container, so a binary
+# installed in $HOME does not survive. Registering this launcher in .mcp.json
+# instead of an absolute path keeps the server available in those sessions
+# without anyone re-running the installer by hand.
+#
+# stdout is the MCP protocol channel: everything this script prints before the
+# exec must go to stderr, or the handshake breaks.
+set -uo pipefail
+
+BIN="${CBM_BIN:-$HOME/.local/bin/codebase-memory-mcp}"
+INSTALLER="https://raw.githubusercontent.com/DeusData/codebase-memory-mcp/main/install.sh"
+
+if [ ! -x "$BIN" ]; then
+    echo "codebase-memory-mcp not found, installing..." >&2
+    # Install to the installer's own default location rather than passing
+    # --dir: its inner install step does not reliably honour a relocated
+    # target. $BIN points at that default, so the two stay in agreement.
+    #
+    # --skip-config: the agent wiring lives in this repo, so the installer only
+    # needs to place the binary. Without it the installer would rewrite the
+    # user's global ~/.claude config on every fresh container.
+    if ! curl -fsSL "$INSTALLER" | bash -s -- --skip-config >&2; then
+        echo "codebase-memory-mcp install failed; graph tools unavailable this session" >&2
+        exit 1
+    fi
+fi
+
+exec "$BIN"

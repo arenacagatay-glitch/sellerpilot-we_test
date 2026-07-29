@@ -1,7 +1,10 @@
 node_modules/
 dist/
 .DS_Store
-.claude/
+# Local agent settings stay untracked, but .claude/bin holds the launcher that
+# .mcp.json points at, so it has to be committed.
+.claude/*
+!.claude/bin/
 *.local
 .env
 .env.*

@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "codebase-memory": {
+      "command": "bash",
+      "args": [".claude/bin/cbm-launch"]
+    }
+  }
+}
