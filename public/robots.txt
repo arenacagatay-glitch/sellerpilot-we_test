@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# Önizleme / yasal sayfaların arama sonucunda görünmesine gerek yok
+Disallow: /v2
+
+Sitemap: https://sellerpilot.cloud/sitemap.xml
