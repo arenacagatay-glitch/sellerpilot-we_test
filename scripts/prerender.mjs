@@ -13,7 +13,7 @@
 // bastığı metin aynı olduğu için kullanıcı tarafında kopukluk olmaz.
 // ═══════════════════════════════════════════════════════════════════
 import { build } from 'esbuild';
-import { readFile, writeFile, mkdir, rm } from 'node:fs/promises';
+import { readFile, writeFile, mkdir, rm, readdir } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
@@ -23,19 +23,23 @@ const DIST = path.join(ROOT, 'dist');
 const SITE = 'https://sellerpilot.cloud';
 
 // Yazılar .ts dosyalarında; node doğrudan okuyamaz, önce tek bir .mjs'e derliyoruz.
+// blogContent*.ts dosyaları DİSKTEN BULUNUR — yeni bir içerik dosyası eklendiğinde
+// burayı güncellemek gerekmesin diye. (Sabit liste tutulsaydı, unutulan dosyanın
+// yazıları sessizce ön-render'sız ve sitemap'siz kalırdı.)
 async function loadPosts() {
+  const files = (await readdir(ROOT))
+    .filter((f) => /^blogContent\d+\.ts$/.test(f))
+    .sort((a, b) => parseInt(a.match(/\d+/)[0], 10) - parseInt(b.match(/\d+/)[0], 10));
+  if (!files.length) throw new Error('blogContent*.ts bulunamadı');
+
+  const names = files.map((f, i) => ({ mod: './' + f.replace(/\.ts$/, ''), as: `P${i}` }));
   const tmp = path.join(ROOT, '.prerender-posts.mjs');
   await build({
     stdin: {
       contents: `
-        import { POSTS_1 } from './blogContent1';
-        import { POSTS_2 } from './blogContent2';
-        import { POSTS_3 } from './blogContent3';
-        import { POSTS_4 } from './blogContent4';
-        import { POSTS_5 } from './blogContent5';
-        import { POSTS_6 } from './blogContent6';
-        import { POSTS_7 } from './blogContent7';
-        export const ALL = [...POSTS_1, ...POSTS_2, ...POSTS_3, ...POSTS_4, ...POSTS_5, ...POSTS_6, ...POSTS_7]
+        ${names.map((n) => `import * as ${n.as} from '${n.mod}';`).join('\n')}
+        const pick = (m) => Object.values(m).find(Array.isArray) ?? [];
+        export const ALL = [${names.map((n) => `...pick(${n.as})`).join(', ')}]
           .sort((a, b) => (a.date < b.date ? 1 : -1));
       `,
       resolveDir: ROOT,
@@ -45,6 +49,11 @@ async function loadPosts() {
   });
   const { ALL } = await import(pathToFileURL(tmp).href + `?t=${Date.now()}`);
   await rm(tmp, { force: true });
+
+  // Aynı slug iki dosyada varsa sessizce üzerine yazılır — build'i kırıp haber ver.
+  const dup = ALL.map((p) => p.slug).filter((s, i, a) => a.indexOf(s) !== i);
+  if (dup.length) throw new Error(`Aynı slug birden fazla kez tanımlı: ${[...new Set(dup)].join(', ')}`);
+  console.log(`  ${files.length} içerik dosyası okundu: ${files.join(', ')}`);
   return ALL;
 }
 
