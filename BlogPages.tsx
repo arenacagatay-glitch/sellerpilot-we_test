@@ -8,10 +8,15 @@ import { ArrowRight, ArrowLeft, Clock } from 'lucide-react';
 import { V2Styles, V2Nav, V2Footer } from './LandingV2';
 import { POSTS_1 } from './blogContent1';
 import { POSTS_2 } from './blogContent2';
+import { POSTS_3 } from './blogContent3';
+import { POSTS_4 } from './blogContent4';
+import { POSTS_5 } from './blogContent5';
+import { POSTS_6 } from './blogContent6';
+import { POSTS_7 } from './blogContent7';
 import type { BlogPost } from './blogContent1';
 import { APP_URL } from './constants';
 
-export const ALL_POSTS: BlogPost[] = [...POSTS_1, ...POSTS_2]
+export const ALL_POSTS: BlogPost[] = [...POSTS_1, ...POSTS_2, ...POSTS_3, ...POSTS_4, ...POSTS_5, ...POSTS_6, ...POSTS_7]
   .sort((a, b) => (a.date < b.date ? 1 : -1));
 
 const fmtDate = (iso: string) =>
