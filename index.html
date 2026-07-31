@@ -40,6 +40,43 @@
     }
     </script>
     <link rel="stylesheet" href="/index.css">
+
+    <!-- Organization şeması: Google'a markayı tanıtır (arama sonucunda marka bilgi
+         kutusu + logo). Yerel işletme DEĞİL — SellerPilot yalnızca internet üzerinden
+         hizmet veren bir SaaS, bu yüzden LocalBusiness/GoogleİşletmeProfili uygun değil. -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://sellerpilot.cloud/#organization",
+          "name": "SellerPilot",
+          "legalName": "PurelyPro Badger Kozmetik ve Danışmanlık Hizmetleri Ticaret Limited Şirketi",
+          "url": "https://sellerpilot.cloud",
+          "logo": "https://sellerpilot.cloud/favicon.svg",
+          "description": "Trendyol satıcıları için yapay zeka destekli müşteri sorusu cevaplama ve mağaza yönetim yazılımı.",
+          "areaServed": { "@type": "Country", "name": "Türkiye" },
+          "sameAs": ["https://www.instagram.com/sellerpilot.ai"]
+        },
+        {
+          "@type": "SoftwareApplication",
+          "@id": "https://sellerpilot.cloud/#software",
+          "name": "SellerPilot",
+          "applicationCategory": "BusinessApplication",
+          "operatingSystem": "Web",
+          "url": "https://sellerpilot.cloud",
+          "publisher": { "@id": "https://sellerpilot.cloud/#organization" },
+          "inLanguage": "tr-TR",
+          "offers": {
+            "@type": "Offer",
+            "priceCurrency": "TRY",
+            "description": "30 gün ücretsiz deneme, ayda 300 soru."
+          }
+        }
+      ]
+    }
+    </script>
   </head>
   <body>
     <!-- Meta Pixel Code (noscript) -->

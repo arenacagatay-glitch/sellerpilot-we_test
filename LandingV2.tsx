@@ -1241,8 +1241,8 @@ const V2Footer = () => (
         <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[.78rem]" style={{ color: 'var(--ink-mid)' }}>
           <a href="/blog">Blog</a>
           <a href="/mesafeli-satis-sozlesmesi.html">Mesafeli Satış</a>
-          <a href="/gizlilik-guvenlik.html">Gizlilik</a>
-          <a href="/iptal-iade.html">İptal & İade</a>
+          <a href="/gizlilik-politikasi.html">Gizlilik</a>
+          <a href="/iptal-iade-kosullari.html">İptal & İade</a>
           <a href="/on-bilgilendirme-formu.html">Ön Bilgilendirme</a>
         </div>
       </div>
