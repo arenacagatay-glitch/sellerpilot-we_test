@@ -158,7 +158,7 @@ const Header = () => {
                 ? <Link key={l.label} to={l.href} onClick={() => setMenuOpen(false)} className="py-3 text-dark font-medium border-b border-gray-50 last:border-0 hover:text-primary transition-colors">{l.label}</Link>
                 : <a key={l.label} href={l.href} onClick={() => setMenuOpen(false)} className="py-3 text-dark font-medium border-b border-gray-50 last:border-0 hover:text-primary transition-colors">{l.label}</a>
             ))}
-            <a href={APP_URL} className="mt-3 text-white text-center font-bold py-3.5 rounded-xl" style={{ background: 'linear-gradient(135deg,#FF6B35,#FFBE5C)' }}>30 Gün Ücretsiz Dene</a>
+            <a href={APP_URL} className="mt-3 text-white text-center font-bold py-3.5 rounded-xl" style={{ background: 'linear-gradient(135deg,#FF6B35,#FFBE5C)' }}>15 Gün Ücretsiz Dene</a>
             <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="mt-2 bg-[#25D366] text-white text-center font-bold py-3.5 rounded-xl flex items-center justify-center gap-2">
               <Smartphone size={18} /> WhatsApp'tan Yazın
             </a>
@@ -275,7 +275,7 @@ const Hero = () => (
             </a>
             <a href={APP_URL}
               className="w-full sm:w-auto border border-white/20 hover:border-amber-300/60 bg-white/5 hover:bg-white/10 text-white text-lg font-bold py-4 px-8 rounded-2xl flex items-center justify-center gap-2 transition-all">
-              30 Gün Ücretsiz Dene <ArrowRight size={20} />
+              15 Gün Ücretsiz Dene <ArrowRight size={20} />
             </a>
           </div>
 
@@ -1374,7 +1374,7 @@ const Pricing = () => (
       <Reveal className="text-center mb-12">
         <span className="inline-block py-1 px-3 bg-orange-50 text-primary text-xs font-bold uppercase tracking-wider rounded-full mb-4 border border-orange-100">Fiyatlandırma</span>
         <h2 className="text-3xl sm:text-4xl font-display font-bold text-dark mb-3">Soru hacminize göre seçin</h2>
-        <p className="text-dark-gray mb-1">Tüm planlar <strong className="text-dark">30 gün ücretsiz deneme</strong> ile başlar. Kredi kartı gerekmez.</p>
+        <p className="text-dark-gray mb-1">Tüm planlar <strong className="text-dark">15 gün ücretsiz deneme</strong> ile başlar. Kredi kartı gerekmez.</p>
         <p className="text-sm text-gray-400">Sadece yapay zekânın cevapladığı sorular sayılır — size düşen ve sizin yazdığınız cevaplar kotanızdan düşmez.</p>
       </Reveal>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
@@ -1468,7 +1468,7 @@ const FinalCTA = () => (
           Bu gece son kez <span className="grad-text">sorulara siz bakın</span>
         </h2>
         <p className="text-lg sm:text-xl text-gray-400 mb-12 max-w-2xl mx-auto">
-          Aklınıza takılan ne varsa WhatsApp'tan sorun — bir satıcı olarak ben cevaplıyorum. Ya da hemen kayıt olun, 30 gün ücretsiz deneyin.
+          Aklınıza takılan ne varsa WhatsApp'tan sorun — bir satıcı olarak ben cevaplıyorum. Ya da hemen kayıt olun, 15 gün ücretsiz deneyin.
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
           <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer"
