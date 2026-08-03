@@ -173,7 +173,7 @@ export const FAQ_ITEMS: FaqItem[] = [
   {
     id: 4,
     question: "Fiyatlandırma nasıl?",
-    answer: "Aylık soru hacminize göre 4 farklı plan sunuyoruz: Başlangıç (100 soru/ay, 1.299₺), Küçük Esnaf (300 soru/ay, 2.999₺), Büyüyen Marka (1.000 soru/ay, 8.999₺), Kurumsal (3.000 soru/ay, 19.999₺). Fiyatlara KDV dahil değildir. Tüm planlar 30 günlük ücretsiz deneme ile başlar. Önemli detay: kotanızdan sadece yapay zekânın cevapladığı sorular düşer — size yönlendirilen ve sizin yazdığınız cevaplar ücretsizdir. Soru limitinizi aşarsanız sistem sizi bilgilendirir."
+    answer: "Aylık soru hacminize göre 4 farklı plan sunuyoruz: Başlangıç (100 soru/ay, 1.299₺), Küçük Esnaf (300 soru/ay, 2.999₺), Büyüyen Marka (1.000 soru/ay, 8.999₺), Kurumsal (3.000 soru/ay, 19.999₺). Fiyatlara KDV dahil değildir. Tüm planlar 15 günlük ücretsiz deneme ile başlar. Önemli detay: kotanızdan sadece yapay zekânın cevapladığı sorular düşer — size yönlendirilen ve sizin yazdığınız cevaplar ücretsizdir. Soru limitinizi aşarsanız sistem sizi bilgilendirir."
   },
   {
     id: 5,
