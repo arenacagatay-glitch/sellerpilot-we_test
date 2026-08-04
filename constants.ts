@@ -22,8 +22,8 @@ export const NAV_LINKS = [
 export const STAT_CARDS: StatCard[] = [
   {
     id: 1,
-    title: "Dakikalar İçinde Cevap",
-    description: "Ölçülen medyan 2 dakika. Müşteri beklemez, başka mağazaya kaçmaz, mağaza puanınız yükselir.",
+    title: "Saniyeler İçinde Cevap",
+    description: "Soru geldiği an cevaplanır. Müşteri beklemez, başka mağazaya kaçmaz, mağaza puanınız yükselir.",
     imageUrl: "",
     iconLabel: "⚡"
   },
@@ -111,7 +111,7 @@ export const STEPS: Step[] = [
     id: 3,
     icon: Moon,
     title: "Siz Hayatınıza Dönün",
-    description: "Gelen soru dakikalar içinde cevaplanır (ölçülen medyan: 2 dakika). Cevaplanamayan zor sorular e-posta ile size düşer — gerisini düşünmeyin."
+    description: "Gelen her soru saniyeler içinde cevaplanır. Cevaplanamayan zor sorular e-posta ile size düşer — gerisini düşünmeyin."
   }
 ];
 
@@ -119,8 +119,8 @@ export const FEATURES: Feature[] = [
   {
     id: 1,
     icon: Zap,
-    title: "Dakikalar İçinde Otomatik Cevap",
-    description: "Müşteri sorusu gelince siz uğraşmadan cevaplanır. Soruda bekleyen müşteri başka mağazadan almaz, mağaza puanınız yükselir."
+    title: "Saniyeler İçinde Otomatik Cevap",
+    description: "Müşteri sorusu geldiği an cevaplanır. Soruda bekleyen müşteri başka mağazadan almaz, mağaza puanınız yükselir."
   },
   {
     id: 2,
