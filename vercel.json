@@ -1,18 +1,14 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "vite build && node scripts/prerender.mjs",
+  "buildCommand": "vite build && node scripts/prerender.mjs && node scripts/anasayfa-yerlestir.mjs",
   "rewrites": [
-    {
-      "source": "/",
-      "destination": "/anasayfa.html"
-    },
     {
       "source": "/mcp",
       "destination": "/mcp.html"
     },
     {
       "source": "/((?!.*\\.).*)",
-      "destination": "/index.html"
+      "destination": "/app.html"
     }
   ],
   "headers": [

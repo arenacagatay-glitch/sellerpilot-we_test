@@ -1,0 +1,52 @@
+// ═══════════════════════════════════════════════════════════════════
+// Ana sayfayı yerine koyar — build'in EN SON adımı.
+//
+// NEDEN GEREKLİ:
+// Vercel'de `rewrites` dosya sistemi kontrolünden SONRA çalışır. `/` istendiğinde
+// dist/index.html fiziksel olarak var olduğu için doğrudan o servis edilir ve
+// vercel.json'daki `"/" → "/anasayfa.html"` kuralı HİÇ devreye girmez.
+// (4 Ağu 2026'da tam olarak bu yaşandı: deploy READY'ydi, site değişmemişti.)
+//
+// ÇÖZÜM: dosyaları takas et.
+//   dist/index.html  (SPA kabuğu) → dist/app.html   ← diğer rotalar buraya rewrite edilir
+//   dist/anasayfa.html            → dist/index.html ← "/" artık yeni ana sayfa
+//
+// ⚠️ prerender.mjs dist/index.html'i blog sayfaları için KABUK olarak okuyor,
+// bu yüzden bu adım ondan SONRA çalışmak zorunda (buildCommand sırası).
+// ═══════════════════════════════════════════════════════════════════
+import { readFile, writeFile, copyFile } from 'node:fs/promises';
+import { existsSync } from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
+const DIST = path.join(ROOT, 'dist');
+
+const spa      = path.join(DIST, 'index.html');
+const spaHedef = path.join(DIST, 'app.html');
+const yeni     = path.join(DIST, 'anasayfa.html');
+
+if (!existsSync(DIST))  throw new Error('dist/ yok — önce `vite build` çalıştırın.');
+if (!existsSync(spa))   throw new Error('dist/index.html yok — vite build başarısız mı?');
+if (!existsSync(yeni))  throw new Error('dist/anasayfa.html yok — public/anasayfa.html eksik.');
+
+// 1) SPA kabuğunu app.html olarak sakla
+await copyFile(spa, spaHedef);
+
+// 2) Yeni ana sayfayı index.html'in yerine koy
+await copyFile(yeni, spa);
+
+// 3) Geri oku ve doğrula — sessiz başarısızlık olmasın
+const sonuc = await readFile(spa, 'utf8');
+const kabuk = await readFile(spaHedef, 'utf8');
+
+if (!sonuc.includes('Artık müşteri hizmetleri')) {
+  throw new Error('dist/index.html yeni ana sayfa DEĞİL — takas başarısız.');
+}
+if (!kabuk.includes('<div id="root">') && !kabuk.includes('id="root"')) {
+  throw new Error('dist/app.html SPA kabuğu değil — diğer rotalar kırılırdı.');
+}
+
+console.log('✓ Ana sayfa yerleştirildi:');
+console.log('  dist/index.html → yeni ana sayfa (' + sonuc.length + ' bayt)');
+console.log('  dist/app.html   → SPA kabuğu   (' + kabuk.length + ' bayt)');
