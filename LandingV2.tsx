@@ -324,7 +324,7 @@ const PhoneMock = () => {
         </span>
         <span>
           <span className="block text-[.62rem]" style={{ color: 'var(--ink-mid)' }}>Soru cevaplandı</span>
-          <span className="block text-[.78rem] font-bold" style={{ color: 'var(--ink-text)' }}>saniyeler içinde ⚡</span>
+          <span className="block text-[.78rem] font-bold" style={{ color: 'var(--ink-text)' }}>dakikalar içinde ⚡</span>
         </span>
       </div>
       <div className="float-chip bob2 hidden sm:flex" style={{ top: '38%', right: '-1.75rem', zIndex: 2 }}>
@@ -475,7 +475,7 @@ const V2Hero = () => (
             Sorulara siz değil,<br /><span style={{ color: 'var(--ember-2)' }}>mağazanız</span> cevap versin.
           </h1>
           <p className="lede mx-auto lg:mx-0 mb-10">
-            SellerPilot ürünlerinizi tanır, gelen her soruyu sizin sesinizle saniyeler içinde yanıtlar.
+            SellerPilot ürünlerinizi tanır, gelen soruyu sizin sesinizle dakikalar içinde yanıtlar.
             Emin olamadığını asla uydurmaz — size iletir.
           </p>
           <div className="flex flex-col sm:flex-row items-center lg:justify-start justify-center gap-3 mb-4">
@@ -494,11 +494,16 @@ const V2Hero = () => (
 
       <Rv delay={0.18} className="mt-16">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-px rounded-2xl overflow-hidden" style={{ background: 'var(--ink-line)' }}>
+          {/* ⚠️ RAKAMLAR ÖLÇÜMDÜR, SLOGAN DEĞİL. Kaynak: `questions` tablosu,
+              son 90 gün, 13 mağaza, satıcının kendi yazdığı cevaplar hariç
+              (answer_source <> 'trendyol_sync'): 1.582 soru bota ulaştı,
+              950'sini AI cevapladı (%60,1); medyan cevap süresi 114 sn.
+              Değiştirmeden ÖNCE yeniden ölç — eski rakamla güncel iddia kurma. */}
           {[
-            ['Saniyeler', 'içinde otomatik cevap'],
+            ['%60', 'soruyu siz görmeden cevaplar'],
+            ['2 dakika', 'medyan cevap süresi'],
             ['7/24', 'gece, hafta sonu, bayram'],
             ['Sıfır', 'tahmine dayalı cevap'],
-            ['Tek panel', 'tüm mağazalarınız'],
           ].map(([big, small]) => (
             <div key={big} className="px-5 py-7 text-center" style={{ background: 'var(--ink)' }}>
               <p className="display text-2xl sm:text-[1.75rem] mb-1.5" style={{ color: 'var(--ink-text)', fontWeight: 600 }}>{big}</p>

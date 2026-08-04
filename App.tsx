@@ -212,7 +212,7 @@ const HeroPhone = () => (
 
       {/* OK chip */}
       <div className="chat-ok self-center mt-1 bg-green-500/15 border border-green-400/30 text-green-400 text-[11px] font-bold px-4 py-2 rounded-full flex items-center gap-2">
-        <CheckCircle size={14} /> Cevaplama süresi: saniyeler
+        <CheckCircle size={14} /> Cevaplama süresi: ~2 dakika
       </div>
     </div>
 
@@ -262,7 +262,7 @@ const Hero = () => (
           </h1>
 
           <p className="text-lg sm:text-xl text-gray-400 leading-relaxed mb-9 max-w-2xl mx-auto lg:mx-0">
-            SellerPilot mağazanıza bağlanır, gelen her soruyu ürün bilgilerinize göre saniyeler içinde yanıtlar.
+            SellerPilot mağazanıza bağlanır, gelen soruyu ürün bilgilerinize göre dakikalar içinde yanıtlar.
             Müşteri başka bir ürün ararsa kataloğunuzdan önerir, kampanyanızı hatırlatır.
             Emin olamadığı soruyu cevaplamaz — e-posta ile size bildirir.
           </p>
@@ -320,7 +320,7 @@ const Hero = () => (
 // ────────────────────────────────────────────────
 const StatBar = () => {
   const stats = [
-    { value: 'Saniyeler', label: 'içinde otomatik cevap', icon: ZapIcon },
+    { value: '%60', label: 'soruyu siz görmeden cevaplar', icon: ZapIcon },
     { value: '7/24', label: 'gece, hafta sonu, bayram', icon: Clock },
     { value: '%0', label: 'tahmine dayalı cevap riski', icon: ShieldCheck },
     { value: 'E-posta', label: 'ile zor sorular size düşer', icon: Mail },
