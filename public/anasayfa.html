@@ -16,7 +16,8 @@
 <style>
 /* ═══════════════════════════════════════════════════════════
    SellerPilot "Ink & Ember" — token'lar LandingV2.tsx'ten BİREBİR
-   Tek temalı: aydınlık kâğıt zemin + koyu mürekkep bantlar.
+   Bu bir MARKA ÖNİZLEMESİ: bilinçli olarak tek temalı (aydınlık kâğıt
+   zemin + koyu mürekkep bantlar). Marka sadakati için tema çevrilmiyor.
    ═══════════════════════════════════════════════════════════ */
 :root{
   --paper:#FAFAF9; --paper-2:#F4F4F3; --line:#E7E5E4; --line-2:#D6D3D1;
@@ -28,7 +29,7 @@
   --disp:"Inter Tight",Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
   --body:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
   --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,monospace;
-  --wrap:1200px;
+  --wrap:1440px;
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--paper);color:var(--text);font-family:var(--body);
@@ -37,13 +38,14 @@ body{margin:0;background:var(--paper);color:var(--text);font-family:var(--body);
 img{max-width:100%}
 a{color:inherit}
 
-.wrap{max-width:var(--wrap);margin:0 auto;padding:0 24px}
+.wrap{max-width:1440px;margin:0 auto;padding-inline:clamp(24px, -49.1429px + 9.52381vw, 88px)}
+@media(max-width:767px){.wrap{padding-inline:16px} /* mobil: H10 gibi 16px */}
 .display{font-family:var(--disp);font-weight:700;letter-spacing:-.04em;line-height:1.03;
   text-wrap:balance;margin:0}
-.h1{font-size:clamp(2.4rem,1.4rem+3.6vw,4.1rem)}
-.h2{font-size:clamp(1.9rem,1.3rem+2.2vw,3rem)}
-.h3{font-size:clamp(1.15rem,1rem+.6vw,1.45rem);font-weight:650;letter-spacing:-.025em;line-height:1.18}
-.lede{font-size:clamp(1rem,.96rem+.25vw,1.16rem);line-height:1.66;color:var(--text-mid);max-width:62ch;margin:0}
+.h1{font-size:clamp(2.4rem,1.4rem + 3.6vw,4.1rem)}
+.h2{font-size:clamp(1.9rem,1.3rem + 2.2vw,3rem)}
+.h3{font-size:clamp(1.15rem,1rem + .6vw,1.45rem);font-weight:650;letter-spacing:-.025em;line-height:1.18}
+.lede{font-size:clamp(1rem,.96rem + .25vw,1.16rem);line-height:1.66;color:var(--text-mid);max-width:62ch;margin:0}
 .eyebrow{font-size:.6875rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
   color:var(--text-low);display:inline-flex;align-items:center;gap:.55rem;margin:0}
 .eyebrow .num{color:var(--ember-deep);font-variant-numeric:tabular-nums}
@@ -123,8 +125,40 @@ header{position:sticky;top:0;z-index:60;background:rgba(250,250,249,.92);
 .pill.new{background:linear-gradient(135deg,var(--ember),var(--ember-2));color:#fff}
 
 /* ── HERO ── */
-.hero{padding:clamp(44px,5.5vw,78px) 0 clamp(52px,6vw,90px)}
-.herogrid{display:grid;grid-template-columns:1.02fr .98fr;gap:clamp(32px,4vw,60px);align-items:center}
+/* ═══ HERO PANELİ — H10'un "wave hero" kalıbı, ölçüleri ölçülerek alındı ═══
+   Kenarların boş durmasının sebebi ölçü DEĞİL, zeminin bitmesiydi. H10'da
+   1920'de yan boşluk 320px ama boşluk PANELİN İÇİNDE kaldığı için dolu duruyor. */
+.hero{margin:0 16px 0;border-radius:20px;overflow:hidden;
+  padding:clamp(40px,5vw,112px) 0 clamp(44px,5.5vw,109px);
+  background:
+    radial-gradient(900px 420px at 18% 0%, rgba(255,107,53,.16) 0%, transparent 62%),
+    radial-gradient(700px 380px at 88% 12%, rgba(255,190,92,.10) 0%, transparent 60%),
+    linear-gradient(160deg,#0F1219 0%,#0A0C11 58%);
+  color:var(--ink-text)}
+.hero .lede{color:var(--ink-mid)}
+.hero .fineprint{color:var(--ink-mid)}
+.hero .tagpill{background:rgba(255,255,255,.05);border-color:var(--ink-line);color:var(--ink-mid)}
+.hero .tagpill b{color:var(--ink-text)}
+.hero .ailogos span{color:var(--ink-mid)}
+.hero .ailogos .g{background:rgba(255,255,255,.09)}
+.hero .btn2{background:transparent;border-color:rgba(255,255,255,.22);color:var(--ink-text)}
+.hero .btn2:hover{border-color:rgba(255,255,255,.45)}
+@media(max-width:767px){.hero{margin:0;border-radius:0}}
+
+/* İç ızgara — H10: grid değil FLEX, ve asla 50/50 değil (1440'ta 750/395 = 1,90) */
+.herogrid{display:flex;flex-direction:column;gap:clamp(32px,4vw,60px);align-items:stretch}
+@media(min-width:768px){
+  .herogrid{flex-direction:row;align-items:center;
+            gap:clamp(48px, -30.8571px + 10.2679vw, 117px)}
+  .herocol{flex:1 1 auto;min-width:0;max-width:720px}
+  .chat{flex:0 1 395px}
+}
+@media(min-width:1440px){
+  .herogrid{gap:93px}
+  .herocol{flex:0 0 750px;max-width:750px}
+  .chat{flex:0 0 395px}
+}
+.hero .lede{max-width:693px}
 .tagpill{display:inline-flex;align-items:center;gap:9px;border:1px solid var(--line-2);
   border-radius:999px;padding:6px 15px;font-size:.78rem;color:var(--text-mid);background:#fff}
 .tagpill b{color:var(--text);font-weight:640}
@@ -142,18 +176,26 @@ header{position:sticky;top:0;z-index:60;background:rgba(250,250,249,.92);
 /* ═══ MCP sohbeti — H10'un WaveHeroChat motorunun ölçülmüş karşılığı ═══
    kelime kelime yazım · imleç YOK · balonlar alta yaslı, yukarı doğru büyür
    · scrollbar gizli · giriş 182ms opacity+translateY · sonsuz döngü        */
-.chat{background:var(--ink);border:1px solid var(--ink-line);border-radius:16px;
-  padding:14px;display:flex;flex-direction:column;max-width:440px;margin-left:auto;
-  box-shadow:0 24px 70px -34px rgba(0,0,0,.85)}
+.chat{background:linear-gradient(135deg,#0F0F1A,#171A26);
+  border:1px solid rgba(255,255,255,.10);border-radius:clamp(16px,3.2vw,24px);
+  padding:clamp(10px,2.4cqi,14px);display:flex;flex-direction:column;
+  width:100%;max-width:395px;margin-inline:auto;
+  aspect-ratio:395/356;                 /* H10 ile birebir aynı oran */
+  container-type:inline-size;           /* iç metin ekrana değil KUTUYA göre ölçeklenir */
+  box-shadow:0 0 37px rgba(255,107,53,.10),0 18px 74px rgba(0,0,0,.7),
+             inset 0 1.5px 0 rgba(255,255,255,.05);
+  overflow:hidden}
 .chattop{display:flex;align-items:center;gap:7px;padding-bottom:10px;margin-bottom:10px;
   border-bottom:1px solid var(--ink-line)}
 .dot{width:7px;height:7px;border-radius:50%;background:var(--ok)}
-.chattop span{font-size:.67rem;color:var(--ink-mid);font-family:var(--mono)}
-.chatview{height:378px;overflow-y:auto;scroll-behavior:smooth;scrollbar-width:none;
+.chattop span{font-size:clamp(7px,1.9cqi,11px);color:var(--ink-mid);font-family:var(--mono)}
+.chatview{flex:1;min-height:0;overflow-y:auto;scroll-behavior:smooth;scrollbar-width:none;
   -ms-overflow-style:none}
 .chatview::-webkit-scrollbar{display:none}
-.chatmsgs{display:flex;flex-direction:column;justify-content:flex-end;gap:7px;min-height:100%}
-.msg{border-radius:11px;padding:9px 11px;font-size:.78rem;line-height:1.52;max-width:92%;
+.chatmsgs{display:flex;flex-direction:column;justify-content:flex-end;
+  gap:clamp(4px,1.4cqi,6px);min-height:100%}
+.msg{border-radius:9px;padding:clamp(7px,1.9cqi,10px) clamp(9px,2.4cqi,12px);
+  font-size:clamp(8.5px,2.5cqi,12px);line-height:1.28;max-width:92%;
   opacity:0;transform:translateY(12px);
   transition:opacity .182s ease,transform .182s ease}
 .msg.is-visible{opacity:1;transform:none}
@@ -166,7 +208,7 @@ header{position:sticky;top:0;z-index:60;background:rgba(250,250,249,.92);
 .mask{background:rgba(255,255,255,.14);border-radius:3px;color:transparent;user-select:none;padding:0 2px}
 .src{display:flex;align-items:center;gap:6px;font-size:.7rem;color:var(--ok);margin-top:9px;
   font-family:var(--mono)}
-.chatfoot{font-size:.7rem;color:var(--ink-mid);border-top:1px solid var(--ink-line);padding-top:10px;margin:0}
+.chatfoot{font-size:clamp(7px,1.9cqi,11px);color:var(--ink-mid);border-top:1px solid var(--ink-line);padding-top:10px;margin:0}
 .chat .msg.sp{max-width:100%}
 @media(prefers-reduced-motion:reduce){.msg{opacity:1;transform:none;transition:none}}
 
@@ -209,9 +251,22 @@ header{position:sticky;top:0;z-index:60;background:rgba(250,250,249,.92);
 
 /* ═══ ORİJİNAL HAREKETLER — LandingV2.tsx'ten birebir, uydurma yok ═══ */
 /* Apple tadı kaydırma açılışı (.rv/.in) — LandingV2 satır 153-154 */
-.rv{opacity:0;transform:translateY(16px);
-  transition:opacity .65s cubic-bezier(.22,1,.36,1),transform .65s cubic-bezier(.22,1,.36,1)}
-.rv.in{opacity:1;transform:none}
+/* Apple tadı: expo-out eğrisi, biraz daha uzun yol, hafif ölçek + blur çözülmesi */
+.rv{opacity:0;transform:translateY(26px) scale(.985);filter:blur(6px);
+  transition:opacity .9s cubic-bezier(.16,1,.3,1),
+             transform .9s cubic-bezier(.16,1,.3,1),
+             filter .9s cubic-bezier(.16,1,.3,1);
+  transition-delay:var(--gecikme,0ms);will-change:opacity,transform}
+.rv.in{opacity:1;transform:none;filter:none}
+/* kardeşler sırayla açılsın — tek blok hâlinde zıplamasın */
+.cols3 > .rv:nth-child(2){--gecikme:90ms}
+.cols3 > .rv:nth-child(3){--gecikme:180ms}
+.plans > .rv:nth-child(2){--gecikme:90ms}
+.plans > .rv:nth-child(3){--gecikme:180ms}
+.acards > .rv:nth-child(2){--gecikme:70ms}
+.acards > .rv:nth-child(3){--gecikme:140ms}
+.acards > .rv:nth-child(4){--gecikme:210ms}
+.acards > .rv:nth-child(5){--gecikme:280ms}
 
 /* Telefon sahnesi: turuncu ışıma + ızgara (LandingV2 satır 196-203) */
 .phone-stage{position:relative;padding:40px 24px;border-radius:2rem;
@@ -254,7 +309,7 @@ header{position:sticky;top:0;z-index:60;background:rgba(250,250,249,.92);
   border:1px solid var(--line);border-radius:14px;overflow:hidden}
 .proof div{background:var(--paper);padding:22px 18px}
 .proof .n{font-family:var(--disp);font-weight:750;letter-spacing:-.04em;
-  font-size:clamp(1.7rem,1.2rem+1.6vw,2.4rem);font-variant-numeric:tabular-nums;line-height:1}
+  font-size:clamp(1.7rem,1.2rem + 1.6vw,2.4rem);font-variant-numeric:tabular-nums;line-height:1}
 .proof .l{font-size:.79rem;color:var(--text-mid);margin-top:7px;line-height:1.45}
 
 /* ── sekmeler ── */
@@ -376,8 +431,14 @@ footer a:hover{color:var(--ember-2)}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 
+<!-- ══════════ ÖNİZLEME ÇUBUĞU ══════════ -->
+<div class="prev"><div class="wrap">
+  <div>🔍 <b>ÖNİZLEME</b> — yayında değil. Menü ağacı <b>helium10.com</b>'un canlı yapısından birebir alındı. <b>Yapı notları yalnızca sizin içindir, siteye çıkmaz.</b></div>
+  <button class="tgl" id="noteBtn" aria-pressed="false">Yapı notlarını göster</button>
+</div></div>
+
 <!-- ══════════ DUYURU ŞERİDİ — H10'un üstteki mavi bandının karşılığı ══════════ -->
-<a class="annbar" href="/mcp">
+<a class="annbar" href="/yeni-mcp.html">
   <span class="wrap"><b>YENİ:</b> SellerPilot MCP yayında. Yapay zekâ araçlarınızı Trendyol verinize bağlayın. <em>→ Daha fazlası</em></span>
 </a>
 
@@ -402,6 +463,7 @@ footer a:hover{color:var(--ember-2)}
   <!-- 7 sütun — H10'un "Why Helium 10" menüsüyle aynı sayı ve sıra -->
   <div class="mega" id="m-urun">
     <div class="wrap">
+      <p class="note">H10 kalıbı: her satır = ÜST SATIR iş cümlesi + ALT SATIR araç adı. En soldaki sütun onlarda "Helium 10 AI → Helium MCP", bizde "SellerPilot AI → SellerPilot MCP".</p>
       <div class="megagrid m7">
         <div class="mcol"><h4>SellerPilot AI</h4>
           <a class="mitem" href="#mcp"><span class="job">Yapay zekâ araçlarınızı bağlayın</span><span class="tool">SellerPilot MCP<span class="pill new">Yeni</span></span></a>
@@ -418,7 +480,7 @@ footer a:hover{color:var(--ember-2)}
         </div>
         <div class="mcol"><h4>İlan Optimizasyonu</h4>
           <a class="mitem" href="#"><span class="job">İlan açıklamanızı yazdırın</span><span class="tool">Açıklama Motoru</span></a>
-          <a class="mitem" href="/gorsel-studyo"><span class="job">Tek fotoğraftan ilan görseli üretin</span><span class="tool">Görsel Stüdyo</span></a>
+          <a class="mitem" href="#"><span class="job">Tek fotoğraftan ilan görseli üretin</span><span class="tool">Görsel Stüdyo</span></a>
         </div>
         <div class="mcol"><h4>Günlük Operasyon</h4>
           <a class="mitem" href="#"><span class="job">Ürün sorularını cevaplayın</span><span class="tool">Soru-Cevap</span></a>
@@ -440,6 +502,7 @@ footer a:hover{color:var(--ember-2)}
   </div>
 
   <div class="mega" id="m-coz"><div class="wrap">
+    <p class="note">H10'un "Solutions" menüsü: iki blok — "Choose a Business Type" + "Choose a Marketplace". Birebir aynı ikili.</p>
     <div class="megagrid m2">
       <div class="mcol"><h4>İşinizi seçin</h4>
         <a class="mitem" href="#"><span class="job">Günde 10–50 soru</span><span class="tool">Butik / Küçük Mağaza</span></a>
@@ -464,7 +527,7 @@ footer a:hover{color:var(--ember-2)}
 
   <div class="mega" id="m-kay"><div class="wrap"><div class="megagrid m1">
     <div class="mcol"><h4>Öğrenin</h4>
-      <a class="mitem" href="/blog"><span class="job">Trendyol satıcı rehberleri</span><span class="tool">Blog<span class="pill">37 yazı</span></span></a>
+      <a class="mitem" href="#"><span class="job">Trendyol satıcı rehberleri</span><span class="tool">Blog<span class="pill">37 yazı</span></span></a>
       <a class="mitem" href="#"><span class="job">Kurulumu adım adım izleyin</span><span class="tool">Kurulum</span></a>
     </div>
     <div class="mcol"><h4>Destek</h4>
@@ -476,8 +539,9 @@ footer a:hover{color:var(--ember-2)}
 
 <!-- ══════════ HERO — MCP ══════════ -->
 <section class="hero"><div class="wrap">
+  <p class="note">H10 hero'sunun altı parçası birebir: ① hap etiketi ② AI logo sırası ③ iki satırlık H1 ④ alt metin ⑤ iki CTA ⑥ sağda sohbet kutusu.</p>
   <div class="herogrid">
-    <div>
+    <div class="herocol">
       <span class="tagpill"><b>Tüm araçlarınız</b> ↔ Trendyol'un en kapsamlı satıcı verisiyle</span>
       <div class="ailogos">
         <span><i class="g">✳</i>Claude</span><span><i class="g">▮</i>Claude Code</span>
@@ -499,6 +563,7 @@ footer a:hover{color:var(--ember-2)}
 
 <!-- ══════════ MEVCUT HERO — AYNEN KALIYOR, SADECE YERİ DEĞİŞTİ ══════════ -->
 <section class="band band-ink" style="padding-top:clamp(48px,6vw,86px)"><div class="wrap">
+  <p class="note">Bugünkü ana sayfanın üst bölümü. Metin, telefon ve kartlar AYNEN korundu — sadece MCP hero'sunun altına indi.</p>
   <div class="herogrid">
     <div>
       <span class="tagpill" style="background:rgba(255,255,255,.05);border-color:var(--ink-line);color:var(--ink-mid)"><span style="width:7px;height:7px;border-radius:50%;background:var(--ember);display:inline-block"></span> 4 farklı kategoride markası olan, 10 yıllık e-ticaret satıcısı tarafından geliştirildi</span>
@@ -527,12 +592,14 @@ footer a:hover{color:var(--ember-2)}
 
 <!-- ══════════ SEKTÖR ŞERİDİ ══════════ -->
 <section class="band band-2" style="padding:34px 0"><div class="wrap" style="text-align:center">
+  <p class="note" style="text-align:left">H10'da burada "Trusted by 4.5M+ Brands" logo duvarı var. Bizde mağaza adları gizli (Kural 2) → sektör rozeti.</p>
   <p class="eyebrow" style="margin-bottom:14px">Trendyol'da 12 mağazada çalışıyor</p>
   <div class="sectors"><span>Tekstil</span><span>Ayakkabı</span><span>Bebek</span><span>Kozmetik</span><span>Ev Tekstili</span><span>Yapı Market</span><span>Oto Aksesuar</span></div>
 </div></section>
 
 <!-- ══════════ KANIT ŞERİDİ ══════════ -->
 <section class="band" style="padding:44px 0"><div class="wrap">
+  <p class="note">H10'da burada "Rated 4.5 / 5" var. Bizde puan yok → ölçülmüş 4 gerçek rakam.</p>
   <div class="rv proof">
     <div><div class="n">120.000</div><div class="l">Trendyol'da yayınlanmış cevap</div></div>
     <div><div class="n">1 dk</div><div class="l">Soru geldikten sonra cevaplanma<br><span style="color:var(--text-low)">isteğe göre ayarlanabilir</span></div></div>
@@ -543,6 +610,7 @@ footer a:hover{color:var(--ember-2)}
 
 <!-- ══════════ SEKMELİ YETENEK ══════════ -->
 <section class="band band-2"><div class="wrap">
+  <p class="note">H10'un 7 sekmeli yetenek bölümünün karşılığı — bizde 6 sekme.</p>
   <p class="eyebrow"><span class="num">01</span> Ne yapıyor</p>
   <h2 class="rv display h2" style="margin-top:12px">Müşteriyle konuştuğunuz<br>her yeri o yönetiyor.</h2>
 
@@ -653,6 +721,7 @@ footer a:hover{color:var(--ember-2)}
 
 <!-- ══════════ MCP BANDI ══════════ -->
 <section class="band band-ink" id="mcp"><div class="wrap">
+  <p class="note">H10'un ana sayfadaki MCP bandının karşılığı. Onlarda: "NEW · HELIUM 10 FOR CLAUDE, CHATGPT, AND CURSOR".</p>
   <p class="eyebrow">Yeni · Claude, ChatGPT ve Cursor için SellerPilot</p>
   <h2 class="rv display h2" style="margin-top:14px;max-width:19ch">Mağazanızı, zaten kullandığınız yapay zekânın içinden yönetin.</h2>
   <p class="lede" style="margin-top:18px">Panele girmenize gerek yok. Claude'a ya da ChatGPT'ye bağlayın, mağazanızı sorun — cevap tahminden değil, <strong style="color:var(--ink-text)">Trendyol'un size verdiği gerçek veriden</strong> gelir. Yazma yetkisi yok: sadece okur, hiçbir şeyi değiştiremez.</p>
@@ -673,6 +742,7 @@ footer a:hover{color:var(--ember-2)}
 
 <!-- ══════════ ÜÇ SÜTUN ══════════ -->
 <section class="band"><div class="wrap">
+  <p class="note">H10: "Less complexity. More revenue. Continuous growth." — üç sütun.</p>
   <h2 class="rv display h2" style="max-width:20ch">Daha az uğraş. Daha çok satış. Korunan puan.</h2>
   <div class="cols3" style="margin-top:34px">
     <div class="rv card"><p class="k">Uğraşı azaltın</p><h3 class="display h3">Gece 02:47'de kimse beklemiyor</h3><p>Soru, sipariş mesajı ve yorum aynı gece cevaplanıyor. Medyan cevaplama süresi <strong>4 dakika</strong>.</p><a href="#">Soru-Cevap →</a></div>
@@ -683,6 +753,7 @@ footer a:hover{color:var(--ember-2)}
 
 <!-- ══════════ EK3 DÜZELTMESİ ══════════ -->
 <section class="band band-2"><div class="wrap">
+  <p class="note">EK3 düzeltmesi: yatay ray silindi. Sol sütun yapışkan, sağda dikey akış — sayfa tamamen sol hizalı, hiçbir kart kesilmiyor.</p>
   <div class="answers">
     <div class="stick">
       <p class="eyebrow"><span class="num">02</span> Kanıt</p>
@@ -690,6 +761,7 @@ footer a:hover{color:var(--ember-2)}
       <p class="lede" style="margin-top:16px">Aşağıdaki her cevap sistem tarafından yazıldı ve Trendyol'da gerçekten yayınlandı. Yazım hataları müşterilere ait — gerçek hayat böyle.</p>
 
       <div class="rv statbox">
+        <p class="note" style="margin-bottom:10px">EK4 düzeltmesi: 62/467 bayattı. Payda da yanlıştı — satıcının kendi yazdığı cevaplar sayılıyordu.</p>
         <div class="big">5.900 / 18.800</div>
         <p>Sistemin yazdığı son 18.800 cevabın <strong>5.900'ünde</strong> müşteriye katalogdan ikinci bir ürün önerildi. <strong>Her üç cevaptan biri</strong> satış fırsatına döndü.</p>
         <p class="cite">Son 30 gün · SellerPilot'un yazdığı cevaplar</p>
@@ -737,6 +809,7 @@ footer a:hover{color:var(--ember-2)}
 
 <!-- ══════════ FİYAT ══════════ -->
 <section class="band" id="fiyat"><div class="wrap">
+  <p class="note">İKİ AYRI ÜRÜN, İKİ AYRI FİYAT. Soru-cevap fiyatı DEĞİŞMEDİ (canlı tarife). Muhasebe: aylık 499/799/1.299 · yıllık %25 indirimli 374/599/974 — Melontik'in %37–55 altında (üçte bir değil; kullanıcı kararı, 4 Ağu: "piyasayı bu kadar öldürmeye gerek yok").</p>
   <p class="eyebrow"><span class="num">04</span> Fiyatlandırma</p>
   <h2 class="rv display h2" style="margin-top:12px">Bu bir otomatik cevaplayıcı değil.<br><span class="ember">Müşteri hizmetleri departmanı.</span></h2>
   <p class="lede" style="margin-top:18px">Rakipler soru cevaplamayı paketlerinin içine bir madde olarak koyuyor. Bizde o işin kendisi: siparişin gerçek kargo durumunu okur, mağazanızın kendi beden tablosundan hesap yapar, stoğu görür, emin olamadığında uydurmaz — size sorar. <strong style="color:var(--text)">Bir yazılım özelliği değil, işe aldığınız bir ekip arkadaşı.</strong></p>
@@ -834,6 +907,7 @@ footer a:hover{color:var(--ember-2)}
 
 <!-- ══════════ AFFILIATE ══════════ -->
 <section class="band band-2" id="ortaklik"><div class="wrap">
+  <p class="note">ACIK_KARARLAR.md: "Agresif fiyatlandırmayla kurulsun" kararı verilmiş, yapılmamıştı. Rakip (TPro360) %15/30/50 veriyor ama TEK SEFERLİK ve kredi olarak. Bizimki her ay tekrar eden nakit → asıl ayrıştırıcı bu.</p>
   <p class="eyebrow"><span class="num">05</span> İş ortaklığı</p>
   <h2 class="rv display h2" style="margin-top:12px;max-width:20ch">Tavsiye edin, <span class="ember">her ay</span> kazanın.</h2>
   <p class="lede" style="margin-top:16px">Piyasadaki programlar tek seferlik komisyon verip kesiyor — üstelik nakit değil, kendi faturanızdan düşülen kredi olarak. Bizimki öyle değil: <strong style="color:var(--text)">getirdiğiniz müşteri ödediği sürece siz de kazanırsınız.</strong></p>
@@ -872,11 +946,12 @@ footer a:hover{color:var(--ember-2)}
 
 <!-- ══════════ FOOTER ══════════ -->
 <footer id="kunye"><div class="wrap">
+  <p class="note">🔴 Künye bugün canlı sitede HİÇBİR YERDE yok — ölü Footer bileşeninin içinde kalmış. PayTR ve mesafeli satış mevzuatı bunu istiyor.</p>
   <div class="fgrid">
     <div><div class="logo" style="color:var(--ink-text);margin-bottom:12px"><svg class="mark" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-label="SellerPilot"><defs><linearGradient id="spg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF6B35"/><stop offset="1" stop-color="#FFBE5C"/></linearGradient></defs><rect width="64" height="64" rx="14" fill="url(#spg2)"/><g transform="translate(12 12) scale(1.6667)"><path fill="#fff" d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></g></svg>SellerPilot</div>
       <p style="margin:0;max-width:34ch">Trendyol satıcıları için müşteri iletişimi ve gerçekleşen kâr — tek panelde.</p></div>
     <div><h5>Modüller</h5><ul><li><a href="#">Soru-Cevap</a></li><li><a href="#">Sipariş Soruları</a></li><li><a href="#">Değerlendirmeler</a></li><li><a href="#">Muhasebe</a></li><li><a href="#mcp">SellerPilot MCP</a></li></ul></div>
-    <div><h5>Kaynaklar</h5><ul><li><a href="/blog">Blog</a></li><li><a href="#">Kurulum</a></li><li><a href="#">SSS</a></li><li><a href="/danismanlik">Danışmanlık</a></li></ul></div>
+    <div><h5>Kaynaklar</h5><ul><li><a href="#">Blog</a></li><li><a href="#">Kurulum</a></li><li><a href="#">SSS</a></li><li><a href="#">Danışmanlık</a></li></ul></div>
     <div><h5>Yasal</h5><ul><li><a href="#">Mesafeli Satış</a></li><li><a href="#">Gizlilik</a></li><li><a href="#">İptal &amp; İade</a></li><li><a href="#">Ön Bilgilendirme</a></li></ul></div>
   </div>
   <p class="kunye"><b>PURELYPRO BADGER KOZMETİK VE DANIŞMANLIK HİZMETLERİ TİCARET LİMİTED ŞİRKETİ</b><br>
@@ -1095,12 +1170,20 @@ footer a:hover{color:var(--ember-2)}
   window.addEventListener('resize',tetik,{passive:true});
   setTimeout(tara,300); setTimeout(tara,1200);
 
-  // Son emniyet: 6 sn sonra hâlâ açılmamış varsa koşulsuz aç.
-  // Görünmeyen içerik, animasyonsuz içerikten çok daha kötüdür.
+  // ⚠️ Emniyet ağı SADECE ekrandakileri açar.
+  // Eski hâli 6 sn sonra HEPSİNİ açıyordu; kullanıcı aşağı indiğinde animasyon
+  // çoktan bitmiş oluyor ve sayfa cansız duruyordu. Kullanıcı fark etti:
+  // "kaydırdığın zamanki smoothluk yok". Battaniye açılış kaldırıldı.
   setTimeout(function(){
-    hedefler.forEach(function(e){ e.classList.add('in'); });
-    temizle();
-  },6000);
+    var acik=0;
+    for(var i=0;i<hedefler.length;i++) if(hedefler[i].classList.contains('in')) acik++;
+    if(acik===0){                       // hiçbiri açılmadıysa sistem bozuk demektir
+      for(var j=0;j<hedefler.length;j++){
+        var r=hedefler[j].getBoundingClientRect();
+        if(r.top<window.innerHeight && r.bottom>0) hedefler[j].classList.add('in');
+      }
+    }
+  },5000);
 })();
 
 // mega menü
@@ -1147,6 +1230,13 @@ function setCycle(mode){
 document.getElementById('ay').addEventListener('click', function(){ setCycle('ay'); });
 document.getElementById('yil').addEventListener('click', function(){ setCycle('yil'); });
 
+// yapı notları
+var nb = document.getElementById('noteBtn');
+nb.addEventListener('click', function(){
+  var on = document.body.classList.toggle('notes');
+  nb.setAttribute('aria-pressed', on ? 'true' : 'false');
+  nb.textContent = on ? 'Yapı notlarını gizle' : 'Yapı notlarını göster';
+});
 </script>
 
 </body>
