@@ -55,13 +55,10 @@ a{color:inherit}
 .band-ink .ember{color:var(--ember-2)}
 .band-2{background:var(--paper-2)}
 
-/* ── önizleme çubuğu ── */
-
-/* ── yapı notu balonları ── */
-.band-ink body.notes 
 /* ── duyuru şeridi ── */
 .annbar{display:block;text-decoration:none;background:var(--ink);color:var(--ink-text);
   padding:11px 0;font-size:.85rem;text-align:center;border-bottom:1px solid var(--ink-line)}
+.annbar .wrap{display:block}   /* <span> satır içi olduğu için max-width+auto margin işlemiyordu */
 .annbar b{color:var(--ember-2);font-weight:750;letter-spacing:.03em}
 .annbar em{font-style:normal;font-weight:650;text-decoration:underline;text-underline-offset:3px;
   margin-left:5px;white-space:nowrap}
