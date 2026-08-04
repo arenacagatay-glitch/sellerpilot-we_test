@@ -1832,7 +1832,7 @@ const App = () => (
         <Route path="/blog" element={<BlogListPage />} />
         <Route path="/blog/:slug" element={<BlogPostPage />} />
         {/* eski önizleme adresi ana sayfaya yönlenir */}
-        <Route path="/v2" element={<Navigate to="/" replace />} />
+        <Route path="/v2" element={<V2Page />} />{/* eski tasarım — geri dönüş yolu */}
       </Routes>
     </div>
   </BrowserRouter>
