@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>SellerPilot MCP — Mağazanız, kullandığınız yapay zekânın içinde</title>
+<style>
+:root{
+  --paper:#FAFAF9;--paper-2:#F4F4F3;--line:#E7E5E4;--line-2:#D6D3D1;
+  --text:#0C0A09;--text-mid:#57534E;--text-low:#79716B;
+  --ink:#0A0C11;--ink-2:#12151D;--ink-line:rgba(255,255,255,.09);
+  --ink-text:#F5F5F4;--ink-mid:#A6A09B;
+  --ember:#FF6B35;--ember-2:#FFBE5C;--ember-deep:#C2410C;--ok:#4ADE80;
+  --disp:"Inter Tight",Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+  --body:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--text);font-family:var(--body);line-height:1.55;-webkit-font-smoothing:antialiased}
+::selection{background:var(--ember);color:#fff}
+a{color:inherit}
+.wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+.display{font-family:var(--disp);font-weight:700;letter-spacing:-.04em;line-height:1.04;text-wrap:balance;margin:0}
+.h1{font-size:clamp(2.2rem,1.3rem+3.2vw,3.7rem)}
+.h2{font-size:clamp(1.8rem,1.25rem+2vw,2.8rem)}
+.h3{font-size:clamp(1.1rem,1rem+.5vw,1.35rem);font-weight:650;letter-spacing:-.025em;line-height:1.2}
+.lede{font-size:clamp(1rem,.96rem+.25vw,1.14rem);line-height:1.66;color:var(--text-mid);max-width:62ch;margin:0}
+.eyebrow{font-size:.68rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--text-low);margin:0}
+.ember{color:var(--ember-deep)}
+.band{padding:clamp(54px,6.5vw,96px) 0}
+.band-ink{background:var(--ink);color:var(--ink-text)}
+.band-ink .lede,.band-ink .eyebrow{color:var(--ink-mid)}
+.band-ink .ember{color:var(--ember-2)}
+.band-2{background:var(--paper-2)}
+
+.annbar{display:block;text-decoration:none;background:var(--ink);color:var(--ink-text);padding:11px 0;font-size:.85rem;text-align:center;border-bottom:1px solid var(--ink-line)}
+.annbar b{color:var(--ember-2);font-weight:750}
+.annbar em{font-style:normal;font-weight:650;text-decoration:underline;text-underline-offset:3px;margin-left:5px}
+
+header{position:sticky;top:0;z-index:60;background:rgba(250,250,249,.93);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;gap:22px;height:64px}
+.logo{display:flex;align-items:center;gap:9px;font-family:var(--disp);font-weight:750;letter-spacing:-.035em;font-size:1.05rem;text-decoration:none}
+.logo svg{width:28px;height:28px;border-radius:8px}
+.navright{margin-left:auto;display:flex;align-items:center;gap:8px}
+.blink{font-size:.875rem;font-weight:530;padding:9px 11px;text-decoration:none}
+.cta{background:var(--ember-deep);color:#fff;text-decoration:none;font-size:.875rem;font-weight:640;padding:10px 17px;border-radius:9px}
+.cta:hover{background:#9A3412}
+.btn2{background:#fff;border:1px solid var(--line-2);color:var(--text);text-decoration:none;font-size:.875rem;font-weight:600;padding:10px 17px;border-radius:9px}
+
+.hero{padding:clamp(40px,5vw,70px) 0 clamp(48px,5.5vw,80px)}
+.herogrid{display:grid;grid-template-columns:1.02fr .98fr;gap:clamp(30px,4vw,58px);align-items:center}
+.tagpill{display:inline-flex;align-items:center;gap:9px;border:1px solid var(--line-2);border-radius:999px;padding:6px 15px;font-size:.78rem;color:var(--text-mid);background:#fff}
+.tagpill b{color:var(--text);font-weight:640}
+.btnrow{display:flex;gap:11px;flex-wrap:wrap;margin-top:26px}
+.fineprint{font-size:.76rem;color:var(--text-low);margin:13px 0 0}
+
+.chat{background:var(--ink);border:1px solid var(--ink-line);border-radius:15px;padding:14px;display:flex;flex-direction:column;gap:9px;max-width:470px;margin-left:auto}
+.chattop{display:flex;align-items:center;gap:7px;padding-bottom:9px;border-bottom:1px solid var(--ink-line)}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--ok)}
+.chattop span{font-size:.67rem;color:var(--ink-mid);font-family:var(--mono)}
+.chatscroll{display:flex;flex-direction:column;gap:9px;max-height:min(52vh,420px);overflow-y:auto;padding-right:6px;scrollbar-width:thin;scroll-behavior:smooth}
+.msg{border-radius:11px;padding:9px 11px;font-size:.78rem;line-height:1.5;max-width:92%}
+.msg.me{align-self:flex-end;background:rgba(255,255,255,.07);border:1px solid var(--ink-line)}
+.msg.sp{align-self:flex-start;background:var(--ink-2);border:1px solid var(--ink-line);max-width:100%}
+.msg.sp b{color:var(--ember-2);font-weight:640}
+.blk{margin:9px 0 0}.blk:first-child{margin:0}
+.mask{background:rgba(255,255,255,.14);border-radius:3px;color:transparent;user-select:none;padding:0 2px}
+.src{display:flex;gap:6px;font-size:.68rem;color:var(--ok);margin-top:9px;font-family:var(--mono)}
+.chatfoot{font-size:.68rem;color:var(--ink-mid);border-top:1px solid var(--ink-line);padding-top:9px;margin:0}
+.rv{opacity:0;transform:translateY(7px)}
+.rv.on{opacity:1;transform:none;transition:opacity .4s,transform .4s}
+.caret{display:inline-block;width:2px;height:.95em;background:var(--ember-2);vertical-align:-2px;margin-left:2px;animation:blink 1s step-end infinite}
+@keyframes blink{50%{opacity:0}}
+.typing{display:inline-flex;gap:4px;align-items:center}
+.typing i{width:5px;height:5px;border-radius:50%;background:var(--ink-mid);animation:bnc 1.2s infinite}
+.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+@keyframes bnc{0%,60%,100%{opacity:.3}30%{opacity:1}}
+
+.ailogos{display:flex;flex-wrap:wrap;gap:10px 26px;align-items:center;justify-content:center}
+.ailogos span{display:inline-flex;align-items:center;gap:8px;font-size:.92rem;font-weight:560;color:var(--text-mid)}
+.ailogos .g{width:21px;height:21px;border-radius:6px;display:grid;place-items:center;font-size:.66rem;font-weight:800;color:#fff;background:#292524}
+
+.cols3{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2.2vw,26px)}
+.card{background:#fff;border:1px solid var(--line);border-radius:15px;padding:24px}
+.band-ink .card{background:var(--ink-2);border-color:var(--ink-line)}
+.card p{margin:9px 0 0;font-size:.92rem;color:var(--text-mid);line-height:1.6}
+.band-ink .card p{color:var(--ink-mid)}
+.card .k{font-size:.7rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ember-deep);font-weight:700;margin:0 0 10px}
+.band-ink .card .k{color:var(--ember-2)}
+
+.flow{display:grid;grid-template-columns:1fr auto 1fr;gap:22px;align-items:center;margin-top:34px}
+.flowbox{border:1px solid var(--ink-line);border-radius:14px;padding:18px;background:var(--ink-2)}
+.flowbox h4{margin:0 0 4px;font-family:var(--disp);font-size:1rem;font-weight:700;letter-spacing:-.02em}
+.flowbox p{margin:0;font-size:.82rem;color:var(--ink-mid)}
+.flowmid{display:flex;flex-direction:column;gap:9px}
+.arrow{font-size:1.4rem;color:var(--ember-2);text-align:center}
+.outcomes{display:flex;flex-direction:column;gap:9px;margin-top:24px}
+.outcomes div{display:flex;gap:10px;align-items:flex-start;font-size:.92rem;color:var(--ink-mid)}
+.outcomes b{color:var(--ink-text);font-weight:600}
+
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:24px 0 28px}
+.tab{background:#fff;border:1px solid var(--line);font:inherit;font-size:.83rem;font-weight:580;padding:8px 15px;border-radius:999px;cursor:pointer;color:var(--text-mid)}
+.tab[aria-selected="true"]{background:var(--ink);border-color:var(--ink);color:var(--ink-text)}
+.panel{display:none}
+.panel[data-on="true"]{display:block}
+.panel h3{margin:0 0 14px}
+.panel ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:11px;max-width:70ch}
+.panel li{display:flex;gap:10px;font-size:.95rem;color:var(--text-mid);line-height:1.55}
+.tick{color:var(--ember-deep);flex:none;font-weight:700}
+
+.tools{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:30px}
+.tool{border:1px solid var(--line);border-radius:14px;padding:19px;background:#fff}
+.tool h4{margin:0 0 7px;font-family:var(--disp);font-size:1rem;font-weight:680;letter-spacing:-.02em}
+.tool p{margin:0 0 11px;font-size:.86rem;color:var(--text-mid);line-height:1.55}
+.tool code{font-family:var(--mono);font-size:.74rem;color:var(--ember-deep);background:rgba(194,65,12,.07);border:1px solid rgba(194,65,12,.16);border-radius:6px;padding:3px 7px;display:inline-block}
+
+.edge{display:flex;flex-direction:column;gap:12px;margin-top:24px}
+.edge div{display:flex;gap:11px;align-items:center;font-size:1.02rem;font-weight:560}
+.edge .n{width:26px;height:26px;border-radius:8px;background:rgba(255,190,92,.14);color:var(--ember-2);display:grid;place-items:center;font-size:.78rem;font-weight:800;flex:none}
+
+.faq{max-width:820px;margin:26px auto 0}
+details{border-bottom:1px solid var(--line);padding:16px 0}
+summary{cursor:pointer;font-weight:620;font-size:1rem;list-style:none;display:flex;justify-content:space-between;gap:16px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";color:var(--ember-deep);font-weight:700;flex:none}
+details[open] summary::after{content:"−"}
+details p{margin:12px 0 0;font-size:.93rem;color:var(--text-mid);line-height:1.65;max-width:70ch}
+
+footer{background:var(--ink);color:var(--ink-mid);padding:48px 0 30px;font-size:.86rem}
+.kunye{border-top:1px solid var(--ink-line);margin-top:26px;padding-top:20px;font-size:.76rem;line-height:1.75}
+.kunye b{color:var(--ink-text)}
+
+@media(max-width:900px){
+  .herogrid,.cols3,.tools,.flow{grid-template-columns:1fr}
+  .chat{margin:0 auto}
+  .arrow{transform:rotate(90deg)}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<a class="annbar" href="#"><span class="wrap"><b>YENİ:</b> SellerPilot MCP yayında. Yapay zekâ araçlarınızı Trendyol verinize bağlayın. <em>→ Daha fazlası</em></span></a>
+
+<header><div class="wrap nav">
+  <a class="logo" href="/yeni.html"><svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF6B35"/><stop offset="1" stop-color="#FFBE5C"/></linearGradient></defs><rect width="64" height="64" rx="14" fill="url(#g)"/><g transform="translate(12 12) scale(1.6667)"><path fill="#fff" d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></g></svg>SellerPilot</a>
+  <div class="navright"><a class="blink" href="/yeni.html">← Ana sayfa</a><a class="blink" href="#">Giriş yap</a><a class="cta" href="#">Ücretsiz Başla</a></div>
+</div></header>
+
+<!-- ① HERO -->
+<section class="hero"><div class="wrap"><div class="herogrid">
+  <div>
+    <span class="tagpill"><b>Tüm araçlarınız</b> ↔ Trendyol'un en kapsamlı satıcı verisiyle</span>
+    <h1 class="display h1" style="margin-top:22px">Mağazanızın verisi.<br>Zaten kullandığınız<br>yapay zekânın içinde.</h1>
+    <p class="lede" style="margin-top:20px">Sorularınızı, siparişlerinizi, yorumlarınızı ve gerçekleşen kârınızı Claude'a, ChatGPT'ye ya da kendi ajanınıza bağlayın. Haftalar süren analiz, dakikalar sürsün.</p>
+    <div class="btnrow"><a class="cta" href="#">Bağlanmak için üye olun</a><a class="btn2" href="#kurulum">Nasıl bağlanır →</a></div>
+    <p class="fineprint">Kredi kartı gerekmez · 15 gün ücretsiz · Yazma yetkisi yok, sadece okur</p>
+  </div>
+  <div class="chat">
+    <div class="chattop"><span class="dot"></span><span>claude · sellerpilot-mcp bağlı</span></div>
+    <div class="chatscroll" id="mcpChat">
+      <div class="msg me"><span id="mcpQtext"></span><span class="caret" id="mcpCaret"></span></div>
+      <div class="msg sp rv" id="mcpTyping"><span class="typing"><i></i><i></i><i></i></span></div>
+      <div class="msg sp rv" id="mcpA" style="display:none">
+        <div class="blk rv">Veriye göre büyümenin önündeki temel sorun <b>kârlılık değil, sipariş sayısındaki düşüş</b>. Son 7 günde ciro %16,6 gerilemiş; sipariş 139'dan 123'e, ortalama sepet 715 ₺'den 673 ₺'ye düşmüş.</div>
+        <div class="blk rv"><b>1 · En çok satan ürünlere bütçe yoğunlaştır</b><br>Son 30 günde <span class="mask">████ ███</span>, <span class="mask">███████ ███████</span> ve <span class="mask">███████</span> satışın büyük kısmını getiriyor. Reklamı geniş kataloğa dağıtmak yerine bu üç ürüne yönlendirmek daha mantıklı.</div>
+        <div class="blk rv"><b>2 · Erkek parfüm görünürlüğünü büyüt</b><br>"Erkek parfüm" araması aylık 150.000–200.000 bandında. İki erkek parfümünüzle düşük bütçeli, tam eşleşmeli bir reklam testi yapılabilir.</div>
+        <div class="blk rv"><b>3 · Kontrollü kampanyayı geri getir</b><br>Haftalık indirim 12.908 ₺'den 2.923 ₺'ye düşerken siparişler de gerilemiş. Tüm mağazada indirim yerine: en çok satan 2–3 ürüne sınırlı kupon · ikili setler · sepet eşiğine bağlı indirim.</div>
+        <div class="blk rv"><b>4 · Açıklamalardaki satış engellerini kaldır</b><br>Müşteriler özellikle şunu soruyor: tester var mı · koku notaları · hediye paketi · aynı gün kargo saati. Bunları açıklamaya eklemek dönüşümü artırabilir.</div>
+        <div class="blk rv" style="border-top:1px solid var(--ink-line);padding-top:10px">Ben olsam önce en çok satan iki ürünün açıklamalarını düzeltir, ardından 7 günlük bir reklam testi başlatırdım. <b>Ölçüt:</b> günlük siparişi 19'dan 21+'a, sepeti 715 ₺ üzerine taşımak.</div>
+        <div class="src rv">✓ Hakediş defteri + sipariş + soru kuyruğu + pazar araması birlikte okundu</div>
+      </div>
+    </div>
+    <p class="chatfoot">Gerçek MCP çıktısı. Ürün ve marka adları gizlilik için maskelendi.</p>
+  </div>
+</div></div></section>
+
+<!-- ② AI LOGO SIRASI -->
+<section class="band-2" style="padding:26px 0"><div class="wrap">
+  <p class="eyebrow" style="text-align:center;margin-bottom:16px">Seçtiğiniz yapay zekâyı bağlayın</p>
+  <div class="ailogos">
+    <span><i class="g">✳</i>Claude</span><span><i class="g">▮</i>Claude Code</span>
+    <span><i class="g">◎</i>ChatGPT</span><span><i class="g">⌘</i>Codex</span><span><i class="g">◈</i>Cursor</span>
+  </div>
+</div></section>
+
+<!-- ③ BU HAFTA NE DEĞİŞTİ -->
+<section class="band"><div class="wrap">
+  <h2 class="display h2" style="max-width:22ch">Bu hafta ne değişti, ne yapmalıyım? Cevabı yapay zekânızda.</h2>
+  <p class="lede" style="margin-top:16px">SellerPilot'u bağlayın; eskiden tahmin ettiğiniz sorular canlı mağaza verinizden cevaplansın.</p>
+  <div class="cols3" style="margin-top:34px">
+    <div class="card"><p class="k">Müşteri iletişimi</p><h3 class="display h3">Bugün kaç soru geldi, kaçı cevapsız?</h3><p>Hangi ürün en çok soru alıyor? Hangi soru bana yönlendirildi ve hâlâ bekliyor?</p></div>
+    <div class="card"><p class="k">Sipariş &amp; yorum</p><h3 class="display h3">Kaç yorum düştü, kaçına dokunuldu?</h3><p>Bu hafta hangi üründe iade arttı? Kargoda takılan sipariş var mı?</p></div>
+    <div class="card"><p class="k">Kârlılık</p><h3 class="display h3">Marjım neden düştü?</h3><p>Hangi ürün kârı aşağı çekiyor? Komisyon mu, kargo mu, iade mi?</p></div>
+  </div>
+</div></section>
+
+<!-- ④ AKIŞ ŞEMASI -->
+<section class="band band-ink"><div class="wrap">
+  <p class="eyebrow">Nasıl bağlanır</p>
+  <h2 class="display h2" style="margin-top:12px;max-width:20ch">Tek bağlantı. Üç farklı çalışma şekli.</h2>
+  <div class="flow">
+    <div class="flowbox" style="border-color:var(--ember-2)"><h4>SellerPilot MCP</h4><p>Mağazanızın verisi · salt-okuma · 15 araç</p></div>
+    <div class="arrow">→</div>
+    <div class="flowmid">
+      <div class="flowbox"><h4>Claude</h4><p>Sohbet ederek derin analiz</p></div>
+      <div class="flowbox"><h4>ChatGPT / Codex</h4><p>Otomatik çalışan akışlar</p></div>
+      <div class="flowbox"><h4>Kendi ajanınız</h4><p>Doğrudan MCP bağlantısı</p></div>
+    </div>
+  </div>
+  <div class="outcomes">
+    <div><span class="ember">◆</span><span><b>Satış düşüşünün kök sebebini bulma</b> — sipariş mi, sepet mi, trafik mi</span></div>
+    <div><span class="ember">◆</span><span><b>Rakip stratejisi incelemesi</b> — kim hangi kelimede önde</span></div>
+    <div><span class="ember">◆</span><span><b>Kampanya ve indirim kurgusu</b> — marjı bozmadan</span></div>
+    <div><span class="ember">◆</span><span><b>Cevapsız soru ve düşük yıldız avı</b> — hangisi acil</span></div>
+  </div>
+</div></section>
+
+<!-- ⑤ SEKMELİ -->
+<section class="band band-2"><div class="wrap">
+  <p class="eyebrow">Anlık cevap</p>
+  <h2 class="display h2" style="margin-top:12px;max-width:22ch">Ne istersen sor. Ya da kendi akışını kur.</h2>
+  <p class="lede" style="margin-top:16px">İstediğinizde sorun, ya da yapay zekânız sizin için SellerPilot'u kontrol etsin ve dikkat isteyeni işaretlesin. İki durumda da elinize <strong style="color:var(--text)">kararın kendisi</strong> geçer — bir gösterge paneli daha değil.</p>
+  <div class="tabs" role="tablist">
+    <button class="tab" role="tab" aria-selected="true" data-p="t1">Mağaza sağlığı</button>
+    <button class="tab" role="tab" aria-selected="false" data-p="t2">Soru &amp; yorum</button>
+    <button class="tab" role="tab" aria-selected="false" data-p="t3">Kârlılık</button>
+    <button class="tab" role="tab" aria-selected="false" data-p="t4">Pazar fırsatı</button>
+  </div>
+  <div class="panel" id="t1" data-on="true"><h3 class="display h3">Günü tek soruda özetleyin.</h3><ul>
+    <li><span class="tick">✦</span><span>"Bugün mağazamda ne oldu?" — satış, soru, yorum ve kâr tek cevapta.</span></li>
+    <li><span class="tick">✦</span><span>Bir şey bozulduğunda <strong>siz sormadan</strong> işaretlensin diye ajanınıza kontrol görevi verin.</span></li>
+    <li><span class="tick">✦</span><span>Hangi verinin ne kadar geriye gittiğini görün — eksik dönem varsa söyler.</span></li>
+  </ul></div>
+  <div class="panel" id="t2"><h3 class="display h3">Cevapsız kalan hiçbir şey olmasın.</h3><ul>
+    <li><span class="tick">✦</span><span>Size yönlendirilmiş ve hâlâ bekleyen soruları listeler.</span></li>
+    <li><span class="tick">✦</span><span>Hangi ürün anormal soru alıyor? Açıklamada bir eksik var demektir.</span></li>
+    <li><span class="tick">✦</span><span>Bu hafta düşen yıldızları ve hangisine dokunulduğunu gösterir.</span></li>
+  </ul></div>
+  <div class="panel" id="t3"><h3 class="display h3">"Neden değişti?" sorusuna cevap.</h3><ul>
+    <li><span class="tick">✦</span><span>Kâr düştüyse sebebini kalem kalem ayırır: komisyon, kargo, iade, reklam.</span></li>
+    <li><span class="tick">✦</span><span>Ürün bazında net kâr — hangisi sırtınızda taşınıyor.</span></li>
+    <li><span class="tick">✦</span><span>Günlük satış eğrisi ve ortalama sepet değişimi.</span></li>
+  </ul></div>
+  <div class="panel" id="t4"><h3 class="display h3">Girilecek boşluğu bulun.</h3><ul>
+    <li><span class="tick">✦</span><span>Bir kelimede talep çok, satıcı az mı? Ölçülmüş veriyle söyler.</span></li>
+    <li><span class="tick">✦</span><span>Rakip satıcı analizi — kim ne satıyor, hangi fiyat bandında.</span></li>
+    <li><span class="tick">✦</span><span>Kategori özeti ve ürün fırsatı taraması.</span></li>
+  </ul></div>
+</div></section>
+
+<!-- ⑥ ARAÇLAR -->
+<section class="band"><div class="wrap">
+  <h2 class="display h2" style="max-width:20ch">Bir kez bağlanır, bakım istemez.</h2>
+  <p class="lede" style="margin-top:16px">Kendi kazıyıcınızı yazmanıza, bakımını yapmanıza gerek yok. <strong style="color:var(--text)">15 araç</strong>, tek bağlantı — mağazanız, teşhis ve pazar verisi.</p>
+  <div class="tools">
+    <div class="tool"><h4>Kâr özeti</h4><p>Seçtiğiniz dönemde gerçekleşen net kâr, marj ve kırılımı.</p><code>trendyol_kar_ozeti</code></div>
+    <div class="tool"><h4>Günlük satış</h4><p>Gün gün ciro, sipariş adedi ve ortalama sepet.</p><code>trendyol_gunluk_satis</code></div>
+    <div class="tool"><h4>Ürün kârlılığı</h4><p>Ürün bazında net kâr — hangisi kazandırıyor, hangisi zarar.</p><code>trendyol_urun_karliligi</code></div>
+    <div class="tool"><h4>Soru durumu</h4><p>Gelen, cevaplanan ve size yönlendirilip bekleyen sorular.</p><code>trendyol_soru_durumu</code></div>
+    <div class="tool"><h4>Günün özeti</h4><p>Tek çağrıda bugünün tam fotoğrafı.</p><code>trendyol_gunun_ozeti</code></div>
+    <div class="tool"><h4>Neden değişti?</h4><p>İki dönemi karşılaştırır, farkın sebebini kalem kalem ayırır.</p><code>trendyol_neden_degisti</code></div>
+    <div class="tool"><h4>Soru yoğun ürünler</h4><p>Anormal soru alan ilanlar — açıklama eksiğinin adresi.</p><code>trendyol_soru_yogun_urunler</code></div>
+    <div class="tool"><h4>Kelime araması</h4><p>Ölçülmüş arama hacmi, rekabet ve talep/arz oranı.</p><code>kelime_ara</code></div>
+    <div class="tool"><h4>Fırsat bulma</h4><p>Talebi yüksek, arzı düşük kelime ve kategoriler.</p><code>firsat_bul</code></div>
+    <div class="tool"><h4>Ürün araması</h4><p>Pazardaki ürünleri satış, ciro, puan ve yoruma göre tarar.</p><code>urun_ara</code></div>
+    <div class="tool"><h4>Satış tahmini</h4><p>Bir ürünün dönemsel satış bandı — bant ve güven notuyla.</p><code>satis_tahmini</code></div>
+    <div class="tool"><h4>Satıcı analizi</h4><p>Rakip satıcının kataloğu, fiyat bandı ve hacmi.</p><code>satici_analizi</code></div>
+  </div>
+  <p class="fineprint" style="margin-top:16px">Ayrıca: kategori özeti · veri kapsamı · mağaza listesi. Toplam <strong>15 araç</strong>.</p>
+</div></section>
+
+<!-- ⑦ ÜSTÜNLÜK -->
+<section class="band band-ink"><div class="wrap">
+  <h2 class="display h2" style="max-width:20ch">Rakiplerinizin kopyala-yapıştır edemeyeceği bir üstünlük.</h2>
+  <div class="edge">
+    <div><span class="n">1</span><span>Canlı veriyle çalışın — ekran görüntüsüyle değil</span></div>
+    <div><span class="n">2</span><span>Kararı ölçün, tahmin etmeyin</span></div>
+    <div><span class="n">3</span><span>Haftalar süren analizi dakikaya indirin</span></div>
+  </div>
+  <div class="btnrow"><a class="cta" href="#">Ücretsiz Başla</a></div>
+</div></section>
+
+<!-- ⑧ ÜÇ SÜTUN -->
+<section class="band band-2"><div class="wrap">
+  <h2 class="display h2" style="max-width:24ch">Komut yazarak büyümeye başlayın.</h2>
+  <p class="lede" style="margin-top:16px">Trendyol'a özel toplanmış satıcı verisi, yapay zekâyla çalışmak üzere kurulmuş. Kullandığınız araçların içinde, satıcı seviyesinde veri.</p>
+  <div class="cols3" style="margin-top:34px">
+    <div class="card"><p class="k">Tek bağlantı</p><h3 class="display h3">Mağaza + pazar, aynı yerde</h3><p>Kâr, sipariş, soru, yorum ve pazar araştırması — hepsi tek entegrasyondan. Araçlar birbirini zincirleyebilir: bir sorunun cevabı diğerine girdi olur.</p></div>
+    <div class="card"><p class="k">Salt-okuma</p><h3 class="display h3">Hiçbir şeyi değiştiremez</h3><p>Yazma aracı hiç yazılmadı. Mağazanızda fiyat değiştiremez, ilan güncelleyemez, mesaj gönderemez. Sadece okur ve söyler.</p></div>
+    <div class="card"><p class="k">Standart protokol</p><h3 class="display h3">Claude, ChatGPT, Cursor</h3><p>Anthropic'in açık MCP standardı üzerine kurulu — ekstra entegrasyon zahmeti yok. Kendi ajanınız varsa doğrudan bağlanır.</p></div>
+  </div>
+</div></section>
+
+<!-- ⑨ SSS -->
+<section class="band" id="kurulum"><div class="wrap">
+  <p class="eyebrow" style="text-align:center">Sıkça sorulanlar</p>
+  <h2 class="display h2" style="text-align:center;margin-top:12px">Bağlanmadan önce merak edilenler</h2>
+  <div class="faq">
+    <details open><summary>Hangi yapay zekâ araçlarıyla çalışıyor?</summary><p>Claude (masaüstü ve Claude Code), ChatGPT, Codex ve Cursor. MCP standardını destekleyen kendi ajanınız varsa o da doğrudan bağlanır.</p></details>
+    <details><summary>Hangi verileri çekebiliyor?</summary><p>Mağazanızın gerçekleşen kârı, günlük satışı, ürün bazlı kârlılığı, soru durumu ve veri kapsamı; ayrıca pazar tarafında kelime, ürün, kategori ve rakip satıcı verisi.</p></details>
+    <details><summary>Verim güvende mi? Yapay zekâ mağazamı değiştirebilir mi?</summary><p>Hayır. Bağlantıda <strong>yazma aracı bulunmuyor</strong> — hiç yazılmadı. Fiyat değiştiremez, ilan güncelleyemez, müşteriye mesaj gönderemez. Yalnızca okur. Yetki sizde kalır, istediğiniz an bağlantıyı kesersiniz.</p></details>
+    <details><summary>Ücreti ne?</summary><p>MCP bağlantısı SellerPilot aboneliğinize dâhildir, ayrıca ücretlendirilmez. 15 günlük ücretsiz denemede de açıktır.</p></details>
+    <details><summary>MCP tam olarak nedir?</summary><p>Model Context Protocol — Anthropic'in geliştirdiği açık standart. Yapay zekâ araçlarının dış veri kaynaklarına güvenli ve standart biçimde bağlanmasını sağlar. Her araç için ayrı entegrasyon yazma derdini ortadan kaldırır.</p></details>
+    <details><summary>Birden fazla mağaza bağlayabilir miyim?</summary><p>Evet. Bağlı mağazalarınızı listeler ve her soruda hangi mağazayı kastettiğinizi belirtebilirsiniz.</p></details>
+    <details><summary>Claude veya ChatGPT'ye nasıl bağlarım?</summary><p>Panelden bağlantı bilgilerinizi alır, yapay zekâ aracınızın bağlantı ayarlarına yapıştırırsınız. Kurulum birkaç dakika sürer; adım adım rehber panelde hazır.</p></details>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <p style="margin:0 0 6px"><strong style="color:var(--ink-text)">SellerPilot</strong> — Trendyol satıcıları için müşteri iletişimi ve gerçekleşen kâr.</p>
+  <p class="kunye"><b>PURELYPRO BADGER KOZMETİK VE DANIŞMANLIK HİZMETLERİ TİCARET LİMİTED ŞİRKETİ</b><br>
+  Bahçelievler Mah. Talatpaşa Cad. Saray Apt. No: 43 İç Kapı No: 34, Bahçelievler / İstanbul<br>
+  Vergi Kimlik No: 7331258700 · MERSİS: 0733125870000001 · info@sellerpilot.cloud</p>
+</div></footer>
+
+<script>
+// sekmeler
+document.querySelectorAll('.tab').forEach(function(t){
+  t.addEventListener('click', function(){
+    document.querySelectorAll('.tab').forEach(function(x){ x.setAttribute('aria-selected','false'); });
+    document.querySelectorAll('.panel').forEach(function(p){ p.dataset.on='false'; });
+    t.setAttribute('aria-selected','true');
+    var p = document.getElementById(t.dataset.p); if (p) p.dataset.on='true';
+  });
+});
+
+// MCP sohbeti — soru yazılır, cevap sırayla akar
+(function(){
+  var box=document.getElementById('mcpChat'); if(!box) return;
+  var SORU='Satışlarımı artırmak için ne yapabilirim?';
+  var qText=document.getElementById('mcpQtext'), caret=document.getElementById('mcpCaret');
+  var typing=document.getElementById('mcpTyping'), ans=document.getElementById('mcpA');
+  var blocks=ans.querySelectorAll('.rv');
+  var sade=window.matchMedia('(prefers-reduced-motion: reduce)').matches, basladi=false;
+
+  function hepsi(){ qText.textContent=SORU; caret.style.display='none'; typing.style.display='none';
+    ans.style.display=''; ans.classList.add('on');
+    for(var i=0;i<blocks.length;i++) blocks[i].classList.add('on'); }
+
+  function akit(){
+    if(basladi) return; basladi=true;
+    if(sade){ hepsi(); return; }
+    var i=0;
+    (function yaz(){
+      if(i<=SORU.length){ qText.textContent=SORU.slice(0,i++); setTimeout(yaz,32); }
+      else{
+        caret.style.display='none'; typing.classList.add('on');
+        setTimeout(function(){
+          typing.style.display='none'; ans.style.display='';
+          setTimeout(function(){ ans.classList.add('on'); },20);
+          blocks.forEach(function(b,n){
+            setTimeout(function(){
+              b.classList.add('on');
+              if(n>1) box.scrollTop = b.offsetTop - box.clientHeight + b.offsetHeight + 40;
+            }, 430*(n+1));
+          });
+        },900);
+      }
+    })();
+  }
+  function ekranda(){ var r=box.getBoundingClientRect(); return r.top<window.innerHeight*0.9 && r.bottom>0; }
+  function kontrol(){ if(ekranda()){ akit(); window.removeEventListener('scroll',kontrol); } }
+  window.addEventListener('scroll',kontrol,{passive:true});
+  window.addEventListener('resize',kontrol,{passive:true});
+  document.addEventListener('visibilitychange',kontrol);
+  setTimeout(kontrol,300); setTimeout(kontrol,1200);
+})();
+</script>
+</body>
+</html>
