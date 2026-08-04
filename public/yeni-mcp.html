@@ -86,6 +86,12 @@ header{position:sticky;top:0;z-index:60;background:rgba(250,250,249,.93);backdro
 .chat .msg.sp{max-width:100%}
 @media(prefers-reduced-motion:reduce){.msg{opacity:1;transform:none;transition:none}}
 
+
+.rv{opacity:0;transform:translateY(16px);
+  transition:opacity .65s cubic-bezier(.22,1,.36,1),transform .65s cubic-bezier(.22,1,.36,1)}
+.rv.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.rv{opacity:1!important;transform:none!important;transition:none!important}}
+
 .ailogos{display:flex;flex-wrap:wrap;gap:10px 26px;align-items:center;justify-content:center}
 .ailogos span{display:inline-flex;align-items:center;gap:8px;font-size:.92rem;font-weight:560;color:var(--text-mid)}
 .ailogos .g{width:21px;height:21px;border-radius:6px;display:grid;place-items:center;font-size:.66rem;font-weight:800;color:#fff;background:#292524}
@@ -184,26 +190,26 @@ footer{background:var(--ink);color:var(--ink-mid);padding:48px 0 30px;font-size:
 
 <!-- ③ BU HAFTA NE DEĞİŞTİ -->
 <section class="band"><div class="wrap">
-  <h2 class="display h2" style="max-width:22ch">Bu hafta ne değişti, ne yapmalıyım? Cevabı yapay zekânızda.</h2>
+  <h2 class="rv display h2" style="max-width:22ch">Bu hafta ne değişti, ne yapmalıyım? Cevabı yapay zekânızda.</h2>
   <p class="lede" style="margin-top:16px">SellerPilot'u bağlayın; eskiden tahmin ettiğiniz sorular canlı mağaza verinizden cevaplansın.</p>
   <div class="cols3" style="margin-top:34px">
-    <div class="card"><p class="k">Müşteri iletişimi</p><h3 class="display h3">Bugün kaç soru geldi, kaçı cevapsız?</h3><p>Hangi ürün en çok soru alıyor? Hangi soru bana yönlendirildi ve hâlâ bekliyor?</p></div>
-    <div class="card"><p class="k">Sipariş &amp; yorum</p><h3 class="display h3">Kaç yorum düştü, kaçına dokunuldu?</h3><p>Bu hafta hangi üründe iade arttı? Kargoda takılan sipariş var mı?</p></div>
-    <div class="card"><p class="k">Kârlılık</p><h3 class="display h3">Marjım neden düştü?</h3><p>Hangi ürün kârı aşağı çekiyor? Komisyon mu, kargo mu, iade mi?</p></div>
+    <div class="rv card"><p class="k">Müşteri iletişimi</p><h3 class="display h3">Bugün kaç soru geldi, kaçı cevapsız?</h3><p>Hangi ürün en çok soru alıyor? Hangi soru bana yönlendirildi ve hâlâ bekliyor?</p></div>
+    <div class="rv card"><p class="k">Sipariş &amp; yorum</p><h3 class="display h3">Kaç yorum düştü, kaçına dokunuldu?</h3><p>Bu hafta hangi üründe iade arttı? Kargoda takılan sipariş var mı?</p></div>
+    <div class="rv card"><p class="k">Kârlılık</p><h3 class="display h3">Marjım neden düştü?</h3><p>Hangi ürün kârı aşağı çekiyor? Komisyon mu, kargo mu, iade mi?</p></div>
   </div>
 </div></section>
 
 <!-- ④ AKIŞ ŞEMASI -->
 <section class="band band-ink"><div class="wrap">
   <p class="eyebrow">Nasıl bağlanır</p>
-  <h2 class="display h2" style="margin-top:12px;max-width:20ch">Tek bağlantı. Üç farklı çalışma şekli.</h2>
+  <h2 class="rv display h2" style="margin-top:12px;max-width:20ch">Tek bağlantı. Üç farklı çalışma şekli.</h2>
   <div class="flow">
-    <div class="flowbox" style="border-color:var(--ember-2)"><h4>SellerPilot MCP</h4><p>Mağazanızın verisi · salt-okuma · 15 araç</p></div>
+    <div class="rv flowbox" style="border-color:var(--ember-2)"><h4>SellerPilot MCP</h4><p>Mağazanızın verisi · salt-okuma · 15 araç</p></div>
     <div class="arrow">→</div>
     <div class="flowmid">
-      <div class="flowbox"><h4>Claude</h4><p>Sohbet ederek derin analiz</p></div>
-      <div class="flowbox"><h4>ChatGPT / Codex</h4><p>Otomatik çalışan akışlar</p></div>
-      <div class="flowbox"><h4>Kendi ajanınız</h4><p>Doğrudan MCP bağlantısı</p></div>
+      <div class="rv flowbox"><h4>Claude</h4><p>Sohbet ederek derin analiz</p></div>
+      <div class="rv flowbox"><h4>ChatGPT / Codex</h4><p>Otomatik çalışan akışlar</p></div>
+      <div class="rv flowbox"><h4>Kendi ajanınız</h4><p>Doğrudan MCP bağlantısı</p></div>
     </div>
   </div>
   <div class="outcomes">
@@ -217,7 +223,7 @@ footer{background:var(--ink);color:var(--ink-mid);padding:48px 0 30px;font-size:
 <!-- ⑤ SEKMELİ -->
 <section class="band band-2"><div class="wrap">
   <p class="eyebrow">Anlık cevap</p>
-  <h2 class="display h2" style="margin-top:12px;max-width:22ch">Ne istersen sor. Ya da kendi akışını kur.</h2>
+  <h2 class="rv display h2" style="margin-top:12px;max-width:22ch">Ne istersen sor. Ya da kendi akışını kur.</h2>
   <p class="lede" style="margin-top:16px">İstediğinizde sorun, ya da yapay zekânız sizin için SellerPilot'u kontrol etsin ve dikkat isteyeni işaretlesin. İki durumda da elinize <strong style="color:var(--text)">kararın kendisi</strong> geçer — bir gösterge paneli daha değil.</p>
   <div class="tabs" role="tablist">
     <button class="tab" role="tab" aria-selected="true" data-p="t1">Mağaza sağlığı</button>
@@ -249,28 +255,28 @@ footer{background:var(--ink);color:var(--ink-mid);padding:48px 0 30px;font-size:
 
 <!-- ⑥ ARAÇLAR -->
 <section class="band"><div class="wrap">
-  <h2 class="display h2" style="max-width:20ch">Bir kez bağlanır, bakım istemez.</h2>
+  <h2 class="rv display h2" style="max-width:20ch">Bir kez bağlanır, bakım istemez.</h2>
   <p class="lede" style="margin-top:16px">Kendi kazıyıcınızı yazmanıza, bakımını yapmanıza gerek yok. <strong style="color:var(--text)">15 araç</strong>, tek bağlantı — mağazanız, teşhis ve pazar verisi.</p>
   <div class="tools">
-    <div class="tool"><h4>Kâr özeti</h4><p>Seçtiğiniz dönemde gerçekleşen net kâr, marj ve kırılımı.</p><code>trendyol_kar_ozeti</code></div>
-    <div class="tool"><h4>Günlük satış</h4><p>Gün gün ciro, sipariş adedi ve ortalama sepet.</p><code>trendyol_gunluk_satis</code></div>
-    <div class="tool"><h4>Ürün kârlılığı</h4><p>Ürün bazında net kâr — hangisi kazandırıyor, hangisi zarar.</p><code>trendyol_urun_karliligi</code></div>
-    <div class="tool"><h4>Soru durumu</h4><p>Gelen, cevaplanan ve size yönlendirilip bekleyen sorular.</p><code>trendyol_soru_durumu</code></div>
-    <div class="tool"><h4>Günün özeti</h4><p>Tek çağrıda bugünün tam fotoğrafı.</p><code>trendyol_gunun_ozeti</code></div>
-    <div class="tool"><h4>Neden değişti?</h4><p>İki dönemi karşılaştırır, farkın sebebini kalem kalem ayırır.</p><code>trendyol_neden_degisti</code></div>
-    <div class="tool"><h4>Soru yoğun ürünler</h4><p>Anormal soru alan ilanlar — açıklama eksiğinin adresi.</p><code>trendyol_soru_yogun_urunler</code></div>
-    <div class="tool"><h4>Kelime araması</h4><p>Ölçülmüş arama hacmi, rekabet ve talep/arz oranı.</p><code>kelime_ara</code></div>
-    <div class="tool"><h4>Fırsat bulma</h4><p>Talebi yüksek, arzı düşük kelime ve kategoriler.</p><code>firsat_bul</code></div>
-    <div class="tool"><h4>Ürün araması</h4><p>Pazardaki ürünleri satış, ciro, puan ve yoruma göre tarar.</p><code>urun_ara</code></div>
-    <div class="tool"><h4>Satış tahmini</h4><p>Bir ürünün dönemsel satış bandı — bant ve güven notuyla.</p><code>satis_tahmini</code></div>
-    <div class="tool"><h4>Satıcı analizi</h4><p>Rakip satıcının kataloğu, fiyat bandı ve hacmi.</p><code>satici_analizi</code></div>
+    <div class="rv tool"><h4>Kâr özeti</h4><p>Seçtiğiniz dönemde gerçekleşen net kâr, marj ve kırılımı.</p><code>trendyol_kar_ozeti</code></div>
+    <div class="rv tool"><h4>Günlük satış</h4><p>Gün gün ciro, sipariş adedi ve ortalama sepet.</p><code>trendyol_gunluk_satis</code></div>
+    <div class="rv tool"><h4>Ürün kârlılığı</h4><p>Ürün bazında net kâr — hangisi kazandırıyor, hangisi zarar.</p><code>trendyol_urun_karliligi</code></div>
+    <div class="rv tool"><h4>Soru durumu</h4><p>Gelen, cevaplanan ve size yönlendirilip bekleyen sorular.</p><code>trendyol_soru_durumu</code></div>
+    <div class="rv tool"><h4>Günün özeti</h4><p>Tek çağrıda bugünün tam fotoğrafı.</p><code>trendyol_gunun_ozeti</code></div>
+    <div class="rv tool"><h4>Neden değişti?</h4><p>İki dönemi karşılaştırır, farkın sebebini kalem kalem ayırır.</p><code>trendyol_neden_degisti</code></div>
+    <div class="rv tool"><h4>Soru yoğun ürünler</h4><p>Anormal soru alan ilanlar — açıklama eksiğinin adresi.</p><code>trendyol_soru_yogun_urunler</code></div>
+    <div class="rv tool"><h4>Kelime araması</h4><p>Ölçülmüş arama hacmi, rekabet ve talep/arz oranı.</p><code>kelime_ara</code></div>
+    <div class="rv tool"><h4>Fırsat bulma</h4><p>Talebi yüksek, arzı düşük kelime ve kategoriler.</p><code>firsat_bul</code></div>
+    <div class="rv tool"><h4>Ürün araması</h4><p>Pazardaki ürünleri satış, ciro, puan ve yoruma göre tarar.</p><code>urun_ara</code></div>
+    <div class="rv tool"><h4>Satış tahmini</h4><p>Bir ürünün dönemsel satış bandı — bant ve güven notuyla.</p><code>satis_tahmini</code></div>
+    <div class="rv tool"><h4>Satıcı analizi</h4><p>Rakip satıcının kataloğu, fiyat bandı ve hacmi.</p><code>satici_analizi</code></div>
   </div>
   <p class="fineprint" style="margin-top:16px">Ayrıca: kategori özeti · veri kapsamı · mağaza listesi. Toplam <strong>15 araç</strong>.</p>
 </div></section>
 
 <!-- ⑦ ÜSTÜNLÜK -->
 <section class="band band-ink"><div class="wrap">
-  <h2 class="display h2" style="max-width:20ch">Rakiplerinizin kopyala-yapıştır edemeyeceği bir üstünlük.</h2>
+  <h2 class="rv display h2" style="max-width:20ch">Rakiplerinizin kopyala-yapıştır edemeyeceği bir üstünlük.</h2>
   <div class="edge">
     <div><span class="n">1</span><span>Canlı veriyle çalışın — ekran görüntüsüyle değil</span></div>
     <div><span class="n">2</span><span>Kararı ölçün, tahmin etmeyin</span></div>
@@ -281,19 +287,19 @@ footer{background:var(--ink);color:var(--ink-mid);padding:48px 0 30px;font-size:
 
 <!-- ⑧ ÜÇ SÜTUN -->
 <section class="band band-2"><div class="wrap">
-  <h2 class="display h2" style="max-width:24ch">Komut yazarak büyümeye başlayın.</h2>
+  <h2 class="rv display h2" style="max-width:24ch">Komut yazarak büyümeye başlayın.</h2>
   <p class="lede" style="margin-top:16px">Trendyol'a özel toplanmış satıcı verisi, yapay zekâyla çalışmak üzere kurulmuş. Kullandığınız araçların içinde, satıcı seviyesinde veri.</p>
   <div class="cols3" style="margin-top:34px">
-    <div class="card"><p class="k">Tek bağlantı</p><h3 class="display h3">Mağaza + pazar, aynı yerde</h3><p>Kâr, sipariş, soru, yorum ve pazar araştırması — hepsi tek entegrasyondan. Araçlar birbirini zincirleyebilir: bir sorunun cevabı diğerine girdi olur.</p></div>
-    <div class="card"><p class="k">Salt-okuma</p><h3 class="display h3">Hiçbir şeyi değiştiremez</h3><p>Yazma aracı hiç yazılmadı. Mağazanızda fiyat değiştiremez, ilan güncelleyemez, mesaj gönderemez. Sadece okur ve söyler.</p></div>
-    <div class="card"><p class="k">Standart protokol</p><h3 class="display h3">Claude, ChatGPT, Cursor</h3><p>Anthropic'in açık MCP standardı üzerine kurulu — ekstra entegrasyon zahmeti yok. Kendi ajanınız varsa doğrudan bağlanır.</p></div>
+    <div class="rv card"><p class="k">Tek bağlantı</p><h3 class="display h3">Mağaza + pazar, aynı yerde</h3><p>Kâr, sipariş, soru, yorum ve pazar araştırması — hepsi tek entegrasyondan. Araçlar birbirini zincirleyebilir: bir sorunun cevabı diğerine girdi olur.</p></div>
+    <div class="rv card"><p class="k">Salt-okuma</p><h3 class="display h3">Hiçbir şeyi değiştiremez</h3><p>Yazma aracı hiç yazılmadı. Mağazanızda fiyat değiştiremez, ilan güncelleyemez, mesaj gönderemez. Sadece okur ve söyler.</p></div>
+    <div class="rv card"><p class="k">Standart protokol</p><h3 class="display h3">Claude, ChatGPT, Cursor</h3><p>Anthropic'in açık MCP standardı üzerine kurulu — ekstra entegrasyon zahmeti yok. Kendi ajanınız varsa doğrudan bağlanır.</p></div>
   </div>
 </div></section>
 
 <!-- ⑨ SSS -->
 <section class="band" id="kurulum"><div class="wrap">
   <p class="eyebrow" style="text-align:center">Sıkça sorulanlar</p>
-  <h2 class="display h2" style="text-align:center;margin-top:12px">Bağlanmadan önce merak edilenler</h2>
+  <h2 class="rv display h2" style="text-align:center;margin-top:12px">Bağlanmadan önce merak edilenler</h2>
   <div class="faq">
     <details open><summary>Hangi yapay zekâ araçlarıyla çalışıyor?</summary><p>Claude (masaüstü ve Claude Code), ChatGPT, Codex ve Cursor. MCP standardını destekleyen kendi ajanınız varsa o da doğrudan bağlanır.</p></details>
     <details><summary>Hangi verileri çekebiliyor?</summary><p>Mağazanızın gerçekleşen kârı, günlük satışı, ürün bazlı kârlılığı, soru durumu ve veri kapsamı; ayrıca pazar tarafında kelime, ürün, kategori ve rakip satıcı verisi.</p></details>
@@ -447,6 +453,55 @@ document.querySelectorAll('.tab').forEach(function(t){
   setTimeout(kontrol, 300);
   setTimeout(kontrol, 1200);
 })();
+
+// ═══ Apple tadı kaydırma açılışı — LandingV2 useReveal'ın karşılığı ═══
+(function(){
+  var hedefler=document.querySelectorAll('.rv');
+  if(!hedefler.length) return;
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
+     !('IntersectionObserver' in window)){
+    hedefler.forEach(function(e){ e.classList.add('in'); }); return;
+  }
+  var io=new IntersectionObserver(function(girisler){
+    girisler.forEach(function(g){
+      if(g.isIntersecting){ g.target.classList.add('in'); io.unobserve(g.target); }
+    });
+  },{rootMargin:'0px 0px -12% 0px',threshold:.08});
+  hedefler.forEach(function(e){ io.observe(e); });
+
+  // ⚠️ YEDEK — gözlemciye tek başına güvenme. Bazı tarayıcı/sekme durumlarında
+  // IntersectionObserver hiç ateşlenmiyor ve içerik opacity:0'da kilitli kalıyor
+  // (aynı desen requestAnimationFrame'de de yaşandı). Kaydırmada elle kontrol:
+  var bekliyor=false;
+  function tara(){
+    bekliyor=false;
+    var kalan=0;
+    for(var i=0;i<hedefler.length;i++){
+      var e=hedefler[i];
+      if(e.classList.contains('in')) continue;
+      var r=e.getBoundingClientRect();
+      if(r.top < window.innerHeight*0.92 && r.bottom > 0) e.classList.add('in');
+      else kalan++;
+    }
+    if(!kalan) temizle();
+  }
+  function tetik(){ if(!bekliyor){ bekliyor=true; setTimeout(tara,80); } }
+  function temizle(){
+    window.removeEventListener('scroll',tetik);
+    window.removeEventListener('resize',tetik);
+  }
+  window.addEventListener('scroll',tetik,{passive:true});
+  window.addEventListener('resize',tetik,{passive:true});
+  setTimeout(tara,300); setTimeout(tara,1200);
+
+  // Son emniyet: 6 sn sonra hâlâ açılmamış varsa koşulsuz aç.
+  // Görünmeyen içerik, animasyonsuz içerikten çok daha kötüdür.
+  setTimeout(function(){
+    hedefler.forEach(function(e){ e.classList.add('in'); });
+    temizle();
+  },6000);
+})();
+
 
 </script>
 </body>
