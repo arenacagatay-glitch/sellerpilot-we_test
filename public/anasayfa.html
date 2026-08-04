@@ -300,6 +300,9 @@ header{position:sticky;top:0;z-index:60;background:rgba(250,250,249,.92);
 .shot .why{display:flex;gap:7px;align-items:flex-start;font-size:.76rem;color:var(--text-low);
   border-top:1px solid var(--line);margin-top:12px;padding-top:10px}
 
+.navmcp{display:inline-flex;align-items:center;gap:7px}
+.npill{font-size:.62rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;
+  padding:2px 7px;border-radius:999px;color:#fff;background:linear-gradient(135deg,#FF6B35,#FFBE5C)}
 /* ── MCP bandı ── */
 .mcpcmd{display:grid;gap:11px;margin-top:26px}
 .mcpcmd div{display:flex;gap:13px;align-items:flex-start;border:1px solid var(--ink-line);
@@ -413,12 +416,13 @@ footer a:hover{color:var(--ember-2)}
       <button class="navbtn" data-menu="coz" aria-expanded="false">Çözümler <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6"/></svg></button>
       <button class="navbtn" data-menu="hak" aria-expanded="false">Hakkımızda <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6"/></svg></button>
       <button class="navbtn" data-menu="kay" aria-expanded="false">Kaynaklar <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6"/></svg></button>
+      <a class="blink navmcp" href="/mcp">MCP <span class="npill">Yeni</span></a>
       <a class="blink" href="#fiyat">Fiyatlandırma</a>
     </nav>
     <div class="navright">
       <button class="iconbtn" aria-label="Ara"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></button>
-      <a class="blink" href="#">Giriş yap</a>
-      <a class="cta" href="#fiyat">Ücretsiz Başla</a>
+      <a class="blink" href="https://app.sellerpilot.cloud">Giriş yap</a>
+      <a class="cta" href="https://app.sellerpilot.cloud/kayit">Ücretsiz Başla</a>
     </div>
   </div>
 
@@ -427,33 +431,33 @@ footer a:hover{color:var(--ember-2)}
     <div class="wrap">
       <div class="megagrid m7">
         <div class="mcol"><h4>SellerPilot AI</h4>
-          <a class="mitem" href="#mcp"><span class="job">Yapay zekâ araçlarınızı bağlayın</span><span class="tool">SellerPilot MCP<span class="pill new">Yeni</span></span></a>
-          <a class="mitem" href="#"><span class="job">Soruyu sizin ağzınızdan cevaplayın</span><span class="tool">Cevap Beyni</span></a>
+          <a class="mitem" href="/mcp"><span class="job">Yapay zekâ araçlarınızı bağlayın</span><span class="tool">SellerPilot MCP<span class="pill new">Yeni</span></span></a>
+          <a class="mitem" href="#p1"><span class="job">Soruyu sizin ağzınızdan cevaplayın</span><span class="tool">Cevap Beyni</span></a>
         </div>
         <div class="mcol"><h4>Ürün Araştırması</h4>
-          <a class="mitem" href="#"><span class="job">Ürünün tutup tutmayacağını ölçün</span><span class="tool">Chrome Eklentisi</span></a>
-          <a class="mitem" href="#"><span class="job">Kazandıran ürünü bulun</span><span class="tool">Ürün Veritabanı</span></a>
-          <a class="mitem" href="#"><span class="job">Rakibin ürününü röntgenleyin</span><span class="tool">Pazar Röntgeni</span></a>
+          <a class="mitem" href="#p6"><span class="job">Ürünün tutup tutmayacağını ölçün</span><span class="tool">Chrome Eklentisi</span></a>
+          <a class="mitem" href="#p6"><span class="job">Kazandıran ürünü bulun</span><span class="tool">Ürün Veritabanı</span></a>
+          <a class="mitem" href="#p6"><span class="job">Rakibin ürününü röntgenleyin</span><span class="tool">Pazar Röntgeni</span></a>
         </div>
         <div class="mcol"><h4>Kelime Araştırması</h4>
-          <a class="mitem" href="#"><span class="job">Rakibin kelimelerini bulun</span><span class="tool">Kelime Gezgini</span></a>
-          <a class="mitem" href="#"><span class="job">Talebi arza bölün, boşluğu görün</span><span class="tool">Talep / Arz</span></a>
+          <a class="mitem" href="#p6"><span class="job">Rakibin kelimelerini bulun</span><span class="tool">Kelime Gezgini</span></a>
+          <a class="mitem" href="#p6"><span class="job">Talebi arza bölün, boşluğu görün</span><span class="tool">Talep / Arz</span></a>
         </div>
         <div class="mcol"><h4>İlan Optimizasyonu</h4>
-          <a class="mitem" href="#"><span class="job">İlan açıklamanızı yazdırın</span><span class="tool">Açıklama Motoru</span></a>
-          <a class="mitem" href="#"><span class="job">Tek fotoğraftan ilan görseli üretin</span><span class="tool">Görsel Stüdyo</span></a>
+          <a class="mitem" href="#p5"><span class="job">İlan açıklamanızı yazdırın</span><span class="tool">Açıklama Motoru</span></a>
+          <a class="mitem" href="/gorsel-studyo"><span class="job">Tek fotoğraftan ilan görseli üretin</span><span class="tool">Görsel Stüdyo</span></a>
         </div>
         <div class="mcol"><h4>Günlük Operasyon</h4>
-          <a class="mitem" href="#"><span class="job">Ürün sorularını cevaplayın</span><span class="tool">Soru-Cevap</span></a>
-          <a class="mitem" href="#"><span class="job">Kargo ve iade mesajlarını çözün</span><span class="tool">Sipariş Soruları</span></a>
-          <a class="mitem" href="#"><span class="job">Düşük yıldızı geri kazanın</span><span class="tool">Değerlendirmeler</span></a>
-          <a class="mitem" href="#"><span class="job">Müşteriyi kuponla geri getirin</span><span class="tool">Kupon Motoru</span></a>
+          <a class="mitem" href="#p1"><span class="job">Ürün sorularını cevaplayın</span><span class="tool">Soru-Cevap</span></a>
+          <a class="mitem" href="#p2"><span class="job">Kargo ve iade mesajlarını çözün</span><span class="tool">Sipariş Soruları</span></a>
+          <a class="mitem" href="#p3"><span class="job">Düşük yıldızı geri kazanın</span><span class="tool">Değerlendirmeler</span></a>
+          <a class="mitem" href="#p3"><span class="job">Müşteriyi kuponla geri getirin</span><span class="tool">Kupon Motoru</span></a>
         </div>
         <div class="mcol"><h4>Performans &amp; Muhasebe</h4>
           <a class="mitem" href="#fiyat"><span class="job">Gerçekleşen kârınızı görün</span><span class="tool">Muhasebe</span></a>
-          <a class="mitem" href="#"><span class="job">Ürün maliyetlerinizi tek yerde tutun</span><span class="tool">Maliyet Defteri</span></a>
-          <a class="mitem" href="#"><span class="job">İadenin gerçek sebebini görün</span><span class="tool">İade Zekâsı</span></a>
-          <a class="mitem" href="#"><span class="job">Hangi ilden ne kazandığınızı görün</span><span class="tool">Bölgeler</span></a>
+          <a class="mitem" href="#p4"><span class="job">Ürün maliyetlerinizi tek yerde tutun</span><span class="tool">Maliyet Defteri</span></a>
+          <a class="mitem" href="#p4"><span class="job">İadenin gerçek sebebini görün</span><span class="tool">İade Zekâsı</span></a>
+          <a class="mitem" href="#p4"><span class="job">Hangi ilden ne kazandığınızı görün</span><span class="tool">Bölgeler</span></a>
         </div>
         <div class="mcol"><h4>Reklam</h4>
           <span class="mitem soon"><span class="job">Reklam harcamanızı kâra bağlayın</span><span class="tool">Reklam Kırılımı<span class="pill">Yakında</span></span></span>
@@ -465,12 +469,12 @@ footer a:hover{color:var(--ember-2)}
   <div class="mega" id="m-coz"><div class="wrap">
     <div class="megagrid m2">
       <div class="mcol"><h4>İşinizi seçin</h4>
-        <a class="mitem" href="#"><span class="job">Günde 10–50 soru</span><span class="tool">Butik / Küçük Mağaza</span></a>
-        <a class="mitem" href="#"><span class="job">Günde 50–300 soru</span><span class="tool">Büyüyen Mağaza</span></a>
-        <a class="mitem" href="#"><span class="job">Çok mağazalı yönetim</span><span class="tool">Kurumsal / Ajans</span></a>
+        <a class="mitem" href="#fiyat"><span class="job">Günde 10–50 soru</span><span class="tool">Butik / Küçük Mağaza</span></a>
+        <a class="mitem" href="#fiyat"><span class="job">Günde 50–300 soru</span><span class="tool">Büyüyen Mağaza</span></a>
+        <a class="mitem" href="/danismanlik"><span class="job">Çok mağazalı yönetim</span><span class="tool">Kurumsal / Ajans</span></a>
       </div>
       <div class="mcol"><h4>Pazaryerinizi seçin</h4>
-        <a class="mitem" href="#"><span class="job">Soru-cevap · sipariş · yorum · muhasebe</span><span class="tool">Trendyol'da satın</span></a>
+        <a class="mitem" href="#p1"><span class="job">Soru-cevap · sipariş · yorum · muhasebe</span><span class="tool">Trendyol'da satın</span></a>
         <span class="mitem soon"><span class="job">Aynı motor, ikinci pazaryeri</span><span class="tool">Hepsiburada<span class="pill">Yakında</span></span></span>
         <span class="mitem soon"><span class="job">Kendi siteniz</span><span class="tool">Shopify<span class="pill">Yakında</span></span></span>
       </div>
@@ -479,20 +483,20 @@ footer a:hover{color:var(--ember-2)}
 
   <div class="mega" id="m-hak"><div class="wrap"><div class="megagrid m1">
     <div class="mcol"><h4>Şirket</h4>
-      <a class="mitem" href="#"><span class="job">Kimiz, neden yaptık</span><span class="tool">Hakkımızda</span></a>
+      <a class="mitem" href="#misyon"><span class="job">Kimiz, neden yaptık</span><span class="tool">Hakkımızda</span></a>
       <a class="mitem" href="#kunye"><span class="job">Unvan, adres, VKN, MERSİS</span><span class="tool">Künye &amp; Yasal</span></a>
-      <a class="mitem" href="#"><span class="job">Bize ulaşın</span><span class="tool">İletişim</span></a>
+      <a class="mitem" href="#kunye"><span class="job">Bize ulaşın</span><span class="tool">İletişim</span></a>
     </div>
   </div></div></div>
 
   <div class="mega" id="m-kay"><div class="wrap"><div class="megagrid m1">
     <div class="mcol"><h4>Öğrenin</h4>
-      <a class="mitem" href="#"><span class="job">Trendyol satıcı rehberleri</span><span class="tool">Blog<span class="pill">37 yazı</span></span></a>
-      <a class="mitem" href="#"><span class="job">Kurulumu adım adım izleyin</span><span class="tool">Kurulum</span></a>
+      <a class="mitem" href="/blog"><span class="job">Trendyol satıcı rehberleri</span><span class="tool">Blog<span class="pill">37 yazı</span></span></a>
+      <a class="mitem" href="/mcp#kurulum"><span class="job">Kurulumu adım adım izleyin</span><span class="tool">Kurulum</span></a>
     </div>
     <div class="mcol"><h4>Destek</h4>
-      <a class="mitem" href="#"><span class="job">Merak edilenler</span><span class="tool">SSS</span></a>
-      <a class="mitem" href="#"><span class="job">Satıcı hikâyeleri</span><span class="tool">Müşteri Hikâyeleri</span></a>
+      <a class="mitem" href="/mcp#sss"><span class="job">Merak edilenler</span><span class="tool">SSS</span></a>
+      <a class="mitem" href="#ortaklik"><span class="job">Satıcı hikâyeleri</span><span class="tool">Müşteri Hikâyeleri</span></a>
     </div>
   </div></div></div>
 </header>
@@ -508,7 +512,7 @@ footer a:hover{color:var(--ember-2)}
       </div>
       <h1 class="display h1">Artık müşteri hizmetleri<br>departmanına sahipsiniz.</h1>
       <p class="lede" style="margin-top:22px"><strong style="color:var(--text)">Sizin ağzınızdan yöneten bir ekip arkadaşınızın olduğunu hayal edin.</strong> SellerPilot'u Claude'a, ChatGPT'ye ya da kendi ajanınıza bağlayın; sorularınızı, siparişlerinizi, yorumlarınızı ve gerçekleşen kârınızı tek bir komutla sorun.</p>
-      <div class="btnrow"><a class="cta" href="#fiyat">Ücretsiz Başla</a><a class="btn2" href="#mcp">Nasıl çalışır →</a></div>
+      <div class="btnrow"><a class="cta" href="https://app.sellerpilot.cloud/kayit">Ücretsiz Başla</a><a class="btn2" href="#mcp">Nasıl çalışır →</a></div>
       <p class="fineprint">Kredi kartı gerekmez · Kurulum birkaç dakika · 15 gün ücretsiz</p>
     </div>
 
@@ -527,7 +531,7 @@ footer a:hover{color:var(--ember-2)}
       <span class="tagpill" style="background:rgba(255,255,255,.05);border-color:var(--ink-line);color:var(--ink-mid)"><span style="width:7px;height:7px;border-radius:50%;background:var(--ember);display:inline-block"></span> 4 farklı kategoride markası olan, 10 yıllık e-ticaret satıcısı tarafından geliştirildi</span>
       <h2 class="display h1" style="margin-top:26px;color:var(--ink-text)">Sorulara siz değil,<br><span style="color:var(--ember-2)">mağazanız</span><br>cevap versin.</h2>
       <p class="lede" style="margin-top:24px">SellerPilot ürünlerinizi tanır, gelen her soruyu sizin sesinizle saniyeler içinde yanıtlar. Emin olamadığını asla uydurmaz — size iletir.</p>
-      <div class="btnrow"><a class="cta" href="#fiyat">15 gün ücretsiz dene →</a><a class="btn2" href="#" style="background:transparent;border-color:var(--ink-line);color:var(--ink-text)">📱 WhatsApp'tan yazın</a></div>
+      <div class="btnrow"><a class="cta" href="#fiyat">15 gün ücretsiz dene →</a><a class="btn2" href="mailto:info@sellerpilot.cloud" style="background:transparent;border-color:var(--ink-line);color:var(--ink-text)">✉️ Bize yazın</a></div>
       <p class="fineprint" style="color:var(--ink-mid)">Kredi kartı gerekmez · Kurulum birkaç dakika</p>
     </div>
 
@@ -691,16 +695,16 @@ footer a:hover{color:var(--ember-2)}
     <div><h5>Teşhis · 3 araç</h5><code>trendyol_gunun_ozeti</code><code>trendyol_neden_degisti</code><code>trendyol_soru_yogun_urunler</code></div>
     <div><h5>Pazar · 6 araç</h5><code>kelime_ara</code><code>firsat_bul</code><code>urun_ara</code><code>satis_tahmini</code><code>kategori_ozeti</code><code>satici_analizi</code></div>
   </div>
-  <div class="btnrow"><a class="cta" href="#">SellerPilot MCP'yi keşfedin →</a></div>
+  <div class="btnrow"><a class="cta" href="/mcp">SellerPilot MCP'yi keşfedin →</a></div>
 </div></section>
 
 <!-- ══════════ ÜÇ SÜTUN ══════════ -->
 <section class="band"><div class="wrap">
   <h2 class="rv display h2" style="max-width:20ch">Daha az uğraş. Daha çok satış. Korunan puan.</h2>
   <div class="cols3" style="margin-top:34px">
-    <div class="rv card"><p class="k">Uğraşı azaltın</p><h3 class="display h3">Gece 02:47'de kimse beklemiyor</h3><p>Soru, sipariş mesajı ve yorum aynı gece cevaplanıyor. Medyan cevaplama süresi <strong>4 dakika</strong>.</p><a href="#">Soru-Cevap →</a></div>
-    <div class="rv card"><p class="k">Geliri artırın</p><h3 class="display h3">Her cevap bir satış fırsatı</h3><p>Uygun soruda katalogdan ikinci bir ürün öneriliyor — son 467 cevabın <strong>147'sinde</strong> öneri çıktı.</p><a href="#">Nasıl →</a></div>
-    <div class="rv card"><p class="k">Puanınızı koruyun</p><h3 class="display h3">Hiçbir 1 yıldız dokunulmadan kalmaz</h3><p>Düşük yıldızlı müşteriye ulaşılıyor, sorun çözülüyor, kuponla geri getiriliyor.</p><a href="#">Değerlendirmeler →</a></div>
+    <div class="rv card"><p class="k">Uğraşı azaltın</p><h3 class="display h3">Gece 02:47'de kimse beklemiyor</h3><p>Soru, sipariş mesajı ve yorum aynı gece cevaplanıyor. Medyan cevaplama süresi <strong>4 dakika</strong>.</p><a href="#p1">Soru-Cevap →</a></div>
+    <div class="rv card"><p class="k">Geliri artırın</p><h3 class="display h3">Her cevap bir satış fırsatı</h3><p>Uygun soruda katalogdan ikinci bir ürün öneriliyor — son 467 cevabın <strong>147'sinde</strong> öneri çıktı.</p><a href="#p1">Nasıl →</a></div>
+    <div class="rv card"><p class="k">Puanınızı koruyun</p><h3 class="display h3">Hiçbir 1 yıldız dokunulmadan kalmaz</h3><p>Düşük yıldızlı müşteriye ulaşılıyor, sorun çözülüyor, kuponla geri getiriliyor.</p><a href="#p3">Değerlendirmeler →</a></div>
   </div>
 </div></section>
 
@@ -802,21 +806,21 @@ footer a:hover{color:var(--ember-2)}
       <div class="price"><span data-ay="499 ₺" data-yil="374 ₺">499 ₺</span><small>/ay</small></div>
       <p class="was">Melontik: <s data-ay="799 ₺" data-yil="599 ₺">799 ₺</s></p>
       <ul><li><span class="tick">✓</span>1 mağaza</li><li><span class="tick">✓</span>Tüm hakediş geçmişi</li><li><span class="tick">✓</span>12 modülün tamamı</li></ul>
-      <a class="buy" href="#">15 gün ücretsiz dene</a>
+      <a class="buy" href="https://app.sellerpilot.cloud/kayit">15 gün ücretsiz dene</a>
     </div>
     <div class="rv plan mid">
       <span class="lim">20.000 Ürün</span><h4>Gelişmiş</h4><p class="band-lbl">Aylık 1.000 – 5.000 sipariş</p>
       <div class="price"><span data-ay="799 ₺" data-yil="599 ₺">799 ₺</span><small>/ay</small></div>
       <p class="was">Melontik: <s data-ay="1.499 ₺" data-yil="999 ₺">1.499 ₺</s></p>
       <ul><li><span class="tick">✓</span>3 mağaza</li><li><span class="tick">✓</span>Tüm hakediş geçmişi</li><li><span class="tick">✓</span>12 modülün tamamı</li></ul>
-      <a class="buy" href="#">15 gün ücretsiz dene</a>
+      <a class="buy" href="https://app.sellerpilot.cloud/kayit">15 gün ücretsiz dene</a>
     </div>
     <div class="rv plan">
       <span class="lim">30.000 Ürün</span><h4>Kurumsal</h4><p class="band-lbl">Aylık 5.000 – 30.000 sipariş</p>
       <div class="price"><span data-ay="1.299 ₺" data-yil="974 ₺">1.299 ₺</span><small>/ay</small></div>
       <p class="was">Melontik: <s data-ay="2.899 ₺" data-yil="1.999 ₺">2.899 ₺</s></p>
       <ul><li><span class="tick">✓</span>10 mağaza</li><li><span class="tick">✓</span>Tüm hakediş geçmişi</li><li><span class="tick">✓</span>12 modülün tamamı</li></ul>
-      <a class="buy" href="#">15 gün ücretsiz dene</a>
+      <a class="buy" href="https://app.sellerpilot.cloud/kayit">15 gün ücretsiz dene</a>
     </div>
   </div>
 
@@ -882,14 +886,14 @@ footer a:hover{color:var(--ember-2)}
     </tbody>
   </table></div>
   <p style="font-size:.78rem;color:var(--text-low);margin-top:12px">Rakip adı verilmez; "piyasadaki tipik program" kolonu TPro360'ın açık şartlarından derlendi.</p>
-  <div class="btnrow"><a class="cta" href="#">Ortaklık linkimi al</a></div>
+  <div class="btnrow"><a class="cta" href="mailto:info@sellerpilot.cloud?subject=Ortaklık%20programı">Ortaklık linkimi al</a></div>
 </div></section>
 
 <!-- ══════════ KAPANIŞ ══════════ -->
 <section class="band band-ink" style="text-align:center"><div class="wrap">
   <h2 class="rv display h2" style="max-width:18ch;margin:0 auto">Bu gece son kez sorulara siz bakın.</h2>
   <div class="btnrow" style="justify-content:center;margin-top:30px">
-    <a class="cta" href="#">Hemen başlayın</a><a class="btn2" href="#" style="background:transparent;border-color:var(--ink-line);color:var(--ink-text)">Önce konuşalım</a>
+    <a class="cta" href="https://app.sellerpilot.cloud/kayit">Hemen başlayın</a><a class="btn2" href="/danismanlik" style="background:transparent;border-color:var(--ink-line);color:var(--ink-text)">Önce konuşalım</a>
   </div>
 </div></section>
 
@@ -898,9 +902,9 @@ footer a:hover{color:var(--ember-2)}
   <div class="fgrid">
     <div><div class="logo" style="color:var(--ink-text);margin-bottom:12px"><svg class="mark" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-label="SellerPilot"><defs><linearGradient id="spg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF6B35"/><stop offset="1" stop-color="#FFBE5C"/></linearGradient></defs><rect width="64" height="64" rx="14" fill="url(#spg2)"/><g transform="translate(12 12) scale(1.6667)"><path fill="#fff" d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></g></svg>SellerPilot</div>
       <p style="margin:0;max-width:34ch">Trendyol satıcıları için müşteri iletişimi ve gerçekleşen kâr — tek panelde.</p></div>
-    <div><h5>Modüller</h5><ul><li><a href="#">Soru-Cevap</a></li><li><a href="#">Sipariş Soruları</a></li><li><a href="#">Değerlendirmeler</a></li><li><a href="#">Muhasebe</a></li><li><a href="#mcp">SellerPilot MCP</a></li></ul></div>
-    <div><h5>Kaynaklar</h5><ul><li><a href="#">Blog</a></li><li><a href="#">Kurulum</a></li><li><a href="#">SSS</a></li><li><a href="#">Danışmanlık</a></li></ul></div>
-    <div><h5>Yasal</h5><ul><li><a href="#">Mesafeli Satış</a></li><li><a href="#">Gizlilik</a></li><li><a href="#">İptal &amp; İade</a></li><li><a href="#">Ön Bilgilendirme</a></li></ul></div>
+    <div><h5>Modüller</h5><ul><li><a href="#p1">Soru-Cevap</a></li><li><a href="#p2">Sipariş Soruları</a></li><li><a href="#p3">Değerlendirmeler</a></li><li><a href="#p4">Muhasebe</a></li><li><a href="/mcp">SellerPilot MCP</a></li></ul></div>
+    <div><h5>Kaynaklar</h5><ul><li><a href="/blog">Blog</a></li><li><a href="/mcp#kurulum">Kurulum</a></li><li><a href="/mcp#sss">SSS</a></li><li><a href="/danismanlik">Danışmanlık</a></li></ul></div>
+    <div><h5>Yasal</h5><ul><li><a href="/mesafeli-satis-sozlesmesi.html">Mesafeli Satış</a></li><li><a href="/gizlilik-politikasi.html">Gizlilik</a></li><li><a href="/iptal-iade-kosullari.html">İptal &amp; İade</a></li><li><a href="/on-bilgilendirme-formu.html">Ön Bilgilendirme</a></li></ul></div>
   </div>
   <p class="kunye"><b>PURELYPRO BADGER KOZMETİK VE DANIŞMANLIK HİZMETLERİ TİCARET LİMİTED ŞİRKETİ</b><br>
   Bahçelievler Mah. Talatpaşa Cad. Saray Apt. No: 43 İç Kapı No: 34, Bahçelievler / İstanbul<br>
