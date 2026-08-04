@@ -3,7 +3,6 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="robots" content="noindex,nofollow">
 <title>SellerPilot MCP — Mağazanız, kullandığınız yapay zekânın içinde</title>
 <style>
 :root{
@@ -78,9 +77,7 @@ header{position:sticky;top:0;z-index:60;background:rgba(250,250,249,.93);backdro
 .btnrow{display:flex;gap:11px;flex-wrap:wrap;margin-top:26px}
 .fineprint{font-size:.76rem;color:var(--text-low);margin:13px 0 0}
 
-/* ═══ MCP sohbeti — H10'un WaveHeroChat motorunun ölçülmüş karşılığı ═══
-   kelime kelime yazım · imleç YOK · balonlar alta yaslı, yukarı doğru büyür
-   · scrollbar gizli · giriş 182ms opacity+translateY · sonsuz döngü        */
+/* ═══ MCP sohbeti ═══ */
 .chat{background:linear-gradient(135deg,#0F0F1A,#171A26);
   border:1px solid rgba(255,255,255,.10);border-radius:clamp(16px,3.2vw,24px);
   padding:clamp(10px,2.4cqi,14px);display:flex;flex-direction:column;
@@ -193,8 +190,8 @@ footer{background:var(--ink);color:var(--ink-mid);padding:48px 0 30px;font-size:
 <a class="annbar" href="#"><span class="wrap"><b>YENİ:</b> SellerPilot MCP yayında. Yapay zekâ araçlarınızı Trendyol verinize bağlayın. <em>→ Daha fazlası</em></span></a>
 
 <header><div class="wrap nav">
-  <a class="logo" href="/yeni.html"><svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF6B35"/><stop offset="1" stop-color="#FFBE5C"/></linearGradient></defs><rect width="64" height="64" rx="14" fill="url(#g)"/><g transform="translate(12 12) scale(1.6667)"><path fill="#fff" d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></g></svg>SellerPilot</a>
-  <div class="navright"><a class="blink" href="/yeni.html">← Ana sayfa</a><a class="blink" href="#">Giriş yap</a><a class="cta" href="#">Ücretsiz Başla</a></div>
+  <a class="logo" href="/"><svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF6B35"/><stop offset="1" stop-color="#FFBE5C"/></linearGradient></defs><rect width="64" height="64" rx="14" fill="url(#g)"/><g transform="translate(12 12) scale(1.6667)"><path fill="#fff" d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></g></svg>SellerPilot</a>
+  <div class="navright"><a class="blink" href="/">← Ana sayfa</a><a class="blink" href="#">Giriş yap</a><a class="cta" href="#">Ücretsiz Başla</a></div>
 </div></header>
 
 <!-- ① HERO -->
@@ -363,15 +360,7 @@ document.querySelectorAll('.tab').forEach(function(t){
   });
 });
 
-// ═══════════════════════════════════════════════════════════════════
-// MCP sohbet motoru — helium10.com WaveHeroChat'in ölçülmüş karşılığı
-// kelime kelime yazım · imleç yok · alta yaslı · scrollbar gizli · döngü
-// Zamanlamalar (4 Ağu 2026'da H10'un canlı kaynağından ölçüldü, hız 0.65x):
-//   kelime  = round((55 + min(40, harf*8)) * 0.65)  → 41–62 ms
-//   satır   = 117 ms   ·  balon girişi = 182 ms
-//   kullanıcı: balon → 117 ms → yaz   ·  asistan: 117 ms → balon → 78 ms → yaz
-//   mesaj sonu 423 ms  ·  tur sonu 1560 ms, liste temizlenir, baştan
-// ═══════════════════════════════════════════════════════════════════
+// MCP sohbet motoru
 (function(){
   var view = document.getElementById('chatView');
   var list = document.getElementById('chatMsgs');
@@ -488,7 +477,7 @@ document.querySelectorAll('.tab').forEach(function(t){
   setTimeout(kontrol, 1200);
 })();
 
-// ═══ Apple tadı kaydırma açılışı — LandingV2 useReveal'ın karşılığı ═══
+// Kaydırma açılışı
 (function(){
   var hedefler=document.querySelectorAll('.rv');
   if(!hedefler.length) return;

@@ -43,6 +43,26 @@ const kabuk = await readFile(spaHedef, 'utf8');
 if (!sonuc.includes('Artık müşteri hizmetleri')) {
   throw new Error('dist/index.html yeni ana sayfa DEĞİL — takas başarısız.');
 }
+
+// ⛔ İÇERİDEKİ NOTLAR CANLIYA ÇIKAMAZ.
+// 4 Ağu 2026: anasayfa.html kaynaktan yeniden üretilirken temizlik adımı
+// atlandı ve "🔍 ÖNİZLEME — yayında değil" çubuğu CANLI ana sayfaya geri
+// geldi. Kullanıcı gördü. Elle temizliğe güvenmek yerine build'i kırıyoruz.
+const yasak = [
+  ['ÖNİZLEME',      'önizleme çubuğu'],
+  ['class="note"',  'iç yapı notu'],
+  ['noteBtn',       'yapı notu düğmesi'],
+  ['yayında değil', '"yayında değil" ibaresi'],
+  ['helium10.com',  'rakip adı'],
+];
+const bulunan = yasak.filter(([k]) => sonuc.includes(k));
+if (bulunan.length) {
+  throw new Error(
+    'CANLI SAYFADA OLMAMASI GEREKEN İÇERİK VAR → ' +
+    bulunan.map(([k, ad]) => `${ad} ("${k}")`).join(', ') +
+    '\npublic/anasayfa.html temizlenmeden yayına çıkamaz.'
+  );
+}
 if (!kabuk.includes('<div id="root">') && !kabuk.includes('id="root"')) {
   throw new Error('dist/app.html SPA kabuğu değil — diğer rotalar kırılırdı.');
 }

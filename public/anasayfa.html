@@ -15,9 +15,8 @@
 
 <style>
 /* ═══════════════════════════════════════════════════════════
-   SellerPilot "Ink & Ember" — token'lar LandingV2.tsx'ten BİREBİR
-   Bu bir MARKA ÖNİZLEMESİ: bilinçli olarak tek temalı (aydınlık kâğıt
-   zemin + koyu mürekkep bantlar). Marka sadakati için tema çevrilmiyor.
+   SellerPilot "Ink & Ember" — token'lar 
+   Tek temalı: aydınlık kâğıt zemin + koyu mürekkep bantlar.
    ═══════════════════════════════════════════════════════════ */
 :root{
   --paper:#FAFAF9; --paper-2:#F4F4F3; --line:#E7E5E4; --line-2:#D6D3D1;
@@ -39,7 +38,7 @@ img{max-width:100%}
 a{color:inherit}
 
 .wrap{max-width:1440px;margin:0 auto;padding-inline:clamp(24px, -49.1429px + 9.52381vw, 88px)}
-@media(max-width:767px){.wrap{padding-inline:16px} /* mobil: H10 gibi 16px */}
+@media(max-width:767px){.wrap{padding-inline:16px} /* mobil */}
 .display{font-family:var(--disp);font-weight:700;letter-spacing:-.04em;line-height:1.03;
   text-wrap:balance;margin:0}
 .h1{font-size:clamp(2.4rem,1.4rem + 3.6vw,4.1rem)}
@@ -57,22 +56,10 @@ a{color:inherit}
 .band-2{background:var(--paper-2)}
 
 /* ── önizleme çubuğu ── */
-.prev{background:#1C1917;color:#E7E5E4;font-size:.8rem;padding:9px 0}
-.prev .wrap{display:flex;gap:14px;align-items:center;flex-wrap:wrap;justify-content:space-between}
-.prev b{color:var(--ember-2)}
-.tgl{display:inline-flex;align-items:center;gap:7px;cursor:pointer;border:1px solid #44403C;
-  background:#292524;color:#E7E5E4;border-radius:999px;padding:5px 13px;font:inherit}
-.tgl:hover{border-color:var(--ember)}
-.tgl[aria-pressed="true"]{background:var(--ember-deep);border-color:var(--ember)}
 
 /* ── yapı notu balonları ── */
-.note{display:none;font-family:var(--mono);font-size:.7rem;letter-spacing:.02em;
-  background:rgba(194,65,12,.09);border:1px dashed rgba(194,65,12,.45);color:var(--ember-deep);
-  padding:6px 11px;border-radius:7px;margin:0 0 14px}
-.band-ink .note{background:rgba(255,190,92,.1);border-color:rgba(255,190,92,.4);color:var(--ember-2)}
-body.notes .note{display:block}
-
-/* ── duyuru şeridi (H10'un mavi bandı) ── */
+.band-ink body.notes 
+/* ── duyuru şeridi ── */
 .annbar{display:block;text-decoration:none;background:var(--ink);color:var(--ink-text);
   padding:11px 0;font-size:.85rem;text-align:center;border-bottom:1px solid var(--ink-line)}
 .annbar b{color:var(--ember-2);font-weight:750;letter-spacing:.03em}
@@ -80,7 +67,7 @@ body.notes .note{display:block}
   margin-left:5px;white-space:nowrap}
 .annbar:hover em{color:var(--ember-2)}
 
-/* ── HEADER + MEGA MENÜ (Helium 10 birebir) ── */
+/* ── HEADER + MEGA MENÜ ── */
 header{position:sticky;top:0;z-index:60;background:rgba(250,250,249,.92);
   backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
 .nav{display:flex;align-items:center;gap:26px;height:66px}
@@ -125,27 +112,13 @@ header{position:sticky;top:0;z-index:60;background:rgba(250,250,249,.92);
 .pill.new{background:linear-gradient(135deg,var(--ember),var(--ember-2));color:#fff}
 
 /* ── HERO ── */
-/* ═══ HERO PANELİ — H10'un "wave hero" kalıbı, ölçüleri ölçülerek alındı ═══
-   Kenarların boş durmasının sebebi ölçü DEĞİL, zeminin bitmesiydi. H10'da
-   1920'de yan boşluk 320px ama boşluk PANELİN İÇİNDE kaldığı için dolu duruyor. */
-.hero{margin:0 16px 0;border-radius:20px;overflow:hidden;
-  padding:clamp(40px,5vw,112px) 0 clamp(44px,5.5vw,109px);
-  background:
-    radial-gradient(900px 420px at 18% 0%, rgba(255,107,53,.16) 0%, transparent 62%),
-    radial-gradient(700px 380px at 88% 12%, rgba(255,190,92,.10) 0%, transparent 60%),
-    linear-gradient(160deg,#0F1219 0%,#0A0C11 58%);
-  color:var(--ink-text)}
-.hero .lede{color:var(--ink-mid)}
-.hero .fineprint{color:var(--ink-mid)}
-.hero .tagpill{background:rgba(255,255,255,.05);border-color:var(--ink-line);color:var(--ink-mid)}
-.hero .tagpill b{color:var(--ink-text)}
-.hero .ailogos span{color:var(--ink-mid)}
-.hero .ailogos .g{background:rgba(255,255,255,.09)}
-.hero .btn2{background:transparent;border-color:rgba(255,255,255,.22);color:var(--ink-text)}
-.hero .btn2:hover{border-color:rgba(255,255,255,.45)}
-@media(max-width:767px){.hero{margin:0;border-radius:0}}
+/* ═══ HERO ═══ */
+/* Açılış AÇIK zeminde kalır — güven veren beyaz. Koyu panel denendi ve
+   kullanıcı reddetti (4 Ağu): "beyaz güven veren bir açılıştı, siyah yapmışsın".
+   Zemin farkını hemen alttaki koyu telefon bandı zaten veriyor. */
+.hero{padding:clamp(44px, 5.5vw, 96px) 0 clamp(52px, 6vw, 104px)}
 
-/* İç ızgara — H10: grid değil FLEX, ve asla 50/50 değil (1440'ta 750/395 = 1,90) */
+/* İç ızgara — flex; 1440'ta 750/395 kilitli */
 .herogrid{display:flex;flex-direction:column;gap:clamp(32px,4vw,60px);align-items:stretch}
 @media(min-width:768px){
   .herogrid{flex-direction:row;align-items:center;
@@ -173,14 +146,12 @@ header{position:sticky;top:0;z-index:60;background:rgba(250,250,249,.92);
 .fineprint{font-size:.76rem;color:var(--text-low);margin:13px 0 0}
 
 /* ── MCP sohbet kutusu ── */
-/* ═══ MCP sohbeti — H10'un WaveHeroChat motorunun ölçülmüş karşılığı ═══
-   kelime kelime yazım · imleç YOK · balonlar alta yaslı, yukarı doğru büyür
-   · scrollbar gizli · giriş 182ms opacity+translateY · sonsuz döngü        */
+/* ═══ MCP sohbeti ═══ */
 .chat{background:linear-gradient(135deg,#0F0F1A,#171A26);
   border:1px solid rgba(255,255,255,.10);border-radius:clamp(16px,3.2vw,24px);
   padding:clamp(10px,2.4cqi,14px);display:flex;flex-direction:column;
   width:100%;max-width:395px;margin-inline:auto;
-  aspect-ratio:395/356;                 /* H10 ile birebir aynı oran */
+  aspect-ratio:395/356;
   container-type:inline-size;           /* iç metin ekrana değil KUTUYA göre ölçeklenir */
   box-shadow:0 0 37px rgba(255,107,53,.10),0 18px 74px rgba(0,0,0,.7),
              inset 0 1.5px 0 rgba(255,255,255,.05);
@@ -249,7 +220,7 @@ header{position:sticky;top:0;z-index:60;background:rgba(250,250,249,.92);
 @media(max-width:900px){.float{position:static;margin:8px auto 0}.phonewrap{padding-top:8px}}
 
 
-/* ═══ ORİJİNAL HAREKETLER — LandingV2.tsx'ten birebir, uydurma yok ═══ */
+/* ═══ HAREKETLER ═══ */
 /* Apple tadı kaydırma açılışı (.rv/.in) — LandingV2 satır 153-154 */
 /* Apple tadı: expo-out eğrisi, biraz daha uzun yol, hafif ölçek + blur çözülmesi */
 .rv{opacity:0;transform:translateY(26px) scale(.985);filter:blur(6px);
@@ -268,7 +239,7 @@ header{position:sticky;top:0;z-index:60;background:rgba(250,250,249,.92);
 .acards > .rv:nth-child(4){--gecikme:210ms}
 .acards > .rv:nth-child(5){--gecikme:280ms}
 
-/* Telefon sahnesi: turuncu ışıma + ızgara (LandingV2 satır 196-203) */
+/* Telefon sahnesi: turuncu ışıma + ızgara  */
 .phone-stage{position:relative;padding:40px 24px;border-radius:2rem;
   background-image:
     radial-gradient(circle at 50% 42%, rgba(255,107,53,.16) 0%, rgba(255,107,53,0) 62%),
@@ -431,18 +402,12 @@ footer a:hover{color:var(--ember-2)}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 
-<!-- ══════════ ÖNİZLEME ÇUBUĞU ══════════ -->
-<div class="prev"><div class="wrap">
-  <div>🔍 <b>ÖNİZLEME</b> — yayında değil. Menü ağacı <b>helium10.com</b>'un canlı yapısından birebir alındı. <b>Yapı notları yalnızca sizin içindir, siteye çıkmaz.</b></div>
-  <button class="tgl" id="noteBtn" aria-pressed="false">Yapı notlarını göster</button>
-</div></div>
-
-<!-- ══════════ DUYURU ŞERİDİ — H10'un üstteki mavi bandının karşılığı ══════════ -->
+<!-- ══════════ DUYURU ŞERİDİ ══════════ -->
 <a class="annbar" href="/yeni-mcp.html">
   <span class="wrap"><b>YENİ:</b> SellerPilot MCP yayında. Yapay zekâ araçlarınızı Trendyol verinize bağlayın. <em>→ Daha fazlası</em></span>
 </a>
 
-<!-- ══════════ HEADER — H10 birebir ══════════ -->
+<!-- ══════════ HEADER ══════════ -->
 <header>
   <div class="wrap nav">
     <div class="logo"><svg class="mark" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-label="SellerPilot"><defs><linearGradient id="spg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF6B35"/><stop offset="1" stop-color="#FFBE5C"/></linearGradient></defs><rect width="64" height="64" rx="14" fill="url(#spg)"/><g transform="translate(12 12) scale(1.6667)"><path fill="#fff" d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></g></svg>SellerPilot</div>
@@ -460,10 +425,9 @@ footer a:hover{color:var(--ember-2)}
     </div>
   </div>
 
-  <!-- 7 sütun — H10'un "Why Helium 10" menüsüyle aynı sayı ve sıra -->
+  <!-- 7 sütun -->
   <div class="mega" id="m-urun">
     <div class="wrap">
-      <p class="note">H10 kalıbı: her satır = ÜST SATIR iş cümlesi + ALT SATIR araç adı. En soldaki sütun onlarda "Helium 10 AI → Helium MCP", bizde "SellerPilot AI → SellerPilot MCP".</p>
       <div class="megagrid m7">
         <div class="mcol"><h4>SellerPilot AI</h4>
           <a class="mitem" href="#mcp"><span class="job">Yapay zekâ araçlarınızı bağlayın</span><span class="tool">SellerPilot MCP<span class="pill new">Yeni</span></span></a>
@@ -502,7 +466,6 @@ footer a:hover{color:var(--ember-2)}
   </div>
 
   <div class="mega" id="m-coz"><div class="wrap">
-    <p class="note">H10'un "Solutions" menüsü: iki blok — "Choose a Business Type" + "Choose a Marketplace". Birebir aynı ikili.</p>
     <div class="megagrid m2">
       <div class="mcol"><h4>İşinizi seçin</h4>
         <a class="mitem" href="#"><span class="job">Günde 10–50 soru</span><span class="tool">Butik / Küçük Mağaza</span></a>
@@ -539,7 +502,6 @@ footer a:hover{color:var(--ember-2)}
 
 <!-- ══════════ HERO — MCP ══════════ -->
 <section class="hero"><div class="wrap">
-  <p class="note">H10 hero'sunun altı parçası birebir: ① hap etiketi ② AI logo sırası ③ iki satırlık H1 ④ alt metin ⑤ iki CTA ⑥ sağda sohbet kutusu.</p>
   <div class="herogrid">
     <div class="herocol">
       <span class="tagpill"><b>Tüm araçlarınız</b> ↔ Trendyol'un en kapsamlı satıcı verisiyle</span>
@@ -563,7 +525,6 @@ footer a:hover{color:var(--ember-2)}
 
 <!-- ══════════ MEVCUT HERO — AYNEN KALIYOR, SADECE YERİ DEĞİŞTİ ══════════ -->
 <section class="band band-ink" style="padding-top:clamp(48px,6vw,86px)"><div class="wrap">
-  <p class="note">Bugünkü ana sayfanın üst bölümü. Metin, telefon ve kartlar AYNEN korundu — sadece MCP hero'sunun altına indi.</p>
   <div class="herogrid">
     <div>
       <span class="tagpill" style="background:rgba(255,255,255,.05);border-color:var(--ink-line);color:var(--ink-mid)"><span style="width:7px;height:7px;border-radius:50%;background:var(--ember);display:inline-block"></span> 4 farklı kategoride markası olan, 10 yıllık e-ticaret satıcısı tarafından geliştirildi</span>
@@ -592,14 +553,12 @@ footer a:hover{color:var(--ember-2)}
 
 <!-- ══════════ SEKTÖR ŞERİDİ ══════════ -->
 <section class="band band-2" style="padding:34px 0"><div class="wrap" style="text-align:center">
-  <p class="note" style="text-align:left">H10'da burada "Trusted by 4.5M+ Brands" logo duvarı var. Bizde mağaza adları gizli (Kural 2) → sektör rozeti.</p>
   <p class="eyebrow" style="margin-bottom:14px">Trendyol'da 12 mağazada çalışıyor</p>
   <div class="sectors"><span>Tekstil</span><span>Ayakkabı</span><span>Bebek</span><span>Kozmetik</span><span>Ev Tekstili</span><span>Yapı Market</span><span>Oto Aksesuar</span></div>
 </div></section>
 
 <!-- ══════════ KANIT ŞERİDİ ══════════ -->
 <section class="band" style="padding:44px 0"><div class="wrap">
-  <p class="note">H10'da burada "Rated 4.5 / 5" var. Bizde puan yok → ölçülmüş 4 gerçek rakam.</p>
   <div class="rv proof">
     <div><div class="n">120.000</div><div class="l">Trendyol'da yayınlanmış cevap</div></div>
     <div><div class="n">1 dk</div><div class="l">Soru geldikten sonra cevaplanma<br><span style="color:var(--text-low)">isteğe göre ayarlanabilir</span></div></div>
@@ -610,7 +569,6 @@ footer a:hover{color:var(--ember-2)}
 
 <!-- ══════════ SEKMELİ YETENEK ══════════ -->
 <section class="band band-2"><div class="wrap">
-  <p class="note">H10'un 7 sekmeli yetenek bölümünün karşılığı — bizde 6 sekme.</p>
   <p class="eyebrow"><span class="num">01</span> Ne yapıyor</p>
   <h2 class="rv display h2" style="margin-top:12px">Müşteriyle konuştuğunuz<br>her yeri o yönetiyor.</h2>
 
@@ -721,7 +679,6 @@ footer a:hover{color:var(--ember-2)}
 
 <!-- ══════════ MCP BANDI ══════════ -->
 <section class="band band-ink" id="mcp"><div class="wrap">
-  <p class="note">H10'un ana sayfadaki MCP bandının karşılığı. Onlarda: "NEW · HELIUM 10 FOR CLAUDE, CHATGPT, AND CURSOR".</p>
   <p class="eyebrow">Yeni · Claude, ChatGPT ve Cursor için SellerPilot</p>
   <h2 class="rv display h2" style="margin-top:14px;max-width:19ch">Mağazanızı, zaten kullandığınız yapay zekânın içinden yönetin.</h2>
   <p class="lede" style="margin-top:18px">Panele girmenize gerek yok. Claude'a ya da ChatGPT'ye bağlayın, mağazanızı sorun — cevap tahminden değil, <strong style="color:var(--ink-text)">Trendyol'un size verdiği gerçek veriden</strong> gelir. Yazma yetkisi yok: sadece okur, hiçbir şeyi değiştiremez.</p>
@@ -742,7 +699,6 @@ footer a:hover{color:var(--ember-2)}
 
 <!-- ══════════ ÜÇ SÜTUN ══════════ -->
 <section class="band"><div class="wrap">
-  <p class="note">H10: "Less complexity. More revenue. Continuous growth." — üç sütun.</p>
   <h2 class="rv display h2" style="max-width:20ch">Daha az uğraş. Daha çok satış. Korunan puan.</h2>
   <div class="cols3" style="margin-top:34px">
     <div class="rv card"><p class="k">Uğraşı azaltın</p><h3 class="display h3">Gece 02:47'de kimse beklemiyor</h3><p>Soru, sipariş mesajı ve yorum aynı gece cevaplanıyor. Medyan cevaplama süresi <strong>4 dakika</strong>.</p><a href="#">Soru-Cevap →</a></div>
@@ -753,7 +709,6 @@ footer a:hover{color:var(--ember-2)}
 
 <!-- ══════════ EK3 DÜZELTMESİ ══════════ -->
 <section class="band band-2"><div class="wrap">
-  <p class="note">EK3 düzeltmesi: yatay ray silindi. Sol sütun yapışkan, sağda dikey akış — sayfa tamamen sol hizalı, hiçbir kart kesilmiyor.</p>
   <div class="answers">
     <div class="stick">
       <p class="eyebrow"><span class="num">02</span> Kanıt</p>
@@ -761,7 +716,6 @@ footer a:hover{color:var(--ember-2)}
       <p class="lede" style="margin-top:16px">Aşağıdaki her cevap sistem tarafından yazıldı ve Trendyol'da gerçekten yayınlandı. Yazım hataları müşterilere ait — gerçek hayat böyle.</p>
 
       <div class="rv statbox">
-        <p class="note" style="margin-bottom:10px">EK4 düzeltmesi: 62/467 bayattı. Payda da yanlıştı — satıcının kendi yazdığı cevaplar sayılıyordu.</p>
         <div class="big">5.900 / 18.800</div>
         <p>Sistemin yazdığı son 18.800 cevabın <strong>5.900'ünde</strong> müşteriye katalogdan ikinci bir ürün önerildi. <strong>Her üç cevaptan biri</strong> satış fırsatına döndü.</p>
         <p class="cite">Son 30 gün · SellerPilot'un yazdığı cevaplar</p>
@@ -809,7 +763,6 @@ footer a:hover{color:var(--ember-2)}
 
 <!-- ══════════ FİYAT ══════════ -->
 <section class="band" id="fiyat"><div class="wrap">
-  <p class="note">İKİ AYRI ÜRÜN, İKİ AYRI FİYAT. Soru-cevap fiyatı DEĞİŞMEDİ (canlı tarife). Muhasebe: aylık 499/799/1.299 · yıllık %25 indirimli 374/599/974 — Melontik'in %37–55 altında (üçte bir değil; kullanıcı kararı, 4 Ağu: "piyasayı bu kadar öldürmeye gerek yok").</p>
   <p class="eyebrow"><span class="num">04</span> Fiyatlandırma</p>
   <h2 class="rv display h2" style="margin-top:12px">Bu bir otomatik cevaplayıcı değil.<br><span class="ember">Müşteri hizmetleri departmanı.</span></h2>
   <p class="lede" style="margin-top:18px">Rakipler soru cevaplamayı paketlerinin içine bir madde olarak koyuyor. Bizde o işin kendisi: siparişin gerçek kargo durumunu okur, mağazanızın kendi beden tablosundan hesap yapar, stoğu görür, emin olamadığında uydurmaz — size sorar. <strong style="color:var(--text)">Bir yazılım özelliği değil, işe aldığınız bir ekip arkadaşı.</strong></p>
@@ -907,7 +860,6 @@ footer a:hover{color:var(--ember-2)}
 
 <!-- ══════════ AFFILIATE ══════════ -->
 <section class="band band-2" id="ortaklik"><div class="wrap">
-  <p class="note">ACIK_KARARLAR.md: "Agresif fiyatlandırmayla kurulsun" kararı verilmiş, yapılmamıştı. Rakip (TPro360) %15/30/50 veriyor ama TEK SEFERLİK ve kredi olarak. Bizimki her ay tekrar eden nakit → asıl ayrıştırıcı bu.</p>
   <p class="eyebrow"><span class="num">05</span> İş ortaklığı</p>
   <h2 class="rv display h2" style="margin-top:12px;max-width:20ch">Tavsiye edin, <span class="ember">her ay</span> kazanın.</h2>
   <p class="lede" style="margin-top:16px">Piyasadaki programlar tek seferlik komisyon verip kesiyor — üstelik nakit değil, kendi faturanızdan düşülen kredi olarak. Bizimki öyle değil: <strong style="color:var(--text)">getirdiğiniz müşteri ödediği sürece siz de kazanırsınız.</strong></p>
@@ -946,7 +898,6 @@ footer a:hover{color:var(--ember-2)}
 
 <!-- ══════════ FOOTER ══════════ -->
 <footer id="kunye"><div class="wrap">
-  <p class="note">🔴 Künye bugün canlı sitede HİÇBİR YERDE yok — ölü Footer bileşeninin içinde kalmış. PayTR ve mesafeli satış mevzuatı bunu istiyor.</p>
   <div class="fgrid">
     <div><div class="logo" style="color:var(--ink-text);margin-bottom:12px"><svg class="mark" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-label="SellerPilot"><defs><linearGradient id="spg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF6B35"/><stop offset="1" stop-color="#FFBE5C"/></linearGradient></defs><rect width="64" height="64" rx="14" fill="url(#spg2)"/><g transform="translate(12 12) scale(1.6667)"><path fill="#fff" d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></g></svg>SellerPilot</div>
       <p style="margin:0;max-width:34ch">Trendyol satıcıları için müşteri iletişimi ve gerçekleşen kâr — tek panelde.</p></div>
@@ -960,15 +911,7 @@ footer a:hover{color:var(--ember-2)}
 </div></footer>
 
 <script>
-// ═══════════════════════════════════════════════════════════════════
-// MCP sohbet motoru — helium10.com WaveHeroChat'in ölçülmüş karşılığı
-// kelime kelime yazım · imleç yok · alta yaslı · scrollbar gizli · döngü
-// Zamanlamalar (4 Ağu 2026'da H10'un canlı kaynağından ölçüldü, hız 0.65x):
-//   kelime  = round((55 + min(40, harf*8)) * 0.65)  → 41–62 ms
-//   satır   = 117 ms   ·  balon girişi = 182 ms
-//   kullanıcı: balon → 117 ms → yaz   ·  asistan: 117 ms → balon → 78 ms → yaz
-//   mesaj sonu 423 ms  ·  tur sonu 1560 ms, liste temizlenir, baştan
-// ═══════════════════════════════════════════════════════════════════
+// MCP sohbet motoru
 (function(){
   var view = document.getElementById('chatView');
   var list = document.getElementById('chatMsgs');
@@ -1086,7 +1029,7 @@ footer a:hover{color:var(--ember-2)}
 })();
 
 
-// ═══ TELEFON DÖNGÜSÜ — LandingV2.tsx PhoneMock'un birebir karşılığı ═══
+// Telefon döngüsü
 // faz: soru (0) → yazıyor (700ms) → cevap (2000ms) → sonraki konuşma (9000ms)
 (function(){
   var body=document.getElementById('phBody'), dots=document.getElementById('phDots');
@@ -1130,7 +1073,7 @@ footer a:hover{color:var(--ember-2)}
   tur(0);
 })();
 
-// ═══ Apple tadı kaydırma açılışı — LandingV2 useReveal'ın karşılığı ═══
+// Kaydırma açılışı
 (function(){
   var hedefler=document.querySelectorAll('.rv');
   if(!hedefler.length) return;
@@ -1230,13 +1173,6 @@ function setCycle(mode){
 document.getElementById('ay').addEventListener('click', function(){ setCycle('ay'); });
 document.getElementById('yil').addEventListener('click', function(){ setCycle('yil'); });
 
-// yapı notları
-var nb = document.getElementById('noteBtn');
-nb.addEventListener('click', function(){
-  var on = document.body.classList.toggle('notes');
-  nb.setAttribute('aria-pressed', on ? 'true' : 'false');
-  nb.textContent = on ? 'Yapı notlarını gizle' : 'Yapı notlarını göster';
-});
 </script>
 
 </body>
