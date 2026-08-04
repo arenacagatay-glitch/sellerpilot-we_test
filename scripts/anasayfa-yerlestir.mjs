@@ -54,6 +54,7 @@ const yasak = [
   ['noteBtn',       'yapı notu düğmesi'],
   ['yayında değil', '"yayında değil" ibaresi'],
   ['helium10.com',  'rakip adı'],
+  ['LandingV2',     'iç dosya adı'],
 ];
 const bulunan = yasak.filter(([k]) => sonuc.includes(k));
 if (bulunan.length) {
