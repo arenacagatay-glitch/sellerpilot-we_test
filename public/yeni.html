@@ -1,0 +1,790 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="description" content="SellerPilot yeni site yapisi onizlemesi">
+<title>SellerPilot — Yeni Site Yapısı (Önizleme)</title>
+</head>
+<body>
+
+<style>
+/* ═══════════════════════════════════════════════════════════
+   SellerPilot "Ink & Ember" — token'lar LandingV2.tsx'ten BİREBİR
+   Bu bir MARKA ÖNİZLEMESİ: bilinçli olarak tek temalı (aydınlık kâğıt
+   zemin + koyu mürekkep bantlar). Marka sadakati için tema çevrilmiyor.
+   ═══════════════════════════════════════════════════════════ */
+:root{
+  --paper:#FAFAF9; --paper-2:#F4F4F3; --line:#E7E5E4; --line-2:#D6D3D1;
+  --text:#0C0A09; --text-mid:#57534E; --text-low:#79716B;
+  --ink:#0A0C11; --ink-2:#12151D; --ink-line:rgba(255,255,255,.09);
+  --ink-text:#F5F5F4; --ink-mid:#A6A09B;
+  --ember:#FF6B35; --ember-2:#FFBE5C; --ember-deep:#C2410C;
+  --ok:#4ADE80;
+  --disp:"Inter Tight",Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+  --body:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,monospace;
+  --wrap:1200px;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--text);font-family:var(--body);
+  -webkit-font-smoothing:antialiased;line-height:1.55}
+::selection{background:var(--ember);color:#fff}
+img{max-width:100%}
+a{color:inherit}
+
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 24px}
+.display{font-family:var(--disp);font-weight:700;letter-spacing:-.04em;line-height:1.03;
+  text-wrap:balance;margin:0}
+.h1{font-size:clamp(2.4rem,1.4rem+3.6vw,4.1rem)}
+.h2{font-size:clamp(1.9rem,1.3rem+2.2vw,3rem)}
+.h3{font-size:clamp(1.15rem,1rem+.6vw,1.45rem);font-weight:650;letter-spacing:-.025em;line-height:1.18}
+.lede{font-size:clamp(1rem,.96rem+.25vw,1.16rem);line-height:1.66;color:var(--text-mid);max-width:62ch;margin:0}
+.eyebrow{font-size:.6875rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--text-low);display:inline-flex;align-items:center;gap:.55rem;margin:0}
+.eyebrow .num{color:var(--ember-deep);font-variant-numeric:tabular-nums}
+.ember{color:var(--ember-deep)}
+.band{padding:clamp(56px,7vw,104px) 0}
+.band-ink{background:var(--ink);color:var(--ink-text)}
+.band-ink .lede,.band-ink .eyebrow{color:var(--ink-mid)}
+.band-ink .ember{color:var(--ember-2)}
+.band-2{background:var(--paper-2)}
+
+/* ── önizleme çubuğu ── */
+.prev{background:#1C1917;color:#E7E5E4;font-size:.8rem;padding:9px 0}
+.prev .wrap{display:flex;gap:14px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+.prev b{color:var(--ember-2)}
+.tgl{display:inline-flex;align-items:center;gap:7px;cursor:pointer;border:1px solid #44403C;
+  background:#292524;color:#E7E5E4;border-radius:999px;padding:5px 13px;font:inherit}
+.tgl:hover{border-color:var(--ember)}
+.tgl[aria-pressed="true"]{background:var(--ember-deep);border-color:var(--ember)}
+
+/* ── yapı notu balonları ── */
+.note{display:none;font-family:var(--mono);font-size:.7rem;letter-spacing:.02em;
+  background:rgba(194,65,12,.09);border:1px dashed rgba(194,65,12,.45);color:var(--ember-deep);
+  padding:6px 11px;border-radius:7px;margin:0 0 14px}
+.band-ink .note{background:rgba(255,190,92,.1);border-color:rgba(255,190,92,.4);color:var(--ember-2)}
+body.notes .note{display:block}
+
+/* ── HEADER + MEGA MENÜ (Helium 10 birebir) ── */
+header{position:sticky;top:0;z-index:60;background:rgba(250,250,249,.92);
+  backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;gap:26px;height:66px}
+.logo{display:flex;align-items:center;gap:9px;font-family:var(--disp);font-weight:750;
+  letter-spacing:-.035em;font-size:1.06rem;white-space:nowrap}
+.logo svg.mark{width:28px;height:28px;flex:none;border-radius:8px;display:block}
+.navlinks{display:flex;align-items:center;gap:3px;margin-left:6px}
+.navbtn{background:none;border:0;font:inherit;font-size:.875rem;font-weight:530;color:var(--text);
+  padding:9px 11px;border-radius:8px;cursor:pointer;display:inline-flex;align-items:center;gap:5px;
+  white-space:nowrap}
+.navbtn:hover{background:var(--paper-2)}
+.navbtn svg{opacity:.5;transition:transform .18s}
+.navbtn[aria-expanded="true"]{background:var(--paper-2)}
+.navbtn[aria-expanded="true"] svg{transform:rotate(180deg)}
+.navright{margin-left:auto;display:flex;align-items:center;gap:6px}
+.iconbtn{background:none;border:0;padding:8px;border-radius:8px;cursor:pointer;color:var(--text-mid);display:grid;place-items:center}
+.iconbtn:hover{background:var(--paper-2);color:var(--text)}
+.blink{font-size:.875rem;font-weight:530;padding:9px 11px;text-decoration:none;white-space:nowrap}
+.cta{background:var(--ember-deep);color:#fff;text-decoration:none;font-size:.875rem;font-weight:640;
+  padding:10px 17px;border-radius:9px;white-space:nowrap;transition:background .15s}
+.cta:hover{background:#9A3412}
+
+.mega{position:absolute;left:0;right:0;top:100%;background:var(--paper);
+  border-bottom:1px solid var(--line);box-shadow:0 22px 48px -26px rgba(12,10,9,.3);
+  display:none;animation:drop .16s ease}
+.mega[data-open="true"]{display:block}
+@keyframes drop{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+.megagrid{display:grid;gap:22px 30px;padding:30px 0 34px}
+.m7{grid-template-columns:repeat(4,minmax(0,1fr))}
+.m2{grid-template-columns:repeat(2,minmax(0,1fr));max-width:840px}
+.m1{grid-template-columns:repeat(3,minmax(0,1fr));max-width:900px}
+.mcol h4{margin:0 0 9px;font-family:var(--disp);font-size:.78rem;font-weight:750;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--ember-deep);
+  padding-bottom:7px;border-bottom:1px solid var(--line)}
+.mitem{display:block;text-decoration:none;padding:7px 8px;margin:0 -8px;border-radius:8px}
+.mitem:hover{background:var(--paper-2)}
+.mitem .job{display:block;font-size:.78rem;color:var(--text-mid);line-height:1.4}
+.mitem .tool{display:block;font-size:.9rem;font-weight:620;letter-spacing:-.015em;margin-top:1px}
+.mitem.soon{opacity:.55;cursor:default;pointer-events:none}
+.pill{display:inline-block;font-size:.6rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;
+  background:var(--line);color:var(--text-low);border-radius:5px;padding:2px 6px;margin-left:6px;vertical-align:1px}
+.pill.new{background:linear-gradient(135deg,var(--ember),var(--ember-2));color:#fff}
+
+/* ── HERO ── */
+.hero{padding:clamp(44px,5.5vw,78px) 0 clamp(52px,6vw,90px)}
+.herogrid{display:grid;grid-template-columns:1.02fr .98fr;gap:clamp(32px,4vw,60px);align-items:center}
+.tagpill{display:inline-flex;align-items:center;gap:9px;border:1px solid var(--line-2);
+  border-radius:999px;padding:6px 15px;font-size:.78rem;color:var(--text-mid);background:#fff}
+.tagpill b{color:var(--text);font-weight:640}
+.ailogos{display:flex;flex-wrap:wrap;gap:7px 20px;align-items:center;margin:22px 0 26px}
+.ailogos span{display:inline-flex;align-items:center;gap:7px;font-size:.9rem;font-weight:560;color:var(--text-mid)}
+.ailogos .g{width:19px;height:19px;border-radius:5px;display:grid;place-items:center;
+  font-size:.62rem;font-weight:800;color:#fff;background:#292524}
+.btnrow{display:flex;gap:11px;flex-wrap:wrap;margin-top:28px}
+.btn2{background:#fff;border:1px solid var(--line-2);color:var(--text);text-decoration:none;
+  font-size:.875rem;font-weight:600;padding:10px 17px;border-radius:9px}
+.btn2:hover{border-color:var(--text-low)}
+.fineprint{font-size:.76rem;color:var(--text-low);margin:13px 0 0}
+
+/* ── MCP sohbet kutusu ── */
+.chat{background:var(--ink);border:1px solid var(--ink-line);border-radius:17px;
+  padding:17px;display:flex;flex-direction:column;gap:11px}
+.chattop{display:flex;align-items:center;gap:8px;padding-bottom:11px;border-bottom:1px solid var(--ink-line)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--ok)}
+.chattop span{font-size:.72rem;color:var(--ink-mid);font-family:var(--mono)}
+.msg{border-radius:12px;padding:11px 13px;font-size:.855rem;line-height:1.55;max-width:92%}
+.msg.me{align-self:flex-end;background:rgba(255,255,255,.07);color:var(--ink-text);
+  border:1px solid var(--ink-line)}
+.msg.sp{align-self:flex-start;background:var(--ink-2);border:1px solid var(--ink-line);color:var(--ink-text)}
+.msg.sp b{color:var(--ember-2);font-weight:640}
+.msg .blk{margin:9px 0 0}
+.msg .blk:first-child{margin:0}
+.mask{background:rgba(255,255,255,.14);border-radius:3px;color:transparent;user-select:none;padding:0 2px}
+.src{display:flex;align-items:center;gap:6px;font-size:.7rem;color:var(--ok);margin-top:9px;
+  font-family:var(--mono)}
+.chatfoot{font-size:.7rem;color:var(--ink-mid);border-top:1px solid var(--ink-line);padding-top:10px;margin:0}
+.chatscroll{display:flex;flex-direction:column;gap:11px;max-height:min(64vh,560px);overflow-y:auto;
+  padding-right:6px;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.22) transparent}
+.chatscroll::-webkit-scrollbar{width:6px}
+.chatscroll::-webkit-scrollbar-thumb{background:rgba(255,255,255,.22);border-radius:3px}
+.chat .msg.sp{max-width:100%}
+
+/* ── sektör + kanıt şeritleri ── */
+.sectors{display:flex;flex-wrap:wrap;gap:9px;justify-content:center}
+.sectors span{font-size:.78rem;font-weight:600;letter-spacing:.04em;color:var(--text-mid);
+  border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 14px}
+.proof{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);
+  border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.proof div{background:var(--paper);padding:22px 18px}
+.proof .n{font-family:var(--disp);font-weight:750;letter-spacing:-.04em;
+  font-size:clamp(1.7rem,1.2rem+1.6vw,2.4rem);font-variant-numeric:tabular-nums;line-height:1}
+.proof .l{font-size:.79rem;color:var(--text-mid);margin-top:7px;line-height:1.45}
+
+/* ── sekmeler ── */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:26px 0 30px}
+.tab{background:#fff;border:1px solid var(--line);font:inherit;font-size:.83rem;font-weight:580;
+  padding:8px 15px;border-radius:999px;cursor:pointer;color:var(--text-mid)}
+.tab:hover{border-color:var(--line-2)}
+.tab[aria-selected="true"]{background:var(--ink);border-color:var(--ink);color:var(--ink-text)}
+.panel{display:none;grid-template-columns:1fr 1fr;gap:clamp(24px,3vw,46px);align-items:start}
+.panel[data-on="true"]{display:grid}
+.panel ul{margin:16px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:11px}
+.panel li{display:flex;gap:10px;font-size:.93rem;color:var(--text-mid);line-height:1.5}
+.panel li b{color:var(--text);font-weight:620}
+.tick{color:var(--ember-deep);flex:none;font-weight:700}
+.shot{background:#fff;border:1px solid var(--line);border-radius:14px;padding:17px;
+  font-size:.85rem;color:var(--text-mid);line-height:1.6}
+.shot .qq{background:var(--paper-2);border-radius:10px;padding:10px 12px;color:var(--text);font-size:.83rem}
+.shot .aa{background:linear-gradient(135deg,var(--ember),var(--ember-2));color:#fff;border-radius:10px;
+  padding:11px 13px;margin-top:9px;font-size:.83rem;line-height:1.55}
+.shot .why{display:flex;gap:7px;align-items:flex-start;font-size:.76rem;color:var(--text-low);
+  border-top:1px solid var(--line);margin-top:12px;padding-top:10px}
+
+/* ── MCP bandı ── */
+.mcpcmd{display:grid;gap:11px;margin-top:26px}
+.mcpcmd div{display:flex;gap:13px;align-items:flex-start;border:1px solid var(--ink-line);
+  border-radius:12px;padding:13px 15px;background:var(--ink-2)}
+.mcpcmd code{font-family:var(--mono);font-size:.8rem;color:var(--ember-2);flex:none;max-width:38%}
+.mcpcmd p{margin:0;font-size:.88rem;color:var(--ink-mid);line-height:1.5}
+.toolgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:22px}
+.toolgrid div{border:1px solid var(--ink-line);border-radius:11px;padding:13px}
+.toolgrid h5{margin:0 0 8px;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ember-2)}
+.toolgrid code{display:block;font-family:var(--mono);font-size:.73rem;color:var(--ink-mid);
+  line-height:1.9;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* ── üç sütun / segment ── */
+.cols3{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(18px,2.4vw,32px)}
+.card{background:#fff;border:1px solid var(--line);border-radius:15px;padding:24px}
+.band-ink .card{background:var(--ink-2);border-color:var(--ink-line)}
+.card p{margin:9px 0 0;font-size:.92rem;color:var(--text-mid);line-height:1.6}
+.band-ink .card p{color:var(--ink-mid)}
+.card .k{font-size:.72rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ember-deep);
+  font-weight:700;margin:0 0 11px}
+.card a{display:inline-block;margin-top:14px;font-size:.85rem;font-weight:620;color:var(--ember-deep);text-decoration:none}
+.card a:hover{text-decoration:underline}
+
+/* ── EK3 düzeltmesi: yapışkan sol + dikey akış ── */
+.answers{display:grid;grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr);gap:clamp(28px,4vw,64px);align-items:start}
+.stick{position:sticky;top:96px}
+.acards{display:flex;flex-direction:column;gap:14px;max-width:36rem}
+.ac{background:#fff;border:1px solid var(--line);border-radius:15px;padding:19px}
+.ac .top{display:flex;justify-content:space-between;gap:12px;font-size:.68rem;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--text-low);font-weight:700;margin-bottom:13px}
+.ac .q{background:var(--paper-2);border-radius:11px;padding:11px 13px;font-size:.875rem;line-height:1.5}
+.ac .a{background:linear-gradient(135deg,var(--ember),var(--ember-2));color:#fff;border-radius:11px;
+  padding:12px 14px;margin-top:10px;font-size:.875rem;line-height:1.58}
+.ac .n{display:flex;gap:8px;align-items:flex-start;font-size:.79rem;color:var(--text-mid);
+  border-top:1px solid var(--line);margin-top:14px;padding-top:11px;line-height:1.5}
+.statbox{border:1px solid var(--line);background:#fff;border-radius:15px;padding:22px;margin-top:26px}
+.statbox .big{font-family:var(--disp);font-weight:750;letter-spacing:-.045em;font-size:2.6rem;
+  color:var(--ember-deep);font-variant-numeric:tabular-nums;line-height:1}
+.statbox p{margin:11px 0 0;font-size:.9rem;color:var(--text-mid);line-height:1.6}
+.statbox .cite{font-family:var(--mono);font-size:.7rem;color:var(--text-low);margin-top:12px;
+  border-top:1px solid var(--line);padding-top:10px}
+
+/* ── fiyat ── */
+.switch{display:inline-flex;background:var(--paper-2);border:1px solid var(--line);border-radius:999px;padding:4px;gap:3px}
+.switch button{background:none;border:0;font:inherit;font-size:.84rem;font-weight:600;padding:7px 17px;
+  border-radius:999px;cursor:pointer;color:var(--text-mid)}
+.switch button[aria-pressed="true"]{background:var(--ink);color:var(--ink-text)}
+.save{font-size:.75rem;font-weight:700;color:var(--ember-deep);margin-left:11px}
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:26px}
+.plan{background:#fff;border:1px solid var(--line);border-radius:15px;padding:23px;display:flex;flex-direction:column}
+.plan.mid{border-color:var(--ember);box-shadow:0 0 0 1px var(--ember)}
+.plan .lim{font-size:.72rem;letter-spacing:.11em;text-transform:uppercase;color:var(--text-low);font-weight:700}
+.plan h4{font-family:var(--disp);font-size:1.25rem;font-weight:700;letter-spacing:-.03em;margin:9px 0 3px}
+.plan .band-lbl{font-size:.81rem;color:var(--text-mid);margin:0}
+.plan .price{font-family:var(--disp);font-weight:750;letter-spacing:-.04em;font-size:2.15rem;
+  margin:17px 0 2px;font-variant-numeric:tabular-nums}
+.plan .price small{font-size:.92rem;font-weight:600;color:var(--text-low);letter-spacing:0}
+.plan .was{font-size:.78rem;color:var(--text-low);margin:0}
+.plan .was s{color:var(--text-low)}
+.plan ul{list-style:none;margin:16px 0 0;padding:0;display:flex;flex-direction:column;gap:7px;font-size:.83rem;color:var(--text-mid)}
+.plan ul li{display:flex;gap:8px;line-height:1.45}
+.plan .buy{margin-top:18px;text-align:center;background:var(--ink);color:var(--ink-text);
+  text-decoration:none;font-size:.86rem;font-weight:640;padding:11px;border-radius:10px}
+.plan.mid .buy{background:var(--ember-deep)}
+.qatable{width:100%;border-collapse:collapse;margin-top:20px;font-size:.88rem}
+.qatable th,.qatable td{text-align:left;padding:11px 13px;border-bottom:1px solid var(--line)}
+.qatable th{font-size:.71rem;letter-spacing:.11em;text-transform:uppercase;color:var(--text-low)}
+.qatable td:last-child,.qatable th:last-child{text-align:right;font-variant-numeric:tabular-nums;font-weight:640}
+.scroller{overflow-x:auto}
+
+/* ── karşılaştırma ── */
+.vs{width:100%;border-collapse:collapse;font-size:.88rem;margin-top:22px}
+.vs th,.vs td{padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top;text-align:left}
+.vs thead th{font-size:.71rem;letter-spacing:.11em;text-transform:uppercase;color:var(--text-low)}
+.vs thead th:last-child{color:var(--ember-deep)}
+.vs td:first-child{color:var(--text-low);width:22%}
+.vs td:last-child{font-weight:560}
+
+/* ── footer ── */
+footer{background:var(--ink);color:var(--ink-mid);padding:56px 0 34px;font-size:.86rem}
+.fgrid{display:grid;grid-template-columns:1.3fr repeat(3,1fr);gap:30px}
+footer h5{color:var(--ink-text);font-size:.72rem;letter-spacing:.13em;text-transform:uppercase;margin:0 0 13px}
+footer ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+footer a{text-decoration:none}
+footer a:hover{color:var(--ember-2)}
+.kunye{border-top:1px solid var(--ink-line);margin-top:32px;padding-top:22px;font-size:.76rem;line-height:1.75}
+.kunye b{color:var(--ink-text)}
+
+@media(max-width:900px){
+  .herogrid,.panel,.answers,.cols3,.plans,.proof,.toolgrid,.fgrid{grid-template-columns:1fr}
+  .m7,.m2,.m1{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .stick{position:static}
+  .navlinks{display:none}
+  .proof div{padding:18px}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<!-- ══════════ ÖNİZLEME ÇUBUĞU ══════════ -->
+<div class="prev"><div class="wrap">
+  <div>🔍 <b>ÖNİZLEME</b> — yayında değil. Menü ağacı <b>helium10.com</b>'un canlı yapısından birebir alındı. <b>Yapı notları yalnızca sizin içindir, siteye çıkmaz.</b></div>
+  <button class="tgl" id="noteBtn" aria-pressed="false">Yapı notlarını göster</button>
+</div></div>
+
+<!-- ══════════ HEADER — H10 birebir ══════════ -->
+<header>
+  <div class="wrap nav">
+    <div class="logo"><svg class="mark" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-label="SellerPilot"><defs><linearGradient id="spg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF6B35"/><stop offset="1" stop-color="#FFBE5C"/></linearGradient></defs><rect width="64" height="64" rx="14" fill="url(#spg)"/><g transform="translate(12 12) scale(1.6667)"><path fill="#fff" d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></g></svg>SellerPilot</div>
+    <nav class="navlinks">
+      <button class="navbtn" data-menu="urun" aria-expanded="false">Neden SellerPilot <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6"/></svg></button>
+      <button class="navbtn" data-menu="coz" aria-expanded="false">Çözümler <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6"/></svg></button>
+      <button class="navbtn" data-menu="hak" aria-expanded="false">Hakkımızda <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6"/></svg></button>
+      <button class="navbtn" data-menu="kay" aria-expanded="false">Kaynaklar <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6"/></svg></button>
+      <a class="blink" href="#fiyat">Fiyatlandırma</a>
+    </nav>
+    <div class="navright">
+      <button class="iconbtn" aria-label="Ara"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></button>
+      <a class="blink" href="#">Giriş yap</a>
+      <a class="cta" href="#fiyat">Ücretsiz Başla</a>
+    </div>
+  </div>
+
+  <!-- 7 sütun — H10'un "Why Helium 10" menüsüyle aynı sayı ve sıra -->
+  <div class="mega" id="m-urun">
+    <div class="wrap">
+      <p class="note">H10 kalıbı: her satır = ÜST SATIR iş cümlesi + ALT SATIR araç adı. En soldaki sütun onlarda "Helium 10 AI → Helium MCP", bizde "SellerPilot AI → SellerPilot MCP".</p>
+      <div class="megagrid m7">
+        <div class="mcol"><h4>SellerPilot AI</h4>
+          <a class="mitem" href="#mcp"><span class="job">Yapay zekâ araçlarınızı bağlayın</span><span class="tool">SellerPilot MCP<span class="pill new">Yeni</span></span></a>
+          <a class="mitem" href="#"><span class="job">Soruyu sizin ağzınızdan cevaplayın</span><span class="tool">Cevap Beyni</span></a>
+        </div>
+        <div class="mcol"><h4>Ürün Araştırması</h4>
+          <a class="mitem" href="#"><span class="job">Ürünün tutup tutmayacağını ölçün</span><span class="tool">Chrome Eklentisi</span></a>
+          <a class="mitem" href="#"><span class="job">Kazandıran ürünü bulun</span><span class="tool">Ürün Veritabanı</span></a>
+          <a class="mitem" href="#"><span class="job">Rakibin ürününü röntgenleyin</span><span class="tool">Pazar Röntgeni</span></a>
+        </div>
+        <div class="mcol"><h4>Kelime Araştırması</h4>
+          <a class="mitem" href="#"><span class="job">Rakibin kelimelerini bulun</span><span class="tool">Kelime Gezgini</span></a>
+          <a class="mitem" href="#"><span class="job">Talebi arza bölün, boşluğu görün</span><span class="tool">Talep / Arz</span></a>
+        </div>
+        <div class="mcol"><h4>İlan Optimizasyonu</h4>
+          <a class="mitem" href="#"><span class="job">İlan açıklamanızı yazdırın</span><span class="tool">Açıklama Motoru</span></a>
+          <a class="mitem" href="#"><span class="job">Tek fotoğraftan ilan görseli üretin</span><span class="tool">Görsel Stüdyo</span></a>
+        </div>
+        <div class="mcol"><h4>Günlük Operasyon</h4>
+          <a class="mitem" href="#"><span class="job">Ürün sorularını cevaplayın</span><span class="tool">Soru-Cevap</span></a>
+          <a class="mitem" href="#"><span class="job">Kargo ve iade mesajlarını çözün</span><span class="tool">Sipariş Soruları</span></a>
+          <a class="mitem" href="#"><span class="job">Düşük yıldızı geri kazanın</span><span class="tool">Değerlendirmeler</span></a>
+          <a class="mitem" href="#"><span class="job">Müşteriyi kuponla geri getirin</span><span class="tool">Kupon Motoru</span></a>
+        </div>
+        <div class="mcol"><h4>Performans &amp; Muhasebe</h4>
+          <a class="mitem" href="#fiyat"><span class="job">Gerçekleşen kârınızı görün</span><span class="tool">Muhasebe</span></a>
+          <a class="mitem" href="#"><span class="job">Ürün maliyetlerinizi tek yerde tutun</span><span class="tool">Maliyet Defteri</span></a>
+          <a class="mitem" href="#"><span class="job">İadenin gerçek sebebini görün</span><span class="tool">İade Zekâsı</span></a>
+          <a class="mitem" href="#"><span class="job">Hangi ilden ne kazandığınızı görün</span><span class="tool">Bölgeler</span></a>
+        </div>
+        <div class="mcol"><h4>Reklam</h4>
+          <span class="mitem soon"><span class="job">Reklam harcamanızı kâra bağlayın</span><span class="tool">Reklam Kırılımı<span class="pill">Yakında</span></span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mega" id="m-coz"><div class="wrap">
+    <p class="note">H10'un "Solutions" menüsü: iki blok — "Choose a Business Type" + "Choose a Marketplace". Birebir aynı ikili.</p>
+    <div class="megagrid m2">
+      <div class="mcol"><h4>İşinizi seçin</h4>
+        <a class="mitem" href="#"><span class="job">Günde 10–50 soru</span><span class="tool">Butik / Küçük Mağaza</span></a>
+        <a class="mitem" href="#"><span class="job">Günde 50–300 soru</span><span class="tool">Büyüyen Mağaza</span></a>
+        <a class="mitem" href="#"><span class="job">Çok mağazalı yönetim</span><span class="tool">Kurumsal / Ajans</span></a>
+      </div>
+      <div class="mcol"><h4>Pazaryerinizi seçin</h4>
+        <a class="mitem" href="#"><span class="job">Soru-cevap · sipariş · yorum · muhasebe</span><span class="tool">Trendyol'da satın</span></a>
+        <span class="mitem soon"><span class="job">Aynı motor, ikinci pazaryeri</span><span class="tool">Hepsiburada<span class="pill">Yakında</span></span></span>
+        <span class="mitem soon"><span class="job">Kendi siteniz</span><span class="tool">Shopify<span class="pill">Yakında</span></span></span>
+      </div>
+    </div>
+  </div></div>
+
+  <div class="mega" id="m-hak"><div class="wrap"><div class="megagrid m1">
+    <div class="mcol"><h4>Şirket</h4>
+      <a class="mitem" href="#"><span class="job">Kimiz, neden yaptık</span><span class="tool">Hakkımızda</span></a>
+      <a class="mitem" href="#kunye"><span class="job">Unvan, adres, VKN, MERSİS</span><span class="tool">Künye &amp; Yasal</span></a>
+      <a class="mitem" href="#"><span class="job">Bize ulaşın</span><span class="tool">İletişim</span></a>
+    </div>
+  </div></div></div>
+
+  <div class="mega" id="m-kay"><div class="wrap"><div class="megagrid m1">
+    <div class="mcol"><h4>Öğrenin</h4>
+      <a class="mitem" href="#"><span class="job">Trendyol satıcı rehberleri</span><span class="tool">Blog<span class="pill">37 yazı</span></span></a>
+      <a class="mitem" href="#"><span class="job">Kurulumu adım adım izleyin</span><span class="tool">Kurulum</span></a>
+    </div>
+    <div class="mcol"><h4>Destek</h4>
+      <a class="mitem" href="#"><span class="job">Merak edilenler</span><span class="tool">SSS</span></a>
+      <a class="mitem" href="#"><span class="job">Satıcı hikâyeleri</span><span class="tool">Müşteri Hikâyeleri</span></a>
+    </div>
+  </div></div></div>
+</header>
+
+<!-- ══════════ HERO — MCP ══════════ -->
+<section class="hero"><div class="wrap">
+  <p class="note">H10 hero'sunun altı parçası birebir: ① hap etiketi ② AI logo sırası ③ iki satırlık H1 ④ alt metin ⑤ iki CTA ⑥ sağda sohbet kutusu.</p>
+  <div class="herogrid">
+    <div>
+      <span class="tagpill"><b>Tüm araçlarınız</b> ↔ Trendyol'un en kapsamlı satıcı verisiyle</span>
+      <div class="ailogos">
+        <span><i class="g">✳</i>Claude</span><span><i class="g">▮</i>Claude Code</span>
+        <span><i class="g">◎</i>ChatGPT</span><span><i class="g">⌘</i>Codex</span><span><i class="g">◈</i>Cursor</span>
+      </div>
+      <h1 class="display h1">Artık müşteri hizmetleri<br>departmanına sahipsiniz.</h1>
+      <p class="lede" style="margin-top:22px"><strong style="color:var(--text)">Sizin ağzınızdan yöneten bir ekip arkadaşınızın olduğunu hayal edin.</strong> SellerPilot'u Claude'a, ChatGPT'ye ya da kendi ajanınıza bağlayın; sorularınızı, siparişlerinizi, yorumlarınızı ve gerçekleşen kârınızı tek bir komutla sorun.</p>
+      <div class="btnrow"><a class="cta" href="#fiyat">Ücretsiz Başla</a><a class="btn2" href="#mcp">Nasıl çalışır →</a></div>
+      <p class="fineprint">Kredi kartı gerekmez · Kurulum birkaç dakika · 15 gün ücretsiz</p>
+    </div>
+
+    <div class="chat">
+      <div class="chattop"><span class="dot"></span><span>claude · sellerpilot-mcp bağlı</span></div>
+      <div class="chatscroll">
+        <div class="msg me">Satışlarımı artırmak için ne yapabilirim?</div>
+        <div class="msg sp">
+          <div class="blk">Veriye göre büyümenin önündeki temel sorun <b>kârlılık değil, sipariş sayısındaki düşüş</b>. Son 7 günde ciro %16,6 gerilemiş; sipariş 139'dan 123'e, ortalama sepet 715 ₺'den 673 ₺'ye düşmüş.</div>
+
+          <div class="blk"><b>1 · En çok satan ürünlere bütçe yoğunlaştır</b><br>Son 30 günde <span class="mask">████ ███</span>, <span class="mask">███████ ███████</span> ve <span class="mask">███████</span> satışın büyük kısmını getiriyor. Reklamı geniş kataloğa dağıtmak yerine bu üç ürüne ve setlerine yönlendirmek daha mantıklı.</div>
+
+          <div class="blk"><b>2 · Erkek parfüm görünürlüğünü büyüt</b><br>"Erkek parfüm" araması aylık 150.000–200.000 bandında ve talep/arz açısından test edilmeye değer. İki erkek parfümünüzle düşük bütçeli, tam eşleşmeli bir reklam testi yapılabilir.</div>
+
+          <div class="blk"><b>3 · Kontrollü kampanyayı geri getir</b><br>Haftalık indirim tutarı 12.908 ₺'den 2.923 ₺'ye düşerken siparişler de gerilemiş. Bu nedenselliği kanıtlamaz ama güçlü bir test alanı. Tüm mağazada indirim yerine: en çok satan 2–3 ürüne sınırlı kupon · ikili/üçlü setler · sepet eşiğine bağlı indirim. Amaç ortalama sepeti yeniden 715 ₺ üzerine çıkarmak.</div>
+
+          <div class="blk"><b>4 · Açıklamalardaki satış engellerini kaldır</b><br>En çok satan iki kadın parfümünüzde müşteriler özellikle şunu soruyor: tester var mı · koku notaları ve esans oranı · hangi koku karakterine benziyor · hediye paketi · açılmış parfüm iade edilir mi · aynı gün kargo saati. Bunları açıklamaya ve görsellere eklemek soru sayısını azaltıp dönüşümü artırabilir. Yanıt bekleyen <b>4 yönlendirilmiş soru</b> da hızlıca cevaplanmalı.</div>
+
+          <div class="blk"><b>5 · Kârlılığı koru</b><br>Son 30 günlük net kâr ≈ 112.531 ₺, marj %29,7. Satış artırırken hedef marjı en az %25'te tutmak mantıklı; ciro uğruna kontrolsüz indirim gerekmiyor.</div>
+
+          <div class="blk" style="border-top:1px solid var(--ink-line);padding-top:10px">Ben olsam önce en çok satan iki kadın parfümünün açıklamalarını düzeltir, ardından bir erkek parfümü için 7 günlük reklam testi ve ikili set kampanyası başlatırdım. <b>Başarı ölçütü:</b> günlük siparişi 19'dan 21+ seviyesine, sepeti 715 ₺ üzerine taşımak.</div>
+
+          <div class="src">✓ Hakediş defteri + sipariş verisi + soru kuyruğu + pazar araması birlikte okundu</div>
+        </div>
+      </div>
+      <p class="chatfoot">Gerçek MCP çıktısı. Ürün ve marka adları gizlilik için maskelendi.</p>
+    </div>
+  </div>
+</div></section>
+
+<!-- ══════════ SEKTÖR ŞERİDİ ══════════ -->
+<section class="band band-2" style="padding:34px 0"><div class="wrap" style="text-align:center">
+  <p class="note" style="text-align:left">H10'da burada "Trusted by 4.5M+ Brands" logo duvarı var. Bizde mağaza adları gizli (Kural 2) → sektör rozeti.</p>
+  <p class="eyebrow" style="margin-bottom:14px">Trendyol'da 12 mağazada çalışıyor</p>
+  <div class="sectors"><span>Tekstil</span><span>Ayakkabı</span><span>Bebek</span><span>Kozmetik</span><span>Ev Tekstili</span><span>Yapı Market</span><span>Oto Aksesuar</span></div>
+</div></section>
+
+<!-- ══════════ KANIT ŞERİDİ ══════════ -->
+<section class="band" style="padding:44px 0"><div class="wrap">
+  <p class="note">H10'da burada "Rated 4.5 / 5" var. Bizde puan yok → ölçülmüş 4 gerçek rakam.</p>
+  <div class="proof">
+    <div><div class="n">120.000</div><div class="l">Trendyol'da yayınlanmış cevap</div></div>
+    <div><div class="n">1 dk</div><div class="l">Soru geldikten sonra cevaplanma<br><span style="color:var(--text-low)">isteğe göre ayarlanabilir</span></div></div>
+    <div><div class="n">126.000</div><div class="l">İzlenen değerlendirme</div></div>
+    <div><div class="n">29.500</div><div class="l">Müşteriyi geri getirmek için tanımlanan kupon</div></div>
+  </div>
+</div></section>
+
+<!-- ══════════ SEKMELİ YETENEK ══════════ -->
+<section class="band band-2"><div class="wrap">
+  <p class="note">H10'un 7 sekmeli yetenek bölümünün karşılığı — bizde 6 sekme.</p>
+  <p class="eyebrow"><span class="num">01</span> Ne yapıyor</p>
+  <h2 class="display h2" style="margin-top:12px">Müşteriyle konuştuğunuz<br>her yeri o yönetiyor.</h2>
+
+  <div class="tabs" role="tablist">
+    <button class="tab" role="tab" aria-selected="true" data-p="p1">Soruları cevapla</button>
+    <button class="tab" role="tab" aria-selected="false" data-p="p2">Siparişi çöz</button>
+    <button class="tab" role="tab" aria-selected="false" data-p="p3">Yorumu geri kazan</button>
+    <button class="tab" role="tab" aria-selected="false" data-p="p4">Kârını gör</button>
+    <button class="tab" role="tab" aria-selected="false" data-p="p5">İlanı iyileştir</button>
+    <button class="tab" role="tab" aria-selected="false" data-p="p6">Pazarı araştır</button>
+  </div>
+
+  <div class="panel" id="p1" data-on="true">
+    <div><h3 class="display h3">Ürün sorusu — sizin ağzınızdan</h3>
+      <ul>
+        <li><span class="tick">✦</span><span><b>Mağazanızdaki her köşeyi tanır.</b> Ürününüzü, bedeninizi, renginizi, stoğunuzu bilir.</span></li>
+        <li><span class="tick">✦</span><span><b>"Sanırım" demez.</b> Doğru bedeni söyler, doğru rengi gösterir.</span></li>
+        <li><span class="tick">✦</span><span><b>Bilmediğini uydurmaz</b> — o soruyu size bırakır, siz cevaplarsınız.</span></li>
+        <li><span class="tick">✦</span><span><b>Sizin gibi konuşur.</b> Cevaplar Trendyol'a uygun; geri dönmez.</span></li>
+      </ul></div>
+    <div class="shot">
+      <div class="qq">170 boy 107 kg kaç beden olur</div>
+      <div class="aa">Merhaba! Boy ve kilo ölçülerinize göre hazırladığımız beden tablomuza baktığımızda 60 beden tercih edebilirsiniz 😊</div>
+      <div class="why"><span class="tick">✓</span><span>Mağazanın kendi beden tablosundan hesapladı — tahmin değil.</span></div>
+    </div>
+  </div>
+
+  <div class="panel" id="p2">
+    <div><h3 class="display h3">Sipariş mesajı — kargo, iade, ayıplı ürün</h3>
+      <ul>
+        <li><span class="tick">✦</span><span><b>"Kargom nerede?" sorusuna gerçek cevabı verir.</b> Siparişi görür, nerede olduğunu söyler.</span></li>
+        <li><span class="tick">✦</span><span>Ayıplı, yanlış ya da eksik ürün — <b>hepsini ayrı ayrı ele alır.</b></span></li>
+        <li><span class="tick">✦</span><span>Kızgın müşteriyi <b>kuponla geri getirir.</b> Tutarı siz belirlersiniz.</span></li>
+        <li><span class="tick">✦</span><span>Şikâyet anında <b>satış yapmaya kalkmaz.</b> Önce sorunu çözer.</span></li>
+      </ul></div>
+    <div class="shot">
+      <div class="qq">114•••0188 ben PTT demiştim ama ip ğ kolay gelsin kargoya vermişsiniz. ne zaman getirecekler,</div>
+      <div class="aa">Merhaba! 114•••0188 numaralı siparişinizi kontrol ettik: siparişiniz kargoya verildi, yolda (Kolay Gelsin Marketplace). Tahmini teslimat: 13 Temmuz – 16 Temmuz. Hesabım &gt; Siparişlerim &gt; "Kargom Nerede?" adımından da anlık takip edebilirsiniz. 📦</div>
+      <div class="why"><span class="tick">✓</span><span>Numarayı görüp siparişi Trendyol'dan gerçekten sorguladı — durum, kargo firması ve teslim tarihi gerçek.</span></div>
+    </div>
+  </div>
+
+  <div class="panel" id="p3">
+    <div><h3 class="display h3">1 yıldızlı yorumları 5 yıldıza çeviriyoruz</h3>
+      <ul>
+        <li><span class="tick">✦</span><span><b>Hiçbir yorum cevapsız kalmaz.</b> Kızana "çözelim", memnuna "teşekkürler".</span></li>
+        <li><span class="tick">✦</span><span><b>Yıldıza değil, yazana bakar.</b> Kimin gerçekten kızgın olduğunu anlar.</span></li>
+        <li><span class="tick">✦</span><span>Sorun çözülünce müşteriden <b>yorumunu güncellemesini</b> nazikçe ister.</span></li>
+        <li><span class="tick">✦</span><span>Ve bir <b>kupon</b> bırakır — kızgın müşteri, geri gelen müşteriye dönsün diye.</span></li>
+      </ul></div>
+    <div class="shot">
+      <div class="qq">★☆☆☆☆ &nbsp;<span style="color:var(--text-low)">— ürün ayağıma küçük geldi, iade ettim ama uğraştım</span></div>
+      <div class="aa">Merhaba, yaşattığımız zorluk için üzgünüz. Doğru numarayı birlikte belirleyelim: ayak uzunluğunuzu yazarsanız tam kalıbı söyleyeyim. Bir sonraki siparişinizde kullanmanız için 250 ₺ kupon tanımladık.</div>
+      <div class="why"><span class="tick">✓</span><span>Düşük yıldız tespit edildi → sorun çözüldü → yorumu güncellemesi rica edildi → kupon ile geri getirildi.</span></div>
+    </div>
+  </div>
+
+  <div class="panel" id="p4">
+    <div><h3 class="display h3">Gerçekleşen kâr — tahmin değil</h3>
+      <ul>
+        <li><span class="tick">✦</span><span><b>Tahmin değil, gerçekleşen kâr.</b> Ay sonunda cebinizde ne kaldıysa o.</span></li>
+        <li><span class="tick">✦</span><span><b>Hangi ürün kazandırıyor, hangisi sırtınızda?</b> Tek tek gösterir.</span></li>
+        <li><span class="tick">✦</span><span>Kargo, komisyon, iade, reklam — <b>hepsi hesaba dâhil.</b></span></li>
+        <li><span class="tick">✦</span><span>Dolarla mal alıyorsanız <b>kur da kendiliğinden</b> işler.</span></li>
+      </ul></div>
+    <div class="shot">
+      <div style="font-family:var(--mono);font-size:.78rem;line-height:2.1;color:var(--text-mid)">
+        Brüt satış<span style="float:right;color:var(--text)">████████ ₺</span><br>
+        − Komisyon<span style="float:right">████ ₺</span><br>
+        − Kargo<span style="float:right">████ ₺</span><br>
+        − İade<span style="float:right">████ ₺</span><br>
+        − Ürün maliyeti<span style="float:right">████ ₺</span><br>
+        <span style="color:var(--ember-deep);font-weight:700">= Net kâr<span style="float:right">████ ₺</span></span>
+      </div>
+      <div class="why"><span class="tick">✓</span><span>Gerçek tutarlar gizlilik için maskelendi. Ekranda kuruşu kuruşuna Trendyol hakedişiyle eşleşiyor.</span></div>
+    </div>
+  </div>
+
+  <div class="panel" id="p5">
+    <div><h3 class="display h3">İlan kendini yazar</h3>
+      <ul>
+        <li><span class="tick">✦</span><span><b>Aynı soru 14 kez geldiyse</b> cevabı ilanınıza yazar — bir daha sorulmaz.</span></li>
+        <li><span class="tick">✦</span><span><b>Neyin eksik olduğunu müşteri söyler,</b> o da not alır.</span></li>
+        <li><span class="tick">✦</span><span>Tek fotoğraftan <b>ilan görsellerinizi</b> üretir.</span></li>
+      </ul></div>
+    <div class="shot"><div class="qq">Aynı üründe 3 hafta içinde 14 kez "hangi bedeni almalıyım" sorusu geldi.</div>
+      <div class="aa">Açıklamaya beden tablosu ve "tam kalıptır" ibaresi eklenmesi öneriliyor. Onaylarsanız ilanı güncelleyeyim.</div>
+      <div class="why"><span class="tick">✓</span><span>Öneri gerçek soru yığınından çıkıyor; uygulamaya siz karar veriyorsunuz.</span></div>
+    </div>
+  </div>
+
+  <div class="panel" id="p6">
+    <div><h3 class="display h3">Pazarı araştır</h3>
+      <ul>
+        <li><span class="tick">✦</span><span><b>Müşteri ne arıyor, rakip ne satıyor?</b> İkisini yan yana görürsünüz.</span></li>
+        <li><span class="tick">✦</span><span><b>Talep çok, satıcı az olan yerler</b> — girilecek boşluğu gösterir.</span></li>
+        <li><span class="tick">✦</span><span>Bir ürün gerçekten satıyor mu, <b>yorum sayısı mı şişkin?</b> Ayırt eder.</span></li>
+      </ul></div>
+    <div class="shot"><div style="font-family:var(--mono);font-size:.78rem;line-height:2.1;color:var(--text-mid)">
+      kelime<span style="float:right;color:var(--text)">talep / arz</span><br>
+      ██████████<span style="float:right">yüksek boşluk</span><br>
+      ████████<span style="float:right">dengeli</span><br>
+      ███████████<span style="float:right">doymuş</span>
+    </div>
+    <div class="why"><span class="tick">✓</span><span>Kelime verisi kendi taramamızdan; rakip aracın beyanı değil.</span></div></div>
+  </div>
+</div></section>
+
+<!-- ══════════ MCP BANDI ══════════ -->
+<section class="band band-ink" id="mcp"><div class="wrap">
+  <p class="note">H10'un ana sayfadaki MCP bandının karşılığı. Onlarda: "NEW · HELIUM 10 FOR CLAUDE, CHATGPT, AND CURSOR".</p>
+  <p class="eyebrow">Yeni · Claude, ChatGPT ve Cursor için SellerPilot</p>
+  <h2 class="display h2" style="margin-top:14px;max-width:19ch">Mağazanızı, zaten kullandığınız yapay zekânın içinden yönetin.</h2>
+  <p class="lede" style="margin-top:18px">Panele girmenize gerek yok. Claude'a ya da ChatGPT'ye bağlayın, mağazanızı sorun — cevap tahminden değil, <strong style="color:var(--ink-text)">Trendyol'un size verdiği gerçek veriden</strong> gelir. Yazma yetkisi yok: sadece okur, hiçbir şeyi değiştiremez.</p>
+
+  <div class="mcpcmd">
+    <div><code>"Bugün mağazamda ne oldu?"</code><p>Günün özeti: satış, soru, yorum ve kâr — tek ekranda.</p></div>
+    <div><code>"Kârım neden düştü?"</code><p>Değişimi kalem kalem ayırır: komisyon mu, kargo mu, iade mi.</p></div>
+    <div><code>"Bu kelimede rakiplerim kim?"</code><p>Pazar verisinden rakip, arz ve talep kırılımı.</p></div>
+  </div>
+
+  <div class="toolgrid">
+    <div><h5>Mağazanız · 6 araç</h5><code>trendyol_kar_ozeti</code><code>trendyol_gunluk_satis</code><code>trendyol_urun_karliligi</code><code>trendyol_soru_durumu</code><code>trendyol_veri_kapsami</code><code>trendyol_magaza_listesi</code></div>
+    <div><h5>Teşhis · 3 araç</h5><code>trendyol_gunun_ozeti</code><code>trendyol_neden_degisti</code><code>trendyol_soru_yogun_urunler</code></div>
+    <div><h5>Pazar · 6 araç</h5><code>kelime_ara</code><code>firsat_bul</code><code>urun_ara</code><code>satis_tahmini</code><code>kategori_ozeti</code><code>satici_analizi</code></div>
+  </div>
+  <div class="btnrow"><a class="cta" href="#">SellerPilot MCP'yi keşfedin →</a></div>
+</div></section>
+
+<!-- ══════════ ÜÇ SÜTUN ══════════ -->
+<section class="band"><div class="wrap">
+  <p class="note">H10: "Less complexity. More revenue. Continuous growth." — üç sütun.</p>
+  <h2 class="display h2" style="max-width:20ch">Daha az uğraş. Daha çok satış. Korunan puan.</h2>
+  <div class="cols3" style="margin-top:34px">
+    <div class="card"><p class="k">Uğraşı azaltın</p><h3 class="display h3">Gece 02:47'de kimse beklemiyor</h3><p>Soru, sipariş mesajı ve yorum aynı gece cevaplanıyor. Medyan cevaplama süresi <strong>4 dakika</strong>.</p><a href="#">Soru-Cevap →</a></div>
+    <div class="card"><p class="k">Geliri artırın</p><h3 class="display h3">Her cevap bir satış fırsatı</h3><p>Uygun soruda katalogdan ikinci bir ürün öneriliyor — son 467 cevabın <strong>147'sinde</strong> öneri çıktı.</p><a href="#">Nasıl →</a></div>
+    <div class="card"><p class="k">Puanınızı koruyun</p><h3 class="display h3">Hiçbir 1 yıldız dokunulmadan kalmaz</h3><p>Düşük yıldızlı müşteriye ulaşılıyor, sorun çözülüyor, kuponla geri getiriliyor.</p><a href="#">Değerlendirmeler →</a></div>
+  </div>
+</div></section>
+
+<!-- ══════════ EK3 DÜZELTMESİ ══════════ -->
+<section class="band band-2"><div class="wrap">
+  <p class="note">EK3 düzeltmesi: yatay ray silindi. Sol sütun yapışkan, sağda dikey akış — sayfa tamamen sol hizalı, hiçbir kart kesilmiyor.</p>
+  <div class="answers">
+    <div class="stick">
+      <p class="eyebrow"><span class="num">02</span> Kanıt</p>
+      <h2 class="display h2" style="margin-top:12px">Kurgu değil.<br><span class="ember">Bu hafta verilmiş cevaplar.</span></h2>
+      <p class="lede" style="margin-top:16px">Aşağıdaki her cevap sistem tarafından yazıldı ve Trendyol'da gerçekten yayınlandı. Yazım hataları müşterilere ait — gerçek hayat böyle.</p>
+
+      <div class="statbox">
+        <p class="note" style="margin-bottom:10px">EK4 düzeltmesi: 62/467 bayattı. Payda da yanlıştı — satıcının kendi yazdığı cevaplar sayılıyordu.</p>
+        <div class="big">5.900 / 18.800</div>
+        <p>Sistemin yazdığı son 18.800 cevabın <strong>5.900'ünde</strong> müşteriye katalogdan ikinci bir ürün önerildi. <strong>Her üç cevaptan biri</strong> satış fırsatına döndü.</p>
+        <p class="cite">Son 30 gün · SellerPilot'un yazdığı cevaplar</p>
+      </div>
+    </div>
+
+    <div class="acards">
+      <div class="ac"><div class="top"><span>Sipariş Takibi</span><span>21 Temmuz 2026</span></div>
+        <div class="q">114•••0188 ben PTT demiştim ama ip ğ kolay gelsin kargoya vermişsiniz. ne zaman getirecekler,</div>
+        <div class="a">Merhaba! 114•••0188 numaralı siparişinizi kontrol ettik: siparişiniz kargoya verildi, yolda (Kolay Gelsin Marketplace). Tahmini teslimat: 13 Temmuz – 16 Temmuz. Hesabım &gt; Siparişlerim &gt; "Kargom Nerede?" adımından da anlık takip edebilirsiniz. 📦</div>
+        <div class="n"><span class="tick">✓</span><span>Numarayı görüp siparişi Trendyol'dan gerçekten sorguladı — durum, kargo firması ve teslim tarihi gerçek.</span></div></div>
+
+      <div class="ac"><div class="top"><span>Ayakkabı</span><span>25 Temmuz 2026</span></div>
+        <div class="q">denizde giyinilrmi ıslak kumda</div>
+        <div class="a">Merhaba efendim, bu terliğimiz her ne kadar plaj ve sahil kullanımına uygun olsa da ıslak kumda veya denizde hasır ve tekstil yapısı nedeniyle zorlanabilir 🌊 Deniz kenarında kullanım için tam koruma sağlayan <span class="mask">██████████</span> modelimizi de inceleyebilirsiniz. Mutlu ve sağlıklı günler dilerim :)</div>
+        <div class="n"><span class="tick">✓</span><span>Ürünün sınırını dürüstçe söyledi, satışı kaybetmek yerine doğru ürüne yönlendirdi.</span></div></div>
+
+      <div class="ac"><div class="top"><span>Tekstil</span><span>25 Temmuz 2026</span></div>
+        <div class="q">170 boy 107 kg kaç beden olur</div>
+        <div class="a">Merhaba! Boy ve kilo ölçülerinize göre hazırladığımız beden tablomuza baktığımızda 60 beden tercih edebilirsiniz 😊</div>
+        <div class="n"><span class="tick">✓</span><span>Mağazanın kendi beden tablosundan hesapladı — tahmin değil.</span></div></div>
+
+      <div class="ac"><div class="top"><span>Yapı Market</span><span>22 Temmuz 2026</span></div>
+        <div class="q">mutfak tezganihi boyamak istiyorum kac litre almam lazim</div>
+        <div class="a">Merhaba! Mutfak tezgahınızın boyutu hakkında net bir şey söyleyebilmem için yaklaşık ölçülerini paylaşabilir misiniz? Genellikle mutfak tezgahı ve yoğun temas eden yüzeyler için koruyucu vernikle desteklenen setlerimiz çok daha uzun ömürlü bir kullanım sağlar 🍳✨</div>
+        <div class="n"><span class="tick">✓</span><span>Litre uydurmak yerine ölçü istedi; doğru seti de önerdi.</span></div></div>
+
+      <div class="ac"><div class="top"><span>Bebek</span><span>25 Temmuz 2026</span></div>
+        <div class="q">Kapsamı nedir ben oyun parkı için istiyorum 120x120 uyumlumudur</div>
+        <div class="a">Merhaba, evet bu sinekliğimiz tüm park yatak ve bebek yataklarıyla uyumlu olacak şekilde tasarlanmıştır, oyun parkınız için rahatlıkla kullanabilirsiniz 🍼✨</div>
+        <div class="n"><span class="tick">✓</span><span>Ölçü uyumluluğunu ürün verisinden doğrulayıp net cevap verdi.</span></div></div>
+    </div>
+  </div>
+  <p style="font-size:.78rem;color:var(--text-low);margin-top:26px;text-align:center">Mağaza ve ürün adları gizlilik için maskelendi — cevapların geri kalanı birebir.</p>
+</div></section>
+
+<!-- ══════════ UPSELL ══════════ -->
+<section class="band band-ink"><div class="wrap">
+  <p class="eyebrow"><span class="num">03</span> Satışa çevirme</p>
+  <h2 class="display h2" style="margin-top:12px">Artık 7/24 çalışan bir satışçınız var.</h2>
+  <p class="lede" style="margin-top:18px;font-size:1.3rem;color:var(--ink-text);max-width:26ch;font-weight:600">
+    Upsell'i açan satıcılarımızın satışlarında <span class="ember">%10–15 artış</span> gözlemlenmiştir.</p>
+  <p class="lede" style="margin-top:16px">Sorusu satışa dönebilecek müşteriye doğru ürünü önerir — stokta olmayanı asla, kampanyanız yoksa indirim de yok, kızgın müşteriye satış hiç yok. <strong style="color:var(--ink-text)">Son 18.800 cevabın 5.900'ünde bir öneri çıktı.</strong></p>
+</div></section>
+
+<!-- ══════════ FİYAT ══════════ -->
+<section class="band" id="fiyat"><div class="wrap">
+  <p class="note">İKİ AYRI ÜRÜN, İKİ AYRI FİYAT. Soru-cevap fiyatı DEĞİŞMEDİ (canlı tarife). Muhasebe: aylık 499/799/1.299 · yıllık %25 indirimli 374/599/974 — Melontik'in %37–55 altında (üçte bir değil; kullanıcı kararı, 4 Ağu: "piyasayı bu kadar öldürmeye gerek yok").</p>
+  <p class="eyebrow"><span class="num">04</span> Fiyatlandırma</p>
+  <h2 class="display h2" style="margin-top:12px">Bu bir otomatik cevaplayıcı değil.<br><span class="ember">Müşteri hizmetleri departmanı.</span></h2>
+  <p class="lede" style="margin-top:18px">Rakipler soru cevaplamayı paketlerinin içine bir madde olarak koyuyor. Bizde o işin kendisi: siparişin gerçek kargo durumunu okur, mağazanızın kendi beden tablosundan hesap yapar, stoğu görür, emin olamadığında uydurmaz — size sorar. <strong style="color:var(--text)">Bir yazılım özelliği değil, işe aldığınız bir ekip arkadaşı.</strong></p>
+
+  <div class="scroller"><table class="vs">
+    <thead><tr><th></th><th>Paket içi "AI cevap" özelliği</th><th>SellerPilot</th></tr></thead>
+    <tbody>
+      <tr><td>Neye bakar</td><td>Sadece ilan metnine</td><td><strong>Mağazanızdaki her köşeyi tanır</strong></td></tr>
+      <tr><td>Emin değilse</td><td>Yine de cevaplar</td><td>Uydurmaz — o soruyu size bırakır</td></tr>
+      <tr><td>Satış</td><td>Yok</td><td>Uygun soruda ürün önerir — her üç cevaptan biri</td></tr>
+      <tr><td>Sipariş mesajı</td><td>Kapsam dışı</td><td>Kargo, ayıplı, yanlış ve eksik ürün — kupon dâhil</td></tr>
+      <tr><td>Yorum</td><td>Kapsam dışı</td><td>Hiçbir yorumu cevapsız bırakmaz, kızganı geri kazanır</td></tr>
+      <tr><td>Fiyat mantığı</td><td>Pakete gömülü, ayrıştırılamaz</td><td>Soru hacmine göre şeffaf</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3 class="display h3" style="margin-top:52px">Soru-Cevap — aylık soru hacminize göre</h3>
+  <p style="font-size:.85rem;color:var(--text-low);margin:8px 0 0">Kotanızdan sadece yapay zekânın cevapladığı sorular düşer; size yönlendirilen ve sizin yazdığınız cevaplar ücretsizdir.</p>
+  <div class="scroller"><table class="qatable">
+    <thead><tr><th>Plan</th><th>Aylık soru</th><th>Aylık ücret</th></tr></thead>
+    <tbody>
+      <tr><td>Başlangıç</td><td>100 soru</td><td>1.299 ₺</td></tr>
+      <tr><td>Küçük Esnaf</td><td>300 soru</td><td>2.999 ₺</td></tr>
+      <tr><td>Büyüyen Marka</td><td>1.000 soru</td><td>8.999 ₺</td></tr>
+      <tr><td>Kurumsal</td><td>3.000 soru</td><td>19.999 ₺</td></tr>
+    </tbody>
+  </table></div>
+  <p style="font-size:.78rem;color:var(--text-low);margin-top:10px">Fiyatlara KDV dahil değildir · Tüm planlar 15 gün ücretsiz deneme ile başlar</p>
+
+  <div style="display:flex;align-items:center;flex-wrap:wrap;gap:14px;margin-top:58px">
+    <h3 class="display h3" style="margin:0">Muhasebe — gerçekleşen kâr</h3>
+    <div class="switch"><button id="ay" aria-pressed="true">Aylık</button><button id="yil" aria-pressed="false">Yıllık</button></div>
+    <span class="save">Yıllıkta %25'e varan indirim</span>
+  </div>
+  <p style="font-size:.85rem;color:var(--text-low);margin:10px 0 0">Üç planda da <strong style="color:var(--text)">özellikler aynı</strong>. Kademeyi ayıran tek şey hacim: ürün limiti, sipariş bandı ve mağaza sayısı. <strong style="color:var(--text)">Aynı defteri okuyoruz — yarı fiyatına.</strong></p>
+
+  <div class="plans">
+    <div class="plan">
+      <span class="lim">10.000 Ürün</span><h4>Başlangıç</h4><p class="band-lbl">Aylık 0 – 1.000 sipariş</p>
+      <div class="price"><span data-ay="499 ₺" data-yil="374 ₺">499 ₺</span><small>/ay</small></div>
+      <p class="was">Melontik: <s data-ay="799 ₺" data-yil="599 ₺">799 ₺</s></p>
+      <ul><li><span class="tick">✓</span>1 mağaza</li><li><span class="tick">✓</span>Tüm hakediş geçmişi</li><li><span class="tick">✓</span>12 modülün tamamı</li></ul>
+      <a class="buy" href="#">15 gün ücretsiz dene</a>
+    </div>
+    <div class="plan mid">
+      <span class="lim">20.000 Ürün</span><h4>Gelişmiş</h4><p class="band-lbl">Aylık 1.000 – 5.000 sipariş</p>
+      <div class="price"><span data-ay="799 ₺" data-yil="599 ₺">799 ₺</span><small>/ay</small></div>
+      <p class="was">Melontik: <s data-ay="1.499 ₺" data-yil="999 ₺">1.499 ₺</s></p>
+      <ul><li><span class="tick">✓</span>3 mağaza</li><li><span class="tick">✓</span>Tüm hakediş geçmişi</li><li><span class="tick">✓</span>12 modülün tamamı</li></ul>
+      <a class="buy" href="#">15 gün ücretsiz dene</a>
+    </div>
+    <div class="plan">
+      <span class="lim">30.000 Ürün</span><h4>Kurumsal</h4><p class="band-lbl">Aylık 5.000 – 30.000 sipariş</p>
+      <div class="price"><span data-ay="1.299 ₺" data-yil="974 ₺">1.299 ₺</span><small>/ay</small></div>
+      <p class="was">Melontik: <s data-ay="2.899 ₺" data-yil="1.999 ₺">2.899 ₺</s></p>
+      <ul><li><span class="tick">✓</span>10 mağaza</li><li><span class="tick">✓</span>Tüm hakediş geçmişi</li><li><span class="tick">✓</span>12 modülün tamamı</li></ul>
+      <a class="buy" href="#">15 gün ücretsiz dene</a>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:20px">
+    <p class="k">Üç planda da olanlar</p>
+    <p style="margin:0">Mağaza kârlılık verileri · Hakediş bazlı sipariş kârlılığı · Ürün bazlı net kâr · Maliyet Defteri (Excel yükleme) · Kargo faturası kalem kırılımı · İade zekâsı · İl/bölge bazlı kârlılık · Nakit akışı · Kâr-Zarar tablosu (aylık + CSV) · Komisyon tarifesi kontrolü · Kâr bandı Chrome eklentisi · Kampanya kâr analizi</p>
+  </div>
+</div></section>
+
+<!-- ══════════ KAPANIŞ ══════════ -->
+<section class="band band-ink" style="text-align:center"><div class="wrap">
+  <h2 class="display h2" style="max-width:18ch;margin:0 auto">Bu gece son kez sorulara siz bakın.</h2>
+  <div class="btnrow" style="justify-content:center;margin-top:30px">
+    <a class="cta" href="#">Hemen başlayın</a><a class="btn2" href="#" style="background:transparent;border-color:var(--ink-line);color:var(--ink-text)">Önce konuşalım</a>
+  </div>
+</div></section>
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer id="kunye"><div class="wrap">
+  <p class="note">🔴 Künye bugün canlı sitede HİÇBİR YERDE yok — ölü Footer bileşeninin içinde kalmış. PayTR ve mesafeli satış mevzuatı bunu istiyor.</p>
+  <div class="fgrid">
+    <div><div class="logo" style="color:var(--ink-text);margin-bottom:12px"><svg class="mark" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-label="SellerPilot"><defs><linearGradient id="spg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF6B35"/><stop offset="1" stop-color="#FFBE5C"/></linearGradient></defs><rect width="64" height="64" rx="14" fill="url(#spg2)"/><g transform="translate(12 12) scale(1.6667)"><path fill="#fff" d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></g></svg>SellerPilot</div>
+      <p style="margin:0;max-width:34ch">Trendyol satıcıları için müşteri iletişimi ve gerçekleşen kâr — tek panelde.</p></div>
+    <div><h5>Modüller</h5><ul><li><a href="#">Soru-Cevap</a></li><li><a href="#">Sipariş Soruları</a></li><li><a href="#">Değerlendirmeler</a></li><li><a href="#">Muhasebe</a></li><li><a href="#mcp">SellerPilot MCP</a></li></ul></div>
+    <div><h5>Kaynaklar</h5><ul><li><a href="#">Blog</a></li><li><a href="#">Kurulum</a></li><li><a href="#">SSS</a></li><li><a href="#">Danışmanlık</a></li></ul></div>
+    <div><h5>Yasal</h5><ul><li><a href="#">Mesafeli Satış</a></li><li><a href="#">Gizlilik</a></li><li><a href="#">İptal &amp; İade</a></li><li><a href="#">Ön Bilgilendirme</a></li></ul></div>
+  </div>
+  <p class="kunye"><b>PURELYPRO BADGER KOZMETİK VE DANIŞMANLIK HİZMETLERİ TİCARET LİMİTED ŞİRKETİ</b><br>
+  Bahçelievler Mah. Talatpaşa Cad. Saray Apt. No: 43 İç Kapı No: 34, Bahçelievler / İstanbul<br>
+  Vergi Kimlik No: 7331258700 · MERSİS: 0733125870000001 · info@sellerpilot.cloud</p>
+</div></footer>
+
+<script>
+// mega menü
+var openId = null;
+function closeAll(){
+  document.querySelectorAll('.mega').forEach(function(m){ m.dataset.open = 'false'; });
+  document.querySelectorAll('.navbtn').forEach(function(b){ b.setAttribute('aria-expanded','false'); });
+  openId = null;
+}
+document.querySelectorAll('.navbtn').forEach(function(btn){
+  var id = btn.dataset.menu;
+  function open(){
+    if (openId === id) return;
+    closeAll();
+    var m = document.getElementById('m-' + id);
+    if (m) { m.dataset.open = 'true'; btn.setAttribute('aria-expanded','true'); openId = id; }
+  }
+  btn.addEventListener('mouseenter', open);
+  btn.addEventListener('focus', open);
+  btn.addEventListener('click', function(e){ e.preventDefault(); openId === id ? closeAll() : open(); });
+});
+document.querySelector('header').addEventListener('mouseleave', closeAll);
+document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeAll(); });
+
+// sekmeler
+document.querySelectorAll('.tab').forEach(function(t){
+  t.addEventListener('click', function(){
+    document.querySelectorAll('.tab').forEach(function(x){ x.setAttribute('aria-selected','false'); });
+    document.querySelectorAll('.panel').forEach(function(p){ p.dataset.on = 'false'; });
+    t.setAttribute('aria-selected','true');
+    var p = document.getElementById(t.dataset.p);
+    if (p) p.dataset.on = 'true';
+  });
+});
+
+// aylık / yıllık
+function setCycle(mode){
+  document.getElementById('ay').setAttribute('aria-pressed', mode === 'ay' ? 'true' : 'false');
+  document.getElementById('yil').setAttribute('aria-pressed', mode === 'yil' ? 'true' : 'false');
+  document.querySelectorAll('[data-ay]').forEach(function(el){
+    el.textContent = mode === 'ay' ? el.dataset.ay : el.dataset.yil;
+  });
+}
+document.getElementById('ay').addEventListener('click', function(){ setCycle('ay'); });
+document.getElementById('yil').addEventListener('click', function(){ setCycle('yil'); });
+
+// yapı notları
+var nb = document.getElementById('noteBtn');
+nb.addEventListener('click', function(){
+  var on = document.body.classList.toggle('notes');
+  nb.setAttribute('aria-pressed', on ? 'true' : 'false');
+  nb.textContent = on ? 'Yapı notlarını gizle' : 'Yapı notlarını göster';
+});
+</script>
+
+</body>
+</html>
