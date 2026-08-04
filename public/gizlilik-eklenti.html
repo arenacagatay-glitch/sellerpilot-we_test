@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SellerPilot Chrome Eklentisi Gizlilik Politikası</title>
+  <meta name="description" content="SellerPilot Chrome eklentisinin veri işleme ve gizlilik politikası.">
+  <style>
+    :root { color-scheme: dark; --bg:#0a0c11; --card:#11141b; --text:#f7f7f8; --muted:#a4a8b3; --line:#292e39; --accent:#ff8c42; }
+    * { box-sizing: border-box; }
+    body { margin:0; background:var(--bg); color:var(--text); font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+    main { width:min(780px,calc(100% - 32px)); margin:56px auto; }
+    header { padding:32px; background:linear-gradient(145deg,rgba(255,107,53,.15),rgba(255,190,92,.05)); border:1px solid var(--line); border-radius:20px; }
+    h1 { margin:0 0 10px; font-size:clamp(30px,6vw,48px); line-height:1.08; letter-spacing:-.035em; }
+    h2 { margin:38px 0 12px; font-size:22px; letter-spacing:-.015em; }
+    p, li { color:var(--muted); }
+    strong { color:var(--text); }
+    a { color:#ffb36f; }
+    .meta { margin:0; color:#c7cad1; }
+    .note { margin-top:20px; padding:18px 20px; border-left:3px solid var(--accent); background:var(--card); border-radius:0 12px 12px 0; }
+    table { width:100%; border-collapse:collapse; margin:16px 0 28px; font-size:14px; }
+    th, td { padding:13px 12px; text-align:left; vertical-align:top; border-bottom:1px solid var(--line); }
+    th { color:var(--text); }
+    td { color:var(--muted); }
+    footer { margin-top:48px; padding-top:22px; border-top:1px solid var(--line); color:var(--muted); font-size:14px; }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Chrome Eklentisi Gizlilik Politikası</h1>
+      <p class="meta"><strong>SellerPilot — Trendyol X-Ray</strong><br>Yürürlük tarihi: 4 Ağustos 2026</p>
+    </header>
+
+    <p class="note">SellerPilot, Trendyol'un resmi ürünü değildir ve Trendyol tarafından desteklendiği veya onaylandığı iddia edilmez.</p>
+
+    <h2>1. Kapsam ve amaç</h2>
+    <p>Bu politika, SellerPilot Chrome eklentisinin kullanıcı verilerini nasıl işlediğini açıklar. Eklentinin tek amacı, kullanıcının açık olan Trendyol satıcı, kampanya, soru ve arama sayfalarındaki ilgili bilgileri kâr ve pazar içgörülerine dönüştürüp doğrudan kullanıcıya göstermektir.</p>
+
+    <h2>2. İşlenen bilgiler</h2>
+    <table>
+      <thead><tr><th>Bilgi</th><th>Neden işlenir?</th><th>İşleme yeri</th></tr></thead>
+      <tbody>
+        <tr><td>Mağaza/tenant kimliği ve mağaza adı</td><td>Doğru SellerPilot mağazasıyla işlem yapmak</td><td>Tarayıcı ve SellerPilot hizmeti</td></tr>
+        <tr><td>Erişim ve yenileme belirteçleri</td><td>Ayrı bir eklenti şifresi istemeden SellerPilot oturumunu doğrulamak ve yenilemek</td><td>Tarayıcı; doğrulama sırasında SellerPilot/Supabase</td></tr>
+        <tr><td>Barkod veya model kodu, fiyat, komisyon, teslimat seçimi ve fiyat aralıkları</td><td>Net kâr ve marj hesaplamak</td><td>Trendyol sayfası, tarayıcı ve SellerPilot hesaplama hizmeti</td></tr>
+        <tr><td>Maliyet ve kâr sonuçları</td><td>Kullanıcının ürün bazında karar vermesini sağlamak</td><td>SellerPilot hesaplama hizmeti ve tarayıcı</td></tr>
+        <tr><td>Arama terimi; görünür ürün, fiyat, değerlendirme, sipariş bandı, marka/satıcı ve reklam bilgileri</td><td>X-Ray pazar özeti ve, yapılandırılmışsa, Radar talep/arz metriği göstermek</td><td>Trendyol sayfası ve tarayıcı; arama terimi Radar hizmetine gönderilebilir</td></tr>
+        <tr><td>Cevap bekleyen soru sayısı ve en fazla üç görünür soru metni</td><td>Popup'ta son soru durumunu göstermek</td><td>Yalnızca kullanıcının tarayıcısındaki yerel eklenti deposu</td></tr>
+        <tr><td>Filtreler, görünüm tercihleri, son okuma ve kısa süreli önbellek</td><td>Tercihleri korumak ve gereksiz tekrar isteklerini azaltmak</td><td>Yalnızca kullanıcının tarayıcısındaki yerel eklenti deposu</td></tr>
+      </tbody>
+    </table>
+
+    <h2>3. Bilgilerin kullanımı</h2>
+    <p>Bilgiler yalnızca eklentinin kullanıcıya gösterdiği kâr hesabı, pazar özeti, soru durumu, oturum devamlılığı ve bunlarla doğrudan ilgili güvenlik/işletim amaçları için kullanılır. Eklenti kullanıcı davranışını reklam amacıyla izlemez, kullanıcılar arası profil oluşturmaz ve verileri kredi değerliliği ya da borç verme amacıyla kullanmaz.</p>
+
+    <h2>4. Aktarım ve hizmet sağlayıcılar</h2>
+    <p>Kâr hesabı ve kimlik doğrulama için gereken sınırlı bilgiler SellerPilot'un Supabase tabanlı altyapısına HTTPS üzerinden iletilir. Radar özelliği yapılandırıldığında arama terimi, talep ve rekabet metriğini döndürmek üzere SellerPilot Radar'ın Supabase tabanlı hizmetine gönderilir. Supabase bu kapsamda SellerPilot adına altyapı/hizmet sağlayıcı olarak hareket eder.</p>
+    <p>SellerPilot kullanıcı verilerini satmaz; kişiselleştirilmiş, yeniden hedeflemeli veya ilgi alanına dayalı reklamcılık için paylaşmaz. Veriler yalnızca hizmeti sunmak, yasal yükümlülükleri yerine getirmek, güvenlik ve kötüye kullanım incelemesi yapmak için gerekli olduğu ölçüde aktarılabilir.</p>
+
+    <h2>5. Saklama</h2>
+    <p>Yerel veriler, daha yeni bir okuma ile değiştirilene, kullanıcı Chrome'dan eklenti verilerini temizleyene veya eklentiyi kaldırana kadar kullanıcının Chrome profilinde kalabilir. SellerPilot panelinde oturum kapatıldığında eklenti yerel oturum kaydını temizler.</p>
+    <p>Kâr hesabına gönderilen girdiler sonuç üretmek amacıyla işlenir ve SellerPilot uygulama tablolarında ayrı bir eklenti istek kaydı oluşturmak üzere kullanılmaz. Güvenlik ve hizmet sürekliliği için altyapı sağlayıcılarının sınırlı istek meta verileri ve hata günlükleri kendi saklama politikaları kapsamında tutulabilir.</p>
+
+    <h2>6. Güvenlik</h2>
+    <p>Eklenti Manifest V3 kullanır, uzaktan JavaScript veya WebAssembly indirip çalıştırmaz ve dış hizmetlerle yalnızca HTTPS üzerinden iletişim kurar. Kimlik doğrulama bilgileri herkese açık biçimde paylaşılmaz. Hiçbir yöntem mutlak güvenlik sağlayamadığından, kullanıcıların Chrome profillerini cihaz parolasıyla koruması önerilir.</p>
+
+    <h2>7. Kullanıcının seçenekleri</h2>
+    <ul>
+      <li>Popup'taki ayardan isteğe bağlı Radar anahtarını silebilirsiniz.</li>
+      <li>SellerPilot panelinden çıkış yaparak eklenti oturum kaydının temizlenmesini sağlayabilirsiniz.</li>
+      <li>Chrome eklenti ayarlarından eklentinin site erişimini yönetebilir, eklenti verilerini temizleyebilir veya eklentiyi kaldırabilirsiniz.</li>
+      <li>Verilerinizle ilgili sorular ve talepler için aşağıdaki iletişim adresini kullanabilirsiniz.</li>
+    </ul>
+
+    <h2>8. Chrome Web Store Sınırlı Kullanım</h2>
+    <p>Chrome API'lerinden alınan bilgilerin kullanımı, Sınırlı Kullanım gereklilikleri dahil olmak üzere Chrome Web Store Kullanıcı Verileri Politikası'na uygundur. Veriler yalnızca açıklanan tek amaç ve kullanıcıya dönük özellikleri sağlamak veya iyileştirmek için kullanılır.</p>
+
+    <h2>9. Değişiklikler</h2>
+    <p>Bu politika, eklentinin davranışı veya yasal gereklilikler değiştiğinde güncellenebilir. Önemli veri kullanımı değişiklikleri yürürlüğe girmeden önce mağaza kaydında ve gerektiğinde eklenti arayüzünde açıkça bildirilir.</p>
+
+    <h2>10. İletişim</h2>
+    <p>Gizlilik soruları ve talepleri: <a href="mailto:info@sellerpilot.cloud">info@sellerpilot.cloud</a><br>Web sitesi: <a href="https://sellerpilot.cloud/">sellerpilot.cloud</a></p>
+
+    <footer>© 2026 SellerPilot. Tüm hakları saklıdır.</footer>
+  </main>
+</body>
+</html>
