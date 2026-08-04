@@ -123,7 +123,10 @@ header{position:sticky;top:0;z-index:60;background:rgba(250,250,249,.92);
 .mega{position:absolute;left:0;right:0;top:100%;background:var(--paper);
   border-bottom:1px solid var(--line);box-shadow:0 22px 48px -26px rgba(12,10,9,.3);
   display:none;animation:drop .16s ease}
-.mega[data-open="true"]{display:block}
+.mega[data-open="true"]{display:block;opacity:1}
+/* Animasyon çalışmazsa (azaltılmış hareket tercihi, arka plan sekmesi) menü
+   yine de GÖRÜNÜR kalsın: fill-mode yok, bitiş değerine yapışmıyordu. */
+.mega{animation-fill-mode:forwards}
 @keyframes drop{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
 .megagrid{display:grid;gap:22px 30px;padding:30px 0 34px}
 .m7{grid-template-columns:repeat(4,minmax(0,1fr))}
