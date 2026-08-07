@@ -29,13 +29,13 @@
   <main>
     <header>
       <h1>Chrome Eklentisi Gizlilik Politikası</h1>
-      <p class="meta"><strong>SellerPilot — Trendyol X-Ray</strong><br>Yürürlük tarihi: 4 Ağustos 2026</p>
+      <p class="meta"><strong>SellerPilot — Tek Tuşla Kâr Hesabı</strong><br>Yürürlük tarihi: 7 Ağustos 2026 · Sürüm 0.9.5</p>
     </header>
 
     <p class="note">SellerPilot, Trendyol'un resmi ürünü değildir ve Trendyol tarafından desteklendiği veya onaylandığı iddia edilmez.</p>
 
     <h2>1. Kapsam ve amaç</h2>
-    <p>Bu politika, SellerPilot Chrome eklentisinin kullanıcı verilerini nasıl işlediğini açıklar. Eklentinin tek amacı, kullanıcının açık olan Trendyol satıcı, kampanya, soru ve arama sayfalarındaki ilgili bilgileri kâr ve pazar içgörülerine dönüştürüp doğrudan kullanıcıya göstermektir.</p>
+    <p>Bu politika, SellerPilot Chrome eklentisinin kullanıcı verilerini nasıl işlediğini açıklar. Eklentinin tek amacı, kullanıcının kendi açtığı Trendyol satıcı kampanya, komisyon ve soru sayfalarındaki bilgileri ürün başına net kâr hesabına dönüştürüp doğrudan kullanıcıya göstermektir.</p>
 
     <h2>2. İşlenen bilgiler</h2>
     <table>
@@ -45,17 +45,17 @@
         <tr><td>Erişim ve yenileme belirteçleri</td><td>Ayrı bir eklenti şifresi istemeden SellerPilot oturumunu doğrulamak ve yenilemek</td><td>Tarayıcı; doğrulama sırasında SellerPilot/Supabase</td></tr>
         <tr><td>Barkod veya model kodu, fiyat, komisyon, teslimat seçimi ve fiyat aralıkları</td><td>Net kâr ve marj hesaplamak</td><td>Trendyol sayfası, tarayıcı ve SellerPilot hesaplama hizmeti</td></tr>
         <tr><td>Maliyet ve kâr sonuçları</td><td>Kullanıcının ürün bazında karar vermesini sağlamak</td><td>SellerPilot hesaplama hizmeti ve tarayıcı</td></tr>
-        <tr><td>Arama terimi; görünür ürün, fiyat, değerlendirme, sipariş bandı, marka/satıcı ve reklam bilgileri</td><td>X-Ray pazar özeti ve, yapılandırılmışsa, Radar talep/arz metriği göstermek</td><td>Trendyol sayfası ve tarayıcı; arama terimi Radar hizmetine gönderilebilir</td></tr>
         <tr><td>Cevap bekleyen soru sayısı ve en fazla üç görünür soru metni</td><td>Popup'ta son soru durumunu göstermek</td><td>Yalnızca kullanıcının tarayıcısındaki yerel eklenti deposu</td></tr>
         <tr><td>Filtreler, görünüm tercihleri, son okuma ve kısa süreli önbellek</td><td>Tercihleri korumak ve gereksiz tekrar isteklerini azaltmak</td><td>Yalnızca kullanıcının tarayıcısındaki yerel eklenti deposu</td></tr>
       </tbody>
     </table>
 
-    <h2>3. Bilgilerin kullanımı</h2>
-    <p>Bilgiler yalnızca eklentinin kullanıcıya gösterdiği kâr hesabı, pazar özeti, soru durumu, oturum devamlılığı ve bunlarla doğrudan ilgili güvenlik/işletim amaçları için kullanılır. Eklenti kullanıcı davranışını reklam amacıyla izlemez, kullanıcılar arası profil oluşturmaz ve verileri kredi değerliliği ya da borç verme amacıyla kullanmaz.</p>
+    <h2>3. Bilgilerin kullanımı ve eklentinin sayfada yaptığı işlem</h2>
+    <p>Bilgiler yalnızca eklentinin kullanıcıya gösterdiği kâr hesabı, soru durumu, oturum devamlılığı ve bunlarla doğrudan ilgili güvenlik/işletim amaçları için kullanılır. Eklenti kullanıcı davranışını reklam amacıyla izlemez, kullanıcılar arası profil oluşturmaz ve verileri kredi değerliliği ya da borç verme amacıyla kullanmaz.</p>
+    <p>Eklenti kural olarak sayfayı yalnızca <strong>okur</strong>. Tek istisnası, kullanıcının kendi isteğiyle bastığı <em>"en kârlıyı seç"</em> düğmesidir: bu düğme, kullanıcının belirlediği kâr marjı ölçütüne uyan fiyat aralığının yanındaki <strong>Trendyol'un kendi "Seç" kutusunu işaretler</strong>. Bu işaretleme fiyat değiştirmez ve Trendyol'a gönderilmez; <strong>"Fiyat Güncelle" / "Seçilenleri Güncelle" düğmelerine eklenti asla dokunmaz</strong> — gönderme kararını her zaman kullanıcı, Trendyol'un kendi arayüzünden verir. Ürünün yürürlükteki fiyat aralığına da dokunulmaz.</p>
 
     <h2>4. Aktarım ve hizmet sağlayıcılar</h2>
-    <p>Kâr hesabı ve kimlik doğrulama için gereken sınırlı bilgiler SellerPilot'un Supabase tabanlı altyapısına HTTPS üzerinden iletilir. Radar özelliği yapılandırıldığında arama terimi, talep ve rekabet metriğini döndürmek üzere SellerPilot Radar'ın Supabase tabanlı hizmetine gönderilir. Supabase bu kapsamda SellerPilot adına altyapı/hizmet sağlayıcı olarak hareket eder.</p>
+    <p>Kâr hesabı ve kimlik doğrulama için gereken sınırlı bilgiler SellerPilot'un Supabase tabanlı altyapısına HTTPS üzerinden iletilir. Supabase bu kapsamda SellerPilot adına altyapı/hizmet sağlayıcı olarak hareket eder. Eklenti bunun dışında başka hiçbir sunucuya istek göndermez; <strong>Trendyol'a da hiçbir istek atmaz</strong> — yalnızca kullanıcının zaten açık olan sayfasındaki metni okur.</p>
     <p>SellerPilot kullanıcı verilerini satmaz; kişiselleştirilmiş, yeniden hedeflemeli veya ilgi alanına dayalı reklamcılık için paylaşmaz. Veriler yalnızca hizmeti sunmak, yasal yükümlülükleri yerine getirmek, güvenlik ve kötüye kullanım incelemesi yapmak için gerekli olduğu ölçüde aktarılabilir.</p>
 
     <h2>5. Saklama</h2>
@@ -67,7 +67,6 @@
 
     <h2>7. Kullanıcının seçenekleri</h2>
     <ul>
-      <li>Popup'taki ayardan isteğe bağlı Radar anahtarını silebilirsiniz.</li>
       <li>SellerPilot panelinden çıkış yaparak eklenti oturum kaydının temizlenmesini sağlayabilirsiniz.</li>
       <li>Chrome eklenti ayarlarından eklentinin site erişimini yönetebilir, eklenti verilerini temizleyebilir veya eklentiyi kaldırabilirsiniz.</li>
       <li>Verilerinizle ilgili sorular ve talepler için aşağıdaki iletişim adresini kullanabilirsiniz.</li>
