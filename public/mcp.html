@@ -263,7 +263,7 @@ footer{background:var(--ink);color:var(--ink-mid);padding:48px 0 30px;font-size:
   <p class="eyebrow">Nasıl bağlanır</p>
   <h2 class="rv display h2" style="margin-top:12px;max-width:20ch">Tek bağlantı. Üç farklı çalışma şekli.</h2>
   <div class="flow">
-    <div class="rv flowbox" style="border-color:var(--ember-2)"><h4>SellerPilot MCP</h4><p>Mağazanızın verisi · salt-okuma · 15 araç</p></div>
+    <div class="rv flowbox" style="border-color:var(--ember-2)"><h4>SellerPilot MCP</h4><p>Mağaza + pazar verisi · 33 araç · yazma yetkisi sizde</p></div>
     <div class="arrow">→</div>
     <div class="flowmid">
       <div class="rv flowbox"><h4>Claude</h4><p>Sohbet ederek derin analiz</p></div>
@@ -350,7 +350,7 @@ footer{background:var(--ink);color:var(--ink-mid);padding:48px 0 30px;font-size:
   <p class="lede" style="margin-top:16px">Trendyol'a özel toplanmış satıcı verisi, yapay zekâyla çalışmak üzere kurulmuş. Kullandığınız araçların içinde, satıcı seviyesinde veri.</p>
   <div class="cols3" style="margin-top:34px">
     <div class="rv card"><p class="k">Tek bağlantı</p><h3 class="display h3">Mağaza + pazar, aynı yerde</h3><p>Kâr, sipariş, soru, yorum ve pazar araştırması — hepsi tek entegrasyondan. Araçlar birbirini zincirleyebilir: bir sorunun cevabı diğerine girdi olur.</p></div>
-    <div class="rv card"><p class="k">Salt-okuma</p><h3 class="display h3">Mağazanıza yazmaz</h3><p>Fiyat değiştiremez, ilan güncelleyemez, mesaj gönderemez, stok oynatamaz — sadece okur ve söyler. İsterseniz Görsel Stüdyo üretimini başlatma yetkisi ayrıca açılabilir; o da ilanınıza değil, yalnızca kendi kredinize dokunur.</p></div>
+    <div class="rv card"><p class="k">Yetki sizde</p><h3 class="display h3">Varsayılan salt-okuma</h3><p>Bağlantı kurulduğunda hiçbir şeyi değiştiremez — sadece okur ve söyler. İki anahtar panelde sizde durur: <b>görsel üretsin</b> ve <b>ilanı güncellesin</b>. Açtığınız an sohbetten fotoğraf gönderip başlık, açıklama, ilan görseli, fiyat ve stok değiştirebilirsiniz. Kapattığınız an geri salt-okumaya döner.</p></div>
     <div class="rv card"><p class="k">Standart protokol</p><h3 class="display h3">Claude, ChatGPT, Cursor</h3><p>Anthropic'in açık MCP standardı üzerine kurulu — ekstra entegrasyon zahmeti yok. Kendi ajanınız varsa doğrudan bağlanır.</p></div>
   </div>
 </div></section>
@@ -388,7 +388,12 @@ footer{background:var(--ink);color:var(--ink-mid);padding:48px 0 30px;font-size:
     <div class="ad"><span class="no">6</span>
       <h4>Sorun</h4>
       <p>Yeni bir sohbette <i>“mağazamın son 7 günlük kârı ne?”</i> yazın. Bağlantı çalıştığında panelde satırın durumu <b>“çalışıyor”</b>a döner.</p></div>
+    <div class="ad"><span class="no">7</span>
+      <h4>İsterseniz yazma yetkisini açın</h4>
+      <p>Aynı ekranda <b>“Bağlantı ne yapabilsin?”</b> kartındaki iki anahtar kapalı gelir. Açarsanız sohbete fotoğraf gönderip görsel ürettirebilir, başlık-açıklama-fiyat-stok güncelleyebilirsiniz. <b>Kapalı bırakırsanız bağlantı yalnızca okur.</b></p></div>
   </div>
+
+  <p class="kurnot" style="margin-top:20px">Videoda 7. adım henüz görünmüyor — yazma yetkisi anahtarları videodan sonra eklendi. İlk altı adım birebir aynı.</p>
 
   <div class="kurayrim">
     <div class="cl"><b>Claude:</b> özel bağlayıcı ekleme ücretli planlarda (Pro/Max) açıktır. Takım ve kurumsal hesaplarda bağlayıcıyı önce hesap sahibi ekler, sonra üyeler kendi hesabına bağlar.</div>
@@ -407,8 +412,8 @@ footer{background:var(--ink);color:var(--ink-mid);padding:48px 0 30px;font-size:
   <h2 class="rv display h2" style="text-align:center;margin-top:12px">Bağlanmadan önce merak edilenler</h2>
   <div class="faq">
     <details open><summary>Hangi yapay zekâ araçlarıyla çalışıyor?</summary><p>Claude (masaüstü ve Claude Code), ChatGPT, Codex ve Cursor. MCP standardını destekleyen kendi ajanınız varsa o da doğrudan bağlanır.</p></details>
-    <details><summary>Hangi verileri çekebiliyor?</summary><p>Mağazanızın gerçekleşen kârı, günlük satışı, ürün bazlı kârlılığı, soru durumu ve veri kapsamı; ayrıca pazar tarafında kelime, ürün, kategori ve rakip satıcı verisi.</p></details>
-    <details><summary>Verim güvende mi? Yapay zekâ mağazamı değiştirebilir mi?</summary><p>Hayır. Bağlantı mağazanıza <strong>yazmaz</strong>: fiyat değiştiremez, ilan güncelleyemez, müşteriye mesaj gönderemez, stok oynatamaz. Yalnızca okur. Yetki sizde kalır, istediğiniz an bağlantıyı kesersiniz.</p><p style="margin-top:10px">Tek isteğe bağlı istisna: talep ederseniz <strong>Görsel Stüdyo</strong> üretimini başlatma yetkisi açılır. O da mağazanıza dokunmaz — kendi kredinizden düşerek görsel üretir ve üretilen görsel ilanınıza otomatik yüklenmez, koyma kararı sizde kalır. Bu yetki <strong>varsayılan kapalıdır</strong>.</p></details>
+    <details><summary>Neler yapabiliyor?</summary><p><b>Okuma (her zaman açık):</b> mağazanızın gerçekleşen kârı, günlük satışı, ürün bazlı kârlılığı, soru durumu ve veri kapsamı; ayrıca pazar tarafında kelime, ürün, kategori ve rakip satıcı verisi.</p><p style="margin-top:10px"><b>Yetki açarsanız:</b> sohbete ürün fotoğrafı gönderip <b>tek fotoğraftan 6 ilan görseli</b> ürettirme; başlık, açıklama, ilan görseli, fiyat, stok ve öznitelik güncelleme; kategori ve marka bulup <b>yeni ürün açma</b>. Fotoğrafı sohbette paylaşırsınız, size özel bir yükleme adresi verilir, bıraktığınız an akış devam eder.</p></details>
+    <details><summary>Verim güvende mi? Yapay zekâ mağazamı değiştirebilir mi?</summary><p>Kararı siz verirsiniz. Bağlantı <strong>varsayılan olarak yalnızca okur</strong>: fiyat değiştiremez, ilan güncelleyemez, müşteriye mesaj gönderemez, stok oynatamaz. Bu hâliyle bırakabilirsiniz.</p><p style="margin-top:10px">Panelde iki anahtar var, ikisi de <strong>kapalı gelir</strong>: <strong>“Görsel üretebilsin”</strong> (kendi kredinizden düşerek ilan görseli üretir) ve <strong>“İlanı güncelleyebilsin”</strong> (başlık, açıklama, ilan görseli, fiyat, stok değiştirir; yeni ürün açar). Açtığınız anda ne olabileceği aynı ekranda yazılıdır; istediğiniz an kapatırsınız.</p><p style="margin-top:10px">Yapay zekâ hiçbir değişikliği kendiliğinden yapmaz — her yazma işleminden önce ne değişeceğini size gösterip onay ister. Yanlış fiyat koruması da ayrıca vardır: mevcut fiyattan çok uzak bir rakam, siz açıkça teyit etmedikçe reddedilir. Müşterilerinize mesaj gönderme ve sipariş/iade işlemi yapma yetkisi <strong>hiçbir durumda</strong> yoktur.</p></details>
     <details><summary>Ücreti ne?</summary><p>MCP bağlantısı SellerPilot aboneliğinize dâhildir, ayrıca ücretlendirilmez. 15 günlük ücretsiz denemede de açıktır.</p></details>
     <details><summary>MCP tam olarak nedir?</summary><p>Model Context Protocol — Anthropic'in geliştirdiği açık standart. Yapay zekâ araçlarının dış veri kaynaklarına güvenli ve standart biçimde bağlanmasını sağlar. Her araç için ayrı entegrasyon yazma derdini ortadan kaldırır.</p></details>
     <details><summary>Birden fazla mağaza bağlayabilir miyim?</summary><p>Evet — her mağaza için ayrı bir bağlantı üretirsiniz. Bir bağlantı yalnızca tek mağazanın verisini açar; bu, mağazalarınızın birbirine karışmamasının da güvencesidir.</p></details>
