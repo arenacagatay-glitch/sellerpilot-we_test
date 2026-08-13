@@ -1203,6 +1203,31 @@ footer a:hover{color:var(--ember-2)}
   window.addEventListener('resize',tetik,{passive:true});
   setTimeout(tara,300); setTimeout(tara,1200);
 
+  // ⛔⛔ 13 Ağu 2026 — "FİYATLANDIRMA SAYFASI AÇILMIYOR" BURADAN ÇIKTI.
+  // Kullanıcı menüden Fiyatlandırma'ya (#fiyat) basınca bölüm BOMBOŞ geliyordu.
+  // Ölçüldü (840x987 gerçek görünüm, sellerpilot.cloud/#fiyat): 7 saniye sonra
+  // 35 `.rv` bloğunun HİÇBİRİ açılmamıştı, üç fiyat kartı opacity:0'da kilitli.
+  // Sentetik `scroll` olayı gönderilince anında açıldı → mekanizma sağlam,
+  // onu TETİKLEYEN yoktu.
+  //
+  // Kök sebep: iki yol da bu senaryoyu kapsamıyordu.
+  //   · IntersectionObserver bazı tarayıcı/sekme durumlarında hiç ateşlenmiyor
+  //     (yukarıdaki yedeğin zaten kabul ettiği durum — ölçümde bizim kurduğumuz
+  //     deneme gözlemcisi de 0 kez ateşledi).
+  //   · Yedek `tara` yalnız SCROLL/RESIZE ile çalışıyor. Çapa bağlantısıyla
+  //     gelen kullanıcı KAYDIRMAZ — tarayıcı onu oraya ışınlar. 300/1200 ms'lik
+  //     tikler ise çapa sıçramasından ÖNCE koşuyor (yazı tipi/görsel yüklenince
+  //     düzen kayıyor, sıçrama sonraya kalıyor), o an ekranda hiçbir şey yok.
+  // Sonuç: kaydırmadan gelen ziyaretçi için sayfa kalıcı olarak boş.
+  //
+  // ⚠️ Çapayla gelen ziyaretçi REKLAMDAN GELEN ziyaretçidir — yani tam olarak
+  // parasını verdiğimiz kişi boş sayfa görüyordu.
+  window.addEventListener('load',tetik);              // kaynaklar bitince: çapa yerine oturmuştur
+  window.addEventListener('hashchange',function(){    // menüden #fiyat'a basış
+    setTimeout(tara,60); setTimeout(tara,400);
+  });
+  setTimeout(tara,2500);                              // geç oturan düzen için son tik
+
   // ⚠️ Emniyet ağı SADECE ekrandakileri açar.
   // Eski hâli 6 sn sonra HEPSİNİ açıyordu; kullanıcı aşağı indiğinde animasyon
   // çoktan bitmiş oluyor ve sayfa cansız duruyordu. Kullanıcı fark etti:
