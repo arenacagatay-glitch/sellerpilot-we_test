@@ -869,45 +869,61 @@ footer a:hover{color:var(--ember-2)}
     </tbody>
   </table></div>
 
-  <h3 class="display h3" style="margin-top:52px">Soru-Cevap — aylık soru hacminize göre</h3>
-  <p style="font-size:.85rem;color:var(--text-low);margin:8px 0 0">Kotanızdan sadece yapay zekânın cevapladığı sorular düşer; size yönlendirilen ve sizin yazdığınız cevaplar ücretsizdir.</p>
+  <!-- ══ FİYAT YAPISI · 13 Ağu 2026 · TEK KAYNAK: FIYATLANDIRMA.md ══
+       Üç ayrı hat + Kaptan. Tek merdiven DENENDİ ve kırıldı: soru hacmine
+       bağlanırsa büyük mağaza en ucuz kademeden muhasebe alıyor, mağaza
+       büyüklüğüne bağlanırsa muhasebe için gelen istemediği soru-cevaba
+       para veriyor. Üç modülün alıcısı üç ayrı insan.
+       ⛔ Rakip fiyatıyla üstü çizili karşılaştırma KALDIRILDI — 1/3'e inenin
+       karşısına 1/6'ya inen çıkar. İndirimle değil kapsamla kazanılır.
+       (HTML yorumu kaynağı görüntüleyen herkese açıktır; rakip adı yazma.) -->
+
+  <div style="display:flex;align-items:center;flex-wrap:wrap;gap:14px;margin-top:52px">
+    <h3 class="display h3" style="margin:0">İhtiyacınız olan hattı alın</h3>
+    <div class="switch"><button id="ay" aria-pressed="true">Aylık</button><button id="yil" aria-pressed="false">Yıllık</button></div>
+    <span class="save">Yıllıkta %25 indirim</span>
+  </div>
+  <p style="font-size:.85rem;color:var(--text-low);margin:10px 0 0">Üç hat birbirinden bağımsız çalışır; ister birini alın, ister üçünü birden. Hepsi 15 gün ücretsiz denemeyle başlar.</p>
+
+  <!-- ÜCRETSİZ -->
+  <div class="rv card" style="margin-top:22px">
+    <p class="k">Ücretsiz · süresiz</p>
+    <h4 style="font-family:var(--disp);font-size:1.25rem;margin:6px 0 8px">Kâr Bandı</h4>
+    <p style="margin:0">Chrome eklentisi — Trendyol'un kampanya sayfasında her satırın net kârını yanına yazar; zarar edeceğiniz kampanyayı işaretlemeden önce görürsünüz. Yanında muhasebenin <strong style="color:var(--text)">son 3 aylık</strong> penceresi, 1 mağaza. Kart istemez.</p>
+  </div>
+
+  <!-- HAT A -->
+  <h3 class="display h3" style="margin-top:48px">Ürün Araştırması</h3>
+  <p style="font-size:.85rem;color:var(--text-low);margin:8px 0 0">Ne satacağınızı bulun. Mağaza ya da API bağlantısı gerekmez — <strong style="color:var(--text)">24 saat güncel veri</strong>.</p>
   <div class="scroller"><table class="qatable">
-    <thead><tr><th>Plan</th><th>Aylık soru</th><th>Aylık ücret</th></tr></thead>
+    <thead><tr><th>Plan</th><th>Kim için</th><th>Aylık</th></tr></thead>
     <tbody>
-      <tr><td>Başlangıç</td><td>100 soru</td><td>1.299 ₺</td></tr>
-      <tr><td>Küçük Esnaf</td><td>300 soru</td><td>2.999 ₺</td></tr>
-      <tr><td>Büyüyen Marka</td><td>1.000 soru</td><td>8.999 ₺</td></tr>
-      <tr><td>Kurumsal</td><td>3.000 soru</td><td>19.999 ₺</td></tr>
+      <tr><td>Erken Erişim</td><td>Herkes</td><td><span data-ay="399 ₺" data-yil="299 ₺">399 ₺</span></td></tr>
+      <tr><td>Öğrenci / Yeni Satıcı</td><td>Öğrenci belgesi ya da 6 aydan yeni mağaza</td><td><span data-ay="199 ₺" data-yil="149 ₺">199 ₺</span></td></tr>
     </tbody>
   </table></div>
-  <p style="font-size:.78rem;color:var(--text-low);margin-top:10px">Fiyatlara KDV dahil değildir · Tüm planlar 15 gün ücretsiz deneme ile başlar</p>
+  <p style="font-size:.78rem;color:var(--text-low);margin-top:10px">Ürün veritabanı · Fırsat bulucu · Satış tahmini · Kelime gezgini · Pazar röntgeni · Niyet kümeleri · X-Ray eklentisi<br><strong style="color:var(--text)">Erken Erişim fiyatı</strong> — şimdi girenler bu fiyatta kalır, yeni katılımlarda fiyat artar.</p>
 
-  <div style="display:flex;align-items:center;flex-wrap:wrap;gap:14px;margin-top:58px">
-    <h3 class="display h3" style="margin:0">Muhasebe — gerçekleşen kâr</h3>
-    <div class="switch"><button id="ay" aria-pressed="true">Aylık</button><button id="yil" aria-pressed="false">Yıllık</button></div>
-    <span class="save">Yıllıkta %25'e varan indirim</span>
-  </div>
-  <p style="font-size:.85rem;color:var(--text-low);margin:10px 0 0">Üç planda da <strong style="color:var(--text)">özellikler aynı</strong>. Kademeyi ayıran tek şey hacim: ürün limiti, sipariş bandı ve mağaza sayısı. <strong style="color:var(--text)">Aynı defteri okuyoruz — yarı fiyatına.</strong></p>
+  <!-- HAT B -->
+  <h3 class="display h3" style="margin-top:48px">Muhasebe — gerçekleşen kâr</h3>
+  <p style="font-size:.85rem;color:var(--text-low);margin:10px 0 0">Üç planda da <strong style="color:var(--text)">özellikler aynı</strong>, kota yok. Kademeyi ayıran tek şey aylık sipariş adediniz.</p>
 
   <div class="rv plans">
     <div class="rv plan">
-      <span class="lim">10.000 Ürün</span><h4>Başlangıç</h4><p class="band-lbl">Aylık 0 – 1.000 sipariş</p>
-      <div class="price"><span data-ay="499 ₺" data-yil="374 ₺">499 ₺</span><small>/ay</small></div>
-      <p class="was">Melontik: <s data-ay="799 ₺" data-yil="599 ₺">799 ₺</s></p>
+      <h4>Başlangıç</h4><p class="band-lbl">Aylık 0 – 1.000 sipariş</p>
+      <div class="price"><span data-ay="599 ₺" data-yil="449 ₺">599 ₺</span><small>/ay</small></div>
       <ul><li><span class="tick">✓</span>1 mağaza</li><li><span class="tick">✓</span>Tüm hakediş geçmişi</li><li><span class="tick">✓</span>12 modülün tamamı</li></ul>
       <a class="buy" href="https://app.sellerpilot.cloud/kayit">15 gün ücretsiz dene</a>
     </div>
     <div class="rv plan mid">
-      <span class="lim">20.000 Ürün</span><h4>Gelişmiş</h4><p class="band-lbl">Aylık 1.000 – 5.000 sipariş</p>
-      <div class="price"><span data-ay="799 ₺" data-yil="599 ₺">799 ₺</span><small>/ay</small></div>
-      <p class="was">Melontik: <s data-ay="1.499 ₺" data-yil="999 ₺">1.499 ₺</s></p>
+      <h4>Gelişmiş</h4><p class="band-lbl">Aylık 1.000 – 5.000 sipariş</p>
+      <div class="price"><span data-ay="849 ₺" data-yil="639 ₺">849 ₺</span><small>/ay</small></div>
       <ul><li><span class="tick">✓</span>3 mağaza</li><li><span class="tick">✓</span>Tüm hakediş geçmişi</li><li><span class="tick">✓</span>12 modülün tamamı</li></ul>
       <a class="buy" href="https://app.sellerpilot.cloud/kayit">15 gün ücretsiz dene</a>
     </div>
     <div class="rv plan">
-      <span class="lim">30.000 Ürün</span><h4>Kurumsal</h4><p class="band-lbl">Aylık 5.000 – 30.000 sipariş</p>
-      <div class="price"><span data-ay="1.299 ₺" data-yil="974 ₺">1.299 ₺</span><small>/ay</small></div>
-      <p class="was">Melontik: <s data-ay="2.899 ₺" data-yil="1.999 ₺">2.899 ₺</s></p>
+      <h4>Kurumsal</h4><p class="band-lbl">Aylık 5.000 – 30.000 sipariş</p>
+      <div class="price"><span data-ay="1.990 ₺" data-yil="1.490 ₺">1.990 ₺</span><small>/ay</small></div>
       <ul><li><span class="tick">✓</span>10 mağaza</li><li><span class="tick">✓</span>Tüm hakediş geçmişi</li><li><span class="tick">✓</span>12 modülün tamamı</li></ul>
       <a class="buy" href="https://app.sellerpilot.cloud/kayit">15 gün ücretsiz dene</a>
     </div>
@@ -917,6 +933,64 @@ footer a:hover{color:var(--ember-2)}
     <p class="k">Üç planda da olanlar</p>
     <p style="margin:0">Mağaza kârlılık verileri · Hakediş bazlı sipariş kârlılığı · Ürün bazlı net kâr · Maliyet Defteri (Excel yükleme) · Kargo faturası kalem kırılımı · İade zekâsı · İl/bölge bazlı kârlılık · Nakit akışı · Kâr-Zarar tablosu (aylık + CSV) · Komisyon tarifesi kontrolü · Kâr bandı Chrome eklentisi · Kampanya kâr analizi</p>
   </div>
+
+  <!-- HAT C -->
+  <h3 class="display h3" style="margin-top:48px">Müşteri Hizmetleri</h3>
+  <p style="font-size:.85rem;color:var(--text-low);margin:8px 0 0">Kotanızdan sadece <strong style="color:var(--text)">yapay zekânın yazdığı müşteri cevabı</strong> düşer. Değerlendirme daveti, kupon, hatırlatma, size yönlendirilen sorular ve sizin yazdığınız cevaplar ücretsizdir.</p>
+  <div class="scroller"><table class="qatable">
+    <thead><tr><th>Plan</th><th>Aylık soru</th><th>Mağaza</th><th>Aylık</th></tr></thead>
+    <tbody>
+      <tr><td>Başlangıç</td><td>100 soru</td><td>1</td><td><span data-ay="1.299 ₺" data-yil="974 ₺">1.299 ₺</span></td></tr>
+      <tr><td>Küçük Esnaf</td><td>300 soru</td><td>1</td><td><span data-ay="2.999 ₺" data-yil="2.249 ₺">2.999 ₺</span></td></tr>
+      <tr><td>Büyüyen Marka <em style="font-style:normal;color:var(--ember)">· Operasyon dahil</em></td><td>1.000 soru</td><td>3</td><td><span data-ay="8.999 ₺" data-yil="6.749 ₺">8.999 ₺</span></td></tr>
+      <tr><td>Kurumsal <em style="font-style:normal;color:var(--ember)">· Operasyon + Yapay Zekâ Bağlantısı dahil</em></td><td>3.000 soru</td><td>Sınırsız</td><td><span data-ay="19.999 ₺" data-yil="14.999 ₺">19.999 ₺</span></td></tr>
+    </tbody>
+  </table></div>
+  <p style="font-size:.78rem;color:var(--text-low);margin-top:10px">Kotayı aşarsanız iş kesilmez, işlem başı 8 ₺ faturaya yazılır ve panelde uyarı çıkar.</p>
+
+  <div class="rv card" style="margin-top:20px">
+    <p class="k">Operasyon Modülü · <span data-ay="4.999 ₺" data-yil="3.749 ₺">4.999 ₺</span>/ay</p>
+    <p style="margin:0">Kargosu geciken, ürünü ayıplı çıkan, eksik gönderi alan müşteriyle sizin yerinize yazışır; kargonun nerede olduğunu bilir, sorunu çözer, gerektiğinde kuponu kendisi verir. Düşük yıldız veren müşteriye ulaşır, memnun eder, puanınızı geri kazandırır. <strong style="color:var(--text)">Gece de çalışan müşteri hizmetleri departmanınız.</strong><br><span style="color:var(--text-low)">Başlangıç ve Küçük Esnaf'ın üstüne eklenir; Büyüyen Marka ve Kurumsal'da zaten dahildir.</span></p>
+  </div>
+
+  <!-- EKLENTİLER -->
+  <h3 class="display h3" style="margin-top:48px">Mağazanızı konuşarak yönetin</h3>
+  <div class="cols3" style="margin-top:18px">
+    <div class="rv card">
+      <p class="k">Yapay Zekâ Bağlantısı · <span data-ay="1.499 ₺/ay" data-yil="yıllıkta ücretsiz">1.499 ₺/ay</span></p>
+      <p style="margin:0">Kendi Claude ya da ChatGPT'nizden mağazanızı sorarsınız: kârınız, satışınız, iadeleriniz, cevap bekleyen sorularınız, pazar verisi. Panele girip rapor aramazsınız.<br><span style="color:var(--text-low)">Kurumsal ve Kaptan 4'te dahildir · <strong style="color:var(--text)">yıllık ödeyen her müşteride ücretsizdir</strong>.</span></p>
+    </div>
+    <div class="rv card">
+      <p class="k">İlan Stüdyosu · 45.000 ₺ + KDV · ömür boyu</p>
+      <p style="margin:0"><strong style="color:var(--text)">Ajansa her ürün için ödediğinizi bir kez ödeyin, ömür boyu sizin olsun.</strong> Telefonla ürünün fotoğrafını çekin, yapay zekânıza "bunu Trendyol'a aç" deyin. Görseli o üretir; kategoriyi bulan, öznitelikleri dolduran, başlığı ve açıklamayı yazan, fiyatı ve stoğu giren, ilanı açan taraf SellerPilot olur.<br><span style="color:var(--text-low)">Tek seferlik ödeme, aylık abonelik gerekmez · sınırsız ürün, süre sınırı yok.</span></p>
+    </div>
+  </div>
+
+  <!-- KAPTAN -->
+  <h3 class="display h3" style="margin-top:48px">Kaptan — üçü bir arada</h3>
+  <p style="font-size:.85rem;color:var(--text-low);margin:8px 0 0">Tek kural: <strong style="color:var(--text)">en pahalı hattınızın üstüne 1.000 ₺ ekleyin, diğer iki hat dahil olsun.</strong></p>
+  <div class="rv plans">
+    <div class="rv plan">
+      <h4>Kaptan 2</h4><p class="band-lbl">300 soru · üç hat</p>
+      <div class="price"><span data-ay="3.999 ₺" data-yil="2.999 ₺">3.999 ₺</span><small>/ay</small></div>
+      <ul><li><span class="tick">✓</span>Ürün Araştırması</li><li><span class="tick">✓</span>Muhasebe · Gelişmiş</li><li><span class="tick">✓</span>Müşteri Hizmetleri · 300 soru</li></ul>
+      <a class="buy" href="https://app.sellerpilot.cloud/kayit">15 gün ücretsiz dene</a>
+    </div>
+    <div class="rv plan mid">
+      <h4>Kaptan 3</h4><p class="band-lbl">1.000 soru · Operasyon dahil</p>
+      <div class="price"><span data-ay="9.999 ₺" data-yil="7.499 ₺">9.999 ₺</span><small>/ay</small></div>
+      <ul><li><span class="tick">✓</span>Ürün Araştırması</li><li><span class="tick">✓</span>Muhasebe · Kurumsal</li><li><span class="tick">✓</span>Operasyon Modülü</li></ul>
+      <a class="buy" href="https://app.sellerpilot.cloud/kayit">15 gün ücretsiz dene</a>
+    </div>
+    <div class="rv plan">
+      <h4>Kaptan 4</h4><p class="band-lbl">3.000 soru · sınırsız mağaza</p>
+      <div class="price"><span data-ay="20.999 ₺" data-yil="15.749 ₺">20.999 ₺</span><small>/ay</small></div>
+      <ul><li><span class="tick">✓</span>Her şey dahil</li><li><span class="tick">✓</span>Yapay Zekâ Bağlantısı</li><li><span class="tick">✓</span>Telefonla öncelikli destek</li></ul>
+      <a class="buy" href="https://app.sellerpilot.cloud/kayit">15 gün ücretsiz dene</a>
+    </div>
+  </div>
+
+  <p style="font-size:.78rem;color:var(--text-low);margin-top:18px">Fiyatlara KDV dahil değildir · Tüm planlar 15 gün ücretsiz deneme ile başlar · Yıllık ödemede %25 indirim</p>
 </div></section>
 
 <!-- ══════════ HEDEFİMİZ VE MİSYONUMUZ ══════════ -->
