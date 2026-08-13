@@ -1222,11 +1222,34 @@ footer a:hover{color:var(--ember-2)}
   //
   // ⚠️ Çapayla gelen ziyaretçi REKLAMDAN GELEN ziyaretçidir — yani tam olarak
   // parasını verdiğimiz kişi boş sayfa görüyordu.
-  window.addEventListener('load',tetik);              // kaynaklar bitince: çapa yerine oturmuştur
+  window.addEventListener('load',tetik);              // kaynaklar bitince
   window.addEventListener('hashchange',function(){    // menüden #fiyat'a basış
     setTimeout(tara,60); setTimeout(tara,400);
   });
-  setTimeout(tara,2500);                              // geç oturan düzen için son tik
+
+  // ⛔ TEK BAŞINA `load` + `hashchange` YETMEDİ — ölçüldü (13 Ağu, canlı):
+  // yama yayına girdikten sonra `#fiyat` ile girişte açılan blok sayısı
+  // 0 → 1 oldu ama fiyat başlığı ve üç kart hâlâ opacity:0 kaldı. İki sebep:
+  //   · `hashchange` İLK YÜKLEMEDE ateşlenmez (adres çubuğuna #fiyat yazıp
+  //     giren = reklamdan gelen kişi tam da bu yoldan geliyor);
+  //   · çapa sıçraması `load`'dan SONRAYA kayabiliyor — yazı tipi ve görseller
+  //     oturunca düzen değişiyor, tarayıcı konumu geç düzeltiyor.
+  // Yani hangi ANDA tarayacağımızı tahmin etmek yanlış kurulmuş bir soru.
+  //
+  // ⚠️ Zamana değil KONUMA bak: kaydırma konumu her değiştiğinde tara.
+  // Olay dinleyicisi kullanılmıyor — çapa sıçraması `scroll` olayı
+  // üretmeyebiliyor (bu arızanın ta kendisi). requestAnimationFrame de
+  // kullanılmıyor: IntersectionObserver'ın ateşlenmediği ortamlarda rAF de
+  // güvenilmez (yukarıdaki yedeğin doğduğu desen). Sade zamanlayıcı, 8 saniye
+  // boyunca 250 ms'de bir = 32 çalışma, sonra kendini kapatır.
+  // Koşul YOK: her tikte tara. "scrollY değişti mi" diye bakmak, yazı tipi
+  // oturunca konum aynı kalıp ELEMANLARIN kaydığı durumu kaçırırdı.
+  var tikSayaci=0;
+  var yerlesmeIzleyici=setInterval(function(){
+    tara();
+    if(++tikSayaci>=32) clearInterval(yerlesmeIzleyici);
+  },250);
+  tara();                                             // ilk kare
 
   // ⚠️ Emniyet ağı SADECE ekrandakileri açar.
   // Eski hâli 6 sn sonra HEPSİNİ açıyordu; kullanıcı aşağı indiğinde animasyon
