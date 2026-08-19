@@ -33,8 +33,28 @@ if (!existsSync(yeni))  throw new Error('dist/anasayfa.html yok — public/anasa
 // 1) SPA kabuğunu app.html olarak sakla
 await copyFile(spa, spaHedef);
 
-// 2) Yeni ana sayfayı index.html'in yerine koy
-await copyFile(yeni, spa);
+// Yorum ve iç not temizleme fonksiyonu (HTML / JS / CSS)
+function minifiEt(html) {
+  // HTML yorumlarını temizle
+  let temiz = html.replace(/<!--(?!\[if)[\s\S]*?-->/g, '');
+  // script içindeki satır içi ve blok yorumları temizle (URL'leri bozmadan)
+  temiz = temiz.replace(/<script([^>]*)>([\s\S]*?)<\/script>/g, (_, attrs, code) => {
+    const lines = code.split('\n');
+    const cleanedLines = lines.filter(l => !l.trim().startsWith('//'));
+    const noBlockComments = cleanedLines.join('\n').replace(/\/\*[\s\S]*?\*\//g, '');
+    return `<script${attrs}>${noBlockComments}</script>`;
+  });
+  // style içindeki CSS yorumlarını temizle
+  temiz = temiz.replace(/<style([^>]*)>([\s\S]*?)<\/style>/g, (_, attrs, css) => {
+    return `<style${attrs}>${css.replace(/\/\*[\s\S]*?\*\//g, '')}</style>`;
+  });
+  return temiz;
+}
+
+// 2) Yeni ana sayfayı oku, temizle ve index.html'in yerine koy
+const hamYeni = await readFile(yeni, 'utf8');
+const temizYeni = minifiEt(hamYeni);
+await writeFile(spa, temizYeni, 'utf8');
 
 // 3) Geri oku ve doğrula — sessiz başarısızlık olmasın
 const sonuc = await readFile(spa, 'utf8');

@@ -14,10 +14,7 @@
 <body>
 
 <style>
-/* ═══════════════════════════════════════════════════════════
-   SellerPilot "Ink & Ember" — token'lar 
-   Tek temalı: aydınlık kâğıt zemin + koyu mürekkep bantlar.
-   ═══════════════════════════════════════════════════════════ */
+
 :root{
   --paper:#FAFAF9; --paper-2:#F4F4F3; --line:#E7E5E4; --line-2:#D6D3D1;
   --text:#0C0A09; --text-mid:#57534E; --text-low:#79716B;
@@ -38,7 +35,7 @@ img{max-width:100%}
 a{color:inherit}
 
 .wrap{max-width:1440px;margin:0 auto;padding-inline:clamp(24px, -49.1429px + 9.52381vw, 88px)}
-@media(max-width:767px){.wrap{padding-inline:16px} /* mobil */}
+@media(max-width:767px){.wrap{padding-inline:16px} }
 .display{font-family:var(--disp);font-weight:700;letter-spacing:-.04em;line-height:1.03;
   text-wrap:balance;margin:0}
 .h1{font-size:clamp(2.4rem,1.4rem + 3.6vw,4.1rem)}
@@ -55,16 +52,16 @@ a{color:inherit}
 .band-ink .ember{color:var(--ember-2)}
 .band-2{background:var(--paper-2)}
 
-/* ── duyuru şeridi ── */
+
 .annbar{display:block;text-decoration:none;background:var(--ink);color:var(--ink-text);
   padding:11px 0;font-size:.85rem;text-align:center;border-bottom:1px solid var(--ink-line)}
-.annbar .wrap{display:block}   /* <span> satır içi olduğu için max-width+auto margin işlemiyordu */
+.annbar .wrap{display:block}   
 .annbar b{color:var(--ember-2);font-weight:750;letter-spacing:.03em}
 .annbar em{font-style:normal;font-weight:650;text-decoration:underline;text-underline-offset:3px;
   margin-left:5px;white-space:nowrap}
 .annbar:hover em{color:var(--ember-2)}
 
-/* ── HEADER + MEGA MENÜ ── */
+
 header{position:sticky;top:0;z-index:60;background:rgba(250,250,249,.92);
   backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
 .nav{display:flex;align-items:center;gap:26px;height:66px}
@@ -88,7 +85,7 @@ header{position:sticky;top:0;z-index:60;background:rgba(250,250,249,.92);
 .cta:hover{background:#9A3412}
 
 
-/* ═══ Mobil menü — 900px altında navlinks gizleniyor, yerine bu geliyor ═══ */
+
 .mnav{display:none;background:none;border:1px solid var(--line);border-radius:9px;
   padding:8px 10px;cursor:pointer;color:var(--text);align-items:center;gap:7px;font:inherit;
   font-size:.82rem;font-weight:600}
@@ -124,8 +121,7 @@ header{position:sticky;top:0;z-index:60;background:rgba(250,250,249,.92);
   border-bottom:1px solid var(--line);box-shadow:0 22px 48px -26px rgba(12,10,9,.3);
   display:none;animation:drop .16s ease}
 .mega[data-open="true"]{display:block;opacity:1}
-/* Animasyon çalışmazsa (azaltılmış hareket tercihi, arka plan sekmesi) menü
-   yine de GÖRÜNÜR kalsın: fill-mode yok, bitiş değerine yapışmıyordu. */
+
 .mega{animation-fill-mode:forwards}
 @keyframes drop{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
 .megagrid{display:grid;gap:22px 30px;padding:30px 0 34px}
@@ -144,14 +140,12 @@ header{position:sticky;top:0;z-index:60;background:rgba(250,250,249,.92);
   background:var(--line);color:var(--text-low);border-radius:5px;padding:2px 6px;margin-left:6px;vertical-align:1px}
 .pill.new{background:linear-gradient(135deg,var(--ember),var(--ember-2));color:#fff}
 
-/* ── HERO ── */
-/* ═══ HERO ═══ */
-/* Açılış AÇIK zeminde kalır — güven veren beyaz. Koyu panel denendi ve
-   kullanıcı reddetti (4 Ağu): "beyaz güven veren bir açılıştı, siyah yapmışsın".
-   Zemin farkını hemen alttaki koyu telefon bandı zaten veriyor. */
+
+
+
 .hero{padding:clamp(44px, 5.5vw, 96px) 0 clamp(52px, 6vw, 104px)}
 
-/* İç ızgara — flex; 1440'ta 750/395 kilitli */
+
 .herogrid{display:flex;flex-direction:column;gap:clamp(32px,4vw,60px);align-items:stretch}
 @media(min-width:768px){
   .herogrid{flex-direction:row;align-items:center;
@@ -178,14 +172,14 @@ header{position:sticky;top:0;z-index:60;background:rgba(250,250,249,.92);
 .btn2:hover{border-color:var(--text-low)}
 .fineprint{font-size:.76rem;color:var(--text-low);margin:13px 0 0}
 
-/* ── MCP sohbet kutusu ── */
-/* ═══ MCP sohbeti ═══ */
+
+
 .chat{background:linear-gradient(135deg,#0F0F1A,#171A26);
   border:1px solid rgba(255,255,255,.10);border-radius:clamp(16px,3.2vw,24px);
   padding:clamp(10px,2.4cqi,14px);display:flex;flex-direction:column;
   width:100%;max-width:395px;margin-inline:auto;
   aspect-ratio:395/356;
-  container-type:inline-size;           /* iç metin ekrana değil KUTUYA göre ölçeklenir */
+  container-type:inline-size;           
   box-shadow:0 0 37px rgba(255,107,53,.10),0 18px 74px rgba(0,0,0,.7),
              inset 0 1.5px 0 rgba(255,255,255,.05);
   overflow:hidden}
@@ -216,7 +210,7 @@ header{position:sticky;top:0;z-index:60;background:rgba(250,250,249,.92);
 .chat .msg.sp{max-width:100%}
 @media(prefers-reduced-motion:reduce){.msg{opacity:1;transform:none;transition:none}}
 
-/* ── mevcut hero: telefon + uçuşan kartlar ── */
+
 .phonewrap{position:relative;display:flex;flex-direction:column;align-items:center;
   padding:26px 0 8px;isolation:isolate}
 .phone{position:relative;width:min(300px,86%);background:#0E1118;border:1px solid var(--ink-line);
@@ -253,16 +247,16 @@ header{position:sticky;top:0;z-index:60;background:rgba(250,250,249,.92);
 @media(max-width:900px){.float{position:static;margin:8px auto 0}.phonewrap{padding-top:8px}}
 
 
-/* ═══ HAREKETLER ═══ */
-/* Kaydırma açılışı (.rv/.in) */
-/* Apple tadı: expo-out eğrisi, biraz daha uzun yol, hafif ölçek + blur çözülmesi */
+
+
+
 .rv{opacity:0;transform:translateY(26px) scale(.985);filter:blur(6px);
   transition:opacity .9s cubic-bezier(.16,1,.3,1),
              transform .9s cubic-bezier(.16,1,.3,1),
              filter .9s cubic-bezier(.16,1,.3,1);
   transition-delay:var(--gecikme,0ms);will-change:opacity,transform}
 .rv.in{opacity:1;transform:none;filter:none}
-/* kardeşler sırayla açılsın — tek blok hâlinde zıplamasın */
+
 .cols3 > .rv:nth-child(2){--gecikme:90ms}
 .cols3 > .rv:nth-child(3){--gecikme:180ms}
 .plans > .rv:nth-child(2){--gecikme:90ms}
@@ -272,7 +266,7 @@ header{position:sticky;top:0;z-index:60;background:rgba(250,250,249,.92);
 .acards > .rv:nth-child(4){--gecikme:210ms}
 .acards > .rv:nth-child(5){--gecikme:280ms}
 
-/* Telefon sahnesi: turuncu ışıma + ızgara  */
+
 .phone-stage{position:relative;padding:40px 24px;border-radius:2rem;
   background-image:
     radial-gradient(circle at 50% 42%, rgba(255,107,53,.16) 0%, rgba(255,107,53,0) 62%),
@@ -281,7 +275,7 @@ header{position:sticky;top:0;z-index:60;background:rgba(250,250,249,.92);
   background-size:100% 100%,44px 44px,44px 44px}
 .phone{background:#0D0F16;border:1px solid rgba(255,255,255,.12);border-radius:2.6rem;
   box-shadow:0 0 0 6px rgba(255,255,255,.03),0 40px 80px -30px rgba(0,0,0,.8)}
-/* Yüzen rozetler — üç farklı süre ve gecikme (satır 214-217) */
+
 .float-chip{position:absolute;display:flex;align-items:center;gap:.6rem;
   background:rgba(18,21,29,.72);border:1px solid rgba(255,255,255,.12);
   backdrop-filter:blur(10px);border-radius:1rem;padding:.6rem .9rem;
@@ -290,10 +284,10 @@ header{position:sticky;top:0;z-index:60;background:rgba(250,250,249,.92);
 .bob2{animation:v2bob 7.5s ease-in-out 1.2s infinite}
 .bob3{animation:v2bob 8.5s ease-in-out 2.1s infinite}
 @keyframes v2bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
-/* Mesaj girişi (satır 219-220) */
+
 .msg-in{animation:v2msg .55s cubic-bezier(.22,1,.36,1) both}
 @keyframes v2msg{from{opacity:0;transform:translateY(12px) scale(.98)}to{opacity:1;transform:none}}
-/* "yazıyor" noktaları (satır 221-227) */
+
 .ptyping{display:inline-flex;gap:5px;align-items:center;padding:10px 0}
 .ptyping span{width:5px;height:5px;border-radius:50%;background:var(--ink-mid);
   display:inline-block;animation:v2typ 1.1s ease-in-out infinite}
@@ -305,7 +299,7 @@ header{position:sticky;top:0;z-index:60;background:rgba(250,250,249,.92);
   *{animation:none!important;scroll-behavior:auto!important}
 }
 
-/* ── sektör + kanıt şeritleri ── */
+
 .sectors{display:flex;flex-wrap:wrap;gap:9px;justify-content:center}
 .sectors span{font-size:.78rem;font-weight:600;letter-spacing:.04em;color:var(--text-mid);
   border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 14px}
@@ -316,7 +310,7 @@ header{position:sticky;top:0;z-index:60;background:rgba(250,250,249,.92);
   font-size:clamp(1.7rem,1.2rem + 1.6vw,2.4rem);font-variant-numeric:tabular-nums;line-height:1}
 .proof .l{font-size:.79rem;color:var(--text-mid);margin-top:7px;line-height:1.45}
 
-/* ── sekmeler ── */
+
 .tabs{display:flex;gap:6px;flex-wrap:wrap;margin:26px 0 30px}
 .tab{background:#fff;border:1px solid var(--line);font:inherit;font-size:.83rem;font-weight:580;
   padding:8px 15px;border-radius:999px;cursor:pointer;color:var(--text-mid)}
@@ -339,7 +333,7 @@ header{position:sticky;top:0;z-index:60;background:rgba(250,250,249,.92);
 .navmcp{display:inline-flex;align-items:center;gap:7px}
 .npill{font-size:.62rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;
   padding:2px 7px;border-radius:999px;color:#fff;background:linear-gradient(135deg,#FF6B35,#FFBE5C)}
-/* ── MCP bandı ── */
+
 .mcpcmd{display:grid;gap:11px;margin-top:26px}
 .mcpcmd div{display:flex;gap:13px;align-items:flex-start;border:1px solid var(--ink-line);
   border-radius:12px;padding:13px 15px;background:var(--ink-2)}
@@ -351,7 +345,7 @@ header{position:sticky;top:0;z-index:60;background:rgba(250,250,249,.92);
 .toolgrid code{display:block;font-family:var(--mono);font-size:.73rem;color:var(--ink-mid);
   line-height:1.9;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
-/* ── üç sütun / segment ── */
+
 .cols3{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(18px,2.4vw,32px)}
 .card{background:#fff;border:1px solid var(--line);border-radius:15px;padding:24px}
 .band-ink .card{background:var(--ink-2);border-color:var(--ink-line)}
@@ -362,7 +356,7 @@ header{position:sticky;top:0;z-index:60;background:rgba(250,250,249,.92);
 .card a{display:inline-block;margin-top:14px;font-size:.85rem;font-weight:620;color:var(--ember-deep);text-decoration:none}
 .card a:hover{text-decoration:underline}
 
-/* ── EK3 düzeltmesi: yapışkan sol + dikey akış ── */
+
 .answers{display:grid;grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr);gap:clamp(28px,4vw,64px);align-items:start}
 .stick{position:sticky;top:96px}
 .acards{display:flex;flex-direction:column;gap:14px;max-width:36rem}
@@ -381,7 +375,7 @@ header{position:sticky;top:0;z-index:60;background:rgba(250,250,249,.92);
 .statbox .cite{font-family:var(--mono);font-size:.7rem;color:var(--text-low);margin-top:12px;
   border-top:1px solid var(--line);padding-top:10px}
 
-/* ── fiyat ── */
+
 .switch{display:inline-flex;background:var(--paper-2);border:1px solid var(--line);border-radius:999px;padding:4px;gap:3px}
 .switch button{background:none;border:0;font:inherit;font-size:.84rem;font-weight:600;padding:7px 17px;
   border-radius:999px;cursor:pointer;color:var(--text-mid)}
@@ -403,19 +397,14 @@ header{position:sticky;top:0;z-index:60;background:rgba(250,250,249,.92);
 .plan .buy{margin-top:18px;text-align:center;background:var(--ink);color:var(--ink-text);
   text-decoration:none;font-size:.86rem;font-weight:640;padding:11px;border-radius:10px}
 .plan.mid .buy{background:var(--ember-deep)}
-/* ── fiyat · 13 Ağu 2026 denetimi (FIYATLANDIRMA.md §12) ──
-   Üç şey eklendi: ① her fiyatın altında yıllık peşin toplam, ② her hattın
-   başında "kim için" satırı, ③ ücretsiz kapı için ayrı, daha ağır bir kart.
-   Sebep: fiyat bölümü doğruydu ama satıcı hangi hattın kendisi olduğunu
-   tabloya bakmadan söyleyemiyordu — §8.3'ün kendi kuralı. */
+
 .hatbas{margin-top:56px;padding-top:26px;border-top:1px solid var(--line)}
 .hatbas .no{font-family:var(--mono);font-size:.72rem;letter-spacing:.13em;color:var(--ember-deep);
   text-transform:uppercase;display:block;margin-bottom:7px}
 .hatbas h3{margin:0}
 .hatbas .kim{font-size:.92rem;color:var(--text-mid);margin:9px 0 0;max-width:60ch;line-height:1.6}
 .hatbas .kim b{color:var(--text)}
-/* Yıllık sekmede peşin çekilecek toplam — "299 ₺/ay" görüp 3.588 ₺ ödememesi için.
-   Aylık sekmede gizlenir (o modda peşin toplam diye bir şey yok). */
+
 .yiltop{font-size:.75rem;color:var(--text-low);margin:3px 0 0;font-variant-numeric:tabular-nums}
 body[data-cycle="ay"] .yiltop{visibility:hidden}
 .freecard{background:linear-gradient(180deg,#fff,var(--paper-2));border:1px solid var(--line-2);
@@ -440,7 +429,7 @@ body[data-cycle="ay"] .yiltop{visibility:hidden}
 .qatable td:last-child,.qatable th:last-child{text-align:right;font-variant-numeric:tabular-nums;font-weight:640}
 .scroller{overflow-x:auto}
 
-/* ── karşılaştırma ── */
+
 .vs{width:100%;border-collapse:collapse;font-size:.88rem;margin-top:22px}
 .vs th,.vs td{padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top;text-align:left}
 .vs thead th{font-size:.71rem;letter-spacing:.11em;text-transform:uppercase;color:var(--text-low)}
@@ -448,7 +437,7 @@ body[data-cycle="ay"] .yiltop{visibility:hidden}
 .vs td:first-child{color:var(--text-low);width:22%}
 .vs td:last-child{font-weight:560}
 
-/* ── footer ── */
+
 footer{background:var(--ink);color:var(--ink-mid);padding:56px 0 34px;font-size:.86rem}
 .fgrid{display:grid;grid-template-columns:1.3fr repeat(3,1fr);gap:30px}
 footer h5{color:var(--ink-text);font-size:.72rem;letter-spacing:.13em;text-transform:uppercase;margin:0 0 13px}
@@ -471,12 +460,12 @@ footer a:hover{color:var(--ember-2)}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 
-<!-- ══════════ DUYURU ŞERİDİ ══════════ -->
+
 <a class="annbar" href="/yeni-mcp.html">
   <span class="wrap"><b>YENİ:</b> SellerPilot MCP yayında. Yapay zekâ araçlarınızı Trendyol verinize bağlayın. <em>→ Daha fazlası</em></span>
 </a>
 
-<!-- ══════════ HEADER ══════════ -->
+
 <header>
   <div class="wrap nav">
     <div class="logo"><svg class="mark" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-label="SellerPilot"><defs><linearGradient id="spg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF6B35"/><stop offset="1" stop-color="#FFBE5C"/></linearGradient></defs><rect width="64" height="64" rx="14" fill="url(#spg)"/><g transform="translate(12 12) scale(1.6667)"><path fill="#fff" d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></g></svg>SellerPilot</div>
@@ -496,7 +485,7 @@ footer a:hover{color:var(--ember-2)}
     </div>
   </div>
 
-  <!-- 7 sütun -->
+  
   <div class="mega" id="m-urun">
     <div class="wrap">
       <div class="megagrid m7">
@@ -570,7 +559,7 @@ footer a:hover{color:var(--ember-2)}
     </div>
   </div></div></div>
 
-  <!-- Mobil menü paneli (900px altı) -->
+  
   <div class="mpanel" id="mpanel" data-open="false"><div class="wrap">
     <div class="mtop">
       <a href="/mcp">SellerPilot MCP <span class="npill">Yeni</span></a>
@@ -623,7 +612,7 @@ footer a:hover{color:var(--ember-2)}
   </div></div>
 </header>
 
-<!-- ══════════ HERO — MCP ══════════ -->
+
 <section class="hero"><div class="wrap">
   <div class="herogrid">
     <div class="herocol">
@@ -646,7 +635,7 @@ footer a:hover{color:var(--ember-2)}
   </div>
 </div></section>
 
-<!-- ══════════ MEVCUT HERO — AYNEN KALIYOR, SADECE YERİ DEĞİŞTİ ══════════ -->
+
 <section class="band band-ink" style="padding-top:clamp(48px,6vw,86px)"><div class="wrap">
   <div class="herogrid">
     <div>
@@ -674,13 +663,13 @@ footer a:hover{color:var(--ember-2)}
   </div>
 </div></section>
 
-<!-- ══════════ SEKTÖR ŞERİDİ ══════════ -->
+
 <section class="band band-2" style="padding:34px 0"><div class="wrap" style="text-align:center">
   <p class="eyebrow" style="margin-bottom:14px">Trendyol'da 12 mağazada çalışıyor</p>
   <div class="sectors"><span>Tekstil</span><span>Ayakkabı</span><span>Bebek</span><span>Kozmetik</span><span>Ev Tekstili</span><span>Yapı Market</span><span>Oto Aksesuar</span></div>
 </div></section>
 
-<!-- ══════════ KANIT ŞERİDİ ══════════ -->
+
 <section class="band" style="padding:44px 0"><div class="wrap">
   <div class="rv proof">
     <div><div class="n">120.000</div><div class="l">Trendyol'da yayınlanmış cevap</div></div>
@@ -690,7 +679,7 @@ footer a:hover{color:var(--ember-2)}
   </div>
 </div></section>
 
-<!-- ══════════ SEKMELİ YETENEK ══════════ -->
+
 <section class="band band-2"><div class="wrap">
   <p class="eyebrow"><span class="num">01</span> Ne yapıyor</p>
   <h2 class="rv display h2" style="margin-top:12px">Müşteriyle konuştuğunuz<br>her yeri o yönetiyor.</h2>
@@ -800,7 +789,7 @@ footer a:hover{color:var(--ember-2)}
   </div>
 </div></section>
 
-<!-- ══════════ MCP BANDI ══════════ -->
+
 <section class="band band-ink" id="mcp"><div class="wrap">
   <p class="eyebrow">Yeni · Claude, ChatGPT ve Cursor için SellerPilot</p>
   <h2 class="rv display h2" style="margin-top:14px;max-width:19ch">Mağazanızı, zaten kullandığınız yapay zekânın içinden yönetin.</h2>
@@ -820,7 +809,7 @@ footer a:hover{color:var(--ember-2)}
   <div class="btnrow"><a class="cta" href="/mcp">SellerPilot MCP'yi keşfedin →</a></div>
 </div></section>
 
-<!-- ══════════ ÜÇ SÜTUN ══════════ -->
+
 <section class="band"><div class="wrap">
   <h2 class="rv display h2" style="max-width:20ch">Daha az uğraş. Daha çok satış. Korunan puan.</h2>
   <div class="cols3" style="margin-top:34px">
@@ -830,7 +819,7 @@ footer a:hover{color:var(--ember-2)}
   </div>
 </div></section>
 
-<!-- ══════════ EK3 DÜZELTMESİ ══════════ -->
+
 <section class="band band-2"><div class="wrap">
   <div class="answers">
     <div class="stick">
@@ -875,7 +864,7 @@ footer a:hover{color:var(--ember-2)}
   <p style="font-size:.78rem;color:var(--text-low);margin-top:26px;text-align:center">Mağaza ve ürün adları gizlilik için maskelendi — cevapların geri kalanı birebir.</p>
 </div></section>
 
-<!-- ══════════ UPSELL ══════════ -->
+
 <section class="band band-ink"><div class="wrap">
   <p class="eyebrow"><span class="num">03</span> Satışa çevirme</p>
   <h2 class="rv display h2" style="margin-top:12px">Artık 7/24 çalışan bir satışçınız var.</h2>
@@ -884,7 +873,7 @@ footer a:hover{color:var(--ember-2)}
   <p class="lede" style="margin-top:16px">Sorusu satışa dönebilecek müşteriye doğru ürünü önerir — stokta olmayanı asla, kampanyanız yoksa indirim de yok, kızgın müşteriye satış hiç yok. <strong style="color:var(--ink-text)">Son 18.800 cevabın 5.900'ünde bir öneri çıktı.</strong></p>
 </div></section>
 
-<!-- ══════════ FİYAT ══════════ -->
+
 <section class="band" id="fiyat"><div class="wrap">
   <p class="eyebrow"><span class="num">04</span> Fiyatlandırma</p>
   <h2 class="rv display h2" style="margin-top:12px">Bu bir otomatik cevaplayıcı değil.<br><span class="ember">Müşteri hizmetleri departmanı.</span></h2>
@@ -902,14 +891,7 @@ footer a:hover{color:var(--ember-2)}
     </tbody>
   </table></div>
 
-  <!-- ══ FİYAT YAPISI · 13 Ağu 2026 · TEK KAYNAK: FIYATLANDIRMA.md ══
-       Üç ayrı hat + Kaptan. Tek merdiven DENENDİ ve kırıldı: soru hacmine
-       bağlanırsa büyük mağaza en ucuz kademeden muhasebe alıyor, mağaza
-       büyüklüğüne bağlanırsa muhasebe için gelen istemediği soru-cevaba
-       para veriyor. Üç modülün alıcısı üç ayrı insan.
-       ⛔ Rakip fiyatıyla üstü çizili karşılaştırma KALDIRILDI — 1/3'e inenin
-       karşısına 1/6'ya inen çıkar. İndirimle değil kapsamla kazanılır.
-       (HTML yorumu kaynağı görüntüleyen herkese açıktır; rakip adı yazma.) -->
+  
 
   <div style="display:flex;align-items:flex-end;flex-wrap:wrap;gap:16px;margin-top:52px">
     <div style="flex:1;min-width:280px">
@@ -925,11 +907,7 @@ footer a:hover{color:var(--ember-2)}
     </div>
   </div>
 
-  <!-- ══ ÜCRETSİZ KAPI ══
-       13 Ağu 2026'da TANIMI DEĞİŞTİ: eskiden "son 3 aylık pencere" yazıyordu,
-       bu kayan bir pencereydi — yani ürünün kendisi bedavaydı. Artık tek
-       seferlik dondurulmuş rapor: değeri kanıtlar, işlevi vermez.
-       (FIYATLANDIRMA.md §1 · §12 madde 1) -->
+  
   <div class="rv freecard">
     <div>
       <span class="rozet">Ücretsiz · kart istemez</span>
@@ -951,7 +929,7 @@ footer a:hover{color:var(--ember-2)}
     </ul>
   </div>
 
-  <!-- ══ HAT A · ÜRÜN ARAŞTIRMASI ══ -->
+  
   <div class="hatbas">
     <span class="no">Hat A</span>
     <h3 class="display h3">Ürün Araştırması</h3>
@@ -984,7 +962,7 @@ footer a:hover{color:var(--ember-2)}
   </div>
   <p class="notlar"><b>Erken Erişim fiyatı</b> — şimdi girenler bu fiyatta kalır, yeni katılımlarda fiyat artar.</p>
 
-  <!-- ══ HAT B · MUHASEBE ══ -->
+  
   <div class="hatbas">
     <span class="no">Hat B</span>
     <h3 class="display h3">Muhasebe — gerçekleşen kâr</h3>
@@ -1015,9 +993,7 @@ footer a:hover{color:var(--ember-2)}
     </div>
   </div>
 
-  <!-- ⚠️ 13 Ağu 2026 denetimi, madde 2: bandı aşanın ne olacağı HİÇBİR YERDE
-       yazmıyordu. Fiyat ekseni sipariş adediyken bu, eksenin yarısını tanımsız
-       bırakıyordu (FIYATLANDIRMA.md §3). -->
+  
   <div class="rv card" style="margin-top:20px">
     <p class="k">Üç planda da olanlar</p>
     <p style="margin:0">Gösterge Paneli · Kâr-Zarar · Ürün bazlı net kâr · Maliyet Defteri (Excel yükleme) · Kargo faturası kalem kırılımı · İade Zekâsı · Bölgeler (il bazlı kârlılık) · Nakit Akışı · Trendler · Çizelge · Sistem Sağlığı · Kâr bandı Chrome eklentisi</p>
@@ -1030,7 +1006,7 @@ footer a:hover{color:var(--ember-2)}
     <a href="mailto:iletisim@sellerpilot.cloud" style="color:var(--ember-deep)">iletisim@sellerpilot.cloud</a>.
   </p>
 
-  <!-- ══ HAT C · MÜŞTERİ HİZMETLERİ ══ -->
+  
   <div class="hatbas">
     <span class="no">Hat C</span>
     <h3 class="display h3">Müşteri Hizmetleri</h3>
@@ -1075,7 +1051,7 @@ footer a:hover{color:var(--ember-2)}
     <p style="margin:0">Kargosu geciken, ürünü ayıplı çıkan, eksik gönderi alan müşteriyle sizin yerinize yazışır; kargonun nerede olduğunu bilir, sorunu çözer, gerektiğinde kuponu kendisi verir. Düşük yıldız veren müşteriye ulaşır, memnun eder, puanınızı geri kazandırır. <strong style="color:var(--text)">Gece de çalışan müşteri hizmetleri departmanınız.</strong><br><span style="color:var(--text-low)">Başlangıç ve Küçük Esnaf'ın üstüne eklenir; Büyüyen Marka ve Kurumsal'da zaten dahildir.</span></p>
   </div>
 
-  <!-- ══ EKLENTİLER ══ -->
+  
   <div class="hatbas">
     <span class="no">Eklentiler</span>
     <h3 class="display h3">Mağazanızı konuşarak yönetin</h3>
@@ -1092,7 +1068,7 @@ footer a:hover{color:var(--ember-2)}
     </div>
   </div>
 
-  <!-- ══ KAPTAN ══ -->
+  
   <div class="hatbas">
     <span class="no">Üçü bir arada</span>
     <h3 class="display h3">Kaptan</h3>
@@ -1129,7 +1105,7 @@ footer a:hover{color:var(--ember-2)}
   </p>
 </div></section>
 
-<!-- ══════════ HEDEFİMİZ VE MİSYONUMUZ ══════════ -->
+
 <section class="band band-ink" id="misyon"><div class="wrap">
   <p class="eyebrow"><span class="num">06</span> Hedefimiz ve misyonumuz</p>
   <h2 class="rv display h2" style="margin-top:14px;max-width:22ch">Biz sizden para almıyoruz.<br><span class="ember">Büyümenizden pay alıyoruz.</span></h2>
@@ -1158,7 +1134,7 @@ footer a:hover{color:var(--ember-2)}
   </div>
 </div></section>
 
-<!-- ══════════ AFFILIATE ══════════ -->
+
 <section class="band band-2" id="ortaklik"><div class="wrap">
   <p class="eyebrow"><span class="num">05</span> İş ortaklığı</p>
   <h2 class="rv display h2" style="margin-top:12px;max-width:20ch">Tavsiye edin, <span class="ember">her ay</span> kazanın.</h2>
@@ -1188,7 +1164,7 @@ footer a:hover{color:var(--ember-2)}
   <div class="btnrow"><a class="cta" href="mailto:info@sellerpilot.cloud?subject=Ortaklık%20programı">Ortaklık linkimi al</a></div>
 </div></section>
 
-<!-- ══════════ KAPANIŞ ══════════ -->
+
 <section class="band band-ink" style="text-align:center"><div class="wrap">
   <h2 class="rv display h2" style="max-width:18ch;margin:0 auto">Bu gece son kez sorulara siz bakın.</h2>
   <div class="btnrow" style="justify-content:center;margin-top:30px">
@@ -1196,7 +1172,7 @@ footer a:hover{color:var(--ember-2)}
   </div>
 </div></section>
 
-<!-- ══════════ FOOTER ══════════ -->
+
 <footer id="kunye"><div class="wrap">
   <div class="fgrid">
     <div><div class="logo" style="color:var(--ink-text);margin-bottom:12px"><svg class="mark" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-label="SellerPilot"><defs><linearGradient id="spg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF6B35"/><stop offset="1" stop-color="#FFBE5C"/></linearGradient></defs><rect width="64" height="64" rx="14" fill="url(#spg2)"/><g transform="translate(12 12) scale(1.6667)"><path fill="#fff" d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></g></svg>SellerPilot</div>
@@ -1211,7 +1187,6 @@ footer a:hover{color:var(--ember-2)}
 </div></footer>
 
 <script>
-// MCP sohbet motoru
 (function(){
   var view = document.getElementById('chatView');
   var list = document.getElementById('chatMsgs');
@@ -1248,7 +1223,6 @@ footer a:hover{color:var(--ember-2)}
   }
   function dibeCek(){ view.scrollTop = view.scrollHeight; }
 
-  // HTML'i parçalara ayır: etiketler anında, kelimeler gecikmeli basılır
   function parcala(html){
     var out = [], re = /(<[^>]+>)|(\s+)|([^\s<]+)/g, m;
     while ((m = re.exec(html)) !== null) {
@@ -1314,9 +1288,6 @@ footer a:hover{color:var(--ember-2)}
     }
   }
 
-  // Sekme arka plana düşerse tarayıcı setTimeout'u 1 sn'ye kısar; geri
-  // gelince akış bozulmasın diye kaldığı yerden değil baştan başlatmıyoruz —
-  // sadece görünür olduğunda başlatıyoruz.
   function ekranda(){
     var r = view.getBoundingClientRect();
     return r.top < window.innerHeight * 0.9 && r.bottom > 0;
@@ -1329,8 +1300,6 @@ footer a:hover{color:var(--ember-2)}
 })();
 
 
-// Telefon döngüsü
-// faz: soru (0) → yazıyor (700ms) → cevap (2000ms) → sonraki konuşma (9000ms)
 (function(){
   var body=document.getElementById('phBody'), dots=document.getElementById('phDots');
   if(!body) return;
@@ -1373,7 +1342,6 @@ footer a:hover{color:var(--ember-2)}
   tur(0);
 })();
 
-// Kaydırma açılışı
 (function(){
   var hedefler=document.querySelectorAll('.rv');
   if(!hedefler.length) return;
@@ -1388,9 +1356,6 @@ footer a:hover{color:var(--ember-2)}
   },{rootMargin:'0px 0px -12% 0px',threshold:.08});
   hedefler.forEach(function(e){ io.observe(e); });
 
-  // ⚠️ YEDEK — gözlemciye tek başına güvenme. Bazı tarayıcı/sekme durumlarında
-  // IntersectionObserver hiç ateşlenmiyor ve içerik opacity:0'da kilitli kalıyor
-  // (aynı desen requestAnimationFrame'de de yaşandı). Kaydırmada elle kontrol:
   var bekliyor=false;
   function tara(){
     bekliyor=false;
@@ -1413,47 +1378,11 @@ footer a:hover{color:var(--ember-2)}
   window.addEventListener('resize',tetik,{passive:true});
   setTimeout(tara,300); setTimeout(tara,1200);
 
-  // ⛔⛔ 13 Ağu 2026 — "FİYATLANDIRMA SAYFASI AÇILMIYOR" BURADAN ÇIKTI.
-  // Kullanıcı menüden Fiyatlandırma'ya (#fiyat) basınca bölüm BOMBOŞ geliyordu.
-  // Ölçüldü (840x987 gerçek görünüm, sellerpilot.cloud/#fiyat): 7 saniye sonra
-  // 35 `.rv` bloğunun HİÇBİRİ açılmamıştı, üç fiyat kartı opacity:0'da kilitli.
-  // Sentetik `scroll` olayı gönderilince anında açıldı → mekanizma sağlam,
-  // onu TETİKLEYEN yoktu.
-  //
-  // Kök sebep: iki yol da bu senaryoyu kapsamıyordu.
-  //   · IntersectionObserver bazı tarayıcı/sekme durumlarında hiç ateşlenmiyor
-  //     (yukarıdaki yedeğin zaten kabul ettiği durum — ölçümde bizim kurduğumuz
-  //     deneme gözlemcisi de 0 kez ateşledi).
-  //   · Yedek `tara` yalnız SCROLL/RESIZE ile çalışıyor. Çapa bağlantısıyla
-  //     gelen kullanıcı KAYDIRMAZ — tarayıcı onu oraya ışınlar. 300/1200 ms'lik
-  //     tikler ise çapa sıçramasından ÖNCE koşuyor (yazı tipi/görsel yüklenince
-  //     düzen kayıyor, sıçrama sonraya kalıyor), o an ekranda hiçbir şey yok.
-  // Sonuç: kaydırmadan gelen ziyaretçi için sayfa kalıcı olarak boş.
-  //
-  // ⚠️ Çapayla gelen ziyaretçi REKLAMDAN GELEN ziyaretçidir — yani tam olarak
-  // parasını verdiğimiz kişi boş sayfa görüyordu.
   window.addEventListener('load',tetik);              // kaynaklar bitince
   window.addEventListener('hashchange',function(){    // menüden #fiyat'a basış
     setTimeout(tara,60); setTimeout(tara,400);
   });
 
-  // ⛔ TEK BAŞINA `load` + `hashchange` YETMEDİ — ölçüldü (13 Ağu, canlı):
-  // yama yayına girdikten sonra `#fiyat` ile girişte açılan blok sayısı
-  // 0 → 1 oldu ama fiyat başlığı ve üç kart hâlâ opacity:0 kaldı. İki sebep:
-  //   · `hashchange` İLK YÜKLEMEDE ateşlenmez (adres çubuğuna #fiyat yazıp
-  //     giren = reklamdan gelen kişi tam da bu yoldan geliyor);
-  //   · çapa sıçraması `load`'dan SONRAYA kayabiliyor — yazı tipi ve görseller
-  //     oturunca düzen değişiyor, tarayıcı konumu geç düzeltiyor.
-  // Yani hangi ANDA tarayacağımızı tahmin etmek yanlış kurulmuş bir soru.
-  //
-  // ⚠️ Zamana değil KONUMA bak: kaydırma konumu her değiştiğinde tara.
-  // Olay dinleyicisi kullanılmıyor — çapa sıçraması `scroll` olayı
-  // üretmeyebiliyor (bu arızanın ta kendisi). requestAnimationFrame de
-  // kullanılmıyor: IntersectionObserver'ın ateşlenmediği ortamlarda rAF de
-  // güvenilmez (yukarıdaki yedeğin doğduğu desen). Sade zamanlayıcı, 8 saniye
-  // boyunca 250 ms'de bir = 32 çalışma, sonra kendini kapatır.
-  // Koşul YOK: her tikte tara. "scrollY değişti mi" diye bakmak, yazı tipi
-  // oturunca konum aynı kalıp ELEMANLARIN kaydığı durumu kaçırırdı.
   var tikSayaci=0;
   var yerlesmeIzleyici=setInterval(function(){
     tara();
@@ -1461,10 +1390,6 @@ footer a:hover{color:var(--ember-2)}
   },250);
   tara();                                             // ilk kare
 
-  // ⚠️ Emniyet ağı SADECE ekrandakileri açar.
-  // Eski hâli 6 sn sonra HEPSİNİ açıyordu; kullanıcı aşağı indiğinde animasyon
-  // çoktan bitmiş oluyor ve sayfa cansız duruyordu. Kullanıcı fark etti:
-  // "kaydırdığın zamanki smoothluk yok". Battaniye açılış kaldırıldı.
   setTimeout(function(){
     var acik=0;
     for(var i=0;i<hedefler.length;i++) if(hedefler[i].classList.contains('in')) acik++;
@@ -1477,7 +1402,6 @@ footer a:hover{color:var(--ember-2)}
   },5000);
 })();
 
-// mobil menü (900px altı) — mega menüler burada gizlendiği için tek giriş noktası bu
 (function(){
   var btn = document.getElementById('mnav'), panel = document.getElementById('mpanel');
   if (!btn || !panel) return;
@@ -1488,7 +1412,6 @@ footer a:hover{color:var(--ember-2)}
     btn.setAttribute('aria-expanded', acik ? 'false' : 'true');
     document.body.style.overflow = acik ? '' : 'hidden';   // arka plan kaymasın
   });
-  // Bağlantıya basınca panel kapanmalı; çapa (#) linklerinde sayfa yenilenmediği için şart.
   panel.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', kapat); });
   panel.querySelectorAll('.mgroup > button').forEach(function(b){
     b.addEventListener('click', function(){
@@ -1497,11 +1420,9 @@ footer a:hover{color:var(--ember-2)}
     });
   });
   document.addEventListener('keydown', function(e){ if (e.key === 'Escape') kapat(); });
-  // Masaüstüne dönülürse açık kalmasın
   window.addEventListener('resize', function(){ if (window.innerWidth > 900) kapat(); });
 })();
 
-// mega menü
 var openId = null;
 function closeAll(){
   document.querySelectorAll('.mega').forEach(function(m){ m.dataset.open = 'false'; });
@@ -1523,7 +1444,6 @@ document.querySelectorAll('.navbtn').forEach(function(btn){
 document.querySelector('header').addEventListener('mouseleave', closeAll);
 document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeAll(); });
 
-// sekmeler
 document.querySelectorAll('.tab').forEach(function(t){
   t.addEventListener('click', function(){
     document.querySelectorAll('.tab').forEach(function(x){ x.setAttribute('aria-selected','false'); });
@@ -1534,15 +1454,6 @@ document.querySelectorAll('.tab').forEach(function(t){
   });
 });
 
-// aylık / yıllık
-//
-// ⚠️ VARSAYILAN YILLIK (13 Ağu 2026 denetimi, madde 7). FIYATLANDIRMA.md §7
-// "tablo varsayılan yıllık gösterilir" diyordu ama sayfa AYLIKTA açılıyordu;
-// belge ile ekran çelişiyordu. Kopyacıya karşı elimizdeki tek gerçek kilit
-// yıllık peşin ödeme — varsayılanın onu göstermesi gerekiyor.
-//
-// `body[data-cycle]` CSS'e de gerekiyor: aylık modda "yıllık peşin X ₺"
-// satırları gizleniyor (o modda peşin toplam diye bir şey yok).
 function setCycle(mode){
   document.body.dataset.cycle = mode;
   document.getElementById('ay').setAttribute('aria-pressed', mode === 'ay' ? 'true' : 'false');
