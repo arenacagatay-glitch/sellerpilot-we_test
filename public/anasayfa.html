@@ -607,7 +607,13 @@ a.logo:focus-visible{outline:2px solid var(--ember-deep);outline-offset:4px}
 .fpanel{display:none}
 .fpanel[data-on="true"]{display:block;animation:fpIn .28s ease both}
 @keyframes fpIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-.fpanel > .hatbas:first-child{margin-top:26px;padding-top:0;border-top:0}
+.fpanel > .hatbas:first-child{margin-top:24px;padding-top:0;border-top:0}
+/* Sekme hattın adını zaten yazıyor: panel içindeki "HAT A" etiketi ve
+   aynı başlığın ikinci kez tekrarı kaldırıldı (mükerrer + orantısız duruyordu). */
+.fpanel > .hatbas:first-child > .no{display:none}
+.fpanel > .hatbas:first-child > h3{font-size:clamp(1.25rem,1.05rem + .7vw,1.6rem);letter-spacing:-.025em}
+.fpanel > .hatbas:first-child > .kim{font-size:1rem;line-height:1.65;max-width:68ch;margin-top:11px;color:var(--text-mid)}
+.ftabs{margin:26px 0 0}
 @media(prefers-reduced-motion:reduce){.fpanel[data-on="true"]{animation:none}}
 </style>
 
@@ -1032,7 +1038,7 @@ a.logo:focus-visible{outline:2px solid var(--ember-deep);outline-offset:4px}
         <p class="ne">Soruyu sizin ağzınızdan cevaplayın</p>
         <h4>Cevap Beyni<span class="durum ac">Yayında</span></h4>
         <p>Ürününüzü, bedeninizi, renginizi ve stoğunuzu bilir; cevabı <b>sizin üslubunuzla</b> yazar. Emin olamadığında uydurmaz — o soruyu size bırakır.</p>
-        <p class="cik"><span class="tick">✦</span><span>Medyan cevaplama süresi <b>4 dakika</b>. Gece 02:47'de gelen soru siz uyanmadan cevaplanmış olur.</span></p>
+        <p class="cik"><span class="tick">✦</span><span>Gece 02:47'de gelen soru siz uyanmadan cevaplanmış olur.</span></p>
       </div>
     </article>
     <article class="arc" id="t-aciklama">
@@ -1108,7 +1114,7 @@ a.logo:focus-visible{outline:2px solid var(--ember-deep);outline-offset:4px}
 <section class="band"><div class="wrap">
   <h2 class="rv display h2" style="max-width:20ch">Daha az uğraş. Daha çok satış. Korunan puan.</h2>
   <div class="cols3" style="margin-top:34px">
-    <div class="rv card"><p class="k">Uğraşı azaltın</p><h3 class="display h3">Gece 02:47'de kimse beklemiyor</h3><p>Soru, sipariş mesajı ve yorum aynı gece cevaplanıyor. Medyan cevaplama süresi <strong>4 dakika</strong>.</p><a href="#p1">Soru-Cevap →</a></div>
+    <div class="rv card"><p class="k">Uğraşı azaltın</p><h3 class="display h3">Gece 02:47'de kimse beklemiyor</h3><p>Soru, sipariş mesajı ve yorum <strong>aynı gece</strong> cevaplanıyor — siz uyurken.</p><a href="#p1">Soru-Cevap →</a></div>
     <div class="rv card"><p class="k">Geliri artırın</p><h3 class="display h3">Her cevap bir satış fırsatı</h3><p>Uygun soruda katalogdan ikinci bir ürün öneriliyor — son 18.800 cevabın <strong>5.900'ünde</strong> öneri çıktı.</p><a href="#p1">Nasıl →</a></div>
     <div class="rv card"><p class="k">Puanınızı koruyun</p><h3 class="display h3">Hiçbir 1 yıldız dokunulmadan kalmaz</h3><p>Düşük yıldızlı müşteriye ulaşılıyor, sorun çözülüyor, kuponla geri getiriliyor.</p><a href="#p3">Değerlendirmeler →</a></div>
   </div>
@@ -1119,7 +1125,7 @@ a.logo:focus-visible{outline:2px solid var(--ember-deep);outline-offset:4px}
   <div class="answers">
     <div class="stick">
       <p class="eyebrow"><span class="num">04</span> Kanıt</p>
-      <h2 class="rv display h2" style="margin-top:12px">Kurgu değil.<br><span class="ember">Bu hafta verilmiş cevaplar.</span></h2>
+      <h2 class="rv display h2" style="margin-top:12px">Kurgu değil.<br><span class="ember">Trendyol'da yayınlanmış cevaplar.</span></h2>
       <p class="lede" style="margin-top:16px">Aşağıdaki her cevap sistem tarafından yazıldı ve Trendyol'da gerçekten yayınlandı. Yazım hataları müşterilere ait — gerçek hayat böyle.</p>
 
       <div class="rv statbox">
@@ -1130,30 +1136,30 @@ a.logo:focus-visible{outline:2px solid var(--ember-deep);outline-offset:4px}
     </div>
 
     <div class="acards">
-      <div class="rv ac"><div class="top"><span>Sipariş Takibi</span><span>21 Temmuz 2026</span></div>
-        <div class="q">114•••0188 ben PTT demiştim ama ip ğ kolay gelsin kargoya vermişsiniz. ne zaman getirecekler,</div>
-        <div class="a">Merhaba! 114•••0188 numaralı siparişinizi kontrol ettik: siparişiniz kargoya verildi, yolda (Kolay Gelsin Marketplace). Tahmini teslimat: 13 Temmuz – 16 Temmuz. Hesabım &gt; Siparişlerim &gt; "Kargom Nerede?" adımından da anlık takip edebilirsiniz. 📦</div>
-        <div class="n"><span class="tick">✓</span><span>Numarayı görüp siparişi Trendyol'dan gerçekten sorguladı — durum, kargo firması ve teslim tarihi gerçek.</span></div></div>
-
-      <div class="rv ac"><div class="top"><span>Ayakkabı</span><span>25 Temmuz 2026</span></div>
-        <div class="q">denizde giyinilrmi ıslak kumda</div>
-        <div class="a">Merhaba efendim, bu terliğimiz her ne kadar plaj ve sahil kullanımına uygun olsa da ıslak kumda veya denizde hasır ve tekstil yapısı nedeniyle zorlanabilir 🌊 Deniz kenarında kullanım için tam koruma sağlayan <span class="mask">██████████</span> modelimizi de inceleyebilirsiniz. Mutlu ve sağlıklı günler dilerim :)</div>
-        <div class="n"><span class="tick">✓</span><span>Ürünün sınırını dürüstçe söyledi, satışı kaybetmek yerine doğru ürüne yönlendirdi.</span></div></div>
-
-      <div class="rv ac"><div class="top"><span>Tekstil</span><span>25 Temmuz 2026</span></div>
-        <div class="q">170 boy 107 kg kaç beden olur</div>
-        <div class="a">Merhaba! Boy ve kilo ölçülerinize göre hazırladığımız beden tablomuza baktığımızda 60 beden tercih edebilirsiniz 😊</div>
-        <div class="n"><span class="tick">✓</span><span>Mağazanın kendi beden tablosundan hesapladı — tahmin değil.</span></div></div>
-
-      <div class="rv ac"><div class="top"><span>Yapı Market</span><span>22 Temmuz 2026</span></div>
-        <div class="q">mutfak tezganihi boyamak istiyorum kac litre almam lazim</div>
-        <div class="a">Merhaba! Mutfak tezgahınızın boyutu hakkında net bir şey söyleyebilmem için yaklaşık ölçülerini paylaşabilir misiniz? Genellikle mutfak tezgahı ve yoğun temas eden yüzeyler için koruyucu vernikle desteklenen setlerimiz çok daha uzun ömürlü bir kullanım sağlar 🍳✨</div>
-        <div class="n"><span class="tick">✓</span><span>Litre uydurmak yerine ölçü istedi; doğru seti de önerdi.</span></div></div>
-
-      <div class="rv ac"><div class="top"><span>Bebek</span><span>25 Temmuz 2026</span></div>
-        <div class="q">Kapsamı nedir ben oyun parkı için istiyorum 120x120 uyumlumudur</div>
-        <div class="a">Merhaba, evet bu sinekliğimiz tüm park yatak ve bebek yataklarıyla uyumlu olacak şekilde tasarlanmıştır, oyun parkınız için rahatlıkla kullanabilirsiniz 🍼✨</div>
-        <div class="n"><span class="tick">✓</span><span>Ölçü uyumluluğunu ürün verisinden doğrulayıp net cevap verdi.</span></div></div>
+      <div class="rv ac"><div class="top"><span>Ev &amp; Yaşam</span><span>6 Ağustos 2026</span></div>
+        <div class="q">Merhaba şimdi sipariş oluşturdum bugün kargo yapabilirseniz çok sevinirim ayrıca hangi kargoyla gönderim yapıyorsunuz</div>
+        <div class="a">Merhaba! Siparişinizi Aras Kargo ve Trendyol Express ile gönderiyoruz; bugün de hazırlayıp sevk etmeye çalışacağız 📦</div>
+        <div class="n"><span class="tick">✓</span><span>Tek mesajda iki soru vardı — ikisini de cevapladı, söz vermeden “çalışacağız” dedi.</span></div></div>
+      <div class="rv ac"><div class="top"><span>Mutfak</span><span>7 Ağustos 2026</span></div>
+        <div class="q">Merhaba, kolay gelsin. Evimde kedi olduğu için tarhanayı kuruturken üzerini kapatmak istiyorum. Bu tül, tarhanayı kuruturken üzerini örtmek için uygun olur mu?</div>
+        <div class="a">Merhaba, bu bezimiz sebze kurutmak için uygundur ancak evde kedi olduğu için tüylere karşı tam kapalı koruma sağlamaz 🐈 İsterseniz toz ve böceklere karşı tam koruma sunan <span class="mask">██████████</span> modelimize göz atabilirsiniz.</div>
+        <div class="n"><span class="tick">✓</span><span><b>“Evet” demedi.</b> Ürünün sınırını dürüstçe söyleyip müşteriyi doğru ürüne yolladı — satış kaybolmadı, iade riski doğmadı.</span></div></div>
+      <div class="rv ac"><div class="top"><span>Ev Tekstili</span><span>4 Ağustos 2026</span></div>
+        <div class="q">istanbul gazi osmanpasa alsam persembe elimde olurmu</div>
+        <div class="a">Merhaba! Siparişlerimiz 1 iş günü içinde kargoya verilmektedir 🚚 Dilerseniz tarzınızı yansıtacak <span class="mask">██████████</span> modelimize de göz atabilirsiniz.</div>
+        <div class="n"><span class="tick">✓</span><span>Teslim gününe söz vermedi — <b>kendi kontrolündeki</b> süreyi söyledi. Yanlış tarih vaadi, birebir kötü yorum demektir.</span></div></div>
+      <div class="rv ac"><div class="top"><span>Toptan Talep</span><span>14 Ağustos 2026</span></div>
+        <div class="q">35/80 cm fermuarlı özel üretim yapabiliyomusunuz. 10 adet ilk süreçte</div>
+        <div class="a">Merhaba, maalesef özel ölçü ve fermuarlı üretimimiz bulunmuyor ancak geniş kullanım için <span class="mask">██████████</span> modelimizi inceleyebilirsiniz.</div>
+        <div class="n"><span class="tick">✓</span><span>10 adetlik toplu talebi <b>uydurmadan</b> reddetti ve eldeki en yakın ürüne yönlendirdi.</span></div></div>
+      <div class="rv ac"><div class="top"><span>Oto Aksesuar</span><span>11 Ağustos 2026</span></div>
+        <div class="q">tesla içinde kullanılabılır mı</div>
+        <div class="a">Evet, ürünümüz tüm araç gruplarına uyumlu olduğu için Tesla aracınızda da rahatlıkla kullanabilirsiniz 🚗</div>
+        <div class="n"><span class="tick">✓</span><span>İlanda geçmeyen bir marka soruldu; ürün verisinden uyumluluğu görüp net cevap verdi.</span></div></div>
+      <div class="rv ac"><div class="top"><span>Ev &amp; Yaşam</span><span>13 Ağustos 2026</span></div>
+        <div class="q">Büyük tepsiler için sormuştum ben, evet onu da gördüm ve aldım ikisinide yarın gönderir misiniz lazım oluyor birde lütfen görselle aynısı olsun şimdiden teşekkür ederim bol kazançlar ..</div>
+        <div class="a">Merhaba! Güzel dilekleriniz ve tercihiniz için çok teşekkür ederiz, siparişinizi özenle hazırlayıp en kısa sürede kargoya vereceğiz 🎁</div>
+        <div class="n"><span class="tick">✓</span><span>Sipariş sonrası mesajı da cevapsız kalmıyor — müşteri “konuşulduğunu” hissediyor.</span></div></div>
     </div>
   </div>
   <p style="font-size:.78rem;color:var(--text-low);margin-top:26px;text-align:center">Mağaza ve ürün adları gizlilik için maskelendi — cevapların geri kalanı birebir.</p>
@@ -1192,7 +1198,7 @@ a.logo:focus-visible{outline:2px solid var(--ember-deep);outline-offset:4px}
     <div style="flex:1;min-width:280px">
       <h3 class="display h3" style="margin:0">İhtiyacınız olan hattı alın</h3>
       <p style="font-size:.92rem;color:var(--text-mid);margin:9px 0 0;max-width:56ch;line-height:1.6">
-        Üç hat birbirinden bağımsız çalışır — ister birini alın, ister üçünü birden.
+        Üç hat birbirinden bağımsız çalışır — ister birini alın, ister <strong style="color:var(--text)">Kaptan</strong> ile üçünü birden.
         <strong style="color:var(--text)">İstediğiniz zaman iptal edersiniz.</strong></p>
     </div>
     <div class="switchwrap">
@@ -1234,8 +1240,6 @@ a.logo:focus-visible{outline:2px solid var(--ember-deep);outline-offset:4px}
     <button class="tab ftab" role="tab" aria-selected="false" data-h="h-hizmet">Müşteri Hizmetleri</button>
     <button class="tab ftab" role="tab" aria-selected="false" data-h="h-kaptan">Kaptan · üçü bir arada</button>
   </div>
-  <p class="ftabnot">Üç hat birbirinden bağımsız. Yalnız ihtiyacınız olanı alın — ya da <b>Kaptan</b> ile üçünü birden.</p>
-
   <div class="fpanel" id="h-arastirma" data-on="true">
   <div class="hatbas">
     <span class="no">Hat A</span>
