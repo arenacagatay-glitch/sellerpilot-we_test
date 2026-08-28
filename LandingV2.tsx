@@ -403,12 +403,11 @@ const PhoneMock = () => {
 // Nav
 // ────────────────────────────────────────────────
 const LINKS = [
-  { l: 'Satış', h: '/#v2-satis' },
-  { l: 'Farkımız', h: '/#v2-fark' },
+  { l: 'Ürün Araştırması', h: '/#arastirma' },
   { l: 'Görsel Stüdyo', h: '/gorsel-studyo' },
+  { l: 'MCP', h: '/mcp' },
   { l: 'Blog', h: '/blog' },
-  { l: 'Fiyatlar', h: '/#v2-fiyat' },
-  { l: 'SSS', h: '/#v2-sss' },
+  { l: 'Fiyatlandırma', h: '/#fiyat' },
 ];
 
 const V2Nav = () => {
@@ -425,7 +424,7 @@ const V2Nav = () => {
         ? { background: 'rgba(10,12,17,.82)', backdropFilter: 'blur(14px)', borderBottom: '1px solid var(--ink-line)' }
         : { background: 'transparent', borderBottom: '1px solid transparent' }}>
       <div className="max-w-6xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between">
-        <a href="#top" className="flex items-center gap-2.5">
+        <a href="/" aria-label="SellerPilot — ana sayfaya dön" className="flex items-center gap-2.5">
           <span className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: 'linear-gradient(135deg,var(--ember),var(--ember-2))' }}>
             <Plane size={15} className="text-white fill-white" />
           </span>
@@ -439,7 +438,7 @@ const V2Nav = () => {
           ))}
         </nav>
         <div className="flex items-center gap-2.5">
-          <a href={APP_URL} className="btn btn-ember hidden sm:inline-flex" style={{ padding: '.6rem 1.05rem', fontSize: '.875rem' }}>Ücretsiz dene</a>
+          <a href={`${APP_URL}/kayit`} className="btn btn-ember hidden sm:inline-flex" style={{ padding: '.6rem 1.05rem', fontSize: '.875rem' }}>Hemen Başla</a>
           <button onClick={() => setOpen(!open)} className="lg:hidden p-2" aria-label="Menü" style={{ color: 'var(--ink-text)' }}>
             {open ? <X size={20} /> : <MenuIcon size={20} />}
           </button>
@@ -450,7 +449,7 @@ const V2Nav = () => {
           {LINKS.map(x => (
             <a key={x.l} href={x.h} onClick={() => setOpen(false)} className="py-2.5 text-sm" style={{ color: 'var(--ink-mid)' }}>{x.l}</a>
           ))}
-          <a href={APP_URL} className="btn btn-ember mt-2">Ücretsiz dene</a>
+          <a href={`${APP_URL}/kayit`} className="btn btn-ember mt-2">Hemen Başla</a>
         </div>
       )}
     </header>
@@ -1238,13 +1237,21 @@ const V2Footer = () => (
           </span>
         </div>
         <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[.78rem]" style={{ color: 'var(--ink-mid)' }}>
+          <a href="/">Ana sayfa</a>
           <a href="/blog">Blog</a>
           <a href="/mesafeli-satis-sozlesmesi.html">Mesafeli Satış</a>
           <a href="/gizlilik-politikasi.html">Gizlilik</a>
+          <a href="/cerez-politikasi.html">Çerez Politikası</a>
           <a href="/iptal-iade-kosullari.html">İptal & İade</a>
           <a href="/on-bilgilendirme-formu.html">Ön Bilgilendirme</a>
+          <a href="/teslimat-ve-ifa.html">Teslimat ve İfa</a>
         </div>
       </div>
+      <p className="mt-6 text-[.72rem] leading-relaxed" style={{ color: 'var(--ink-mid)' }}>
+        <b style={{ color: 'var(--ink-text)' }}>PURELYPRO BADGER KOZMETİK VE DANIŞMANLIK HİZMETLERİ TİCARET LİMİTED ŞİRKETİ</b><br />
+        Bahçelievler Mah. Talatpaşa Cad. Saray Apt. No: 43 İç Kapı No: 34, Bahçelievler / İstanbul<br />
+        Vergi Kimlik No: 7331258700 · MERSİS: 0733125870000001 · info@sellerpilot.cloud
+      </p>
     </div>
   </footer>
 );
