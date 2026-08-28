@@ -612,7 +612,20 @@ a.logo:focus-visible{outline:2px solid var(--ember-deep);outline-offset:4px}
 .fpanel > .hatbas:first-child > .no{display:none}
 .fpanel > .hatbas:first-child > h3{font-size:clamp(1.25rem,1.05rem + .7vw,1.6rem);letter-spacing:-.025em}
 .fpanel > .hatbas:first-child > .kim{font-size:1rem;line-height:1.65;max-width:68ch;margin-top:11px;color:var(--text-mid)}
-.ftabs{margin:26px 0 0}
+.ftabs{margin:22px 0 0}
+/* "Fiyatlandırma"ya basınca FİYAT görünsün: başlık bloğu sıkıldı. */
+.fiyatbas{display:flex;align-items:flex-end;flex-wrap:wrap;gap:16px;margin-top:26px}
+@media(max-width:640px){
+  #fiyat{padding-top:40px}
+  #fiyat > .wrap > .rv.display.h2{margin-top:8px!important}
+  .fiyatbas{margin-top:16px;gap:14px}
+  .fiyatbas .lede{font-size:.95rem;line-height:1.55}
+  .ftabs{margin-top:16px}
+  .fpanel > .hatbas:first-child{margin-top:16px}
+  .fpanel > .hatbas:first-child > h3{display:none}
+  .fpanel > .hatbas:first-child > .kim{margin-top:0;font-size:.92rem}
+  .plans{margin-top:16px}
+}
 @media(prefers-reduced-motion:reduce){.fpanel[data-on="true"]{animation:none}}
 </style>
 
@@ -1176,28 +1189,13 @@ a.logo:focus-visible{outline:2px solid var(--ember-deep);outline-offset:4px}
 
 <section class="band" id="fiyat"><div class="wrap">
   <p class="eyebrow"><span class="num">06</span> Fiyatlandırma</p>
-  <h2 class="rv display h2" style="margin-top:12px">Bu bir otomatik cevaplayıcı değil.<br><span class="ember">Müşteri hizmetleri departmanı.</span></h2>
-  <p class="lede" style="margin-top:18px">Rakipler soru cevaplamayı paketlerinin içine bir madde olarak koyuyor. Bizde o işin kendisi: siparişin gerçek kargo durumunu okur, mağazanızın kendi beden tablosundan hesap yapar, stoğu görür, emin olamadığında uydurmaz — size sorar. <strong style="color:var(--text)">Bir yazılım özelliği değil, işe aldığınız bir ekip arkadaşı.</strong></p>
-
-  <div class="scroller"><table class="vs">
-    <thead><tr><th></th><th>Paket içi "AI cevap" özelliği</th><th>SellerPilot</th></tr></thead>
-    <tbody>
-      <tr><td>Neye bakar</td><td>Sadece ilan metnine</td><td><strong>Mağazanızdaki her köşeyi tanır</strong></td></tr>
-      <tr><td>Emin değilse</td><td>Yine de cevaplar</td><td>Uydurmaz — o soruyu size bırakır</td></tr>
-      <tr><td>Satış</td><td>Yok</td><td>Uygun soruda ürün önerir — her üç cevaptan biri</td></tr>
-      <tr><td>Sipariş mesajı</td><td>Kapsam dışı</td><td>Kargo, ayıplı, yanlış ve eksik ürün — kupon dâhil</td></tr>
-      <tr><td>Yorum</td><td>Kapsam dışı</td><td>Hiçbir yorumu cevapsız bırakmaz, kızganı geri kazanır</td></tr>
-      <tr><td>Fiyat mantığı</td><td>Pakete gömülü, ayrıştırılamaz</td><td>Soru hacmine göre şeffaf</td></tr>
-    </tbody>
-  </table></div>
-
+  <h2 class="rv display h2" style="margin-top:12px">İhtiyacınız olan hattı alın.</h2>
   
 
-  <div style="display:flex;align-items:flex-end;flex-wrap:wrap;gap:16px;margin-top:52px">
-    <div style="flex:1;min-width:280px">
-      <h3 class="display h3" style="margin:0">İhtiyacınız olan hattı alın</h3>
-      <p style="font-size:.92rem;color:var(--text-mid);margin:9px 0 0;max-width:56ch;line-height:1.6">
-        Üç hat birbirinden bağımsız çalışır — ister birini alın, ister <strong style="color:var(--text)">Kaptan</strong> ile üçünü birden.
+  <div class="fiyatbas">
+    <div style="flex:1;min-width:260px">
+      <p class="lede" style="margin:0;max-width:52ch">
+        Üç hat bağımsız çalışır — ister birini alın, ister <strong style="color:var(--text)">Kaptan</strong> ile üçünü birden.
         <strong style="color:var(--text)">İstediğiniz zaman iptal edersiniz.</strong></p>
     </div>
     <div class="switchwrap">
@@ -1208,28 +1206,6 @@ a.logo:focus-visible{outline:2px solid var(--ember-deep);outline-offset:4px}
       </div>
       <p class="kdvnot">Fiyatlara <strong>KDV dahil değildir</strong> (%20).</p>
     </div>
-  </div>
-
-  
-  <div class="rv freecard">
-    <div>
-      <span class="rozet">Ücretsiz · kart istemez</span>
-      <h4>Kârınızı önce görün, sonra karar verin.</h4>
-      <p>Trendyol mağazanızı bağlayın, ürün maliyetlerinizi girin —
-      <strong style="color:var(--text)">geçmiş 3 ayın gerçek kâr raporunu</strong> tek seferde,
-      ücretsiz çıkaralım. Komisyon, kargo, iade, reklam, KDV düşülmüş hâliyle;
-      hangi ürünün kazandırdığı ürün ürün yazılı.</p>
-      <p style="margin-top:13px;font-size:.83rem;color:var(--text-low)">
-      Rapor bir kez üretilir ve <strong style="color:var(--text-mid)">o hâliyle kalır</strong> —
-      panelinizde durur ama güncellenmez. Yarının kârını görmek Canlı Muhasebe'nin işidir.</p>
-    </div>
-    <ul>
-      <li><span class="tick">✓</span> Geçmiş 3 ayın kâr raporu — <strong style="color:var(--text)">bir kez</strong></li>
-      <li><span class="tick">✓</span> Ürün ürün net kâr kırılımı</li>
-      <li><span class="tick">✓</span> Kâr bandı Chrome eklentisi — <strong style="color:var(--text)">süresiz</strong></li>
-      <li><span class="tick">✓</span> Kampanya kâr analizi · X-Ray</li>
-      <li><span class="nope">—</span> <span class="nope">Günlük güncelleme, yeni dönemler ve uyarılar Canlı Muhasebe'de</span></li>
-    </ul>
   </div>
 
   
@@ -1420,6 +1396,47 @@ a.logo:focus-visible{outline:2px solid var(--ember-deep);outline-offset:4px}
   </div>
 
   
+
+  
+  <div class="rv freecard">
+    <div>
+      <span class="rozet">Ücretsiz · kart istemez</span>
+      <h4>Kârınızı önce görün, sonra karar verin.</h4>
+      <p>Trendyol mağazanızı bağlayın, ürün maliyetlerinizi girin —
+      <strong style="color:var(--text)">geçmiş 3 ayın gerçek kâr raporunu</strong> tek seferde,
+      ücretsiz çıkaralım. Komisyon, kargo, iade, reklam, KDV düşülmüş hâliyle;
+      hangi ürünün kazandırdığı ürün ürün yazılı.</p>
+      <p style="margin-top:13px;font-size:.83rem;color:var(--text-low)">
+      Rapor bir kez üretilir ve <strong style="color:var(--text-mid)">o hâliyle kalır</strong> —
+      panelinizde durur ama güncellenmez. Yarının kârını görmek Canlı Muhasebe'nin işidir.</p>
+    </div>
+    <ul>
+      <li><span class="tick">✓</span> Geçmiş 3 ayın kâr raporu — <strong style="color:var(--text)">bir kez</strong></li>
+      <li><span class="tick">✓</span> Ürün ürün net kâr kırılımı</li>
+      <li><span class="tick">✓</span> Kâr bandı Chrome eklentisi — <strong style="color:var(--text)">süresiz</strong></li>
+      <li><span class="tick">✓</span> Kampanya kâr analizi · X-Ray</li>
+      <li><span class="nope">—</span> <span class="nope">Günlük güncelleme, yeni dönemler ve uyarılar Canlı Muhasebe'de</span></li>
+    </ul>
+  </div>
+
+  <div class="hatbas">
+    <span class="no">Neden bu fiyat</span>
+  <h3 class="rv display h3" style="margin:0">Bu bir otomatik cevaplayıcı değil.<br><span class="ember">Müşteri hizmetleri departmanı.</span></h3>
+  </div>
+  <p class="lede" style="margin-top:18px">Rakipler soru cevaplamayı paketlerinin içine bir madde olarak koyuyor. Bizde o işin kendisi: siparişin gerçek kargo durumunu okur, mağazanızın kendi beden tablosundan hesap yapar, stoğu görür, emin olamadığında uydurmaz — size sorar. <strong style="color:var(--text)">Bir yazılım özelliği değil, işe aldığınız bir ekip arkadaşı.</strong></p>
+
+  <div class="scroller"><table class="vs">
+    <thead><tr><th></th><th>Paket içi "AI cevap" özelliği</th><th>SellerPilot</th></tr></thead>
+    <tbody>
+      <tr><td>Neye bakar</td><td>Sadece ilan metnine</td><td><strong>Mağazanızdaki her köşeyi tanır</strong></td></tr>
+      <tr><td>Emin değilse</td><td>Yine de cevaplar</td><td>Uydurmaz — o soruyu size bırakır</td></tr>
+      <tr><td>Satış</td><td>Yok</td><td>Uygun soruda ürün önerir — her üç cevaptan biri</td></tr>
+      <tr><td>Sipariş mesajı</td><td>Kapsam dışı</td><td>Kargo, ayıplı, yanlış ve eksik ürün — kupon dâhil</td></tr>
+      <tr><td>Yorum</td><td>Kapsam dışı</td><td>Hiçbir yorumu cevapsız bırakmaz, kızganı geri kazanır</td></tr>
+      <tr><td>Fiyat mantığı</td><td>Pakete gömülü, ayrıştırılamaz</td><td>Soru hacmine göre şeffaf</td></tr>
+    </tbody>
+  </table></div>
+
   <p class="notlar" style="margin-top:22px">
     Fiyatlara KDV dahil değildir (%20) · 
     Yıllık ödemede %25 indirim, tutar peşin tahsil edilir · Mevcut müşterilerimiz eski fiyatlarında kalır.
