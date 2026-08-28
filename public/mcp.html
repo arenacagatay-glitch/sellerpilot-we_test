@@ -81,7 +81,12 @@ header{position:sticky;top:0;z-index:60;background:rgba(250,250,249,.93);backdro
 
 
 @media(max-width:640px){
-  header .navright .blink.ikincil{display:none}
+  /* 27 Ağu 2026: burada .blink.ikincil'in TAMAMI gizleniyordu; "Giriş yap" da
+     kayboluyordu ve telefonda bu sayfadan giriş yapmanın hiçbir yolu yoktu.
+     Logo zaten "/" adresine gittiği için yalnız "← Ana sayfa" gizleniyor. */
+  header .navright a[href="/"].blink.ikincil{display:none}
+  header .navright .blink{padding:9px 8px;font-size:.82rem}
+  header .cta{padding:10px 13px;font-size:.83rem}
   header .nav{gap:10px}
   .kurvid{margin-top:22px}
 }
@@ -242,7 +247,7 @@ footer{background:var(--ink);color:var(--ink-mid);padding:48px 0 30px;font-size:
     <h1 class="display h1" style="margin-top:22px">Mağazanızın verisi.<br>Zaten kullandığınız<br>yapay zekânın içinde.</h1>
     <p class="lede" style="margin-top:20px">Sorularınızı, siparişlerinizi, yorumlarınızı ve gerçekleşen kârınızı Claude'a, ChatGPT'ye ya da kendi ajanınıza bağlayın. Haftalar süren analiz, dakikalar sürsün.</p>
     <div class="btnrow"><a class="cta" href="https://app.sellerpilot.cloud/kayit">Bağlanmak için üye olun</a><a class="btn2" href="#kurulum">Nasıl bağlanır →</a></div>
-    <p class="fineprint">Kredi kartı gerekmez · 15 gün ücretsiz · Yazma yetkisi yok, sadece okur</p>
+    <p class="fineprint">Kredi kartı gerekmez · 15 gün ücretsiz · Varsayılan salt-okuma — yazma yetkisi sizde</p>
   </div>
   <div class="chat">
     <div class="chattop"><span class="dot"></span><span>claude · sellerpilot-mcp bağlı</span></div>
