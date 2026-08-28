@@ -627,6 +627,46 @@ a.logo:focus-visible{outline:2px solid var(--ember-deep);outline-offset:4px}
   .plans{margin-top:16px}
 }
 @media(prefers-reduced-motion:reduce){.fpanel[data-on="true"]{animation:none}}
+
+/* ── Öğrenme zinciri (Kanıt bölümü · amiral gemisi) ── */
+.zincir{background:#fff;border:1px solid var(--line);border-radius:18px;padding:26px 24px 24px;
+  box-shadow:0 26px 60px -40px rgba(12,10,9,.45)}
+.zbas h3{margin:9px 0 0}
+.zbas p{font-size:.95rem;color:var(--text-mid);line-height:1.65;margin:12px 0 0;max-width:60ch}
+.zetiket{display:inline-block;font-family:var(--mono);font-size:.68rem;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--ember-deep);background:rgba(255,107,53,.09);
+  border-radius:6px;padding:4px 9px}
+.zadim{list-style:none;margin:22px 0 0;padding:0 0 0 22px;position:relative;
+  display:flex;flex-direction:column;gap:20px}
+.zadim::before{content:"";position:absolute;left:5px;top:6px;bottom:6px;width:2px;
+  background:linear-gradient(var(--line),var(--ember),var(--line))}
+.zadim > li{position:relative}
+.zadim > li::before{content:"";position:absolute;left:-22px;top:5px;width:12px;height:12px;
+  border-radius:50%;background:#fff;border:2px solid var(--line)}
+.zadim > li:not(:first-child)::before{border-color:var(--ember-deep);background:var(--ember-deep)}
+.zgun{display:block;font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--text-low)}
+.zkim{display:inline-block;font-size:.66rem;font-weight:800;letter-spacing:.09em;
+  text-transform:uppercase;border-radius:5px;padding:3px 7px;margin-top:5px}
+.zkim.siz{background:var(--paper-2);color:var(--text-mid);border:1px solid var(--line)}
+.zkim.sp{background:linear-gradient(135deg,var(--ember),var(--ember-2));color:#fff}
+.zq{background:var(--paper-2);border-radius:11px;padding:11px 13px;margin-top:9px;
+  font-size:.9rem;line-height:1.5;color:var(--text-mid)}
+.za{background:linear-gradient(135deg,var(--ember-deep),var(--ember));color:#fff;
+  border-radius:11px;padding:11px 13px;margin-top:7px;font-size:.9rem;line-height:1.5}
+.zadim > li:first-child .za{background:var(--ink);color:var(--ink-text)}
+.znot{display:flex;gap:8px;align-items:flex-start;margin-top:9px;font-size:.83rem;
+  color:var(--text-mid);line-height:1.5}
+.znot b{color:var(--text)}
+.zson{margin:22px 0 0;padding-top:16px;border-top:1px solid var(--line);
+  font-size:.95rem;color:var(--text);line-height:1.6}
+.zson b{color:var(--ember-deep)}
+@media(max-width:640px){
+  .zincir{padding:20px 16px 18px;border-radius:15px}
+  .zadim{padding-left:19px;gap:17px}
+  .zq,.za{font-size:.88rem;padding:10px 12px}
+  .zbas p{font-size:.92rem}
+}
 </style>
 
 
@@ -1148,30 +1188,67 @@ a.logo:focus-visible{outline:2px solid var(--ember-deep);outline-offset:4px}
     </div>
 
     <div class="acards">
-      <div class="rv ac"><div class="top"><span>Ev &amp; Yaşam</span><span>6 Ağustos 2026</span></div>
-        <div class="q">Merhaba şimdi sipariş oluşturdum bugün kargo yapabilirseniz çok sevinirim ayrıca hangi kargoyla gönderim yapıyorsunuz</div>
-        <div class="a">Merhaba! Siparişinizi Aras Kargo ve Trendyol Express ile gönderiyoruz; bugün de hazırlayıp sevk etmeye çalışacağız 📦</div>
-        <div class="n"><span class="tick">✓</span><span>Tek mesajda iki soru vardı — ikisini de cevapladı, söz vermeden “çalışacağız” dedi.</span></div></div>
-      <div class="rv ac"><div class="top"><span>Mutfak</span><span>7 Ağustos 2026</span></div>
-        <div class="q">Merhaba, kolay gelsin. Evimde kedi olduğu için tarhanayı kuruturken üzerini kapatmak istiyorum. Bu tül, tarhanayı kuruturken üzerini örtmek için uygun olur mu?</div>
-        <div class="a">Merhaba, bu bezimiz sebze kurutmak için uygundur ancak evde kedi olduğu için tüylere karşı tam kapalı koruma sağlamaz 🐈 İsterseniz toz ve böceklere karşı tam koruma sunan <span class="mask">██████████</span> modelimize göz atabilirsiniz.</div>
-        <div class="n"><span class="tick">✓</span><span><b>“Evet” demedi.</b> Ürünün sınırını dürüstçe söyleyip müşteriyi doğru ürüne yolladı — satış kaybolmadı, iade riski doğmadı.</span></div></div>
-      <div class="rv ac"><div class="top"><span>Ev Tekstili</span><span>4 Ağustos 2026</span></div>
-        <div class="q">istanbul gazi osmanpasa alsam persembe elimde olurmu</div>
-        <div class="a">Merhaba! Siparişlerimiz 1 iş günü içinde kargoya verilmektedir 🚚 Dilerseniz tarzınızı yansıtacak <span class="mask">██████████</span> modelimize de göz atabilirsiniz.</div>
-        <div class="n"><span class="tick">✓</span><span>Teslim gününe söz vermedi — <b>kendi kontrolündeki</b> süreyi söyledi. Yanlış tarih vaadi, birebir kötü yorum demektir.</span></div></div>
-      <div class="rv ac"><div class="top"><span>Toptan Talep</span><span>14 Ağustos 2026</span></div>
-        <div class="q">35/80 cm fermuarlı özel üretim yapabiliyomusunuz. 10 adet ilk süreçte</div>
-        <div class="a">Merhaba, maalesef özel ölçü ve fermuarlı üretimimiz bulunmuyor ancak geniş kullanım için <span class="mask">██████████</span> modelimizi inceleyebilirsiniz.</div>
-        <div class="n"><span class="tick">✓</span><span>10 adetlik toplu talebi <b>uydurmadan</b> reddetti ve eldeki en yakın ürüne yönlendirdi.</span></div></div>
-      <div class="rv ac"><div class="top"><span>Oto Aksesuar</span><span>11 Ağustos 2026</span></div>
-        <div class="q">tesla içinde kullanılabılır mı</div>
-        <div class="a">Evet, ürünümüz tüm araç gruplarına uyumlu olduğu için Tesla aracınızda da rahatlıkla kullanabilirsiniz 🚗</div>
-        <div class="n"><span class="tick">✓</span><span>İlanda geçmeyen bir marka soruldu; ürün verisinden uyumluluğu görüp net cevap verdi.</span></div></div>
-      <div class="rv ac"><div class="top"><span>Ev &amp; Yaşam</span><span>13 Ağustos 2026</span></div>
-        <div class="q">Büyük tepsiler için sormuştum ben, evet onu da gördüm ve aldım ikisinide yarın gönderir misiniz lazım oluyor birde lütfen görselle aynısı olsun şimdiden teşekkür ederim bol kazançlar ..</div>
-        <div class="a">Merhaba! Güzel dilekleriniz ve tercihiniz için çok teşekkür ederiz, siparişinizi özenle hazırlayıp en kısa sürede kargoya vereceğiz 🎁</div>
-        <div class="n"><span class="tick">✓</span><span>Sipariş sonrası mesajı da cevapsız kalmıyor — müşteri “konuşulduğunu” hissediyor.</span></div></div>
+      <div class="rv zincir">
+        <div class="zbas">
+          <span class="zetiket">Öğrenme</span>
+          <h3 class="display h3">Bir kez siz cevapladınız.<br><span class="ember">Gerisini o hallediyor.</span></h3>
+          <p>Stoğu biten bir parfüm soruldu. Siz bir cevap yazdınız — sistem onu öğrendi ve sonraki
+          müşterilere kendisi uyguladı. Üstelik her seferinde <b>alternatif ürün önerdi</b>.</p>
+        </div>
+        <ol class="zadim">
+          <li>
+            <span class="zgun">14 Ağustos</span>
+            <span class="zkim siz">Siz yazdınız</span>
+            <div class="zq"><span class="mask">██████</span> parfümü var mı</div>
+            <div class="za">Stokta yok efendim yakın zamanda girecek</div>
+          </li>
+          <li>
+            <span class="zgun">16 Ağustos · 2 gün sonra</span>
+            <span class="zkim sp">SellerPilot yazdı</span>
+            <div class="zq"><span class="mask">██████</span> kokunuz ne zaman stok yapılacaktır?? Almak istiyoruz fakat sistemde tükendi olarak gözüküyor, stok lütfen</div>
+            <div class="za">Merhaba, <span class="mask">██████</span> parfümümüz yakında yeniden stoklarımızda olacak efendim. O sırada benzer koku karakterini sevenler için <span class="mask">██████</span> kadın parfümümüze de göz atabilirsiniz! 🌸</div>
+            <div class="znot"><span class="tick">✓</span><span>Sizin cevabınızı öğrendi — üstüne <b>satış fırsatı ekledi</b>.</span></div>
+          </li>
+          <li>
+            <span class="zgun">19 Ağustos</span>
+            <span class="zkim sp">SellerPilot yazdı</span>
+            <div class="zq">Merhabalar <span class="mask">██████</span> stokta yok mu acaba</div>
+            <div class="za"><span class="mask">██████</span> parfümümüz yakında yeniden stoklarımızda olacak efendim! O sırada benzer koku karakterini sevenler için <span class="mask">██████</span> kadın parfümümüze de göz atabilirsiniz 🌸 Lansmana özel <span class="mask">██████</span> kremimiz de alacağınız herhangi bir ürüne ek 599 TL yerine sadece 299 TL!</div>
+            <div class="znot"><span class="tick">✓</span><span>Beş gün sonra hâlâ <b>tutarlı</b> — üstüne o günkü kampanyayı da bağladı.</span></div>
+          </li>
+          <li>
+            <span class="zgun">21 Ağustos</span>
+            <span class="zkim sp">SellerPilot yazdı</span>
+            <div class="zq"><span class="mask">██████</span> parfümden elinizde var mı</div>
+            <div class="za"><span class="mask">██████</span> parfümümüz yakında yeniden stoklarımızda olacak efendim, o zamana kadar benzer <span class="mask">██████</span> tarzını sevenler için <span class="mask">██████</span> kadın parfümümüze göz atabilirsiniz 🌸</div>
+          </li>
+        </ol>
+        <p class="zson">Siz bir kez yazdınız; <b>üç müşteriye o cevap verdi</b> — hiçbirini kaçırmadan, hepsine bir de ürün önererek.</p>
+      </div>
+      <div class="rv ac"><div class="top"><span>Oto Kokusu</span><span>19 Ağustos 2026</span></div>
+        <div class="q">Merhaba Sipariş no 168•••4207… Ürün geldi, sizden daha önce de alışverişim oldu, ürünleriniz gerçekten güzel fakat bu sefer gelen ürün kargoda akmış, kutu ıslaktı. Ve son kullanma tarihine 4 ay kalmış, nasıl yapalım?</div>
+        <div class="a">Merhaba! 168•••4207 numaralı siparişinizi kontrol ettik: siparişiniz teslim edildi (Trendyol Express Marketplace). Tahmini teslimat: 18 Ağustos – 19 Ağustos. Hesabım &gt; Siparişlerim &gt; “Kargom Nerede?” adımından da anlık takip edebilirsiniz. 📦</div>
+        <div class="n"><span class="tick">✓</span><span><b>Sipariş numarasını okudu ve Trendyol'a gerçekten sordu.</b> Genel cevap değil — o siparişin kargo firması ve teslim tarihi.</span></div></div>
+      <div class="rv ac"><div class="top"><span>Kozmetik</span><span>24 Ağustos 2026</span></div>
+        <div class="q">Bugün kargom teslim edilecekti ama bugün gelmedi, orada 24 Ağustos yazıyordu</div>
+        <div class="a">Gecikme için üzgünüm efendim, durumu hemen kontrol edebilmemiz için sipariş numaranızı paylaşabilir misiniz? Trendyol Hesabım &gt; Siparişlerim &gt; ilgili siparişin Satıcıya Soru Sor bölümünden de yazarak destek alabilirsiniz 📦</div>
+        <div class="n"><span class="tick">✓</span><span>Elinde sipariş numarası yoktu — <b>uydurmadı, istedi.</b> Yanlış tarih vermek birebir kötü yorum demektir.</span></div></div>
+      <div class="rv ac"><div class="top"><span>Parfüm</span><span>21 Ağustos 2026</span></div>
+        <div class="q"><span class="mask">██████</span> ile benzer mi</div>
+        <div class="a">Bakmakta olduğunuz <span class="mask">██████</span> oryantal esintili bir koku, ancak tam olarak bahsettiğiniz o ikonik pudralı hissi arıyorsanız mağazamızda <span class="mask">██████</span> modelimiz de bulunuyor, kesinlikle göz atmalısınız 😊</div>
+        <div class="n"><span class="tick">✓</span><span>“Hayır, benzemiyor” deyip bırakmadı. Müşterinin aradığı kokunun <b>kendi kataloğunda</b> olduğunu bulup yönlendirdi.</span></div></div>
+      <div class="rv ac"><div class="top"><span>Parfüm</span><span>18 Ağustos 2026</span></div>
+        <div class="q">Lütfen parfüme indirim yapın</div>
+        <div class="a">Fiyatlarımız dönemsel kampanyalarımıza göre belirleniyor, maalesef buradan indirim yapamıyoruz. Bu arada sepetinize ekleyeceğiniz yeni <span class="mask">██████</span> kremimizi 599 TL yerine lansmana özel 299 TL'ye alabilirsiniz 😊</div>
+        <div class="n"><span class="tick">✓</span><span>İndirim baskısına <b>boyun eğmedi</b> — ama müşteriyi eli boş da göndermedi.</span></div></div>
+      <div class="rv ac"><div class="top"><span>Kozmetik</span><span>21 Ağustos 2026</span></div>
+        <div class="q">başka siteden aldım ama uçuyor hemen, o kadar da para verdim; bu nasıl acaba, uçuyor mu yoksa kalıcı mı libre gibi</div>
+        <div class="a">Merhaba! Vücut spreylerimiz hafif yapılı esanslardır ancak duş sonrası kullanıp gün içinde tazeleyerek kalıcılığını artırabilirsiniz 🌸</div>
+        <div class="n"><span class="tick">✓</span><span><b>“Çok kalıcı” diye abartmadı.</b> Ürünün gerçek yapısını söyledi — iade değil, memnun müşteri.</span></div></div>
+      <div class="rv ac"><div class="top"><span>Kozmetik</span><span>17 Ağustos 2026</span></div>
+        <div class="q">3 al 2 öde yazıyor, sepette 3 adet fiyatı çıkıyor</div>
+        <div class="a">Merhaba! 3 al 2 öde kampanyamızda sepetinize 3 adet eklediğinizde sistem indirimli tutarı otomatik olarak yansıtacaktır, sepet adımında kontrol edebilirsiniz 🌸</div>
+        <div class="n"><span class="tick">✓</span><span>Kampanya kuralını bilip <b>sepet sorununu çözdü</b> — vazgeçecek müşteriyi tuttu.</span></div></div>
     </div>
   </div>
   <p style="font-size:.78rem;color:var(--text-low);margin-top:26px;text-align:center">Mağaza ve ürün adları gizlilik için maskelendi — cevapların geri kalanı birebir.</p>
