@@ -1760,6 +1760,10 @@ document.querySelectorAll('.navbtn').forEach(function(btn){
   btn.addEventListener('click', function(e){ e.preventDefault(); openId === id ? closeAll() : open(); });
 });
 document.querySelector('header').addEventListener('mouseleave', closeAll);
+// Menüden bir yere gidildiğinde panel AÇIK kalıyordu ve hedefin üstünü örtüyordu.
+document.querySelectorAll('.mega a').forEach(function(a){
+  a.addEventListener('click', function(){ closeAll(); });
+});
 document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeAll(); });
 
 document.querySelectorAll('.tab').forEach(function(t){
