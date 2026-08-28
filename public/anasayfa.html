@@ -539,7 +539,22 @@ a.logo:focus-visible{outline:2px solid var(--ember-deep);outline-offset:4px}
 .arhero{border-radius:18px;overflow:hidden;border:1px solid var(--ink-line);margin-top:30px;background:var(--ink)}
 .arhero img{width:100%;height:auto;display:block;aspect-ratio:16/9;object-fit:cover}
 @media(max-width:900px){.arkart{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:620px){.arkart{grid-template-columns:1fr}.arc .gr{aspect-ratio:16/9}}
+@media(max-width:620px){
+  /* Telefonda kart YATAY: solda küçük görsel, sağda yazı.
+     Dikey düzende 12 kart ~8 ekran tutuyordu, bu hâlde ~4,5. */
+  .arkart{grid-template-columns:1fr;gap:11px}
+  .arc{display:grid;grid-template-columns:96px 1fr;align-items:stretch}
+  .arc .gr{aspect-ratio:auto;height:100%;min-height:132px;border-radius:0}
+  .arc .ic{left:8px;top:8px;width:28px;height:28px;border-radius:8px}
+  .arc .ic svg{width:14px;height:14px}
+  .arc .gv{padding:14px 15px 15px}
+  .arc .ne{font-size:.66rem;letter-spacing:.08em}
+  .arc h4{font-size:1rem}
+  .arc p{font-size:.875rem;line-height:1.55;margin-top:6px}
+  .arc .cik{margin-top:10px;padding-top:9px;font-size:.79rem;line-height:1.5}
+  .arc .durum{font-size:.58rem;padding:2px 5px;margin-left:6px}
+  .arhero img{aspect-ratio:4/3}
+}
 
 /* ── 27 Ağu 2026 · mobil okunabilirlik ── */
 @media(max-width:640px){
@@ -573,12 +588,27 @@ a.logo:focus-visible{outline:2px solid var(--ember-deep);outline-offset:4px}
   .phonewrap > .phone{order:1}
   .phone-stage{padding:26px 16px}
 
+  .ftabs{gap:7px}
+  .ftab{flex:1 1 46%;justify-content:center;text-align:center}
+
   /* Dokunma hedefleri 44px'e çıkarıldı */
   .mnav{padding:11px 13px}
   .tab{padding-block:11px}
   .card a,footer li a{display:inline-block;padding:7px 0}
   footer ul li{margin-bottom:2px}
 }
+
+/* ── Fiyat hatları sekmeye katlandı (27 Ağu 2026) ──
+   Telefonda 10 plan kartı alt alta 12,3 ekran tutuyordu. */
+.ftabs{margin:26px 0 6px}
+.ftab{font-size:.88rem}
+.ftabnot{font-size:.85rem;color:var(--text-mid);margin:0 0 4px;max-width:62ch;line-height:1.6}
+.ftabnot b{color:var(--text)}
+.fpanel{display:none}
+.fpanel[data-on="true"]{display:block;animation:fpIn .28s ease both}
+@keyframes fpIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.fpanel > .hatbas:first-child{margin-top:26px;padding-top:0;border-top:0}
+@media(prefers-reduced-motion:reduce){.fpanel[data-on="true"]{animation:none}}
 </style>
 
 
@@ -611,7 +641,7 @@ a.logo:focus-visible{outline:2px solid var(--ember-deep);outline-offset:4px}
       <div class="megagrid m7">
         <div class="mcol"><h4>SellerPilot AI</h4>
           <a class="mitem" href="/mcp"><span class="job">Yapay zekâ araçlarınızı bağlayın</span><span class="tool">SellerPilot MCP<span class="pill new">Yeni</span></span></a>
-          <a class="mitem" href="#p1"><span class="job">Soruyu sizin ağzınızdan cevaplayın</span><span class="tool">Cevap Beyni</span></a>
+          <a class="mitem" href="#t-beyin"><span class="job">Soruyu sizin ağzınızdan cevaplayın</span><span class="tool">Cevap Beyni</span></a>
         </div>
         <div class="mcol"><h4>Ürün Araştırması</h4>
           <a class="mitem" href="#t-eklenti"><span class="job">Ürünün tutup tutmayacağını ölçün</span><span class="tool">Chrome Eklentisi</span></a>
@@ -623,20 +653,20 @@ a.logo:focus-visible{outline:2px solid var(--ember-deep);outline-offset:4px}
           <a class="mitem" href="#t-firsat"><span class="job">Talebi arza bölün, boşluğu görün</span><span class="tool">Fırsat Bulucu</span></a>
         </div>
         <div class="mcol"><h4>İlan Optimizasyonu</h4>
-          <a class="mitem" href="#p5"><span class="job">İlan açıklamanızı yazdırın</span><span class="tool">Açıklama Motoru</span></a>
+          <a class="mitem" href="#t-aciklama"><span class="job">İlan açıklamanızı yazdırın</span><span class="tool">Açıklama Motoru</span></a>
           <a class="mitem" href="/gorsel-studyo"><span class="job">Tek fotoğraftan ilan görseli üretin</span><span class="tool">Görsel Stüdyo</span></a>
         </div>
         <div class="mcol"><h4>Günlük Operasyon</h4>
           <a class="mitem" href="#p1"><span class="job">Ürün sorularını cevaplayın</span><span class="tool">Soru-Cevap</span></a>
           <a class="mitem" href="#p2"><span class="job">Kargo ve iade mesajlarını çözün</span><span class="tool">Sipariş Soruları</span></a>
           <a class="mitem" href="#p3"><span class="job">Düşük yıldızı geri kazanın</span><span class="tool">Değerlendirmeler</span></a>
-          <a class="mitem" href="#p3"><span class="job">Müşteriyi kuponla geri getirin</span><span class="tool">Kupon Motoru</span></a>
+          <a class="mitem" href="#t-kupon"><span class="job">Müşteriyi kuponla geri getirin</span><span class="tool">Kupon Motoru</span></a>
         </div>
         <div class="mcol"><h4>Performans &amp; Muhasebe</h4>
           <a class="mitem" href="#p4"><span class="job">Gerçekleşen kârınızı görün</span><span class="tool">Muhasebe</span></a>
-          <a class="mitem" href="#p4"><span class="job">Ürün maliyetlerinizi tek yerde tutun</span><span class="tool">Maliyet Defteri</span></a>
-          <a class="mitem" href="#p4"><span class="job">İadenin gerçek sebebini görün</span><span class="tool">İade Zekâsı</span></a>
-          <a class="mitem" href="#p4"><span class="job">Hangi ilden ne kazandığınızı görün</span><span class="tool">Bölgeler</span></a>
+          <a class="mitem" href="#t-maliyet"><span class="job">Ürün maliyetlerinizi tek yerde tutun</span><span class="tool">Maliyet Defteri</span></a>
+          <a class="mitem" href="#t-iade"><span class="job">İadenin gerçek sebebini görün</span><span class="tool">İade Zekâsı</span></a>
+          <a class="mitem" href="#t-bolge"><span class="job">Hangi ilden ne kadar iş geldiğini görün</span><span class="tool">Bölgeler</span></a>
         </div>
         <div class="mcol"><h4>Reklam</h4>
           <span class="mitem soon"><span class="job">Reklam harcamanızı kâra bağlayın</span><span class="tool">Reklam Kırılımı<span class="pill">Yakında</span></span></span>
@@ -990,6 +1020,70 @@ a.logo:focus-visible{outline:2px solid var(--ember-deep);outline-offset:4px}
   <div class="btnrow" style="margin-top:26px"><a class="cta" href="#fiyat">Ürün araştırması fiyatlarını gör →</a></div>
 </div></section>
 
+<section class="band band-2" id="operasyon"><div class="wrap">
+  <p class="eyebrow"><span class="num">03</span> Günlük operasyon ve muhasebe</p>
+  <h2 class="rv display h2" style="margin-top:12px">Müşteriyle konuşan da,<br><span class="ember">parayı sayan da o.</span></h2>
+  <p class="lede" style="margin-top:18px">Soru cevaplamak işin yarısı. Diğer yarısı: gelen kupon, düzelen ilan, girilen maliyet ve ay sonunda cebinizde gerçekten ne kaldığı. Altısı da aynı panelde.</p>
+
+  <div class="arkart">
+    <article class="arc" id="t-beyin">
+      <div class="gr"><img src="/arastirma/beyin.webp" alt="Karanlıkta konuşma balonu biçiminde kıvrılmış turuncu ışık teli" width="760" height="760" loading="lazy" decoding="async"><span class="ic"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-8 8H7l-4 3v-6.5A8 8 0 0 1 11 4h2a8 8 0 0 1 8 8z"/></svg></span></div>
+      <div class="gv">
+        <p class="ne">Soruyu sizin ağzınızdan cevaplayın</p>
+        <h4>Cevap Beyni<span class="durum ac">Yayında</span></h4>
+        <p>Ürününüzü, bedeninizi, renginizi ve stoğunuzu bilir; cevabı <b>sizin üslubunuzla</b> yazar. Emin olamadığında uydurmaz — o soruyu size bırakır.</p>
+        <p class="cik"><span class="tick">✦</span><span>Medyan cevaplama süresi <b>4 dakika</b>. Gece 02:47'de gelen soru siz uyanmadan cevaplanmış olur.</span></p>
+      </div>
+    </article>
+    <article class="arc" id="t-aciklama">
+      <div class="gr"><img src="/arastirma/aciklama.webp" alt="Dağınık koyu levhalar sağda düzgün bir yığına diziliyor, en üstteki turuncu parlıyor" width="760" height="760" loading="lazy" decoding="async"><span class="ic"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg></span></div>
+      <div class="gv">
+        <p class="ne">İlan açıklamanızı yazdırın</p>
+        <h4>Açıklama Motoru<span class="durum ac">Yayında</span></h4>
+        <p>Aynı soru üst üste geliyorsa cevabı <b>ilan açıklamanıza</b> yazar. Müşteri neyin eksik olduğunu zaten söylüyor; o da not alıyor.</p>
+        <p class="cik"><span class="tick">✦</span><span>Öneri gerçek soru yığınından çıkar — <b>uygulamaya siz karar verirsiniz</b>, kendiliğinden değiştirmez.</span></p>
+      </div>
+    </article>
+    <article class="arc" id="t-kupon">
+      <div class="gr"><img src="/arastirma/kupon.webp" alt="Turuncu bir etiket, ışıktan bir yay çizerek koyu bir forma geri dönüyor" width="760" height="760" loading="lazy" decoding="async"><span class="ic"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9V6a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v3a3 3 0 0 0 0 6v3a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-3a3 3 0 0 0 0-6z"/><path d="M14 8v8"/></svg></span></div>
+      <div class="gv">
+        <p class="ne">Müşteriyi kuponla geri getirin</p>
+        <h4>Kupon Motoru<span class="durum ac">Yayında</span></h4>
+        <p>Sorunu çözülen ya da düşük yıldız veren müşteriye kupon bırakır. <b>Kızgın müşteri, geri gelen müşteriye döner.</b></p>
+        <p class="cik"><span class="tick">✦</span><span>Kuponu kime ve ne zaman vereceğine kural karar verir — herkese dağıtmaz.</span></p>
+      </div>
+    </article>
+    <article class="arc" id="t-maliyet">
+      <div class="gr"><img src="/arastirma/maliyet.webp" alt="Farklı yükseklikte mat koyu blok yığını; blokların arasındaki dikişler turuncu parlıyor" width="760" height="760" loading="lazy" decoding="async"><span class="ic"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h13v18H6a2 2 0 0 1-2-2z"/><path d="M8 8h7M8 12h7"/></svg></span></div>
+      <div class="gv">
+        <p class="ne">Ürün maliyetlerinizi tek yerde tutun</p>
+        <h4>Maliyet Defteri<span class="durum ac">Yayında</span></h4>
+        <p>Excel'inizi yükleyin; ürün maliyeti, desi ve KDV tek defterde dursun. Kâr hesabı <b>bu defterden okur</b>.</p>
+        <p class="cik"><span class="tick">✦</span><span>Dolarla mal alıyorsanız kur kendiliğinden işler. Maliyeti girilmemiş ürün <b>“kârlı” gösterilmez</b> — “eksik” yazar.</span></p>
+      </div>
+    </article>
+    <article class="arc" id="t-iade">
+      <div class="gr"><img src="/arastirma/iade.webp" alt="Turuncu bir ışık şeridi kendi üzerine kıvrılarak geri dönüyor, ortasında parlak bir çekirdek açılıyor" width="760" height="760" loading="lazy" decoding="async"><span class="ic"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 1 0 3-6.2"/><path d="M3 4v5h5"/></svg></span></div>
+      <div class="gv">
+        <p class="ne">İadenin gerçek sebebini görün</p>
+        <h4>İade Zekâsı<span class="durum ac">Yayında</span></h4>
+        <p>İadeleri sebebe göre değil <b>sorumluluğa göre</b> ayırır: sizden mi, kargodan mı, müşteriden mi, idari mi. Ürün ve sebep kırılımı da yanında.</p>
+        <p class="cik"><span class="tick">✦</span><span>Adet en çok olan sebep, <b>en pahalı sebep olmayabilir</b> — kabul oranıyla birlikte görürsünüz.</span></p>
+      </div>
+    </article>
+    <article class="arc" id="t-bolge">
+      <div class="gr"><img src="/arastirma/bolge.webp" alt="Siyah zeminde soyut kabartma plakalar; üçü alt kenarından turuncu parlıyor" width="760" height="760" loading="lazy" decoding="async"><span class="ic"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4 3 6.5v13L9 17l6 2.5 6-2.5v-13L15 6.5z"/><path d="M9 4v13M15 6.5v13"/></svg></span></div>
+      <div class="gv">
+        <p class="ne">Hangi ilden ne kadar iş geldiğini görün</p>
+        <h4>Bölgeler<span class="durum ac">Yayında</span></h4>
+        <p>İl ve ilçe kırılımında paket, adet, <b>ciro</b>, sepet ortalaması ve <b>iade oranı</b>. Ciro payı yüzdesiyle birlikte.</p>
+        <p class="cik"><span class="tick">✦</span><span>Bazı iller ciroda üstte, iadede de üstte çıkar. Reklamı ve kargo tercihini buna bakarak seçersiniz.</span></p>
+      </div>
+    </article>
+  </div>
+</div></section>
+
+
 
 <section class="band band-ink" id="mcp"><div class="wrap">
   <p class="eyebrow">Yeni · Claude, ChatGPT ve Cursor için SellerPilot</p>
@@ -1024,7 +1118,7 @@ a.logo:focus-visible{outline:2px solid var(--ember-deep);outline-offset:4px}
 <section class="band band-2" id="kanit"><div class="wrap">
   <div class="answers">
     <div class="stick">
-      <p class="eyebrow"><span class="num">03</span> Kanıt</p>
+      <p class="eyebrow"><span class="num">04</span> Kanıt</p>
       <h2 class="rv display h2" style="margin-top:12px">Kurgu değil.<br><span class="ember">Bu hafta verilmiş cevaplar.</span></h2>
       <p class="lede" style="margin-top:16px">Aşağıdaki her cevap sistem tarafından yazıldı ve Trendyol'da gerçekten yayınlandı. Yazım hataları müşterilere ait — gerçek hayat böyle.</p>
 
@@ -1067,7 +1161,7 @@ a.logo:focus-visible{outline:2px solid var(--ember-deep);outline-offset:4px}
 
 
 <section class="band band-ink"><div class="wrap">
-  <p class="eyebrow"><span class="num">04</span> Satışa çevirme</p>
+  <p class="eyebrow"><span class="num">05</span> Satışa çevirme</p>
   <h2 class="rv display h2" style="margin-top:12px">Artık 7/24 çalışan bir satışçınız var.</h2>
   <p class="lede" style="margin-top:18px;font-size:1.3rem;color:var(--ink-text);max-width:26ch;font-weight:600">
     Upsell'i açan satıcılarımızın satışlarında <span class="ember">%10–15 artış</span> gözlemlenmiştir.</p>
@@ -1076,7 +1170,7 @@ a.logo:focus-visible{outline:2px solid var(--ember-deep);outline-offset:4px}
 
 
 <section class="band" id="fiyat"><div class="wrap">
-  <p class="eyebrow"><span class="num">05</span> Fiyatlandırma</p>
+  <p class="eyebrow"><span class="num">06</span> Fiyatlandırma</p>
   <h2 class="rv display h2" style="margin-top:12px">Bu bir otomatik cevaplayıcı değil.<br><span class="ember">Müşteri hizmetleri departmanı.</span></h2>
   <p class="lede" style="margin-top:18px">Rakipler soru cevaplamayı paketlerinin içine bir madde olarak koyuyor. Bizde o işin kendisi: siparişin gerçek kargo durumunu okur, mağazanızın kendi beden tablosundan hesap yapar, stoğu görür, emin olamadığında uydurmaz — size sorar. <strong style="color:var(--text)">Bir yazılım özelliği değil, işe aldığınız bir ekip arkadaşı.</strong></p>
 
@@ -1134,6 +1228,15 @@ a.logo:focus-visible{outline:2px solid var(--ember-deep);outline-offset:4px}
   </div>
 
   
+  <div class="tabs ftabs" role="tablist">
+    <button class="tab ftab" role="tab" aria-selected="true"  data-h="h-arastirma">Ürün Araştırması</button>
+    <button class="tab ftab" role="tab" aria-selected="false" data-h="h-muhasebe">Muhasebe</button>
+    <button class="tab ftab" role="tab" aria-selected="false" data-h="h-hizmet">Müşteri Hizmetleri</button>
+    <button class="tab ftab" role="tab" aria-selected="false" data-h="h-kaptan">Kaptan · üçü bir arada</button>
+  </div>
+  <p class="ftabnot">Üç hat birbirinden bağımsız. Yalnız ihtiyacınız olanı alın — ya da <b>Kaptan</b> ile üçünü birden.</p>
+
+  <div class="fpanel" id="h-arastirma" data-on="true">
   <div class="hatbas">
     <span class="no">Hat A</span>
     <h3 class="display h3">Ürün Araştırması</h3>
@@ -1167,6 +1270,9 @@ a.logo:focus-visible{outline:2px solid var(--ember-deep);outline-offset:4px}
   <p class="notlar"><b>Erken Erişim fiyatı</b> — şimdi girenler bu fiyatta kalır, yeni katılımlarda fiyat artar.</p>
 
   
+  </div>
+
+  <div class="fpanel" id="h-muhasebe">
   <div class="hatbas">
     <span class="no">Hat B</span>
     <h3 class="display h3">Muhasebe — gerçekleşen kâr</h3>
@@ -1211,6 +1317,9 @@ a.logo:focus-visible{outline:2px solid var(--ember-deep);outline-offset:4px}
   </p>
 
   
+  </div>
+
+  <div class="fpanel" id="h-hizmet">
   <div class="hatbas">
     <span class="no">Hat C</span>
     <h3 class="display h3">Müşteri Hizmetleri</h3>
@@ -1256,23 +1365,9 @@ a.logo:focus-visible{outline:2px solid var(--ember-deep);outline-offset:4px}
   </div>
 
   
-  <div class="hatbas">
-    <span class="no">Eklentiler</span>
-    <h3 class="display h3">Mağazanızı konuşarak yönetin</h3>
-    <p class="kim">Hangi hatta olursanız olun üstüne eklenir.</p>
-  </div>
-  <div class="cols3" style="margin-top:22px">
-    <div class="rv card">
-      <p class="k">Yapay Zekâ Bağlantısı · <span data-ay="1.499 ₺/ay" data-yil="yıllık ödeyende ücretsiz">yıllık ödeyende ücretsiz</span></p>
-      <p style="margin:0">Kendi Claude ya da ChatGPT'nizden mağazanızı sorarsınız: kârınız, satışınız, iadeleriniz, cevap bekleyen sorularınız, pazar verisi. Panele girip rapor aramazsınız.<br><span style="color:var(--text-low)">Kurumsal ve Kaptan 4'te dahildir · aylık ödeyende 1.499 ₺/ay · <strong style="color:var(--text)">yıllık ödediğiniz dönem boyunca ücretsizdir</strong>.</span></p>
-    </div>
-    <div class="rv card">
-      <p class="k">İlan Stüdyosu · 45.000 ₺ + KDV · ömür boyu</p>
-      <p style="margin:0"><strong style="color:var(--text)">Ajansa her ürün için ödediğinizi bir kez ödeyin, ömür boyu sizin olsun.</strong> Telefonla ürünün fotoğrafını çekin, yapay zekânıza "bunu Trendyol'a aç" deyin. Görseli o üretir; kategoriyi bulan, öznitelikleri dolduran, başlığı ve açıklamayı yazan, fiyatı ve stoğu giren, ilanı açan taraf SellerPilot olur.<br><span style="color:var(--text-low)">Tek seferlik ödeme, aylık abonelik gerekmez · sınırsız ürün, süre sınırı yok.</span></p>
-    </div>
   </div>
 
-  
+  <div class="fpanel" id="h-kaptan">
   <div class="hatbas">
     <span class="no">Üçü bir arada</span>
     <h3 class="display h3">Kaptan</h3>
@@ -1303,6 +1398,25 @@ a.logo:focus-visible{outline:2px solid var(--ember-deep);outline-offset:4px}
     </div>
   </div>
 
+  </div>
+
+  <div class="hatbas">
+    <span class="no">Eklentiler</span>
+    <h3 class="display h3">Mağazanızı konuşarak yönetin</h3>
+    <p class="kim">Hangi hatta olursanız olun üstüne eklenir.</p>
+  </div>
+  <div class="cols3" style="margin-top:22px">
+    <div class="rv card">
+      <p class="k">Yapay Zekâ Bağlantısı · <span data-ay="1.499 ₺/ay" data-yil="yıllık ödeyende ücretsiz">yıllık ödeyende ücretsiz</span></p>
+      <p style="margin:0">Kendi Claude ya da ChatGPT'nizden mağazanızı sorarsınız: kârınız, satışınız, iadeleriniz, cevap bekleyen sorularınız, pazar verisi. Panele girip rapor aramazsınız.<br><span style="color:var(--text-low)">Kurumsal ve Kaptan 4'te dahildir · aylık ödeyende 1.499 ₺/ay · <strong style="color:var(--text)">yıllık ödediğiniz dönem boyunca ücretsizdir</strong>.</span></p>
+    </div>
+    <div class="rv card">
+      <p class="k">İlan Stüdyosu · 45.000 ₺ + KDV · ömür boyu</p>
+      <p style="margin:0"><strong style="color:var(--text)">Ajansa her ürün için ödediğinizi bir kez ödeyin, ömür boyu sizin olsun.</strong> Telefonla ürünün fotoğrafını çekin, yapay zekânıza "bunu Trendyol'a aç" deyin. Görseli o üretir; kategoriyi bulan, öznitelikleri dolduran, başlığı ve açıklamayı yazan, fiyatı ve stoğu giren, ilanı açan taraf SellerPilot olur.<br><span style="color:var(--text-low)">Tek seferlik ödeme, aylık abonelik gerekmez · sınırsız ürün, süre sınırı yok.</span></p>
+    </div>
+  </div>
+
+  
   <p class="notlar" style="margin-top:22px">
     Fiyatlara KDV dahil değildir (%20) · 
     Yıllık ödemede %25 indirim, tutar peşin tahsil edilir · Mevcut müşterilerimiz eski fiyatlarında kalır.
@@ -1311,7 +1425,7 @@ a.logo:focus-visible{outline:2px solid var(--ember-deep);outline-offset:4px}
 
 
 <section class="band band-ink" id="misyon"><div class="wrap">
-  <p class="eyebrow"><span class="num">06</span> Hedefimiz ve misyonumuz</p>
+  <p class="eyebrow"><span class="num">07</span> Hedefimiz ve misyonumuz</p>
   <h2 class="rv display h2" style="margin-top:14px;max-width:22ch">Biz sizden para almıyoruz.<br><span class="ember">Büyümenizden pay alıyoruz.</span></h2>
 
   <div style="display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(28px,4vw,56px);margin-top:34px;align-items:start" class="misyongrid">
@@ -1340,7 +1454,7 @@ a.logo:focus-visible{outline:2px solid var(--ember-deep);outline-offset:4px}
 
 
 <section class="band band-2" id="ortaklik"><div class="wrap">
-  <p class="eyebrow"><span class="num">07</span> İş ortaklığı</p>
+  <p class="eyebrow"><span class="num">08</span> İş ortaklığı</p>
   <h2 class="rv display h2" style="margin-top:12px;max-width:20ch">Tavsiye edin, <span class="ember">her ay</span> kazanın.</h2>
   <p class="lede" style="margin-top:16px">Piyasadaki programlar tek seferlik komisyon verip kesiyor — üstelik nakit değil, kendi faturanızdan düşülen kredi olarak. Bizimki öyle değil: <strong style="color:var(--text)">getirdiğiniz müşteri ödediği sürece siz de kazanırsınız.</strong></p>
 
@@ -1666,6 +1780,25 @@ function setCycle(mode){
     el.textContent = mode === 'ay' ? el.dataset.ay : el.dataset.yil;
   });
 }
+/* Fiyat hattı sekmeleri. DESEN 74 dersi: gizli panele giden çapa AÇILMAZ,
+   bu yüzden buraya #capa bağlantısı KONMADI; geçiş yalnız düğmeyle. */
+(function(){
+  var dugmeler = document.querySelectorAll('.ftab');
+  if (!dugmeler.length) return;
+  function ac(id){
+    document.querySelectorAll('.fpanel').forEach(function(p){ p.dataset.on = 'false'; });
+    dugmeler.forEach(function(b){ b.setAttribute('aria-selected','false'); });
+    var p = document.getElementById(id);
+    if (!p) return;
+    p.dataset.on = 'true';
+    // panel gizliyken reveal gözlemcisi ölçemiyor -> açılınca elle görünür yap
+    p.querySelectorAll('.rv').forEach(function(e){ e.classList.add('in'); });
+  }
+  dugmeler.forEach(function(b){
+    b.addEventListener('click', function(){ b.setAttribute('aria-selected','true'); ac(b.dataset.h); b.setAttribute('aria-selected','true'); });
+  });
+})();
+
 document.getElementById('ay').addEventListener('click', function(){ setCycle('ay'); });
 document.getElementById('yil').addEventListener('click', function(){ setCycle('yil'); });
 setCycle('ay');   // açılış: AYLIK (kullanıcı kararı 27 Ağu 2026)
