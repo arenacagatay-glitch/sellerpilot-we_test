@@ -1374,7 +1374,7 @@ const Pricing = () => (
       <Reveal className="text-center mb-12">
         <span className="inline-block py-1 px-3 bg-orange-50 text-primary text-xs font-bold uppercase tracking-wider rounded-full mb-4 border border-orange-100">Fiyatlandırma</span>
         <h2 className="text-3xl sm:text-4xl font-display font-bold text-dark mb-3">Soru hacminize göre seçin</h2>
-        <p className="text-dark-gray mb-1">Tüm planlar <strong className="text-dark">15 gün ücretsiz deneme</strong> ile başlar. Kredi kartı gerekmez.</p>
+        <p className="text-dark-gray mb-1">Fiyatlara <strong className="text-dark">KDV dahil değildir</strong> (%20).</p>
         <p className="text-sm text-gray-400">Sadece yapay zekânın cevapladığı sorular sayılır — size düşen ve sizin yazdığınız cevaplar kotanızdan düşmez.</p>
       </Reveal>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
@@ -1468,7 +1468,7 @@ const FinalCTA = () => (
           Bu gece son kez <span className="grad-text">sorulara siz bakın</span>
         </h2>
         <p className="text-lg sm:text-xl text-gray-400 mb-12 max-w-2xl mx-auto">
-          Aklınıza takılan ne varsa WhatsApp'tan sorun — bir satıcı olarak ben cevaplıyorum. Ya da hemen kayıt olun, 15 gün ücretsiz deneyin.
+          Aklınıza takılan ne varsa WhatsApp'tan sorun — bir satıcı olarak ben cevaplıyorum.
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
           <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer"

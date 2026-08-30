@@ -152,7 +152,7 @@ export const BlogPostPage = () => {
             <div className="mt-14 rounded-2xl p-7 sm:p-9 text-center" style={{ background: 'var(--paper-2)', border: '1px solid var(--line)' }}>
               <h2 className="display h3 mb-3">Sorulara bakmayı bırakın, satışa bakın</h2>
               <p className="text-[.92rem] mb-6 max-w-md mx-auto" style={{ color: 'var(--text-mid)' }}>
-                SellerPilot gelen soruları sizin sesinizle cevaplar, emin olamadığını size iletir. 15 gün ücretsiz, kredi kartı gerekmez.
+                SellerPilot gelen soruları sizin sesinizle cevaplar, emin olamadığını size iletir.
               </p>
               <a href={APP_URL} className="btn btn-ember">Ücretsiz deneyin <ArrowRight size={16} /></a>
             </div>

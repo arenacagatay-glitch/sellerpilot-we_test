@@ -478,7 +478,7 @@ const V2Hero = () => (
             Emin olamadığını asla uydurmaz — size iletir.
           </p>
           <div className="flex flex-col sm:flex-row items-center lg:justify-start justify-center gap-3 mb-4">
-            <a href={APP_URL} className="btn btn-ember w-full sm:w-auto">15 gün ücretsiz dene <ArrowRight size={17} /></a>
+            <a href={APP_URL} className="btn btn-ember w-full sm:w-auto">Hemen başla <ArrowRight size={17} /></a>
             <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="btn btn-line w-full sm:w-auto">
               <Smartphone size={17} /> WhatsApp'tan yazın
             </a>
@@ -1127,7 +1127,7 @@ const V2Pricing = () => (
       <Rv className="max-w-2xl mb-14">
         <Eyebrow num="08">Fiyatlandırma</Eyebrow>
         <h2 className="display h2 mb-6">Soru hacminize göre seçin</h2>
-        <p className="lede">Tüm planlar 15 gün ücretsiz deneme ile başlar. Kredi kartı gerekmez.</p>
+        <p className="lede">Fiyatlara KDV dahil değildir (%20).</p>
       </Rv>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {V2_PLANS.map((p, i) => (
@@ -1212,7 +1212,7 @@ const V2Cta = () => (
         <h2 className="display h2 mb-7" style={{ color: 'var(--ink-text)' }}>
           Bu gece son kez<br />sorulara <span style={{ color: 'var(--ember-2)' }}>siz bakın.</span>
         </h2>
-        <p className="lede mx-auto mb-10">Yarın sabah soru-cevap ekranınız temiz olsun. 15 gün ücretsiz, kredi kartı gerekmez.</p>
+        <p className="lede mx-auto mb-10">Yarın sabah soru-cevap ekranınız temiz olsun.</p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
           <a href={APP_URL} className="btn btn-ember w-full sm:w-auto">Hemen başlayın <ArrowRight size={17} /></a>
           <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="btn btn-line w-full sm:w-auto">
