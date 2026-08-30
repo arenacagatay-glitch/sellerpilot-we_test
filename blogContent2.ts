@@ -41,7 +41,7 @@ export const POSTS_2: BlogPost[] = [
       '### Soruya ne kadar sürede cevap vermeliyim?\n\n' +
       'Ne kadar erken, o kadar iyi. Müşteri soru sorduğu anda karar aşamasındadır ve rakip mağazalar bir tık uzağındadır. Saatler içinde değil dakikalar içinde dönen cevap, satışın hâlâ sizde kalma ihtimalini ciddi şekilde artırır.\n\n' +
       '## SellerPilot bunu sizin yerinize yapar\n\n' +
-      'SellerPilot, Trendyol mağazanıza gelen soruları saniyeler içinde cevaplar; aranan ürün stokta yoksa katalogdan stoktaki uygun alternatifi önerir ve tanımladığınız kampanyayı cevaba doğal biçimde ekler. İade ve şikâyet içeren mesajlarda ise satış tamamen kapalıdır; bu sorular satış cümlesi olmadan ele alınır. sellerpilot.cloud üzerinden 15 gün ücretsiz deneyebilirsiniz.\n',
+      'SellerPilot, Trendyol mağazanıza gelen soruları saniyeler içinde cevaplar; aranan ürün stokta yoksa katalogdan stoktaki uygun alternatifi önerir ve tanımladığınız kampanyayı cevaba doğal biçimde ekler. İade ve şikâyet içeren mesajlarda ise satış tamamen kapalıdır; bu sorular satış cümlesi olmadan ele alınır. sellerpilot.cloud üzerinden inceleyebilirsiniz.\n',
   },
   {
     slug: 'trendyol-magaza-puani-nasil-korunur',
@@ -74,7 +74,7 @@ export const POSTS_2: BlogPost[] = [
       '### Emin olmadığım bir soruya ne yapmalıyım?\n\n' +
       'Tahmin etmeyin. Yanlış bilginin bedeli, geç cevabın bedelinden çok daha ağırdır. Doğru bilgiyi ürün detaylarından ya da tedarikçinizden teyit edip öyle dönün; beden ve ölçü gibi konularda bu kural iki kat geçerlidir.\n\n' +
       '## SellerPilot bunu sizin yerinize yapar\n\n' +
-      'SellerPilot cevaplarınızı mağazanızın kendi geçmiş cevaplarından öğrendiği üslupla yazar, link, telefon ve e-posta gibi kural ihlali yaratacak ifadeleri cevaplardan otomatik temizler. Beden sorularında kategoriye uygun beden tablosunu kullanır; tablo yoksa tahmin etmek yerine soruyu e-postayla size iletir. sellerpilot.cloud üzerinden 15 gün ücretsiz deneyebilirsiniz.\n',
+      'SellerPilot cevaplarınızı mağazanızın kendi geçmiş cevaplarından öğrendiği üslupla yazar, link, telefon ve e-posta gibi kural ihlali yaratacak ifadeleri cevaplardan otomatik temizler. Beden sorularında kategoriye uygun beden tablosunu kullanır; tablo yoksa tahmin etmek yerine soruyu e-postayla size iletir. sellerpilot.cloud üzerinden inceleyebilirsiniz.\n',
   },
   {
     slug: 'trendyol-urun-aciklamasi-soru-azaltma',
@@ -109,7 +109,7 @@ export const POSTS_2: BlogPost[] = [
       '### Soruları azaltmak soru-cevabı gereksiz mi yapar?\n\n' +
       'Hayır. Amaç soruyu sıfırlamak değil, cevabı açıklamada olan tekrar soruları eritmektir. Ürüne özgü, kişisel duruma bağlı sorular her zaman gelecektir ve bunlar satışa en yakın sorulardır; asıl mesai onlara kalmalıdır.\n\n' +
       '## SellerPilot bunu sizin yerinize yapar\n\n' +
-      'SellerPilot çok soru alan ürünlerinizi tespit eder ve gelen sorulardan yola çıkarak o ürün için başlık ve açıklama önerisi hazırlar; beğendiğiniz öneriyi tek tuşla Trendyol’a gönderirsiniz. Açıklama iyileşene kadar gelen sorular da saniyeler içinde otomatik cevaplanmaya devam eder. sellerpilot.cloud üzerinden 15 gün ücretsiz deneyebilirsiniz.\n',
+      'SellerPilot çok soru alan ürünlerinizi tespit eder ve gelen sorulardan yola çıkarak o ürün için başlık ve açıklama önerisi hazırlar; beğendiğiniz öneriyi tek tuşla Trendyol’a gönderirsiniz. Açıklama iyileşene kadar gelen sorular da saniyeler içinde otomatik cevaplanmaya devam eder. sellerpilot.cloud üzerinden inceleyebilirsiniz.\n',
   },
   {
     slug: 'eticarette-yapay-zeka-musteri-sorulari',
@@ -146,6 +146,6 @@ export const POSTS_2: BlogPost[] = [
       '### Her soruyu yapay zekâ mı cevaplamalı?\n\n' +
       'Hayır ve bu bir eksik değil, tasarım ilkesidir. Sağlık, şikâyet ve iade gibi konular insan yargısı ister. Sağlıklı kurulum, rutin soruların otomatik cevaplanması ve hassas soruların satıcıya iletilmesidir.\n\n' +
       '## SellerPilot bunu sizin yerinize yapar\n\n' +
-      'SellerPilot cevaplarını mağazanızın gerçek verisine dayandırır: sipariş numarasıyla gerçek sipariş durumunu kontrol eder, beden sorularında kategoriye uygun tabloyu kullanır, tablo yoksa tahmin etmez ve soruyu e-postayla size iletir; iade ve şikâyette satış tamamen kapalıdır. Üslubu kendi cevaplarınızdan öğrenir, dilerseniz onay modunda her cevap yayınlanmadan önce sizden geçer. sellerpilot.cloud üzerinden 15 gün ücretsiz deneyebilirsiniz.\n',
+      'SellerPilot cevaplarını mağazanızın gerçek verisine dayandırır: sipariş numarasıyla gerçek sipariş durumunu kontrol eder, beden sorularında kategoriye uygun tabloyu kullanır, tablo yoksa tahmin etmez ve soruyu e-postayla size iletir; iade ve şikâyette satış tamamen kapalıdır. Üslubu kendi cevaplarınızdan öğrenir, dilerseniz onay modunda her cevap yayınlanmadan önce sizden geçer. sellerpilot.cloud üzerinden inceleyebilirsiniz.\n',
   },
 ];
