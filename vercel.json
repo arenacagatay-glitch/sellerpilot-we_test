@@ -7,6 +7,10 @@
       "destination": "/mcp.html"
     },
     {
+      "source": "/kurumsal",
+      "destination": "/kurumsal.html"
+    },
+    {
       "source": "/((?!.*\\.).*)",
       "destination": "/app.html"
     }

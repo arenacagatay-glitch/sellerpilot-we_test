@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SellerPilot Kurumsal — Trendyol müşteri sorularını insandan hızlı cevaplayan sistem</title>
+<meta name="description" content="Trendyol'daki ürün sorularınızı mağazanızın kendi bilgisiyle dakikalar içinde cevaplayan, emin olmadığında ekibinize bırakan sistem. Kurumsal mağazalar için.">
+<meta name="robots" content="noindex">
+<style>
+:root{
+  --paper:#FAFAF9;--paper-2:#F4F4F3;--line:#E7E5E4;--line-2:#D6D3D1;
+  --text:#0C0A09;--text-mid:#57534E;--text-low:#79716B;
+  --ink:#0A0C11;--ink-line:rgba(255,255,255,.09);--ink-text:#F5F5F4;--ink-mid:#A6A09B;
+  --ember:#FF6B35;--ember-2:#FFBE5C;--ember-deep:#C2410C;
+  --disp:"Inter Tight",Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+  --body:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--text);font-family:var(--body);line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.wrap{max-width:880px;margin:0 auto;padding-inline:24px}
+@media(max-width:767px){.wrap{padding-inline:16px}}
+.display{font-family:var(--disp);font-weight:700;letter-spacing:-.04em;line-height:1.06;text-wrap:balance;margin:0}
+.h1{font-size:clamp(2rem,1.3rem + 2.8vw,3.2rem)}
+.h2{font-size:clamp(1.5rem,1.2rem + 1.2vw,2rem);margin-bottom:14px}
+.lede{font-size:clamp(1.02rem,.98rem + .25vw,1.16rem);line-height:1.66;color:var(--text-mid);max-width:62ch;margin:18px 0 0}
+.eyebrow{font-size:.68rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--text-low);margin:0 0 12px}
+.band{padding:clamp(44px,5.5vw,72px) 0;border-top:1px solid var(--line)}
+header{position:sticky;top:0;z-index:60;background:rgba(250,250,249,.93);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;gap:22px;height:64px}
+.logo{display:flex;align-items:center;gap:9px;font-family:var(--disp);font-weight:750;letter-spacing:-.035em;font-size:1.05rem;text-decoration:none}
+.logo svg{width:28px;height:28px;border-radius:8px}
+.navright{margin-left:auto;display:flex;align-items:center;gap:8px}
+.blink{font-size:.875rem;font-weight:530;padding:9px 11px;text-decoration:none}
+.cta{background:var(--ember-deep);color:#fff;text-decoration:none;font-size:.9rem;font-weight:640;padding:11px 18px;border-radius:9px;display:inline-block}
+.cta:hover{background:#9A3412}
+.btn2{background:#fff;border:1px solid var(--line-2);color:var(--text);text-decoration:none;font-size:.9rem;font-weight:600;padding:11px 18px;border-radius:9px;display:inline-block}
+.hero{padding:clamp(48px,6vw,96px) 0 clamp(40px,5vw,72px)}
+.btnrow{display:flex;gap:11px;flex-wrap:wrap;margin-top:26px}
+.fineprint{font-size:.8rem;color:var(--text-low);margin:14px 0 0}
+.list{display:grid;gap:14px;margin:22px 0 0;padding:0;list-style:none}
+.list li{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 18px;font-size:.98rem;line-height:1.55}
+.list li b{display:block;font-family:var(--disp);letter-spacing:-.02em;margin-bottom:4px}
+.ornek{background:var(--ink);color:var(--ink-text);border-radius:18px;padding:26px 28px;margin-top:22px}
+.ornek .soru,.ornek .cevap{margin:0 0 14px;font-size:1rem;line-height:1.6}
+.ornek .etiket{display:inline-block;font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ember-2);margin-bottom:6px}
+.ornek .cevap{background:rgba(255,255,255,.06);border:1px solid var(--ink-line);border-radius:12px;padding:14px 16px}
+.ornek .not{margin:0;font-size:.86rem;color:var(--ink-mid)}
+.adim{display:grid;gap:16px;margin-top:22px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.adim div{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px 22px}
+.adim .no{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,var(--ember),var(--ember-2));color:#fff;font-weight:800;margin-bottom:10px}
+.adim h4{font-family:var(--disp);font-size:1.05rem;margin:0 0 6px;letter-spacing:-.02em}
+.adim p{margin:0;font-size:.94rem;color:var(--text-mid)}
+.kanit{border-left:3px solid var(--ember-2);background:rgba(255,122,0,.06);border-radius:0 12px 12px 0;padding:14px 18px;margin-top:22px;font-size:.98rem}
+.son{background:var(--paper-2);text-align:left}
+footer{background:var(--ink);color:var(--ink-mid);padding:44px 0 28px;font-size:.86rem}
+.kunye{border-top:1px solid var(--ink-line);margin-top:22px;padding-top:18px;font-size:.76rem;line-height:1.75}
+.kunye b{color:var(--ink-text)}
+</style>
+</head>
+<body>
+
+<header><div class="wrap nav">
+  <a class="logo" href="/"><svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF6B35"/><stop offset="1" stop-color="#FFBE5C"/></linearGradient></defs><rect width="64" height="64" rx="14" fill="url(#g)"/><g transform="translate(12 12) scale(1.6667)"><path fill="#fff" d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></g></svg>SellerPilot</a>
+  <div class="navright"><a class="blink" href="#nasil">Nasıl çalışır</a><a class="cta" href="mailto:iletisim@sellerpilot.cloud?subject=Kurumsal%20g%C3%B6r%C3%BC%C5%9Fme%20talebi">15 dakikalık görüşme</a></div>
+</div></header>
+
+<section class="hero"><div class="wrap">
+  <p class="eyebrow">Kurumsal mağazalar için</p>
+  <h1 class="display h1">Trendyol'daki müşteri sorularınızı bir insandan daha hızlı ve daha tutarlı cevaplayan sistem.</h1>
+  <p class="lede">Mağazanızın kendi ürün bilgisi, kargo ve iade kurallarıyla dakikalar içinde cevap verir; emin olmadığında konuyu ekibinize bırakır. Gece üçte de çalışır, hiçbir soruyu unutmaz.</p>
+  <div class="btnrow"><a class="cta" href="mailto:iletisim@sellerpilot.cloud?subject=Kurumsal%20g%C3%B6r%C3%BC%C5%9Fme%20talebi">15 dakikalık görüşme isteyin</a><a class="btn2" href="#ornek">Gerçek bir örnek görün</a></div>
+  <p class="fineprint">Kurulum bizde, sizden yalnız Trendyol API erişimi. İlk hafta onay modunda çalışır: hiçbir cevap siz görmeden gitmez.</p>
+</div></section>
+
+<section class="band" id="nasil"><div class="wrap">
+  <p class="eyebrow">Ne yapar</p>
+  <h2 class="display h2">Soruya göre doğru kaynağa gider, cevabı oradan kurar.</h2>
+  <ul class="list">
+    <li><b>Beden sorusu</b> Beden tablonuzdan hesaplar; tahmin etmez, "bir numara büyük alın" demez.</li>
+    <li><b>"Başka rengi var mı?"</b> Aynı modelin stoktaki varyantını söyler.</li>
+    <li><b>Kargo ve iade</b> Süreleri ve koşulları sizin kuralınızla verir, genel laf etmez.</li>
+    <li><b>Şikâyet</b> Özür diler, konuyu ekibinize devreder; müşteri devri fark etmez.</li>
+    <li><b>Mağazanızın üslubu</b> Cevaplarınızdan üslubu öğrenir, sizin ağzınızdan yazar.</li>
+    <li><b>Trendyol kuralları</b> Link, telefon ve dış kampanya paylaşımını kendiliğinden engeller; mağaza puanınız risk almaz.</li>
+  </ul>
+</div></section>
+
+<section class="band" id="ornek"><div class="wrap">
+  <p class="eyebrow">Gerçek örnek</p>
+  <h2 class="display h2">Bir müşterimizin mağazasından, birebir.</h2>
+  <div class="ornek">
+    <span class="etiket">Müşteri sordu</span>
+    <p class="soru">"Merhaba, parkede ve fayans zeminde ses yapar mı? Teşekkürler."</p>
+    <span class="etiket">Sistem cevapladı</span>
+    <p class="cevap">"Merhaba! Bu terliğimizin tabanı termoplastik materyalden üretildiği için sert zeminlerde hafif bir ses yapabilir. Eğer tamamen sessiz bir kullanım arıyorsanız, 'Kadın Ev Babeti Ses Yapmaz Hafif Taban Yumuşak Peluş Panduf' modelimize göz atabilirsiniz. Bu arada tüm ürünlerimizde 5 al 4 öde kampanyamızın olduğunu da hatırlatmak isterim! 😊"</p>
+    <p class="not">Bu cevabı kimse yazmadı. Ürün özelliğinden, kataloğdaki alternatiften ve mağazanın o günkü kampanyasından sistem kurdu.</p>
+  </div>
+  <div class="kanit">Ayda 1.400'den fazla müşteri sorusu alan bir Trendyol ayakkabı mağazasında bu soruların tamamı bir aydır bu sistemle cevaplanıyor; ekip yalnız devredilen konularla ilgileniyor.</div>
+</div></section>
+
+<section class="band"><div class="wrap">
+  <p class="eyebrow">Nasıl kurulur</p>
+  <h2 class="display h2">Üç adım, kurulum bizde.</h2>
+  <div class="adim">
+    <div><span class="no">1</span><h4>Trendyol API erişimi</h4><p>Satıcı panelinizden verdiğiniz API anahtarıyla ürünler, sorular ve siparişler bağlanır. Başka bir kurulum yok.</p></div>
+    <div><span class="no">2</span><h4>Onay modu, bir hafta</h4><p>Sistem cevabı hazırlar, siz onaylarsınız. Üslubu ve kuralları bu hafta içinde oturtursunuz.</p></div>
+    <div><span class="no">3</span><h4>Otomatik</h4><p>Cevaplar dakikalar içinde gider. Emin olmadığı ve şikâyet içeren sorular ekibinize düşer.</p></div>
+  </div>
+</div></section>
+
+<section class="band son"><div class="wrap">
+  <h2 class="display h2">Kendi mağazanızın gerçek sorularıyla 15 dakikada görün.</h2>
+  <p class="lede" style="margin-top:6px">Görüşmede sizin mağazanızın son sorularını açıp sistemin nasıl cevapladığını gösteriyoruz. Slayt yok.</p>
+  <div class="btnrow"><a class="cta" href="mailto:iletisim@sellerpilot.cloud?subject=Kurumsal%20g%C3%B6r%C3%BC%C5%9Fme%20talebi">iletisim@sellerpilot.cloud adresine yazın</a></div>
+</div></section>
+
+<footer><div class="wrap">
+  <p style="margin:0 0 6px"><strong style="color:var(--ink-text)">SellerPilot</strong> — Trendyol satıcıları için müşteri iletişimi ve gerçekleşen kâr.</p>
+  <p class="kunye"><b>PURELYPRO BADGER KOZMETİK VE DANIŞMANLIK HİZMETLERİ TİCARET LİMİTED ŞİRKETİ</b><br>
+  Bahçelievler Mah. Talatpaşa Cad. Saray Apt. No: 43 İç Kapı No: 34, Bahçelievler / İstanbul<br>
+  Vergi Kimlik No: 7331258700 · MERSİS: 0733125870000001 · iletisim@sellerpilot.cloud</p>
+</div></footer>
+
+</body>
+</html>
