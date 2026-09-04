@@ -2,9 +2,9 @@
 // Google Apps Script ucu 3 Eyl 2026'da 403 vermeye başladı (anonim erişim kapalı); bu uç onun yerine.
 // Ne yapar: JSON gövdeyi alır → iletisim@sellerpilot.cloud'a e-posta (Hostinger SMTP) + Telegram (radar botu) → {ok:true}
 // Env (Vercel): SMTP_USER, SMTP_PASS, TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID
-const nodemailer = require('nodemailer');
+import nodemailer from 'nodemailer';
 
-module.exports = async (req, res) => {
+export default async function handler(req, res) {
   res.setHeader('Cache-Control', 'no-store');
   if (req.method !== 'POST') return res.status(405).json({ ok: false, hata: 'POST' });
   let b = req.body;
@@ -37,4 +37,4 @@ module.exports = async (req, res) => {
   }
   if (!sonuc.mail && !sonuc.telegram) return res.status(500).json({ ok: false, hata: 'iletilemedi' });
   return res.status(200).json({ ok: true, ...sonuc });
-};
+}
