@@ -11,7 +11,7 @@
       "destination": "/kurumsal.html"
     },
     {
-      "source": "/((?!.*\\.).*)",
+      "source": "/((?!api/)(?!.*\\.).*)",
       "destination": "/app.html"
     }
   ],

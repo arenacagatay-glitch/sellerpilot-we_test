@@ -125,6 +125,7 @@ footer{background:var(--ink);color:var(--ink-mid);padding:44px 0 28px;font-size:
     <label>E-posta<input name="email" type="email" required autocomplete="email"></label>
     <label>Telefon (isteğe bağlı)<input name="tel" type="tel" autocomplete="tel"></label>
     <label>Uygun gün ve saat (isteğe bağlı)<input name="zaman" placeholder="örn. Perşembe 14:00"></label>
+    <input name="web" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
     <button class="cta" type="submit">Görüşme isteyin</button>
     <p class="fineprint" id="frmnot">Ya da doğrudan yazın: iletisim@sellerpilot.cloud</p>
   </form>
@@ -140,18 +141,20 @@ footer{background:var(--ink);color:var(--ink-mid);padding:44px 0 28px;font-size:
 <script>
 (function(){
   var f=document.getElementById('frm'); if(!f) return;
-  var UC='https://script.google.com/macros/s/AKfycbwtGXVec6cRsfgpJpb5GAODf8RDrkLoQvwMsu6E1OOBqxuummZdZs2BxUbRoYzSepc/exec';
   f.addEventListener('submit',function(ev){
     ev.preventDefault();
     var d=new FormData(f); var ad=(d.get('ad')||'').trim(), sirket=(d.get('sirket')||'').trim(), email=(d.get('email')||'').trim();
-    if(!ad||!sirket||!email||email.indexOf('@')<0){ document.getElementById('frmnot').textContent='Ad, şirket ve e-posta gerekli.'; return; }
+    var not=document.getElementById('frmnot');
+    if(!ad||!sirket||!email||email.indexOf('@')<0){ not.textContent='Ad, şirket ve e-posta gerekli.'; return; }
     var btn=f.querySelector('button'); btn.disabled=true; btn.textContent='Gönderiliyor…';
-    var yuk={name:'KURUMSAL · '+ad+' — '+sirket, email:email, phone:((d.get('tel')||'').trim()||'-')+' · uygun: '+((d.get('zaman')||'').trim()||'-')};
-    fetch(UC,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(yuk)})
-      .catch(function(){})
-      .finally(function(){
-        f.innerHTML='<div class="ok">Teşekkürler, talebinizi aldık. Aynı gün içinde '+email.replace(/</g,'')+' adresine dönüyoruz.</div>';
-      });
+    fetch('/api/gorusme',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({ad:ad,sirket:sirket,email:email,tel:(d.get('tel')||'').trim(),zaman:(d.get('zaman')||'').trim(),web:(d.get('web')||''),kaynak:'kurumsal'})})
+      .then(function(r){ return r.json().catch(function(){ return {ok:r.ok}; }); })
+      .then(function(j){
+        if(j && j.ok){ f.innerHTML='<div class="ok">Teşekkürler, talebinizi aldık. Aynı gün içinde '+email.replace(/</g,'')+' adresine dönüyoruz.</div>'; }
+        else { btn.disabled=false; btn.textContent='Görüşme isteyin'; not.textContent='Gönderilemedi. Lütfen doğrudan yazın: iletisim@sellerpilot.cloud'; }
+      })
+      .catch(function(){ btn.disabled=false; btn.textContent='Görüşme isteyin'; not.textContent='Bağlantı hatası. Lütfen doğrudan yazın: iletisim@sellerpilot.cloud'; });
   });
 })();
 </script>
